@@ -1,3 +1,7 @@
+# ARCHIVED - No Longer Updated
+
+This extension has been superseded by the [Lumiverse](https://github.com/prolix-oc/Lumiverse) frontend. This will no longer receive updates.
+
 # Lumia Injector Extension
 
 An extension for SillyTavern that dynamically injects character definitions, personalities, behaviors, and narrative styles into prompts using macros.

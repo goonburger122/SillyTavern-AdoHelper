@@ -1,14 +1,13 @@
 {
-  "name": "lumiverse-helper",
-  "display_name": "Lumiverse Helper",
-  "author": "Prolix OCs",
-  "version": "5.4.5",
-  "description": "Injects Lumia Definitions, Behaviors, and Personalities from custom-made Lumia DLC files into prompt templates.",
+  "name": "ado-helper",
+  "display_name": "Ado Helper",
+  "author": "goonburger122",
+  "version": "1.0.0",
+  "description": "SillyTavern UI enhancement and quality of life extension.",
   "js": "dist/index.js",
   "css": "style.css",
-  "homePage": "https://github.com/prolix-oc/SillyTavern-LumiverseHelper.git",
+  "homePage": "https://github.com/goonburger122/SillyTavern-AdoHelper",
   "requires": [],
   "loading_order": 1,
-  "generate_interceptor": "lumiverseHelperGenInterceptor",
   "auto_update": true
 }

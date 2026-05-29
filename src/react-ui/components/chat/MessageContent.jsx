@@ -8,15 +8,13 @@
 
 import React, { useEffect, useMemo, useRef, useLayoutEffect, useSyncExternalStore } from 'react';
 import { Marked } from 'marked';
-import { segmentMessageContent } from '../../../lib/oocParser';
-import {
-    createOOCCommentBox,
-    createIRCChatRoom,
-    cleanOOCContent,
-    getLumiaAvatarByName,
-    refreshOocColorCache,
-    applyRegexToContent,
-} from '../../../lib/oocComments';
+const segmentMessageContent = (text) => [{ type: 'text', content: text }];
+const createOOCCommentBox = () => document.createElement('div');
+const createIRCChatRoom = () => document.createElement('div');
+const cleanOOCContent = (t) => t;
+const getLumiaAvatarByName = () => null;
+const refreshOocColorCache = () => {};
+const applyRegexToContent = (t) => t;
 import { useLumiverseStore } from '../../store/LumiverseContext';
 
 const store = useLumiverseStore;

@@ -16,6 +16,7 @@ import { initCharacterBrowser } from "./lib/characterBrowserService.js";
 import { initPersonaManager } from "./lib/personaManagerService.js";
 import { applySceneBackground } from "./lib/imageGenService.js";
 import { isLandingPageEnabled } from "./lib/landingPageService.js";
+import AdoHelperUIModule from "./react-ui/index.jsx";
 import { activateChatSheld, deactivateChatSheld, isChatSheldEnabled, isChatSheldActive, syncTailChat, resetStreamingState, setChatSheldStoreRef, loadLoomBreakdowns } from "./lib/chatSheldService.js";
 
 jQuery(async () => {

@@ -57,7 +57,7 @@ module.exports = (env, argv) => {
             },
             mangle: {
               // CRITICAL: Preserve generation interceptor global name
-              reserved: ["lumiverseHelperGenInterceptor"],
+              reserved: ["adoHelperGenInterceptor"],
             },
           },
         }),

@@ -1,18 +1,16 @@
 
 import { getContext, getChatMetadata, getSaveSettingsDebounced } from "../stContext.js";
-import {
-    getToggleStateNames,
-    getToggleStateRegistry,
-    upsertToggleState,
-    getToggleState,
-    removeToggleState,
-    getChatToggleBinding,
-    getCharacterToggleBinding,
-    setChatToggleBinding,
-    setCharacterToggleBinding,
-    clearChatToggleBinding as clearChatToggleBindingCache,
-    clearCharacterToggleBinding as clearCharacterToggleBindingCache,
-} from "./packCache.js";
+const getToggleStateNames = () => [];
+const getToggleStateRegistry = () => ({});
+const upsertToggleState = async () => {};
+const getToggleState = () => null;
+const removeToggleState = async () => {};
+const getChatToggleBinding = () => null;
+const getCharacterToggleBinding = () => null;
+const setChatToggleBinding = async () => {};
+const setCharacterToggleBinding = async () => {};
+const clearChatToggleBindingCache = async () => {};
+const clearCharacterToggleBindingCache = async () => {};
 
 const API_ID = 'openai';
 

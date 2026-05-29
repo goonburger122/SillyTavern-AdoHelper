@@ -8,7 +8,6 @@ import {
   getSettings,
   MODULE_NAME,
   LOOM_SUMMARY_KEY,
-  getLumiaConfigVersion,
 } from "./settingsManager.js";
 import {
   getUserName,

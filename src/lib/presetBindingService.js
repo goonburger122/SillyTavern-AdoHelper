@@ -19,12 +19,10 @@
 import { getContext, getEventSource, getEventTypes } from "../stContext.js";
 import { chatPresetService } from "./chatPresetService.js";
 import { getSettings, saveSettings } from "./settingsManager.js";
-import {
-    getCachedIndex,
-    updateSelections,
-    getChatToggleBinding,
-    getCharacterToggleBinding,
-} from "./packCache.js";
+const getCachedIndex = () => ({ packs: {}, selections: {}, preferences: {}, presets: {} });
+const updateSelections = async () => {};
+const getChatToggleBinding = () => null;
+const getCharacterToggleBinding = () => null;
 
 const MODULE_NAME = "PresetBindingService";
 

@@ -15,18 +15,16 @@ import {
     getEventTypes,
     getSaveSettingsDebounced,
 } from "../stContext.js";
-import {
-    getConnectionProfileRegistry,
-    getActiveConnectionProfileId,
-    setActiveConnectionProfileId,
-    getConnectionProfileBindings,
-    setConnectionProfileBindings,
-    getConnectionProfileSync,
-    getConnectionProfile,
-    upsertConnectionProfile,
-    removeConnectionProfile,
-} from "./packCache.js";
-import { getConnectionProfileFileKey } from "./fileStorage.js";
+const getConnectionProfileRegistry = () => ({});
+const getActiveConnectionProfileId = () => null;
+const setActiveConnectionProfileId = async () => {};
+const getConnectionProfileBindings = () => ({});
+const setConnectionProfileBindings = async () => {};
+const getConnectionProfileSync = () => null;
+const getConnectionProfile = async () => null;
+const upsertConnectionProfile = async () => {};
+const removeConnectionProfile = async () => {};
+const getConnectionProfileFileKey = () => null;
 import { captureReasoningSnapshot, applyReasoningSnapshot } from "./presetsService.js";
 import { MODULE_NAME } from "./settingsManager.js";
 import { resolveBinding as resolveLoomBinding, setActivePreset as setActiveLoomPreset, SAMPLER_PARAMS } from "./lucidLoomService.js";

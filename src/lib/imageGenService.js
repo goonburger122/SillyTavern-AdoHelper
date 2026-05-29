@@ -11,10 +11,13 @@
 import { MODULE_NAME, getSettings, GENDER } from "./settingsManager.js";
 import { getContext, getRequestHeaders, getCurrentCharacter } from "../stContext.js";
 import { generateImage, getProviderConfig } from "./imageProviders.js";
-import { getLumiaField } from "./lumiaContent.js";
+const getLumiaField = () => null;
 import { getItemFromLibrary } from "./dataProcessor.js";
-import { hashString, getSceneImageFileKey } from "./fileStorage.js";
-import { executeSingleTool, getNamedResultRaw, abortToolExecution } from "./councilTools.js";
+const hashString = async (s) => s;
+const getSceneImageFileKey = () => null;
+const executeSingleTool = async () => null;
+const getNamedResultRaw = () => null;
+const abortToolExecution = () => {};
 import { getCurrentPersonaAvatar } from "./personaService.js";
 
 // Debounce tracking — minimum 15s between generation requests

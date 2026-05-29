@@ -25,17 +25,15 @@ import {
   savePack,
   deletePack,
 } from "./settingsManager.js";
-import {
-  getLoomPresetRegistry,
-  getActiveLoomPresetId,
-  getLoomBindings,
-  getConnectionProfileRegistry,
-  getActiveConnectionProfileId,
-  getConnectionProfileBindings,
-} from "./packCache.js";
+const getLoomPresetRegistry = () => ({});
+const getActiveLoomPresetId = () => null;
+const getLoomBindings = () => ({});
+const getConnectionProfileRegistry = () => ({});
+const getActiveConnectionProfileId = () => null;
+const getConnectionProfileBindings = () => ({});
 import { applyTheme, removeThemeOverrides, getDefaultTheme } from "./themeManager.js";
 import { getEventSource, getEventTypes, getRequestHeaders, triggerExtensionUpdate, getExtensionGitVersion } from "../stContext.js";
-import { registerDLCTools } from "./councilTools.js";
+const registerDLCTools = () => {};
 
 // Extension name discovery from import.meta.url per EXTENSION_GUIDE_UPDATES.md
 // Structure: .../third-party/<folder_name>/src/lib/reactBridge.js

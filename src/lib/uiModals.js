@@ -7,7 +7,9 @@ import { getContext } from "../stContext.js";
 import { getSettings, saveSettings, MODULE_NAME, LOOM_SUMMARY_KEY } from "./settingsManager.js";
 import { getItemFromLibrary, escapeHtml } from "./dataProcessor.js";
 import { generateLoomSummary, getProviderDefaults, PROVIDER_CONFIG, getProviderConfig, getIsSummarizing } from "./summarization.js";
-import { showLumiaEditorModal, showPackEditorModal, canEditPack } from "./lumiaEditor.js";
+const showLumiaEditorModal = () => {};
+const showPackEditorModal = () => {};
+const canEditPack = () => false;
 import { notifyReactOfSettingsChange } from "./reactBridge.js";
 
 // Note: processAllLumiaOOCComments is imported dynamically to avoid circular dependency

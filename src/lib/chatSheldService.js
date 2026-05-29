@@ -12,7 +12,7 @@
 
 import { getContext, getEventSource, getEventTypes, getRequestHeaders, getCreateBranch, getTokenCountAsync, getItemizedPrompts, getDeleteMessage, getSaveChat, getUpdateMessageBlock, getSwipeAPI, getGenerate, getStopGeneration, getAddOneMessage, getSubstituteParamsFunc, getExecuteSlashCommands, isGroupChat, getGroupMembers } from "../stContext.js";
 import { getSettings } from "./settingsManager.js";
-import { parseOOCTags } from "./oocParser.js";
+const parseOOCTags = (t) => ({ text: t, tags: [] });
 import { chatSheldStyles } from '../react-ui/components/ChatSheldStyles.js';
 import { generateThemeCSSForChatSheld } from './themeManager.js';
 import { getRandomJoke, onJokesReady } from './jokesService.js';

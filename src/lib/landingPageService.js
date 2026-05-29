@@ -7,7 +7,7 @@
  */
 
 import { getSettings } from "./settingsManager.js";
-import { getCachedIndex } from "./packCache.js";
+const getCachedIndex = () => ({ packs: {}, selections: {}, preferences: {}, presets: {} });
 
 const MODULE_NAME = "lumia-injector";
 

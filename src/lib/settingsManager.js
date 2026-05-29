@@ -12,28 +12,27 @@
 
 import { getExtensionSettings, getSaveSettingsDebounced } from "../stContext.js";
 import { encryptValue, decryptValue } from "./cryptoUtils.js";
-import {
-  initPackCache,
-  isCacheInitialized,
-  getCachedIndex,
-  getAllPacksSync,
-  getPackSync,
-  getPack,
-  upsertPack,
-  removePack as removePackFromCache,
-  updateSelections,
-  updatePreferences,
-  updatePreferencesImmediate,
-  getPresets as getCachedPresets,
-  upsertPreset,
-  deletePreset as deletePresetFromCache,
-  updatePresets,
-  flushIndexSave,
-  migratePacksFromSettings,
-  migrateSelectionsFromSettings,
-  subscribeToCacheChanges,
-  clearAllData,
-} from "./packCache.js";
+// Pack system removed - stubs
+const initPackCache = async () => {};
+const isCacheInitialized = () => true;
+const getCachedIndex = () => ({ packs: {}, selections: {}, preferences: {}, presets: {} });
+const getAllPacksSync = () => [];
+const getPackSync = () => null;
+const getPack = async () => null;
+const upsertPack = async () => {};
+const removePackFromCache = async () => {};
+const updateSelections = async () => {};
+const updatePreferences = async () => {};
+const updatePreferencesImmediate = async () => {};
+const getCachedPresets = () => ({});
+const upsertPreset = async () => {};
+const deletePresetFromCache = async () => {};
+const updatePresets = async () => {};
+const flushIndexSave = async () => {};
+const migratePacksFromSettings = async () => {};
+const migrateSelectionsFromSettings = async () => {};
+const subscribeToCacheChanges = () => () => {};
+const clearAllData = async () => {};
 
 export const MODULE_NAME = "lumia-injector";
 export const SETTINGS_KEY = "lumia_injector_settings";

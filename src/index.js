@@ -17,6 +17,8 @@ import { initPersonaManager } from "./lib/personaManagerService.js";
 import { applySceneBackground } from "./lib/imageGenService.js";
 import { isLandingPageEnabled } from "./lib/landingPageService.js";
 import AdoHelperUIModule from "./react-ui/index.jsx";
+// Import React UI - bundles it and exposes window.AdoHelperUI
+import "./react-ui/index.jsx";
 import { activateChatSheld, deactivateChatSheld, isChatSheldEnabled, isChatSheldActive, syncTailChat, resetStreamingState, setChatSheldStoreRef, loadLoomBreakdowns } from "./lib/chatSheldService.js";
 
 jQuery(async () => {
@@ -24,7 +26,11 @@ jQuery(async () => {
   const event_types = getEventTypes();
 
   loadSettings();
-  initializeReactUI();
+  const reactContainer = document.getElementById("extensions_settings");
+  if (reactContainer) {
+    await initializeReactUI(reactContainer);
+  }
+  refreshUIDisplay();
   setRefreshUICallback(refreshUIDisplay);
   notifyReactOfSettingsChange();
   initPresetBindingService();

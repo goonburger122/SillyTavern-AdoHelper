@@ -9,12 +9,10 @@ import {
   MODULE_NAME,
   LOOM_SUMMARY_KEY,
 } from "./settingsManager.js";
-import {
-  getUserName,
-  getCharacterName,
-  isGroupChat,
-  getGroupMemberNames,
-} from "./loomSystem.js";
+const getUserName = () => '';
+const getCharacterName = () => '';
+const isGroupChat = () => false;
+const getGroupMemberNames = () => [];
 import {
   isChatSheldActive,
   setSummaryMarker,

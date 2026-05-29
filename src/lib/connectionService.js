@@ -27,7 +27,9 @@ const removeConnectionProfile = async () => {};
 const getConnectionProfileFileKey = () => null;
 import { captureReasoningSnapshot, applyReasoningSnapshot } from "./presetsService.js";
 import { MODULE_NAME } from "./settingsManager.js";
-import { resolveBinding as resolveLoomBinding, setActivePreset as setActiveLoomPreset, SAMPLER_PARAMS } from "./lucidLoomService.js";
+const resolveLoomBinding = () => null;
+const setActiveLoomPreset = () => {};
+const SAMPLER_PARAMS = [];
 
 // ============================================================================
 // PROVIDER CONFIGURATION

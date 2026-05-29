@@ -34,8 +34,8 @@ const migrateSelectionsFromSettings = async () => {};
 const subscribeToCacheChanges = () => () => {};
 const clearAllData = async () => {};
 
-export const MODULE_NAME = "lumia-injector";
-export const SETTINGS_KEY = "lumia_injector_settings";
+export const MODULE_NAME = "ado-helper";
+export const SETTINGS_KEY = "ado_helper_settings";
 export const LOOM_SUMMARY_KEY = "loom_summary";
 
 // Schema version for pack format migrations
@@ -160,7 +160,7 @@ const DEFAULT_SETTINGS = {
   dismissedUpdateVersion: null,
   // Drawer position settings
   // UI preferences
-  showLumiverseDrawer: true, // Whether to show the viewport drawer
+  showAdoHelperDrawer: true, // Whether to show the viewport drawer
   drawerSettings: {
     side: 'right',         // 'left' or 'right' - which side of screen the drawer docks to
     verticalPosition: 15,  // Percentage from top (0-100) for tab vertical position
@@ -169,7 +169,7 @@ const DEFAULT_SETTINGS = {
     customPanelWidth: 35,       // vw percentage (25-60), only used when panelWidthMode is 'custom'
   },
   // Landing page override setting
-  enableLandingPage: true, // When true, show custom Lumiverse landing page instead of default welcome
+  enableLandingPage: true, // When true, show custom Ado Helper landing page instead of default welcome
   landingPageChatsDisplayed: 12,
   // Theme customization
   theme: null, // null = use CSS defaults, object = { name, baseColors }
@@ -1001,8 +1001,8 @@ export async function initPackFileStorage() {
   subscribeToCacheChanges(() => {
     // Notify any listeners that pack data changed
     // This will be used by the React store to refresh
-    if (typeof window !== 'undefined' && window.LumiverseBridge?.onPackCacheChange) {
-      window.LumiverseBridge.onPackCacheChange();
+    if (typeof window !== 'undefined' && window.AdoHelperBridge?.onPackCacheChange) {
+      window.AdoHelperBridge.onPackCacheChange();
     }
   });
 
@@ -1387,5 +1387,5 @@ export function getExtensionDirectory() {
     }
   }
   // Fallback
-  return "/scripts/extensions/third-party/SillyTavern-LumiverseHelper";
+  return "/scripts/extensions/third-party/SillyTavern-AdoHelperHelper";
 }

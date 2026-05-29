@@ -1,7 +1,7 @@
 /* global SillyTavern */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { LumiverseProvider, useLumiverseStore } from './store/LumiverseContext';
+import { AdoHelperProvider, useAdoHelperStore } from './store/AdoHelperContext';
 import App from './App';
 import ViewportApp from './components/ViewportApp';
 import LandingPage from './components/LandingPage';
@@ -33,18 +33,18 @@ const mountedRoots = new Map();
 let initialExtensionSettings = null;
 
 /**
- * Mount the main Lumiverse settings panel into the extensions settings area
+ * Mount the main Ado Helper settings panel into the extensions settings area
  * Uses ST's inline-drawer (accordion) structure for proper integration
  * @param {string} containerId - The ID of the container element
  * @param {Object} settings - Initial settings from the extension
  * @returns {Function} Cleanup function to unmount
  */
-function mountSettingsPanel(containerId = 'lumiverse-settings-root', settings = null) {
+function mountSettingsPanel(containerId = 'ado-settings-root', settings = null) {
     // Store initial settings for the provider
     if (settings) {
         initialExtensionSettings = settings;
         // Sync to store immediately
-        useLumiverseStore.syncFromExtension(settings);
+        useAdoHelperStore.syncFromExtension(settings);
     }
 
     const existingRoot = document.getElementById(containerId);
@@ -54,13 +54,13 @@ function mountSettingsPanel(containerId = 'lumiverse-settings-root', settings = 
 
     const container = document.getElementById('extensions_settings');
     if (!container) {
-        console.error('[LumiverseUI] Could not find #extensions_settings container');
+        console.error('[AdoHelperUI] Could not find #extensions_settings container');
         return null;
     }
 
     // Create ST's inline-drawer (accordion) wrapper structure
     const drawerWrapper = document.createElement('div');
-    drawerWrapper.className = 'lumia-injector-settings';
+    drawerWrapper.className = 'ado-helper-settings';
 
     const drawer = document.createElement('div');
     drawer.className = 'inline-drawer';
@@ -69,8 +69,8 @@ function mountSettingsPanel(containerId = 'lumiverse-settings-root', settings = 
     const drawerHeader = document.createElement('div');
     drawerHeader.className = 'inline-drawer-toggle inline-drawer-header';
     drawerHeader.innerHTML = `
-        <b>Lumiverse Helper</b>
-        <span id="lumiverse-accordion-update-badge" class="lumiverse-accordion-badge" style="display: none;">New!</span>
+        <b>Ado Helper</b>
+        <span id="ado-accordion-update-badge" class="ado-accordion-badge" style="display: none;">New!</span>
         <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
     `;
     
@@ -97,11 +97,11 @@ function mountSettingsPanel(containerId = 'lumiverse-settings-root', settings = 
     const Wrapper = isDev ? React.StrictMode : React.Fragment;
     root.render(
         <Wrapper>
-            <LumiverseProvider initialSettings={initialExtensionSettings}>
+            <AdoHelperProvider initialSettings={initialExtensionSettings}>
                 <ErrorBoundary label="Settings Panel">
                     <App />
                 </ErrorBoundary>
-            </LumiverseProvider>
+            </AdoHelperProvider>
         </Wrapper>
     );
 
@@ -120,7 +120,7 @@ function mountSettingsPanel(containerId = 'lumiverse-settings-root', settings = 
  * @returns {Function} Cleanup function
  */
 function mountComponent(Component, container, props = {}, id = null) {
-    const mountId = id || `lumiverse-mount-${Date.now()}`;
+    const mountId = id || `ado-mount-${Date.now()}`;
 
     if (mountedRoots.has(mountId)) {
         return () => unmount(mountId);
@@ -128,7 +128,7 @@ function mountComponent(Component, container, props = {}, id = null) {
 
     const rootElement = document.createElement('div');
     rootElement.id = mountId;
-    rootElement.className = 'lumiverse-react-root';
+    rootElement.className = 'ado-react-root';
     container.appendChild(rootElement);
 
     const root = ReactDOM.createRoot(rootElement);
@@ -136,11 +136,11 @@ function mountComponent(Component, container, props = {}, id = null) {
     const Wrapper = isDev ? React.StrictMode : React.Fragment;
     root.render(
         <Wrapper>
-            <LumiverseProvider>
+            <AdoHelperProvider>
                 <ErrorBoundary label={id}>
                     <Component {...props} />
                 </ErrorBoundary>
-            </LumiverseProvider>
+            </AdoHelperProvider>
         </Wrapper>
     );
 
@@ -177,7 +177,7 @@ function getSTContext() {
     if (typeof SillyTavern !== 'undefined') {
         return SillyTavern.getContext();
     }
-    console.warn('[LumiverseUI] SillyTavern context not available');
+    console.warn('[AdoHelperUI] SillyTavern context not available');
     return null;
 }
 
@@ -189,9 +189,9 @@ function getSTContext() {
 function syncSettings(settings) {
     if (settings) {
         const packCount = settings.packs ? Object.keys(settings.packs).length : 0;
-        useLumiverseStore.syncFromExtension(settings);
+        useAdoHelperStore.syncFromExtension(settings);
         // Verify the sync worked
-        const newState = useLumiverseStore.getState();
+        const newState = useAdoHelperStore.getState();
         const newPackCount = newState.packs ? Object.keys(newState.packs).length : 0;
     } else {
     }
@@ -203,7 +203,7 @@ function syncSettings(settings) {
  * @param {string} badgeText - Text to show in the badge (default: "New!")
  */
 function updateAccordionBadge(hasUpdates, badgeText = 'New!') {
-    const badge = document.getElementById('lumiverse-accordion-update-badge');
+    const badge = document.getElementById('ado-accordion-update-badge');
     if (badge) {
         badge.style.display = hasUpdates ? 'inline-flex' : 'none';
         badge.textContent = badgeText;
@@ -216,7 +216,7 @@ function updateAccordionBadge(hasUpdates, badgeText = 'New!') {
  * @returns {Object} Current state
  */
 function getState() {
-    return useLumiverseStore.exportForExtension();
+    return useAdoHelperStore.exportForExtension();
 }
 
 /**
@@ -225,7 +225,7 @@ function getState() {
  * @returns {Function} Unsubscribe function
  */
 function subscribe(callback) {
-    return useLumiverseStore.subscribe(callback);
+    return useAdoHelperStore.subscribe(callback);
 }
 
 /**
@@ -233,7 +233,7 @@ function subscribe(callback) {
  * @returns {Object} Zustand store
  */
 function getStore() {
-    return useLumiverseStore;
+    return useAdoHelperStore;
 }
 
 /**
@@ -243,7 +243,7 @@ function getStore() {
  * @returns {Function} Cleanup function to unmount
  */
 function mountViewportPanel(settings = null) {
-    const mountId = 'lumiverse-viewport-root';
+    const mountId = 'ado-viewport-root';
 
     // Remove existing if any (following summary button pattern)
     const existing = document.getElementById(mountId);
@@ -254,14 +254,14 @@ function mountViewportPanel(settings = null) {
 
     // Store initial settings for the provider
     if (settings) {
-        useLumiverseStore.syncFromExtension(settings);
+        useAdoHelperStore.syncFromExtension(settings);
     }
 
     // Create container at body level for proper fixed positioning
     // Apply critical positioning styles inline to ensure they take effect (BunnyMo pattern)
     const rootElement = document.createElement('div');
     rootElement.id = mountId;
-    rootElement.className = 'lumiverse-react-root lumiverse-viewport-container';
+    rootElement.className = 'ado-react-root ado-viewport-container';
 
     // Inline styles for reliable fixed positioning - container is just a wrapper
     // The actual panel positioning is handled by the React component
@@ -281,11 +281,11 @@ function mountViewportPanel(settings = null) {
     const Wrapper = isDev ? React.StrictMode : React.Fragment;
     root.render(
         <Wrapper>
-            <LumiverseProvider initialSettings={settings}>
+            <AdoHelperProvider initialSettings={settings}>
                 <ErrorBoundary label="Viewport Panel">
                     <ViewportApp />
                 </ErrorBoundary>
-            </LumiverseProvider>
+            </AdoHelperProvider>
         </Wrapper>
     );
 
@@ -301,7 +301,7 @@ function mountViewportPanel(settings = null) {
  * @returns {Function} Cleanup function
  */
 function renderLandingPage(container) {
-    const mountId = 'lumiverse-landing-root';
+    const mountId = 'ado-landing-root';
 
     // Clean up any existing landing page
     const existing = document.getElementById(mountId);
@@ -312,7 +312,7 @@ function renderLandingPage(container) {
     // Create wrapper element
     const rootElement = document.createElement('div');
     rootElement.id = mountId;
-    rootElement.className = 'lumiverse-react-root';
+    rootElement.className = 'ado-react-root';
     rootElement.style.width = '100%';
     rootElement.style.height = '100%';
     container.appendChild(rootElement);
@@ -321,11 +321,11 @@ function renderLandingPage(container) {
     const Wrapper = isDev ? React.StrictMode : React.Fragment;
     root.render(
         <Wrapper>
-            <LumiverseProvider>
+            <AdoHelperProvider>
                 <ErrorBoundary label="Landing Page">
                     <LandingPage />
                 </ErrorBoundary>
-            </LumiverseProvider>
+            </AdoHelperProvider>
         </Wrapper>
     );
 
@@ -337,11 +337,11 @@ function renderLandingPage(container) {
 /**
  * Mount the Chat Sheld (glassmorphic chat override) into a light DOM container.
  * The container should already exist in the DOM (created by chatSheldService.js).
- * @param {HTMLElement} container - The host element (#lumiverse-chat-root)
+ * @param {HTMLElement} container - The host element (#ado-chat-root)
  * @returns {Function} Cleanup function to unmount
  */
 function mountChatSheld(container) {
-    const mountId = 'lumiverse-chat-sheld';
+    const mountId = 'ado-chat-sheld';
 
     // Clean up any existing mount
     if (mountedRoots.has(mountId)) {
@@ -349,13 +349,13 @@ function mountChatSheld(container) {
     }
 
     if (!container) {
-        console.error('[LumiverseUI] Chat Sheld: No container provided');
+        console.error('[AdoHelperUI] Chat Sheld: No container provided');
         return null;
     }
 
     // Create React root directly in the container (no shadow DOM)
     const reactRoot = document.createElement('div');
-    reactRoot.className = 'lcs-app';
+    reactRoot.className = 'ado-app';
     reactRoot.style.cssText = 'display:flex;flex-direction:column;flex:1 1 auto;min-height:0;width:100%;height:100%;';
     container.appendChild(reactRoot);
 
@@ -363,11 +363,11 @@ function mountChatSheld(container) {
     const Wrapper = isDev ? React.StrictMode : React.Fragment;
     root.render(
         <Wrapper>
-            <LumiverseProvider>
+            <AdoHelperProvider>
                 <ErrorBoundary label="Chat Sheld">
                     <ChatSheld />
                 </ErrorBoundary>
-            </LumiverseProvider>
+            </AdoHelperProvider>
         </Wrapper>
     );
 
@@ -380,7 +380,7 @@ function mountChatSheld(container) {
  * Unmount the Chat Sheld and clean up.
  */
 function unmountChatSheld() {
-    const mountId = 'lumiverse-chat-sheld';
+    const mountId = 'ado-chat-sheld';
     const mounted = mountedRoots.get(mountId);
     if (mounted) {
         mounted.root.unmount();
@@ -393,7 +393,7 @@ function unmountChatSheld() {
 }
 
 // Export the public API
-const LumiverseUI = {
+const AdoHelperUI = {
     // Mounting
     mountSettingsPanel,
     mountViewportPanel,
@@ -422,7 +422,7 @@ const LumiverseUI = {
 // Explicitly assign to window for reliable global access
 // (webpack library config should do this, but being explicit ensures it works)
 if (typeof window !== 'undefined') {
-    window.LumiverseUI = LumiverseUI;
+    window.AdoHelperUI = AdoHelperUI;
 }
 
-export default LumiverseUI;
+export default AdoHelperUI;

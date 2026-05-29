@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import { AlertTriangle } from 'lucide-react';
 
-/* global LumiverseBridge, toastr */
+/* global AdoHelperBridge, toastr */
 
 export default function DangerZoneView() {
     const handleNuclearReset = useCallback(() => {
         const confirmed = window.confirm(
-            'WARNING: This will completely reset ALL Lumiverse Helper settings to defaults.\n\n' +
+            'WARNING: This will completely reset ALL Ado Helper settings to defaults.\n\n' +
             'This includes:\n' +
             '- All downloaded packs\n' +
             '- All custom packs\n' +
@@ -18,11 +18,11 @@ export default function DangerZoneView() {
         );
 
         if (confirmed) {
-            if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.resetAllSettings) {
+            if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.resetAllSettings) {
                 if (typeof toastr !== 'undefined') {
                     toastr.warning('Resetting all settings...');
                 }
-                LumiverseBridge.resetAllSettings();
+                AdoHelperBridge.resetAllSettings();
             } else {
                 console.error('[DangerZoneView] resetAllSettings not available on bridge');
                 if (typeof toastr !== 'undefined') {
@@ -33,14 +33,14 @@ export default function DangerZoneView() {
     }, []);
 
     return (
-        <div className="lumiverse-settings-view">
-            <div className="lumia-danger-zone">
-                <p className="lumia-danger-zone-description">
+        <div className="ado-settings-view">
+            <div className="ado-danger-zone">
+                <p className="ado-danger-zone-description">
                     If you're experiencing issues with the extension, you can reset all settings to their defaults.
                     This will remove all packs, selections, and configurations.
                 </p>
                 <button
-                    className="lumia-btn lumia-btn-danger lumia-btn-full"
+                    className="ado-btn ado-btn-danger ado-btn-full"
                     onClick={handleNuclearReset}
                     type="button"
                 >

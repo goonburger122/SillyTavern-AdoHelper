@@ -39,7 +39,7 @@ const baseStyles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'var(--lumiverse-primary, #9370db)',
+        color: 'var(--ado-primary, #9370db)',
         opacity: 0.6,
         animation: 'spin 1s linear infinite',
     },

@@ -15,13 +15,13 @@ import {
     hideAllUserMessages,
     unhideAllUserMessages,
 } from '../../../lib/chatSheldService';
-import { useLumiverseStore, useLumiverseActions } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions } from '../../store/AdoHelperContext';
 import ConfirmationModal from '../shared/ConfirmationModal';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 export default function ToolsMenu({ onClose }) {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const menuRef = useRef(null);
     const [confirmAction, setConfirmAction] = useState(null);
 
@@ -88,10 +88,10 @@ export default function ToolsMenu({ onClose }) {
             message: 'Start a new chat with this character? The current chat will be saved and you can switch back to it later.',
             variant: 'safe',
             onConfirm: async () => {
-                console.log('[Lumiverse] ToolsMenu: onConfirm fired — calling triggerNewChat');
+                console.log('[Ado Helper] ToolsMenu: onConfirm fired — calling triggerNewChat');
                 setConfirmAction(null);
                 const ok = await triggerNewChat();
-                console.log('[Lumiverse] ToolsMenu: triggerNewChat returned', ok);
+                console.log('[Ado Helper] ToolsMenu: triggerNewChat returned', ok);
                 if (!ok && typeof toastr !== 'undefined') {
                     toastr.error('Failed to create new chat');
                 }
@@ -133,47 +133,47 @@ export default function ToolsMenu({ onClose }) {
 
     return (
         <>
-            <div className="lcs-tools-menu" ref={menuRef}>
-                <button className="lcs-tools-menu-item" onClick={handleAuthorsNote} type="button">
+            <div className="ado-tools-menu" ref={menuRef}>
+                <button className="ado-tools-menu-item" onClick={handleAuthorsNote} type="button">
                     <StickyNote size={14} />
                     <span>Author's Note</span>
                 </button>
 
                 {!isGroup && (
-                    <button className="lcs-tools-menu-item" onClick={handleConvertToGroup} type="button">
+                    <button className="ado-tools-menu-item" onClick={handleConvertToGroup} type="button">
                         <Users size={14} />
                         <span>Convert to Group</span>
                     </button>
                 )}
 
-                <button className="lcs-tools-menu-item" onClick={handleNewChat} type="button">
+                <button className="ado-tools-menu-item" onClick={handleNewChat} type="button">
                     <Plus size={14} />
                     <span>Start New Chat</span>
                 </button>
 
-                <button className="lcs-tools-menu-item" onClick={handleManageChats} type="button">
+                <button className="ado-tools-menu-item" onClick={handleManageChats} type="button">
                     <FolderOpen size={14} />
                     <span>Manage Chats</span>
                 </button>
 
-                <button className="lcs-tools-menu-item" onClick={handleHideAll} type="button">
+                <button className="ado-tools-menu-item" onClick={handleHideAll} type="button">
                     <EyeOff size={14} />
                     <span>Hide All User Messages</span>
                 </button>
 
-                <button className="lcs-tools-menu-item" onClick={handleUnhideAll} type="button">
+                <button className="ado-tools-menu-item" onClick={handleUnhideAll} type="button">
                     <Eye size={14} />
                     <span>Unhide All User Messages</span>
                 </button>
 
-                <div className="lcs-tools-menu-divider" />
+                <div className="ado-tools-menu-divider" />
 
-                <button className="lcs-tools-menu-item lcs-tools-menu-item--danger" onClick={handleBatchDelete} type="button">
+                <button className="ado-tools-menu-item ado-tools-menu-item--danger" onClick={handleBatchDelete} type="button">
                     <Scissors size={14} />
                     <span>Batch Delete</span>
                 </button>
 
-                <button className="lcs-tools-menu-item lcs-tools-menu-item--danger" onClick={() => { triggerCloseChat(); onClose(); }} type="button">
+                <button className="ado-tools-menu-item ado-tools-menu-item--danger" onClick={() => { triggerCloseChat(); onClose(); }} type="button">
                     <X size={14} />
                     <span>Close Chat</span>
                 </button>

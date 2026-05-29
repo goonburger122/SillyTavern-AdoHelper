@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useSyncExternalStore } from 'react';
-import { useSettings, useSelections, useLoomSelections, useLumiverseActions, usePacks, saveToExtension, useLumiverseStore } from '../store/LumiverseContext';
+import { useSettings, useSelections, useLoomSelections, useAdoHelperActions, usePacks, saveToExtension, useAdoHelperStore } from '../store/AdoHelperContext';
 import { exportPack } from './modals/PackEditorModal';
 import { CollapsibleContent } from './Collapsible';
 import { ChatPresetsPanel } from './panels/ChatPresets';
@@ -15,10 +15,10 @@ import {
     LumiaPackItem, LoomPackItem, getLoomItemsFromPack,
 } from './shared/settingsHelpers';
 
-/* global LumiverseBridge, toastr */
+/* global AdoHelperBridge, toastr */
 
 // Get the store for direct access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 // CRITICAL: These must be defined outside components to prevent infinite loops
@@ -34,7 +34,7 @@ const selectChimeraMode = () => store.getState().chimeraMode || false;
 const selectCouncilMode = () => store.getState().councilMode || false;
 const selectCouncilMembers = () => store.getState().councilMembers || EMPTY_ARRAY;
 const selectSelectedDefinitions = () => store.getState().selectedDefinitions || EMPTY_ARRAY;
-const selectShowDrawer = () => store.getState().showLumiverseDrawer ?? true;
+const selectShowDrawer = () => store.getState().showAdoHelperDrawer ?? true;
 const selectDrawerSettings = () => store.getState().drawerSettings ?? DEFAULT_DRAWER_SETTINGS;
 const selectEnableLandingPage = () => store.getState().enableLandingPage ?? true;
 const selectLandingPageChatsDisplayed = () => store.getState().landingPageChatsDisplayed ?? 12;
@@ -46,7 +46,7 @@ function SettingsPanel() {
     const settings = useSettings();
     const selections = useSelections();
     const loomSelections = useLoomSelections();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const { packs, customPacks, allPacks } = usePacks();
 
     // Track which custom pack is expanded to show Lumia items
@@ -320,8 +320,8 @@ function SettingsPanel() {
 
     // Call extension callbacks if available
     const callExtensionCallback = useCallback((name, ...args) => {
-        if (typeof LumiverseBridge !== 'undefined') {
-            const callbacks = LumiverseBridge.getCallbacks();
+        if (typeof AdoHelperBridge !== 'undefined') {
+            const callbacks = AdoHelperBridge.getCallbacks();
             if (callbacks && callbacks[name]) {
                 callbacks[name](...args);
             }
@@ -339,8 +339,8 @@ function SettingsPanel() {
                 const data = JSON.parse(e.target.result);
 
                 // Call the extension's handleNewBook callback
-                if (typeof LumiverseBridge !== 'undefined') {
-                    const callbacks = LumiverseBridge.getCallbacks();
+                if (typeof AdoHelperBridge !== 'undefined') {
+                    const callbacks = AdoHelperBridge.getCallbacks();
 
                     if (callbacks && callbacks.handleNewBook) {
                         // MUST await since handleNewBook is async - ensures pack is in cache before continuing
@@ -356,7 +356,7 @@ function SettingsPanel() {
                         }
                     }
                 } else {
-                    console.error('[SettingsPanel] LumiverseBridge not available');
+                    console.error('[SettingsPanel] AdoHelperBridge not available');
                     if (typeof toastr !== 'undefined') {
                         toastr.error('Bridge not available. Please reload the page.');
                     }
@@ -408,7 +408,7 @@ function SettingsPanel() {
 
     // Handle drawer toggle
     const handleDrawerToggle = useCallback((enabled) => {
-        store.setState({ showLumiverseDrawer: enabled });
+        store.setState({ showAdoHelperDrawer: enabled });
         saveToExtension();
     }, []);
 
@@ -426,7 +426,7 @@ function SettingsPanel() {
     // Handle nuclear reset - wipe all settings and reload
     const handleNuclearReset = useCallback(() => {
         const confirmed = window.confirm(
-            'WARNING: This will completely reset ALL Lumiverse Helper settings to defaults.\n\n' +
+            'WARNING: This will completely reset ALL Ado Helper settings to defaults.\n\n' +
             'This includes:\n' +
             '- All downloaded packs\n' +
             '- All custom packs\n' +
@@ -438,11 +438,11 @@ function SettingsPanel() {
         );
 
         if (confirmed) {
-            if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.resetAllSettings) {
+            if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.resetAllSettings) {
                 if (typeof toastr !== 'undefined') {
                     toastr.warning('Resetting all settings...');
                 }
-                LumiverseBridge.resetAllSettings();
+                AdoHelperBridge.resetAllSettings();
             } else {
                 console.error('[SettingsPanel] resetAllSettings not available on bridge');
                 if (typeof toastr !== 'undefined') {
@@ -510,40 +510,40 @@ function SettingsPanel() {
     }, []);
 
     return (
-        <div className="lumia-injector-settings">
+        <div className="ado-helper-settings">
             {/* Drawer Toggle */}
-            <div className="lumia-drawer-toggle-container">
-                <label className="lumiverse-toggle-wrapper">
-                    <div className="lumiverse-toggle-text">
-                        <span className="lumiverse-toggle-label">Show Lumiverse Drawer</span>
-                        <span className="lumiverse-toggle-description">
+            <div className="ado-drawer-toggle-container">
+                <label className="ado-toggle-wrapper">
+                    <div className="ado-toggle-text">
+                        <span className="ado-toggle-label">Show Ado Helper Drawer</span>
+                        <span className="ado-toggle-description">
                             Access quick settings from a slide-out panel
                         </span>
                     </div>
-                    <div className={clsx('lumiverse-toggle', showDrawer && 'lumiverse-toggle--on')}>
+                    <div className={clsx('ado-toggle', showDrawer && 'ado-toggle--on')}>
                         <input
                             type="checkbox"
-                            className="lumiverse-toggle-input"
+                            className="ado-toggle-input"
                             checked={showDrawer}
                             onChange={(e) => handleDrawerToggle(e.target.checked)}
                         />
-                        <span className="lumiverse-toggle-slider"></span>
+                        <span className="ado-toggle-slider"></span>
                     </div>
                 </label>
             </div>
 
             {/* Drawer Position Settings - only show when drawer is enabled */}
             {showDrawer && (
-                <div className="lumia-drawer-settings-container">
-                    <div className="lumia-drawer-settings-row">
-                        <div className="lumia-drawer-setting">
-                            <label className="lumia-drawer-setting-label">Drawer Side</label>
-                            <div className="lumia-drawer-side-toggle">
+                <div className="ado-drawer-settings-container">
+                    <div className="ado-drawer-settings-row">
+                        <div className="ado-drawer-setting">
+                            <label className="ado-drawer-setting-label">Drawer Side</label>
+                            <div className="ado-drawer-side-toggle">
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        drawerSettings.side === 'left' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        drawerSettings.side === 'left' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handleDrawerSideChange('left')}
                                 >
@@ -552,8 +552,8 @@ function SettingsPanel() {
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        drawerSettings.side === 'right' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        drawerSettings.side === 'right' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handleDrawerSideChange('right')}
                                 >
@@ -561,33 +561,33 @@ function SettingsPanel() {
                                 </button>
                             </div>
                         </div>
-                        <div className="lumia-drawer-setting">
-                            <label htmlFor="lumia-drawer-vpos" className="lumia-drawer-setting-label">
+                        <div className="ado-drawer-setting">
+                            <label htmlFor="ado-drawer-vpos" className="ado-drawer-setting-label">
                                 Tab Position
                             </label>
-                            <div className="lumia-drawer-vpos-input">
+                            <div className="ado-drawer-vpos-input">
                                 <input
                                     type="range"
-                                    id="lumia-drawer-vpos"
-                                    className="lumia-slider"
+                                    id="ado-drawer-vpos"
+                                    className="ado-slider"
                                     value={drawerSettings.verticalPosition}
                                     onChange={(e) => handleVerticalPositionChange(e.target.value)}
                                     min="8"
                                     max="85"
                                 />
-                                <span className="lumia-drawer-vpos-value">{drawerSettings.verticalPosition}%</span>
+                                <span className="ado-drawer-vpos-value">{drawerSettings.verticalPosition}%</span>
                             </div>
                         </div>
                     </div>
-                    <div className="lumia-drawer-settings-row">
-                        <div className="lumia-drawer-setting">
-                            <label className="lumia-drawer-setting-label">Tab Size</label>
-                            <div className="lumia-drawer-side-toggle">
+                    <div className="ado-drawer-settings-row">
+                        <div className="ado-drawer-setting">
+                            <label className="ado-drawer-setting-label">Tab Size</label>
+                            <div className="ado-drawer-side-toggle">
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        drawerSettings.tabSize === 'large' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        drawerSettings.tabSize === 'large' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handleTabSizeChange('large')}
                                 >
@@ -596,8 +596,8 @@ function SettingsPanel() {
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        drawerSettings.tabSize === 'compact' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        drawerSettings.tabSize === 'compact' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handleTabSizeChange('compact')}
                                 >
@@ -606,15 +606,15 @@ function SettingsPanel() {
                             </div>
                         </div>
                     </div>
-                    <div className="lumia-drawer-settings-row">
-                        <div className="lumia-drawer-setting" style={{ flex: 1 }}>
-                            <label className="lumia-drawer-setting-label">Panel Width</label>
-                            <div className="lumia-drawer-side-toggle">
+                    <div className="ado-drawer-settings-row">
+                        <div className="ado-drawer-setting" style={{ flex: 1 }}>
+                            <label className="ado-drawer-setting-label">Panel Width</label>
+                            <div className="ado-drawer-side-toggle">
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        (drawerSettings.panelWidthMode || 'default') === 'default' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        (drawerSettings.panelWidthMode || 'default') === 'default' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handlePanelWidthModeChange('default')}
                                 >
@@ -623,8 +623,8 @@ function SettingsPanel() {
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        drawerSettings.panelWidthMode === 'stChat' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        drawerSettings.panelWidthMode === 'stChat' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handlePanelWidthModeChange('stChat')}
                                     title="Match SillyTavern's chat column width"
@@ -634,8 +634,8 @@ function SettingsPanel() {
                                 <button
                                     type="button"
                                     className={clsx(
-                                        'lumia-side-btn',
-                                        drawerSettings.panelWidthMode === 'custom' && 'lumia-side-btn--active'
+                                        'ado-side-btn',
+                                        drawerSettings.panelWidthMode === 'custom' && 'ado-side-btn--active'
                                     )}
                                     onClick={() => handlePanelWidthModeChange('custom')}
                                 >
@@ -645,22 +645,22 @@ function SettingsPanel() {
                         </div>
                     </div>
                     {drawerSettings.panelWidthMode === 'custom' && (
-                        <div className="lumia-drawer-settings-row">
-                            <div className="lumia-drawer-setting" style={{ flex: 1 }}>
-                                <label htmlFor="lumia-drawer-panel-width" className="lumia-drawer-setting-label">
+                        <div className="ado-drawer-settings-row">
+                            <div className="ado-drawer-setting" style={{ flex: 1 }}>
+                                <label htmlFor="ado-drawer-panel-width" className="ado-drawer-setting-label">
                                     Custom Width
                                 </label>
-                                <div className="lumia-drawer-vpos-input">
+                                <div className="ado-drawer-vpos-input">
                                     <input
                                         type="range"
-                                        id="lumia-drawer-panel-width"
-                                        className="lumia-slider"
+                                        id="ado-drawer-panel-width"
+                                        className="ado-slider"
                                         value={drawerSettings.customPanelWidth || 35}
                                         onChange={(e) => handleCustomPanelWidthChange(e.target.value)}
                                         min="25"
                                         max="60"
                                     />
-                                    <span className="lumia-drawer-vpos-value">{drawerSettings.customPanelWidth || 35}%</span>
+                                    <span className="ado-drawer-vpos-value">{drawerSettings.customPanelWidth || 35}%</span>
                                 </div>
                             </div>
                         </div>
@@ -669,22 +669,22 @@ function SettingsPanel() {
             )}
 
             {/* Landing Page Toggle */}
-            <div className="lumia-drawer-toggle-container">
-                <label className="lumiverse-toggle-wrapper">
-                    <div className="lumiverse-toggle-text">
-                        <span className="lumiverse-toggle-label">Custom Landing Page</span>
-                        <span className="lumiverse-toggle-description">
-                            Show Lumiverse recent chats on the home screen
+            <div className="ado-drawer-toggle-container">
+                <label className="ado-toggle-wrapper">
+                    <div className="ado-toggle-text">
+                        <span className="ado-toggle-label">Custom Landing Page</span>
+                        <span className="ado-toggle-description">
+                            Show Ado Helper recent chats on the home screen
                         </span>
                     </div>
-                    <div className={clsx('lumiverse-toggle', enableLandingPage && 'lumiverse-toggle--on')}>
+                    <div className={clsx('ado-toggle', enableLandingPage && 'ado-toggle--on')}>
                         <input
                             type="checkbox"
-                            className="lumiverse-toggle-input"
+                            className="ado-toggle-input"
                             checked={enableLandingPage}
                             onChange={(e) => handleLandingPageToggle(e.target.checked)}
                         />
-                        <span className="lumiverse-toggle-slider"></span>
+                        <span className="ado-toggle-slider"></span>
                     </div>
                 </label>
                 {enableLandingPage && (
@@ -692,7 +692,7 @@ function SettingsPanel() {
                         <span style={{ fontSize: '0.9em', opacity: 0.8 }}>Chats Displayed:</span>
                         <input
                             type="number"
-                            className="lumia-input lumia-input-sm"
+                            className="ado-input ado-input-sm"
                             style={{ width: '60px' }}
                             value={landingPageChatsDisplayed}
                             onChange={(e) => handleChatsDisplayedChange(e.target.value)}
@@ -710,21 +710,21 @@ function SettingsPanel() {
 
             {/* Lumia DLC Packs Section */}
             <Panel title="Lumia DLC Packs" icon={Icons.book}>
-                <div className="lumia-status-badge">
+                <div className="ado-status-badge">
                     {totalPacks > 0
                         ? `${totalPacks} pack${totalPacks !== 1 ? 's' : ''} loaded (${totalItems} items)`
                         : 'No packs loaded'}
                 </div>
 
-                <div className="lumia-input-row">
+                <div className="ado-input-row">
                     <input
                         type="text"
-                        className="lumia-input"
+                        className="ado-input"
                         placeholder="Enter Lumia DLC Pack URL (JSON)"
-                        id="lumia-url-input-react"
+                        id="ado-url-input-react"
                     />
                     <button
-                        className="lumia-btn lumia-btn-primary"
+                        className="ado-btn ado-btn-primary"
                         onClick={() => callExtensionCallback('fetchWorldBook')}
                         type="button"
                     >
@@ -732,12 +732,12 @@ function SettingsPanel() {
                     </button>
                 </div>
 
-                <div className="lumia-source-actions">
-                    <div className="lumia-divider-text">or</div>
+                <div className="ado-source-actions">
+                    <div className="ado-divider-text">or</div>
 
                     <button
-                        className="lumia-btn lumia-btn-secondary lumia-btn-full"
-                        onClick={() => document.getElementById('lumia-file-input-react')?.click()}
+                        className="ado-btn ado-btn-secondary ado-btn-full"
+                        onClick={() => document.getElementById('ado-file-input-react')?.click()}
                         type="button"
                     >
                         {Icons.upload}
@@ -745,16 +745,16 @@ function SettingsPanel() {
                     </button>
                     <input
                         type="file"
-                        id="lumia-file-input-react"
+                        id="ado-file-input-react"
                         accept=".json"
                         style={{ display: 'none' }}
                         onChange={handleFileUpload}
                     />
 
-                    <div className="lumia-divider-text">or</div>
+                    <div className="ado-divider-text">or</div>
 
                     <button
-                        className="lumia-btn lumia-btn-primary lumia-btn-full"
+                        className="ado-btn ado-btn-primary ado-btn-full"
                         onClick={() => actions.openModal('lucidCards')}
                         type="button"
                     >
@@ -780,7 +780,7 @@ function SettingsPanel() {
                 icon={Icons.settings}
                 action={
                     <button
-                        className="lumia-clear-all-btn"
+                        className="ado-clear-all-btn"
                         onClick={handleClearAll}
                         title="Clear all Lumia selections"
                         type="button"
@@ -791,7 +791,7 @@ function SettingsPanel() {
                 }
             >
                 {/* Mode Toggles */}
-                <div className="lumia-mode-toggles">
+                <div className="ado-mode-toggles">
                     <ModeToggle
                         icon={ModeIcons.chimera}
                         label="Chimera Mode"
@@ -818,7 +818,7 @@ function SettingsPanel() {
                     actions={actions}
                 />
 
-                <div className={clsx('lumia-selector-group', isCouncilActive && 'lumia-selector-group--disabled')}>
+                <div className={clsx('ado-selector-group', isCouncilActive && 'ado-selector-group--disabled')}>
                     <SelectionButton
                         label={chimeraMode ? "Chimera Definitions" : "Definition"}
                         hint={chimeraMode ? "Select Multiple" : "Select One"}
@@ -846,7 +846,7 @@ function SettingsPanel() {
 
             {/* Loom Configuration Section */}
             <Panel title="Loom Configuration" icon={Icons.layers}>
-                <div className="lumia-selector-group">
+                <div className="ado-selector-group">
                     <SelectionButton
                         label="Narrative Style"
                         hint="Select Multiple"
@@ -872,7 +872,7 @@ function SettingsPanel() {
 
             {/* Tools Section */}
             <Panel title="Tools" icon={Icons.tools}>
-                <div className="lumia-tools-row">
+                <div className="ado-tools-row">
                     <ToolButton
                         icon={Icons.dots}
                         label="OOC Settings"
@@ -893,9 +893,9 @@ function SettingsPanel() {
 
             {/* Macro Reference (Collapsible) */}
             <CollapsiblePanel title="Macro Reference" icon={Icons.terminal}>
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Lumia Content</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Lumia Content</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{lumiaDef}}" description="Physical Definition" />
                         <MacroItem code="{{lumiaBehavior}}" description="Behavior(s)" />
                         <MacroItem code="{{lumiaPersonality}}" description="Personality(s)" />
@@ -903,18 +903,18 @@ function SettingsPanel() {
                     </div>
                 </div>
 
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Loom Content</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Loom Content</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{loomStyle}}" description="Narrative Style" />
                         <MacroItem code="{{loomUtils}}" description="Loom Utilities" />
                         <MacroItem code="{{loomRetrofits}}" description="Retrofits" />
                     </div>
                 </div>
 
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Random Lumia</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Random Lumia</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{randomLumia}}" description="Random definition" />
                         <MacroItem code="{{randomLumia.pers}}" description="Random personality" />
                         <MacroItem code="{{randomLumia.behav}}" description="Random behavior" />
@@ -922,35 +922,35 @@ function SettingsPanel() {
                     </div>
                 </div>
 
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Tracking & OOC</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Tracking & OOC</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{lumiaMessageCount}}" description="Message count" />
                         <MacroItem code="{{lumiaOOCTrigger}}" description="OOC trigger/countdown" />
                     </div>
                 </div>
 
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Summarization</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Summarization</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{loomSummary}}" description="Stored summary" />
                         <MacroItem code="{{loomSummaryPrompt}}" description="Summary directive" />
                         <MacroItem code="/loom-summarize" description="Manual trigger" />
                     </div>
                 </div>
 
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Message History</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Message History</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{loomLastUserMessage}}" description="Last user message content" />
                         <MacroItem code="{{loomLastCharMessage}}" description="Last character message content" />
                         <MacroItem code="{{lastMessageName}}" description="Name of whoever sent the last message" />
                     </div>
                 </div>
 
-                <div className="lumia-macro-group">
-                    <div className="lumia-macro-group-title">Sovereign Hand</div>
-                    <div className="lumia-macro-list">
+                <div className="ado-macro-group">
+                    <div className="ado-macro-group-title">Sovereign Hand</div>
+                    <div className="ado-macro-list">
                         <MacroItem code="{{loomSovHand}}" description="Full Sovereign Hand prompt (with user message)" />
                         <MacroItem code="{{loomSovHandActive}}" description="Yes/No status indicator (conditional ready)" />
                         <MacroItem code="{{loomContinuePrompt}}" description="Continue-scene prompt when character spoke last" />
@@ -967,7 +967,7 @@ function SettingsPanel() {
                     collapsed={sectionsCollapsed.customPacks}
                     onToggle={() => toggleSection('customPacks')}
                 >
-                    <div className="lumia-custom-packs">
+                    <div className="ado-custom-packs">
                         {customPacks.map((pack) => {
                             // Use pack.name as fallback if pack.id is undefined
                             const packKey = pack.id || pack.name;
@@ -983,50 +983,50 @@ function SettingsPanel() {
                             return (
                                 <motion.div
                                     key={packKey}
-                                    className={clsx('lumia-pack-item-container', isExpanded && 'lumia-pack-item-container--expanded')}
+                                    className={clsx('ado-pack-item-container', isExpanded && 'ado-pack-item-container--expanded')}
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                 >
                                     {/* Pack header row */}
-                                    <div className="lumia-pack-item">
+                                    <div className="ado-pack-item">
                                         <button
-                                            className="lumia-pack-expand-btn"
+                                            className="ado-pack-expand-btn"
                                             onClick={() => togglePackExpansion(packKey)}
                                             type="button"
                                             title={isExpanded ? 'Collapse' : 'Expand to see items'}
                                         >
-                                            <span className={clsx('lumia-pack-chevron', isExpanded && 'lumia-pack-chevron--expanded')}>
+                                            <span className={clsx('ado-pack-chevron', isExpanded && 'ado-pack-chevron--expanded')}>
                                                 {Icons.chevronDown}
                                             </span>
                                         </button>
                                         <span
-                                            className="lumia-pack-name"
+                                            className="ado-pack-name"
                                             onClick={() => togglePackExpansion(packKey)}
                                             style={{ cursor: 'pointer' }}
                                         >
                                             {pack.name}
                                         </span>
-                                        <div className="lumia-pack-counts">
-                                            <span className="lumia-pack-count">
+                                        <div className="ado-pack-counts">
+                                            <span className="ado-pack-count">
                                                 {lumiaItems.length} Lumia{lumiaItems.length !== 1 ? 's' : ''}
                                             </span>
                                             {loomItems.length > 0 && (
-                                                <span className="lumia-pack-count lumia-pack-count-loom">
+                                                <span className="ado-pack-count ado-pack-count-loom">
                                                     <Layers size={12} strokeWidth={1.5} />
                                                     {loomItems.length} Loom
                                                 </span>
                                             )}
                                         </div>
                                         <button
-                                            className="lumia-btn lumia-btn-icon"
+                                            className="ado-btn ado-btn-icon"
                                             onClick={() => exportPack(pack)}
-                                            title="Export as Lumiverse Pack"
+                                            title="Export as Ado Helper Pack"
                                             type="button"
                                         >
                                             {Icons.download}
                                         </button>
                                         <button
-                                            className="lumia-btn lumia-btn-icon"
+                                            className="ado-btn ado-btn-icon"
                                             onClick={() => actions.openModal('packEditor', { packId: packKey })}
                                             title="Edit pack"
                                             type="button"
@@ -1038,10 +1038,10 @@ function SettingsPanel() {
                                     {/* Expanded Lumia items list */}
                                     <CollapsibleContent
                                         isOpen={isExpanded && lumiaItems.length > 0}
-                                        className="lumia-pack-items-list"
+                                        className="ado-pack-items-list"
                                         duration={200}
                                     >
-                                        <div className="lumia-pack-section-header">Lumia Characters</div>
+                                        <div className="ado-pack-section-header">Lumia Characters</div>
                                         {lumiaItems.map((item, index) => (
                                             <LumiaPackItem
                                                 key={item.lumiaDefName || item.lumiaName || index}
@@ -1060,10 +1060,10 @@ function SettingsPanel() {
                                     {/* Expanded Loom items list */}
                                     <CollapsibleContent
                                         isOpen={isExpanded && loomItems.length > 0}
-                                        className="lumia-pack-items-list"
+                                        className="ado-pack-items-list"
                                         duration={200}
                                     >
-                                        <div className="lumia-pack-section-header">Loom Items</div>
+                                        <div className="ado-pack-section-header">Loom Items</div>
                                         {loomItems.map((item, index) => (
                                             <LoomPackItem
                                                 key={item.loomName || item.itemName || item.name || index}
@@ -1082,7 +1082,7 @@ function SettingsPanel() {
                                     {/* Empty state when no items at all */}
                                     <CollapsibleContent
                                         isOpen={isExpanded && !hasAnyItems}
-                                        className="lumia-pack-items-empty"
+                                        className="ado-pack-items-empty"
                                         duration={200}
                                     >
                                         <span>No items in this pack yet</span>
@@ -1103,7 +1103,7 @@ function SettingsPanel() {
                     collapsed={sectionsCollapsed.downloadedPacks}
                     onToggle={() => toggleSection('downloadedPacks')}
                 >
-                    <div className="lumia-downloaded-packs">
+                    <div className="ado-downloaded-packs">
                         {packs.map((pack) => {
                             const packName = pack.name || pack.packName || 'Unknown Pack';
                             // Support both new format (lumiaItems) and legacy format (items)
@@ -1113,27 +1113,27 @@ function SettingsPanel() {
                             const coverUrl = pack.coverUrl || pack.packCover;
 
                             return (
-                                <div key={packName} className="lumia-downloaded-pack-item">
+                                <div key={packName} className="ado-downloaded-pack-item">
                                     {coverUrl ? (
                                         <img
                                             src={coverUrl}
                                             alt={packName}
-                                            className="lumia-downloaded-pack-cover"
+                                            className="ado-downloaded-pack-cover"
                                         />
                                     ) : (
-                                        <div className="lumia-downloaded-pack-cover-placeholder">
+                                        <div className="ado-downloaded-pack-cover-placeholder">
                                             {Icons.package}
                                         </div>
                                     )}
-                                    <div className="lumia-downloaded-pack-info">
-                                        <span className="lumia-downloaded-pack-name">{packName}</span>
-                                        <span className="lumia-downloaded-pack-count">
+                                    <div className="ado-downloaded-pack-info">
+                                        <span className="ado-downloaded-pack-name">{packName}</span>
+                                        <span className="ado-downloaded-pack-count">
                                             {lumiaItems.length} Lumia{lumiaItems.length !== 1 ? 's' : ''}
                                         </span>
                                     </div>
-                                    <div className="lumia-downloaded-pack-actions">
+                                    <div className="ado-downloaded-pack-actions">
                                         <button
-                                            className="lumia-btn lumia-btn-icon"
+                                            className="ado-btn ado-btn-icon"
                                             onClick={() => actions.openPackDetail(packName)}
                                             title="View pack contents"
                                             type="button"
@@ -1141,7 +1141,7 @@ function SettingsPanel() {
                                             <Eye size={16} strokeWidth={1.5} />
                                         </button>
                                         <button
-                                            className="lumia-btn lumia-btn-icon lumia-btn-icon-danger"
+                                            className="ado-btn ado-btn-icon ado-btn-icon-danger"
                                             onClick={() => handleDeletePack(packName)}
                                             title="Delete pack"
                                             type="button"
@@ -1165,7 +1165,7 @@ function SettingsPanel() {
                     collapsed={sectionsCollapsed.loomPacks}
                     onToggle={() => toggleSection('loomPacks')}
                 >
-                    <div className="lumia-loom-packs">
+                    <div className="ado-loom-packs">
                         {loomPacks.map((pack) => {
                             const packName = pack.name || pack.packName || 'Unknown Pack';
 
@@ -1197,21 +1197,21 @@ function SettingsPanel() {
                             }
 
                             return (
-                                <div key={packName} className="lumia-loom-pack-item">
+                                <div key={packName} className="ado-loom-pack-item">
                                     {pack.packCover ? (
                                         <img
                                             src={pack.packCover}
                                             alt={packName}
-                                            className="lumia-loom-pack-cover"
+                                            className="ado-loom-pack-cover"
                                         />
                                     ) : (
-                                        <div className="lumia-loom-pack-cover-placeholder">
+                                        <div className="ado-loom-pack-cover-placeholder">
                                             {Icons.layers}
                                         </div>
                                     )}
-                                    <div className="lumia-loom-pack-info">
-                                        <span className="lumia-loom-pack-name">{packName}</span>
-                                        <div className="lumia-loom-pack-stats">
+                                    <div className="ado-loom-pack-info">
+                                        <span className="ado-loom-pack-name">{packName}</span>
+                                        <div className="ado-loom-pack-stats">
                                             {styles > 0 && (
                                                 <span><Sparkles size={10} /> {styles}</span>
                                             )}
@@ -1223,9 +1223,9 @@ function SettingsPanel() {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="lumia-loom-pack-actions">
+                                    <div className="ado-loom-pack-actions">
                                         <button
-                                            className="lumia-btn lumia-btn-icon"
+                                            className="ado-btn ado-btn-icon"
                                             onClick={() => actions.openLoomPackDetail(packName)}
                                             title="View loom contents"
                                             type="button"
@@ -1233,7 +1233,7 @@ function SettingsPanel() {
                                             <Eye size={16} strokeWidth={1.5} />
                                         </button>
                                         <button
-                                            className="lumia-btn lumia-btn-icon lumia-btn-icon-danger"
+                                            className="ado-btn ado-btn-icon ado-btn-icon-danger"
                                             onClick={() => handleDeletePack(packName)}
                                             title="Delete pack"
                                             type="button"
@@ -1253,13 +1253,13 @@ function SettingsPanel() {
                 title="Danger Zone"
                 icon={<AlertTriangle size={16} strokeWidth={1.5} />}
             >
-                <div className="lumia-danger-zone">
-                    <p className="lumia-danger-zone-description">
+                <div className="ado-danger-zone">
+                    <p className="ado-danger-zone-description">
                         If you're experiencing issues with the extension, you can reset all settings to their defaults.
                         This will remove all packs, selections, and configurations.
                     </p>
                     <button
-                        className="lumia-btn lumia-btn-danger lumia-btn-full"
+                        className="ado-btn ado-btn-danger ado-btn-full"
                         onClick={handleNuclearReset}
                         type="button"
                     >

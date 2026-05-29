@@ -172,11 +172,11 @@ export default function ImageLightbox({ src, alt, onClose }) {
     }, [onClose]);
 
     return createPortal(
-        <div className="lumiverse-lightbox-backdrop" onClick={onClose}>
-            <div className="lumiverse-lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <div className="ado-lightbox-backdrop" onClick={onClose}>
+            <div className="ado-lightbox-content" onClick={(e) => e.stopPropagation()}>
                 <img
                     ref={imgRef}
-                    className="lumiverse-lightbox-img"
+                    className="ado-lightbox-img"
                     src={src}
                     alt={alt || ''}
                     onClick={handleImgClick}
@@ -184,7 +184,7 @@ export default function ImageLightbox({ src, alt, onClose }) {
                     onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                 />
-                {alt && <span className="lumiverse-lightbox-label">{alt}</span>}
+                {alt && <span className="ado-lightbox-label">{alt}</span>}
             </div>
         </div>,
         document.body,

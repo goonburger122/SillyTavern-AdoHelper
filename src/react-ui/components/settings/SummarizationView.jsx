@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useLumiverseStore, useLumiverseActions, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, saveToExtension } from '../../store/AdoHelperContext';
 import {
     AlignLeft, Settings, Cloud, Server, Play,
     Clock, Edit3, MessageSquare, AlertTriangle,
@@ -22,21 +22,21 @@ const styles = {
     section: {
         marginBottom: '20px',
         padding: '14px',
-        background: 'var(--lumiverse-fill-subtle)',
+        background: 'var(--ado-fill-subtle)',
         borderRadius: '10px',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
     },
     sectionHeader: {
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
         marginBottom: '12px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontWeight: 500,
         fontSize: '14px',
     },
     sectionIcon: {
-        color: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
     },
     modeOptions: {
         display: 'flex',
@@ -45,20 +45,20 @@ const styles = {
     modeOption: {
         flex: 1,
         padding: '10px',
-        background: 'var(--lumiverse-fill-light, rgba(0,0,0,0.2))',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-fill-light, rgba(0,0,0,0.2))',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
         textAlign: 'center',
         fontSize: '13px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     modeOptionSelected: {
         background: 'rgba(147, 112, 219, 0.15)',
-        borderColor: 'var(--lumiverse-primary)',
-        color: 'var(--lumiverse-primary)',
+        borderColor: 'var(--ado-primary)',
+        color: 'var(--ado-primary)',
     },
     field: {
         marginBottom: '12px',
@@ -77,17 +77,17 @@ const styles = {
         display: 'block',
         fontSize: '12px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         marginBottom: '6px',
     },
     input: {
         width: '100%',
         padding: '10px 12px',
         fontSize: '13px',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         boxSizing: 'border-box',
     },
@@ -95,16 +95,16 @@ const styles = {
         width: '100%',
         padding: '10px 12px',
         fontSize: '13px',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         boxSizing: 'border-box',
     },
     hint: {
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         marginTop: '4px',
     },
     toggleRow: {
@@ -120,26 +120,26 @@ const styles = {
         display: 'block',
         fontSize: '13px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     toggleHint: {
         display: 'block',
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         marginTop: '2px',
     },
     toggle: {
         position: 'relative',
         width: '44px',
         height: '24px',
-        background: 'var(--lumiverse-fill-light, rgba(0,0,0,0.3))',
+        background: 'var(--ado-fill-light, rgba(0,0,0,0.3))',
         borderRadius: '12px',
         cursor: 'pointer',
         transition: 'background 0.2s ease',
         flexShrink: 0,
     },
     toggleActive: {
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
     },
     toggleThumb: {
         position: 'absolute',
@@ -178,7 +178,7 @@ const styles = {
     },
     warningText: {
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         lineHeight: 1.4,
     },
     testSection: {
@@ -197,7 +197,7 @@ const styles = {
         padding: '12px',
         fontSize: '14px',
         fontWeight: 500,
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: 'white',
         border: 'none',
         borderRadius: '8px',
@@ -226,8 +226,8 @@ const styles = {
 };
 
 export default function SummarizationView() {
-    const store = useLumiverseStore;
-    const actions = useLumiverseActions();
+    const store = useAdoHelperStore;
+    const actions = useAdoHelperActions();
 
     // Get current settings
     const currentSettings = store.getState();
@@ -306,7 +306,7 @@ export default function SummarizationView() {
         setTestResult(null);
 
         try {
-            const callbacks = window.LumiverseBridge?.getCallbacks?.();
+            const callbacks = window.AdoHelperBridge?.getCallbacks?.();
             if (callbacks?.generateSummary) {
                 const tempSettings = {
                     mode,
@@ -354,7 +354,7 @@ export default function SummarizationView() {
     })();
 
     return (
-        <div className="lumiverse-settings-view">
+        <div className="ado-settings-view">
             {/* Mode Selection */}
             <div style={styles.section}>
                 <div style={styles.sectionHeader}>
@@ -580,7 +580,7 @@ export default function SummarizationView() {
                 >
                     {testing ? (
                         <>
-                            <Loader2 size={16} className="lumiverse-spin" />
+                            <Loader2 size={16} className="ado-spin" />
                             <span>Weaving summary...</span>
                         </>
                     ) : (
@@ -601,7 +601,7 @@ export default function SummarizationView() {
                         ) : (
                             <X size={16} style={{ color: '#f44336' }} />
                         )}
-                        <span style={{ fontSize: '12px', color: 'var(--lumiverse-text)' }}>
+                        <span style={{ fontSize: '12px', color: 'var(--ado-text)' }}>
                             {testResult.message}
                         </span>
                     </div>
@@ -672,7 +672,7 @@ export default function SummarizationView() {
 
             {/* Save Button */}
             <button
-                className="lumia-btn lumia-btn-primary lumia-btn-full"
+                className="ado-btn ado-btn-primary ado-btn-full"
                 onClick={handleSave}
                 type="button"
             >

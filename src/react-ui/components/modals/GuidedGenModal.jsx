@@ -6,10 +6,10 @@
  */
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { saveGuide, deleteGuide } from '../../../lib/guidedGenerationService';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 const POSITIONS = [
     { value: 'system', label: 'System (injected before chat)' },
@@ -53,12 +53,12 @@ export default function GuidedGenModal({ onClose }) {
     }, [existing, onClose]);
 
     return (
-        <div className="lcs-guide-modal-form">
+        <div className="ado-guide-modal-form">
             {/* Name */}
-            <div className="lcs-guide-modal-field">
-                <label className="lcs-guide-modal-label">Name</label>
+            <div className="ado-guide-modal-field">
+                <label className="ado-guide-modal-label">Name</label>
                 <input
-                    className="lcs-guide-modal-input"
+                    className="ado-guide-modal-input"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -67,25 +67,25 @@ export default function GuidedGenModal({ onClose }) {
             </div>
 
             {/* Content */}
-            <div className="lcs-guide-modal-field">
-                <label className="lcs-guide-modal-label">Prompt Content</label>
+            <div className="ado-guide-modal-field">
+                <label className="ado-guide-modal-label">Prompt Content</label>
                 <textarea
-                    className="lcs-guide-modal-input lcs-guide-modal-textarea"
+                    className="ado-guide-modal-input ado-guide-modal-textarea"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Write your instruction here..."
                 />
-                <span className="lcs-guide-modal-hint">
+                <span className="ado-guide-modal-hint">
                     Supports {'{{macros}}'} — e.g. {'{{char}}'}, {'{{user}}'}, {'{{random}}'}
                 </span>
             </div>
 
             {/* Position + Mode row */}
-            <div className="lcs-guide-modal-row">
-                <div className="lcs-guide-modal-field" style={{ flex: 1 }}>
-                    <label className="lcs-guide-modal-label">Position</label>
+            <div className="ado-guide-modal-row">
+                <div className="ado-guide-modal-field" style={{ flex: 1 }}>
+                    <label className="ado-guide-modal-label">Position</label>
                     <select
-                        className="lcs-guide-modal-select"
+                        className="ado-guide-modal-select"
                         value={position}
                         onChange={(e) => setPosition(e.target.value)}
                     >
@@ -94,14 +94,14 @@ export default function GuidedGenModal({ onClose }) {
                         ))}
                     </select>
                 </div>
-                <div className="lcs-guide-modal-field" style={{ flex: 1 }}>
-                    <label className="lcs-guide-modal-label">Mode</label>
-                    <label className="lcs-guide-modal-toggle">
+                <div className="ado-guide-modal-field" style={{ flex: 1 }}>
+                    <label className="ado-guide-modal-label">Mode</label>
+                    <label className="ado-guide-modal-toggle">
                         <div
-                            className={`lcs-guide-modal-toggle-track${mode === 'persistent' ? ' lcs-guide-modal-toggle-track--active' : ''}`}
+                            className={`ado-guide-modal-toggle-track${mode === 'persistent' ? ' ado-guide-modal-toggle-track--active' : ''}`}
                             onClick={() => setMode(m => m === 'persistent' ? 'oneshot' : 'persistent')}
                         >
-                            <div className="lcs-guide-modal-toggle-thumb" />
+                            <div className="ado-guide-modal-toggle-thumb" />
                         </div>
                         <span>{mode === 'persistent' ? 'Persistent' : 'One-shot'}</span>
                     </label>
@@ -109,8 +109,8 @@ export default function GuidedGenModal({ onClose }) {
             </div>
 
             {/* Color picker */}
-            <div className="lcs-guide-modal-field">
-                <label className="lcs-guide-modal-label">Accent Color</label>
+            <div className="ado-guide-modal-field">
+                <label className="ado-guide-modal-label">Accent Color</label>
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                     {PRESET_COLORS.map((c, i) => (
                         <button
@@ -122,9 +122,9 @@ export default function GuidedGenModal({ onClose }) {
                                 height: '24px',
                                 borderRadius: '6px',
                                 border: c === color
-                                    ? '2px solid var(--lumiverse-primary-text, rgba(160,150,255,0.95))'
-                                    : '1px solid var(--lcs-glass-border, rgba(255,255,255,0.08))',
-                                background: c || 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.04))',
+                                    ? '2px solid var(--ado-primary-text, rgba(160,150,255,0.95))'
+                                    : '1px solid var(--ado-glass-border, rgba(255,255,255,0.08))',
+                                background: c || 'var(--ado-fill-subtle, rgba(255,255,255,0.04))',
                                 cursor: 'pointer',
                                 padding: 0,
                             }}
@@ -135,10 +135,10 @@ export default function GuidedGenModal({ onClose }) {
             </div>
 
             {/* Actions */}
-            <div className="lcs-guide-modal-actions">
+            <div className="ado-guide-modal-actions">
                 {existing?.id && (
                     <button
-                        className="lcs-guide-modal-btn lcs-guide-modal-btn--danger"
+                        className="ado-guide-modal-btn ado-guide-modal-btn--danger"
                         onClick={handleDelete}
                         type="button"
                     >
@@ -147,14 +147,14 @@ export default function GuidedGenModal({ onClose }) {
                 )}
                 <div style={{ flex: 1 }} />
                 <button
-                    className="lcs-guide-modal-btn"
+                    className="ado-guide-modal-btn"
                     onClick={onClose}
                     type="button"
                 >
                     Cancel
                 </button>
                 <button
-                    className="lcs-guide-modal-btn lcs-guide-modal-btn--primary"
+                    className="ado-guide-modal-btn ado-guide-modal-btn--primary"
                     onClick={handleSave}
                     type="button"
                 >

@@ -464,7 +464,7 @@ export async function applyProfile(profileId, { silent = false } = {}) {
 
         // 9. Activate linked Loom preset
         if (profile.loomPresetId) {
-            const store = window.LumiverseUI?.getStore?.();
+            const store = window.AdoHelperUI?.getStore?.();
             if (store) {
                 const lb = store.getState().loomBuilder || {};
                 store.setState({ loomBuilder: { ...lb, activePresetId: profile.loomPresetId } });
@@ -480,7 +480,7 @@ export async function applyProfile(profileId, { silent = false } = {}) {
         setActiveConnectionProfileId(profileId);
 
         // 12. Update React store — connection manager + Loom Builder profile switch
-        const store = window.LumiverseUI?.getStore?.();
+        const store = window.AdoHelperUI?.getStore?.();
         if (store) {
             const prev = store.getState();
             const cm = prev.connectionManager || {};
@@ -745,10 +745,10 @@ export async function detectSTProfiles() {
 }
 
 /**
- * Migrate a single ST profile to a Lumiverse connection profile.
+ * Migrate a single ST profile to a Ado Helper connection profile.
  * References ST's secret (doesn't copy the actual key value).
  * @param {Object} stProfile - From detectSTProfiles()
- * @returns {Promise<Object>} The created Lumiverse profile
+ * @returns {Promise<Object>} The created Ado Helper profile
  */
 export async function migrateSTProfile(stProfile) {
     console.log(`[${MODULE_NAME}] Migrating ST profile: "${stProfile.stName}" (${stProfile.provider}/${stProfile.model})`);

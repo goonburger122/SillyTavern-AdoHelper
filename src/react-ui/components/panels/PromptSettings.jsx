@@ -3,10 +3,10 @@ import { CollapsibleContent } from '../Collapsible';
 import { CollapsibleSection } from '../shared/CollapsibleSection';
 import clsx from 'clsx';
 import { Hand, Filter, Info, Layers, Users, Edit2, Check, X } from 'lucide-react';
-import { useLumiverseStore, useLumiverseActions, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, saveToExtension } from '../../store/AdoHelperContext';
 
 // Get the store for direct access (old code uses root-level settings)
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 const EMPTY_OBJECT = {};
@@ -27,27 +27,27 @@ const selectLumiaQuirksEnabled = () => store.getState().lumiaQuirksEnabled !== f
  */
 function Toggle({ id, checked, onChange, label, hint, disabled = false }) {
     return (
-        <div className={clsx('lumiverse-vp-toggle-row', disabled && 'lumiverse-vp-toggle-row--disabled')}>
-            <label className="lumiverse-vp-toggle-label" htmlFor={id}>
-                <span className="lumiverse-vp-toggle-text">{label}</span>
-                {hint && <span className="lumiverse-vp-toggle-hint">{hint}</span>}
+        <div className={clsx('ado-vp-toggle-row', disabled && 'ado-vp-toggle-row--disabled')}>
+            <label className="ado-vp-toggle-label" htmlFor={id}>
+                <span className="ado-vp-toggle-text">{label}</span>
+                {hint && <span className="ado-vp-toggle-hint">{hint}</span>}
             </label>
-            <div className="lumiverse-vp-toggle-switch-wrapper">
+            <div className="ado-vp-toggle-switch-wrapper">
                 <input
                     type="checkbox"
                     id={id}
-                    className="lumiverse-vp-toggle-input"
+                    className="ado-vp-toggle-input"
                     checked={checked}
                     onChange={(e) => onChange(e.target.checked)}
                     disabled={disabled}
                 />
-                <label htmlFor={id} className="lumiverse-vp-toggle-switch-label">
+                <label htmlFor={id} className="ado-vp-toggle-switch-label">
                     <div className={clsx(
-                        'lumiverse-vp-toggle-track',
-                        checked && 'lumiverse-vp-toggle-track--on',
-                        disabled && 'lumiverse-vp-toggle-track--disabled'
+                        'ado-vp-toggle-track',
+                        checked && 'ado-vp-toggle-track--on',
+                        disabled && 'ado-vp-toggle-track--disabled'
                     )}>
-                        <div className="lumiverse-vp-toggle-thumb" />
+                        <div className="ado-vp-toggle-thumb" />
                     </div>
                 </label>
             </div>
@@ -60,18 +60,18 @@ function Toggle({ id, checked, onChange, label, hint, disabled = false }) {
  */
 function NumberField({ id, label, hint, value, onChange, min = 0, max = 100 }) {
     return (
-        <div className="lumiverse-vp-field lumiverse-vp-field--inline">
-            <label className="lumiverse-vp-field-label" htmlFor={id}>{label}</label>
+        <div className="ado-vp-field ado-vp-field--inline">
+            <label className="ado-vp-field-label" htmlFor={id}>{label}</label>
             <input
                 type="number"
                 id={id}
-                className="lumiverse-vp-field-input lumiverse-vp-field-input--small"
+                className="ado-vp-field-input ado-vp-field-input--small"
                 value={value}
                 onChange={(e) => onChange(parseInt(e.target.value, 10) || 0)}
                 min={min}
                 max={max}
             />
-            {hint && <span className="lumiverse-vp-field-hint">{hint}</span>}
+            {hint && <span className="ado-vp-field-hint">{hint}</span>}
         </div>
     );
 }
@@ -83,12 +83,12 @@ function NumberField({ id, label, hint, value, onChange, min = 0, max = 100 }) {
  */
 function InfoBox({ items, muted = false }) {
     return (
-        <div className={clsx('lumiverse-vp-info-box', muted && 'lumiverse-vp-info-box--muted')}>
-            <div className="lumiverse-vp-info-box-header">
+        <div className={clsx('ado-vp-info-box', muted && 'ado-vp-info-box--muted')}>
+            <div className="ado-vp-info-box-header">
                 <Info size={14} strokeWidth={2} />
                 <span>When enabled:</span>
             </div>
-            <ul className="lumiverse-vp-info-box-list">
+            <ul className="ado-vp-info-box-list">
                 {items.map((item, i) => (
                     <li key={i}>{item}</li>
                 ))}
@@ -103,7 +103,7 @@ function InfoBox({ items, muted = false }) {
  */
 function FilterItem({ id, label, hint, enabled, onToggle, depthValue, onDepthChange, depthLabel, depthHint }) {
     return (
-        <div className="lumiverse-vp-filter-item">
+        <div className="ado-vp-filter-item">
             <Toggle
                 id={id}
                 checked={enabled}
@@ -113,7 +113,7 @@ function FilterItem({ id, label, hint, enabled, onToggle, depthValue, onDepthCha
             />
             <CollapsibleContent
                 isOpen={enabled && depthValue !== undefined}
-                className="lumiverse-vp-filter-options"
+                className="ado-vp-filter-options"
                 duration={150}
             >
                 <NumberField
@@ -136,7 +136,7 @@ function FilterItem({ id, label, hint, enabled, onToggle, depthValue, onDepthCha
  * OLD CODE: sovereignHand and contextFilters are at root level of settings
  */
 function PromptSettings() {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     // Get settings directly from store (old code uses root-level fields)
     const sovereignHand = useSyncExternalStore(
@@ -254,7 +254,7 @@ function PromptSettings() {
     const lumiaModeActive = chimeraMode || councilMode;
 
     return (
-        <div className="lumiverse-vp-settings-panel">
+        <div className="ado-vp-settings-panel">
             {/* Lumia Modes Section */}
             <CollapsibleSection
                 Icon={Layers}
@@ -262,12 +262,12 @@ function PromptSettings() {
                 status={lumiaModeActive}
                 defaultOpen={true}
             >
-                <p className="lumiverse-vp-settings-desc">
+                <p className="ado-vp-settings-desc">
                     Configure special Lumia modes for unique character setups. These modes are mutually exclusive.
                 </p>
 
                 {/* Chimera Mode */}
-                <div className="lumiverse-vp-mode-option">
+                <div className="ado-vp-mode-option">
                     <Toggle
                         id="chimera-mode-toggle"
                         checked={chimeraMode}
@@ -277,7 +277,7 @@ function PromptSettings() {
                     />
                     <CollapsibleContent
                         isOpen={chimeraMode}
-                        className="lumiverse-vp-mode-details"
+                        className="ado-vp-mode-details"
                         duration={150}
                     >
                         <InfoBox
@@ -291,7 +291,7 @@ function PromptSettings() {
                 </div>
 
                 {/* Council Mode - Placeholder for Feature 4 */}
-                <div className="lumiverse-vp-mode-option">
+                <div className="ado-vp-mode-option">
                     <Toggle
                         id="council-mode-toggle"
                         checked={councilMode}
@@ -301,7 +301,7 @@ function PromptSettings() {
                     />
                     <CollapsibleContent
                         isOpen={councilMode}
-                        className="lumiverse-vp-mode-details"
+                        className="ado-vp-mode-details"
                         duration={150}
                     >
                         <InfoBox
@@ -311,32 +311,32 @@ function PromptSettings() {
                                 `Currently ${councilMembersCount} council member${councilMembersCount !== 1 ? 's' : ''}`,
                             ]}
                         />
-                        <p className="lumiverse-vp-mode-note">
+                        <p className="ado-vp-mode-note">
                             Configure council members in the Council tab.
                         </p>
                     </CollapsibleContent>
                 </div>
 
                 {/* Behavioral Quirks - Universal, works in all modes */}
-                <div className={clsx('lumiverse-vp-quirks-section', !lumiaQuirksEnabled && 'lumiverse-vp-quirks-section--disabled')}>
-                        <div className="lumiverse-vp-quirks-header">
-                            <div className="lumiverse-vp-quirks-header-left">
-                                <span className="lumiverse-vp-quirks-label">Behavioral Quirks</span>
+                <div className={clsx('ado-vp-quirks-section', !lumiaQuirksEnabled && 'ado-vp-quirks-section--disabled')}>
+                        <div className="ado-vp-quirks-header">
+                            <div className="ado-vp-quirks-header-left">
+                                <span className="ado-vp-quirks-label">Behavioral Quirks</span>
                                 <button
-                                    className={clsx('lumiverse-vp-quirks-toggle', lumiaQuirksEnabled && 'lumiverse-vp-quirks-toggle--on')}
+                                    className={clsx('ado-vp-quirks-toggle', lumiaQuirksEnabled && 'ado-vp-quirks-toggle--on')}
                                     onClick={() => handleQuirksEnabledChange(!lumiaQuirksEnabled)}
                                     title={lumiaQuirksEnabled ? 'Disable quirks' : 'Enable quirks'}
                                     type="button"
                                     aria-pressed={lumiaQuirksEnabled}
                                 >
-                                    <span className="lumiverse-vp-quirks-toggle-track">
-                                        <span className="lumiverse-vp-quirks-toggle-thumb" />
+                                    <span className="ado-vp-quirks-toggle-track">
+                                        <span className="ado-vp-quirks-toggle-thumb" />
                                     </span>
                                 </button>
                             </div>
                             {!isEditingQuirks && lumiaQuirksEnabled && (
                                 <button
-                                    className="lumiverse-vp-quirks-edit-btn"
+                                    className="ado-vp-quirks-edit-btn"
                                     onClick={() => setIsEditingQuirks(true)}
                                     title="Edit quirks"
                                     type="button"
@@ -345,29 +345,29 @@ function PromptSettings() {
                                 </button>
                             )}
                         </div>
-                        <p className="lumiverse-vp-quirks-hint">
+                        <p className="ado-vp-quirks-hint">
                             Extra behavioral modifications. Use <code>{'{{lumiaQuirks}}'}</code>
                         </p>
 
                         {isEditingQuirks && lumiaQuirksEnabled ? (
-                            <div className="lumiverse-vp-quirks-edit">
+                            <div className="ado-vp-quirks-edit">
                                 <textarea
-                                    className="lumiverse-vp-quirks-textarea"
+                                    className="ado-vp-quirks-textarea"
                                     placeholder="Enter behavioral quirks..."
                                     value={quirksValue}
                                     onChange={(e) => setQuirksValue(e.target.value)}
                                     rows={3}
                                 />
-                                <div className="lumiverse-vp-quirks-actions">
+                                <div className="ado-vp-quirks-actions">
                                     <button
-                                        className="lumiverse-vp-quirks-btn lumiverse-vp-quirks-btn--primary"
+                                        className="ado-vp-quirks-btn ado-vp-quirks-btn--primary"
                                         onClick={handleQuirksSave}
                                         type="button"
                                     >
                                         <Check size={12} strokeWidth={2} /> Save
                                     </button>
                                     <button
-                                        className="lumiverse-vp-quirks-btn"
+                                        className="ado-vp-quirks-btn"
                                         onClick={handleQuirksCancel}
                                         type="button"
                                     >
@@ -376,11 +376,11 @@ function PromptSettings() {
                                 </div>
                             </div>
                         ) : (
-                            <div className="lumiverse-vp-quirks-preview">
+                            <div className="ado-vp-quirks-preview">
                                 {lumiaQuirks?.trim() ? (
-                                    <span className="lumiverse-vp-quirks-text">{lumiaQuirks}</span>
+                                    <span className="ado-vp-quirks-text">{lumiaQuirks}</span>
                                 ) : (
-                                    <span className="lumiverse-vp-quirks-empty">No quirks set</span>
+                                    <span className="ado-vp-quirks-empty">No quirks set</span>
                                 )}
                             </div>
                         )}
@@ -394,7 +394,7 @@ function PromptSettings() {
                 status={sovereignEnabled}
                 defaultOpen={true}
             >
-                <p className="lumiverse-vp-settings-desc">
+                <p className="ado-vp-settings-desc">
                     Enable Sovereign Hand integration to use advanced prompt manipulation features.
                 </p>
                 <Toggle
@@ -437,7 +437,7 @@ function PromptSettings() {
                 title="Context Filters"
                 status={filtersActive}
             >
-                <p className="lumiverse-vp-settings-desc">
+                <p className="ado-vp-settings-desc">
                     Filter out specific content from the chat context before sending to the AI.
                 </p>
 
@@ -457,7 +457,7 @@ function PromptSettings() {
                 {/* Strip Fonts Sub-option - uses CSS grid for smooth animation */}
                 <CollapsibleContent
                     isOpen={htmlTagsEnabled}
-                    className="lumiverse-vp-filter-sub"
+                    className="ado-vp-filter-sub"
                     duration={200}
                 >
                     <FilterItem

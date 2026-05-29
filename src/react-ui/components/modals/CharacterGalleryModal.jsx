@@ -25,20 +25,20 @@ const s = {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '16px 20px 12px',
-        borderBottom: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        borderBottom: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
         flexShrink: 0,
     },
     title: {
         fontSize: '16px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         margin: 0,
     },
     closeBtn: {
         background: 'transparent',
         border: 'none',
         borderRadius: '6px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         cursor: 'pointer',
         padding: '6px',
         display: 'flex',
@@ -57,8 +57,8 @@ const s = {
         justifyContent: 'space-between',
         gap: '12px',
         padding: '12px 16px',
-        borderTop: '2px solid var(--lumiverse-danger, #ef4444)',
-        background: 'var(--lumiverse-bg-deepest, rgb(16, 13, 24))',
+        borderTop: '2px solid var(--ado-danger, #ef4444)',
+        background: 'var(--ado-bg-deepest, rgb(16, 13, 24))',
         flexShrink: 0,
         position: 'relative',
         zIndex: 20,
@@ -66,7 +66,7 @@ const s = {
     footerText: {
         fontSize: '13px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text-muted, rgba(255,255,255,0.7))',
+        color: 'var(--ado-text-muted, rgba(255,255,255,0.7))',
         whiteSpace: 'nowrap',
     },
     footerActions: {
@@ -108,7 +108,7 @@ export default function CharacterGalleryModal({ onClose }) {
                     </span>
                     <div style={s.footerActions}>
                         <button
-                            className="lumiverse-cb-batch-bar-btn lumiverse-cb-batch-bar-btn--danger"
+                            className="ado-cb-batch-bar-btn ado-cb-batch-bar-btn--danger"
                             onClick={() => batch.setBatchConfirmOpen(true)}
                             type="button"
                             disabled={selectedCount === 0}
@@ -117,7 +117,7 @@ export default function CharacterGalleryModal({ onClose }) {
                             <span>Delete Selected</span>
                         </button>
                         <button
-                            className="lumiverse-cb-batch-bar-btn"
+                            className="ado-cb-batch-bar-btn"
                             onClick={batch.clearBatchSelection}
                             type="button"
                         >

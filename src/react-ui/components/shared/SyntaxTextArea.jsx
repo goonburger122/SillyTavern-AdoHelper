@@ -35,18 +35,18 @@ export default function SyntaxTextArea({ value, onChange, rows = 6, placeholder,
 
     return (
         <div
-            className={clsx('lumiverse-syntax-textarea', className)}
+            className={clsx('ado-syntax-textarea', className)}
             style={{ height: `${height}px` }}
         >
             <pre
                 ref={overlayRef}
-                className="lumiverse-syntax-textarea-overlay"
+                className="ado-syntax-textarea-overlay"
                 aria-hidden="true"
                 dangerouslySetInnerHTML={{ __html: highlightContent(value) + '\n' }}
             />
             <textarea
                 ref={textareaRef}
-                className="lumiverse-syntax-textarea-input"
+                className="ado-syntax-textarea-input"
                 value={value || ''}
                 onChange={handleChange}
                 onScroll={syncScroll}

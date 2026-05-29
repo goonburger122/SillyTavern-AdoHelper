@@ -19,24 +19,24 @@ const SUPPORTED_SOURCES = [
     'Direct PNG URL (any .png character card)',
 ];
 
-/** Inline styles using var(--lumiverse-*) */
+/** Inline styles using var(--ado-*) */
 const S = {
     header: {
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
         padding: '16px 20px',
-        borderBottom: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        borderBottom: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
     },
     headerIcon: {
-        color: 'var(--lumiverse-primary, #9370db)',
+        color: 'var(--ado-primary, #9370db)',
         flexShrink: 0,
     },
     headerTitle: {
         flex: 1,
         fontSize: '15px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text, #e0e0e0)',
+        color: 'var(--ado-text, #e0e0e0)',
     },
     closeBtn: {
         display: 'flex',
@@ -47,7 +47,7 @@ const S = {
         border: 'none',
         borderRadius: '6px',
         background: 'transparent',
-        color: 'var(--lumiverse-text-muted, rgba(255,255,255,0.5))',
+        color: 'var(--ado-text-muted, rgba(255,255,255,0.5))',
         cursor: 'pointer',
     },
     body: {
@@ -60,7 +60,7 @@ const S = {
     },
     description: {
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted, rgba(255,255,255,0.5))',
+        color: 'var(--ado-text-muted, rgba(255,255,255,0.5))',
         lineHeight: 1.5,
     },
     textarea: {
@@ -68,9 +68,9 @@ const S = {
         minHeight: '120px',
         padding: '10px 12px',
         borderRadius: '8px',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.15))',
-        color: 'var(--lumiverse-text, #e0e0e0)',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.15))',
+        color: 'var(--ado-text, #e0e0e0)',
         fontSize: '12px',
         fontFamily: 'monospace',
         resize: 'vertical',
@@ -78,7 +78,7 @@ const S = {
     },
     details: {
         fontSize: '11px',
-        color: 'var(--lumiverse-text-dim, rgba(255,255,255,0.35))',
+        color: 'var(--ado-text-dim, rgba(255,255,255,0.35))',
     },
     summary: {
         cursor: 'pointer',
@@ -86,7 +86,7 @@ const S = {
         alignItems: 'center',
         gap: '4px',
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted, rgba(255,255,255,0.5))',
+        color: 'var(--ado-text-muted, rgba(255,255,255,0.5))',
         userSelect: 'none',
     },
     sourceList: {
@@ -99,9 +99,9 @@ const S = {
     },
     sourceItem: {
         fontSize: '11px',
-        color: 'var(--lumiverse-text-dim, rgba(255,255,255,0.35))',
+        color: 'var(--ado-text-dim, rgba(255,255,255,0.35))',
         paddingLeft: '8px',
-        borderLeft: '2px solid var(--lumiverse-border, rgba(255,255,255,0.06))',
+        borderLeft: '2px solid var(--ado-border, rgba(255,255,255,0.06))',
     },
     resultsArea: {
         display: 'flex',
@@ -121,11 +121,11 @@ const S = {
     },
     resultSuccess: {
         background: 'rgba(34,197,94,0.08)',
-        color: 'var(--lumiverse-success, #22c55e)',
+        color: 'var(--ado-success, #22c55e)',
     },
     resultError: {
         background: 'rgba(239,68,68,0.08)',
-        color: 'var(--lumiverse-danger, #ef4444)',
+        color: 'var(--ado-danger, #ef4444)',
     },
     resultText: {
         flex: 1,
@@ -139,7 +139,7 @@ const S = {
         justifyContent: 'flex-end',
         gap: '8px',
         padding: '12px 20px',
-        borderTop: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        borderTop: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
     },
     btn: {
         display: 'flex',
@@ -147,16 +147,16 @@ const S = {
         gap: '6px',
         padding: '7px 16px',
         borderRadius: '8px',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
         background: 'transparent',
-        color: 'var(--lumiverse-text-muted, rgba(255,255,255,0.5))',
+        color: 'var(--ado-text-muted, rgba(255,255,255,0.5))',
         fontSize: '12px',
         fontWeight: 500,
         cursor: 'pointer',
         fontFamily: 'inherit',
     },
     btnPrimary: {
-        background: 'var(--lumiverse-primary, #9370db)',
+        background: 'var(--ado-primary, #9370db)',
         color: '#fff',
         border: '1px solid transparent',
     },
@@ -274,7 +274,7 @@ export default function ImportUrlModal({ onClose }) {
                     disabled={!canImport}
                     type="button"
                 >
-                    {isImporting && <Loader2 size={14} strokeWidth={2} className="lumiverse-cb-spinner" />}
+                    {isImporting && <Loader2 size={14} strokeWidth={2} className="ado-cb-spinner" />}
                     {isImporting ? 'Importing...' : `Import${lineCount > 1 ? ` (${lineCount})` : ''}`}
                 </button>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useLumiverseStore, useLumiverseActions, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, saveToExtension } from '../../store/AdoHelperContext';
 import { 
     AlignLeft, Settings, Cloud, Server, Play, 
     Clock, Edit3, MessageSquare, AlertTriangle, 
@@ -42,7 +42,7 @@ const styles = {
         alignItems: 'center',
         gap: '12px',
         padding: '16px 20px',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     headerIcon: {
@@ -53,7 +53,7 @@ const styles = {
         height: '40px',
         borderRadius: '10px',
         background: 'linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(147, 112, 219, 0.1))',
-        color: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
     },
     headerText: {
         flex: 1,
@@ -62,12 +62,12 @@ const styles = {
         margin: 0,
         fontSize: '16px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     subtitle: {
         margin: '4px 0 0',
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     scrollArea: {
         flex: '1 1 auto',
@@ -80,19 +80,19 @@ const styles = {
         padding: '14px',
         background: 'rgba(0, 0, 0, 0.15)',
         borderRadius: '10px',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
     },
     sectionHeader: {
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
         marginBottom: '12px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontWeight: 500,
         fontSize: '14px',
     },
     sectionIcon: {
-        color: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
     },
     modeOptions: {
         display: 'flex',
@@ -102,19 +102,19 @@ const styles = {
         flex: 1,
         padding: '10px',
         background: 'rgba(0, 0, 0, 0.2)',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
         textAlign: 'center',
         fontSize: '13px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     modeOptionSelected: {
         background: 'rgba(147, 112, 219, 0.15)',
-        borderColor: 'var(--lumiverse-primary)',
-        color: 'var(--lumiverse-primary)',
+        borderColor: 'var(--ado-primary)',
+        color: 'var(--ado-primary)',
     },
     field: {
         marginBottom: '12px',
@@ -133,17 +133,17 @@ const styles = {
         display: 'block',
         fontSize: '12px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         marginBottom: '6px',
     },
     input: {
         width: '100%',
         padding: '10px 12px',
         fontSize: '13px',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         boxSizing: 'border-box',
     },
@@ -151,16 +151,16 @@ const styles = {
         width: '100%',
         padding: '10px 12px',
         fontSize: '13px',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         boxSizing: 'border-box',
     },
     hint: {
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         marginTop: '4px',
     },
     toggleRow: {
@@ -176,12 +176,12 @@ const styles = {
         display: 'block',
         fontSize: '13px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     toggleHint: {
         display: 'block',
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         marginTop: '2px',
     },
     toggle: {
@@ -194,7 +194,7 @@ const styles = {
         transition: 'background 0.2s ease',
     },
     toggleActive: {
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
     },
     toggleThumb: {
         position: 'absolute',
@@ -233,7 +233,7 @@ const styles = {
     },
     warningText: {
         fontSize: '11px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         lineHeight: 1.4,
     },
     testSection: {
@@ -252,7 +252,7 @@ const styles = {
         padding: '12px',
         fontSize: '14px',
         fontWeight: 500,
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: 'white',
         border: 'none',
         borderRadius: '8px',
@@ -283,7 +283,7 @@ const styles = {
         justifyContent: 'flex-end',
         gap: '8px',
         padding: '12px 20px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     button: {
@@ -296,12 +296,12 @@ const styles = {
         transition: 'all 0.2s ease',
     },
     buttonSecondary: {
-        background: 'var(--lumiverse-surface)',
-        color: 'var(--lumiverse-text)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-surface)',
+        color: 'var(--ado-text)',
+        border: '1px solid var(--ado-border)',
     },
     buttonPrimary: {
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: 'white',
     },
     hidden: {
@@ -310,8 +310,8 @@ const styles = {
 };
 
 function SummarizationModal({ onClose }) {
-    const store = useLumiverseStore;
-    const actions = useLumiverseActions();
+    const store = useAdoHelperStore;
+    const actions = useAdoHelperActions();
     
     // Get current settings
     const currentSettings = store.getState();
@@ -396,7 +396,7 @@ function SummarizationModal({ onClose }) {
         setTestResult(null);
         
         try {
-            const callbacks = window.LumiverseBridge?.getCallbacks?.();
+            const callbacks = window.AdoHelperBridge?.getCallbacks?.();
             if (callbacks?.generateSummary) {
                 const tempSettings = {
                     mode,
@@ -707,7 +707,7 @@ function SummarizationModal({ onClose }) {
                             ) : (
                                 <X size={16} style={{ color: '#f44336' }} />
                             )}
-                            <span style={{ fontSize: '12px', color: 'var(--lumiverse-text)' }}>
+                            <span style={{ fontSize: '12px', color: 'var(--ado-text)' }}>
                                 {testResult.message}
                             </span>
                         </div>

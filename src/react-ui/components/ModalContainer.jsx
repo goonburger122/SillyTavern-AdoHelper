@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { useUI, useLumiverseActions } from '../store/LumiverseContext';
+import { useUI, useAdoHelperActions } from '../store/AdoHelperContext';
 import useFixedPositionFix from '../hooks/useFixedPositionFix';
 import clsx from 'clsx';
 
@@ -33,7 +33,7 @@ import { AuthorsNoteModalContent } from './chat/AuthorsNotePanel';
 
 /**
  * Modal wrapper that provides backdrop and close functionality
- * Uses lumia-modal class naming to match old design
+ * Uses ado-modal class naming to match old design
  */
 function ModalWrapper({ children, onClose, modalType, size = 'medium', hasCustomHeader = false }) {
     // Close on escape key
@@ -77,23 +77,23 @@ function ModalWrapper({ children, onClose, modalType, size = 'medium', hasCustom
 
     // Determine modal class based on type and size
     const modalClass = clsx(
-        'lumiverse-modal',
-        size === 'small' && 'lumiverse-modal--small',
-        size === 'medium' && 'lumiverse-modal--medium',
-        size === 'large' && 'lumiverse-modal--large',
-        size === 'xlarge' && 'lumiverse-modal--xlarge',
-        modalType === 'selection' && 'lumiverse-modal-selection',
-        modalType === 'settings' && 'lumiverse-modal-settings',
-        modalType === 'editor' && 'lumiverse-modal-editor',
-        modalType === 'pack-editor' && 'lumiverse-modal-pack-editor',
-        modalType === 'pack-selector' && 'lumiverse-modal-pack-selector',
-        modalType === 'lumia-editor' && 'lumiverse-modal-lumia-editor',
-        modalType === 'loom-editor' && 'lumiverse-modal-loom-editor'
+        'ado-modal',
+        size === 'small' && 'ado-modal--small',
+        size === 'medium' && 'ado-modal--medium',
+        size === 'large' && 'ado-modal--large',
+        size === 'xlarge' && 'ado-modal--xlarge',
+        modalType === 'selection' && 'ado-modal-selection',
+        modalType === 'settings' && 'ado-modal-settings',
+        modalType === 'editor' && 'ado-modal-editor',
+        modalType === 'pack-editor' && 'ado-modal-pack-editor',
+        modalType === 'pack-selector' && 'ado-modal-pack-selector',
+        modalType === 'ado-editor' && 'ado-modal-ado-editor',
+        modalType === 'loom-editor' && 'ado-modal-loom-editor'
     );
 
     return (
         <div
-            className="lumiverse-modal-backdrop"
+            className="ado-modal-backdrop"
             onClick={handleBackdropClick}
             onMouseDown={stopAllPropagation}
             onMouseUp={stopAllPropagation}
@@ -147,7 +147,7 @@ const MODAL_CONFIG = {
         props: {},
     },
     importPack: {
-        component: () => <div className="lumia-modal-empty">Import Pack Modal (TODO)</div>,
+        component: () => <div className="ado-modal-empty">Import Pack Modal (TODO)</div>,
         modalType: 'settings',
         size: 'medium',
         hasCustomHeader: false,
@@ -185,7 +185,7 @@ const MODAL_CONFIG = {
     // Single Lumia editor - second step in "Create Lumia" flow
     lumiaEditor: {
         component: LumiaEditorModal,
-        modalType: 'lumia-editor',
+        modalType: 'ado-editor',
         size: 'large',
         hasCustomHeader: true,
         props: {},
@@ -335,7 +335,7 @@ const MODAL_CONFIG = {
  */
 function ModalContainer() {
     const ui = useUI();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     // Neutralize SillyTavern's html transform/perspective that breaks position:fixed
     useFixedPositionFix(!!ui.activeModal);

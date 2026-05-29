@@ -10,7 +10,7 @@ import { useAdaptiveImagePosition } from '../../hooks/useAdaptiveImagePosition';
 export function EditorLayout({ children, className }) {
     return (
         <div 
-            className={clsx('lumiverse-editor-modal', className)}
+            className={clsx('ado-editor-modal', className)}
             style={{ 
                 display: 'flex', 
                 flexDirection: 'column', 
@@ -31,7 +31,7 @@ export function EditorLayout({ children, className }) {
 export function EditorContent({ children, className }) {
     return (
         <div 
-            className={clsx('lumiverse-editor-content', className)}
+            className={clsx('ado-editor-content', className)}
             style={{ 
                 flex: '1 1 auto', 
                 minHeight: 0, 
@@ -51,13 +51,13 @@ export function EditorContent({ children, className }) {
 export function EditorFooter({ children, className }) {
     return (
         <div 
-            className={clsx('lumiverse-editor-footer', className)}
+            className={clsx('ado-editor-footer', className)}
             style={{
                 display: 'flex',
                 alignItems: 'center',
                 padding: '16px',
-                background: 'var(--lumiverse-bg-elevated)',
-                borderTop: '1px solid var(--lumiverse-border)',
+                background: 'var(--ado-bg-elevated)',
+                borderTop: '1px solid var(--ado-border)',
                 flexShrink: 0
             }}
         >
@@ -71,20 +71,20 @@ export function EditorFooter({ children, className }) {
  */
 export function FormField({ label, required, hint, error, children, className }) {
     return (
-        <div className={clsx('lumiverse-form-field', error && 'lumiverse-form-field--error', className)} style={{ marginBottom: '16px' }}>
-            <label className="lumiverse-form-label" style={{ 
+        <div className={clsx('ado-form-field', error && 'ado-form-field--error', className)} style={{ marginBottom: '16px' }}>
+            <label className="ado-form-label" style={{ 
                 display: 'block', 
                 marginBottom: '6px', 
                 fontSize: '13px', 
                 fontWeight: 500, 
-                color: 'var(--lumiverse-text-muted)' 
+                color: 'var(--ado-text-muted)' 
             }}>
                 {label}
-                {required && <span className="lumiverse-required" style={{ color: 'var(--lumiverse-danger)', marginLeft: '4px' }}>*</span>}
+                {required && <span className="ado-required" style={{ color: 'var(--ado-danger)', marginLeft: '4px' }}>*</span>}
             </label>
             {children}
-            {hint && <div className="lumiverse-form-hint" style={{ marginTop: '6px', fontSize: '11px', color: 'var(--lumiverse-text-dim)', lineHeight: 1.4 }}>{hint}</div>}
-            {error && <div className="lumiverse-form-error" style={{ marginTop: '4px', fontSize: '12px', color: 'var(--lumiverse-danger)' }}>{error}</div>}
+            {hint && <div className="ado-form-hint" style={{ marginTop: '6px', fontSize: '11px', color: 'var(--ado-text-dim)', lineHeight: 1.4 }}>{hint}</div>}
+            {error && <div className="ado-form-error" style={{ marginTop: '4px', fontSize: '12px', color: 'var(--ado-danger)' }}>{error}</div>}
         </div>
     );
 }
@@ -96,9 +96,9 @@ export function EditorSection({ Icon, title, children, defaultExpanded = true, c
     const [isExpanded, setIsExpanded] = React.useState(defaultExpanded);
 
     return (
-        <div className={clsx('lumiverse-editor-section', className)} style={{ marginBottom: '20px' }}>
+        <div className={clsx('ado-editor-section', className)} style={{ marginBottom: '20px' }}>
             <div 
-                className="lumiverse-editor-section-header" 
+                className="ado-editor-section-header" 
                 onClick={() => setIsExpanded(!isExpanded)}
                 style={{
                     display: 'flex',
@@ -106,21 +106,21 @@ export function EditorSection({ Icon, title, children, defaultExpanded = true, c
                     gap: '10px',
                     paddingBottom: '10px',
                     marginBottom: '10px',
-                    borderBottom: '1px solid var(--lumiverse-border)',
+                    borderBottom: '1px solid var(--ado-border)',
                     cursor: 'pointer',
                     userSelect: 'none'
                 }}
             >
                 {Icon && (
-                    <div className="lumiverse-section-icon" style={{ 
+                    <div className="ado-section-icon" style={{ 
                         display: 'flex', 
                         alignItems: 'center', 
                         justifyContent: 'center',
                         width: '24px', 
                         height: '24px', 
                         borderRadius: '6px',
-                        background: 'var(--lumiverse-primary-010, var(--lumiverse-primary-light))',
-                        color: 'var(--lumiverse-primary)'
+                        background: 'var(--ado-primary-010, var(--ado-primary-light))',
+                        color: 'var(--ado-primary)'
                     }}>
                         <Icon size={14} strokeWidth={2} />
                     </div>
@@ -128,18 +128,18 @@ export function EditorSection({ Icon, title, children, defaultExpanded = true, c
                 <span style={{ 
                     fontSize: '13px', 
                     fontWeight: 600, 
-                    color: 'var(--lumiverse-text)',
+                    color: 'var(--ado-text)',
                     flex: 1 
                 }}>
                     {title}
                 </span>
-                <div style={{ color: 'var(--lumiverse-text-dim)' }}>
+                <div style={{ color: 'var(--ado-text-dim)' }}>
                     {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                 </div>
             </div>
             
             {isExpanded && (
-                <div className="lumiverse-editor-section-content">
+                <div className="ado-editor-section-content">
                     {children}
                 </div>
             )}
@@ -154,7 +154,7 @@ export function TextInput({ value, onChange, placeholder, className, autoFocus, 
     return (
         <input
             type="text"
-            className={clsx('lumiverse-input', className)}
+            className={clsx('ado-input', className)}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
@@ -162,10 +162,10 @@ export function TextInput({ value, onChange, placeholder, className, autoFocus, 
             style={{
                 width: '100%',
                 padding: '10px 12px',
-                background: 'var(--lumiverse-bg, rgba(0,0,0,0.2))',
-                border: '1px solid var(--lumiverse-border)',
+                background: 'var(--ado-bg, rgba(0,0,0,0.2))',
+                border: '1px solid var(--ado-border)',
                 borderRadius: '8px',
-                color: 'var(--lumiverse-text)',
+                color: 'var(--ado-text)',
                 fontSize: '13px',
                 fontFamily: 'inherit',
                 transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
@@ -181,7 +181,7 @@ export function TextInput({ value, onChange, placeholder, className, autoFocus, 
 export function TextArea({ value, onChange, placeholder, rows = 4, className, ...props }) {
     return (
         <textarea
-            className={clsx('lumiverse-textarea', className)}
+            className={clsx('ado-textarea', className)}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
@@ -189,10 +189,10 @@ export function TextArea({ value, onChange, placeholder, rows = 4, className, ..
             style={{
                 width: '100%',
                 padding: '10px 12px',
-                background: 'var(--lumiverse-bg, rgba(0,0,0,0.2))',
-                border: '1px solid var(--lumiverse-border)',
+                background: 'var(--ado-bg, rgba(0,0,0,0.2))',
+                border: '1px solid var(--ado-border)',
                 borderRadius: '8px',
-                color: 'var(--lumiverse-text)',
+                color: 'var(--ado-text)',
                 fontSize: '13px',
                 fontFamily: 'inherit',
                 lineHeight: 1.5,
@@ -209,18 +209,18 @@ export function TextArea({ value, onChange, placeholder, rows = 4, className, ..
  */
 export function Select({ value, onChange, options, className, ...props }) {
     return (
-        <div className="lumiverse-select-wrapper" style={{ position: 'relative' }}>
+        <div className="ado-select-wrapper" style={{ position: 'relative' }}>
             <select
-                className={clsx('lumiverse-select', className)}
+                className={clsx('ado-select', className)}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 style={{
                     width: '100%',
                     padding: '10px 32px 10px 12px',
-                    background: 'var(--lumiverse-bg, rgba(0,0,0,0.2))',
-                    border: '1px solid var(--lumiverse-border)',
+                    background: 'var(--ado-bg, rgba(0,0,0,0.2))',
+                    border: '1px solid var(--ado-border)',
                     borderRadius: '8px',
-                    color: 'var(--lumiverse-text)',
+                    color: 'var(--ado-text)',
                     fontSize: '13px',
                     fontFamily: 'inherit',
                     appearance: 'none',
@@ -241,7 +241,7 @@ export function Select({ value, onChange, options, className, ...props }) {
                 top: '50%', 
                 transform: 'translateY(-50%)', 
                 pointerEvents: 'none',
-                color: 'var(--lumiverse-text-muted)'
+                color: 'var(--ado-text-muted)'
             }}>
                 <ChevronDown size={14} />
             </div>
@@ -263,7 +263,7 @@ export function ImageInput({ value, onChange, placeholder, className }) {
     }, [value]);
 
     return (
-        <div className={clsx('lumiverse-image-input', className)}>
+        <div className={clsx('ado-image-input', className)}>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                 <div style={{ flex: 1 }}>
                     <TextInput
@@ -273,14 +273,14 @@ export function ImageInput({ value, onChange, placeholder, className }) {
                     />
                 </div>
                 {value && !previewError && (
-                    <div className="lumiverse-image-preview" style={{
+                    <div className="ado-image-preview" style={{
                         width: '40px',
                         height: '40px',
                         borderRadius: '6px',
                         overflow: 'hidden',
-                        border: '1px solid var(--lumiverse-border)',
+                        border: '1px solid var(--ado-border)',
                         flexShrink: 0,
-                        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.2))'
+                        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.2))'
                     }}>
                         <img
                             src={value}
@@ -301,12 +301,12 @@ export function ImageInput({ value, onChange, placeholder, className }) {
                         width: '40px',
                         height: '40px',
                         borderRadius: '6px',
-                        border: '1px dashed var(--lumiverse-border)',
+                        border: '1px dashed var(--ado-border)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
-                        color: 'var(--lumiverse-text-dim)'
+                        color: 'var(--ado-text-dim)'
                     }}>
                         <ImageIcon size={16} />
                     </div>

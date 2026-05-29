@@ -186,7 +186,7 @@ export default function useCharacterEditor(item) {
         setWorldBookNames(worlds);
       } catch (err) {
         if (!cancelled) {
-          console.error("[Lumiverse] Failed to load character:", err);
+          console.error("[Ado Helper] Failed to load character:", err);
           setLoadError(err.message);
         }
       } finally {
@@ -377,7 +377,7 @@ export default function useCharacterEditor(item) {
 
       return true;
     } catch (err) {
-      console.error("[Lumiverse] Save failed:", err);
+      console.error("[Ado Helper] Save failed:", err);
       if (typeof toastr !== "undefined") {
         toastr.error(`Save failed: ${err.message}`);
       }

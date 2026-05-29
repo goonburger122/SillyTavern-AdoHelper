@@ -13,10 +13,10 @@ import {
     Power,
     Zap,
 } from 'lucide-react';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { toggleGuide } from '../../../lib/guidedGenerationService';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const selectGuides = () => store.getState().guidedGenerations || [];
 
 const POSITION_LABELS = {
@@ -69,9 +69,9 @@ export default function GuidedGenPopover({ onClose }) {
     const isEmpty = guides.length === 0;
 
     return (
-        <div className="lcs-guide-popover" ref={menuRef}>
+        <div className="ado-guide-popover" ref={menuRef}>
             {isEmpty ? (
-                <div className="lcs-guide-empty">
+                <div className="ado-guide-empty">
                     <Compass size={20} style={{ opacity: 0.4 }} />
                     <span>No guided generations</span>
                     <span style={{ fontSize: '11px', opacity: 0.6 }}>
@@ -79,29 +79,29 @@ export default function GuidedGenPopover({ onClose }) {
                     </span>
                 </div>
             ) : (
-                <div className="lcs-guide-list">
+                <div className="ado-guide-list">
                     {guides.map((g) => (
-                        <div className="lcs-guide-item" key={g.id}>
+                        <div className="ado-guide-item" key={g.id}>
                             {g.color && (
                                 <div
-                                    className="lcs-guide-item-color"
+                                    className="ado-guide-item-color"
                                     style={{ background: g.color }}
                                 />
                             )}
-                            <div className="lcs-guide-item-info">
-                                <span className="lcs-guide-item-name">{g.name}</span>
-                                <div className="lcs-guide-item-meta">
-                                    <span className={`lcs-guide-mode-badge${g.mode === 'persistent' ? ' lcs-guide-mode-badge--persistent' : ''}`}>
+                            <div className="ado-guide-item-info">
+                                <span className="ado-guide-item-name">{g.name}</span>
+                                <div className="ado-guide-item-meta">
+                                    <span className={`ado-guide-mode-badge${g.mode === 'persistent' ? ' ado-guide-mode-badge--persistent' : ''}`}>
                                         {g.mode === 'persistent' ? 'Persistent' : 'One-shot'}
                                     </span>
-                                    <span className="lcs-guide-position-badge">
+                                    <span className="ado-guide-position-badge">
                                         {POSITION_LABELS[g.position] || g.position}
                                     </span>
                                 </div>
                             </div>
-                            <div className="lcs-guide-item-actions">
+                            <div className="ado-guide-item-actions">
                                 <button
-                                    className="lcs-guide-edit-btn"
+                                    className="ado-guide-edit-btn"
                                     onClick={openSettingsToGuides}
                                     title="Edit guide"
                                     type="button"
@@ -110,7 +110,7 @@ export default function GuidedGenPopover({ onClose }) {
                                 </button>
                                 {g.mode === 'persistent' ? (
                                     <button
-                                        className={`lcs-guide-toggle${g.enabled ? ' lcs-guide-toggle--active' : ''}`}
+                                        className={`ado-guide-toggle${g.enabled ? ' ado-guide-toggle--active' : ''}`}
                                         onClick={() => handleToggle(g.id)}
                                         title={g.enabled ? 'Disable' : 'Enable'}
                                         type="button"
@@ -119,7 +119,7 @@ export default function GuidedGenPopover({ onClose }) {
                                     </button>
                                 ) : (
                                     <button
-                                        className={`lcs-guide-fire-btn${g.enabled ? ' lcs-guide-toggle--active' : ''}`}
+                                        className={`ado-guide-fire-btn${g.enabled ? ' ado-guide-toggle--active' : ''}`}
                                         onClick={() => handleToggle(g.id)}
                                         title={g.enabled ? 'Armed — click to disarm' : 'Arm for next generation'}
                                         type="button"
@@ -133,7 +133,7 @@ export default function GuidedGenPopover({ onClose }) {
                 </div>
             )}
             <button
-                className="lcs-guide-new-btn"
+                className="ado-guide-new-btn"
                 onClick={openSettingsToGuides}
                 type="button"
             >

@@ -5,13 +5,13 @@ import {
     FileText, Check, AlertCircle, Trash2, Save, RefreshCw,
     Settings, Clock, Cloud, Cpu, ChevronDown, Play, MessageSquare, Scissors, RefreshCcw
 } from 'lucide-react';
-import { useLumiverseStore, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperStore, saveToExtension } from '../../store/AdoHelperContext';
 import { motion, AnimatePresence } from 'motion/react';
 
-/* global LumiverseBridge, SillyTavern, toastr */
+/* global AdoHelperBridge, SillyTavern, toastr */
 
 // Get the store for direct access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 const EMPTY_OBJECT = {};
@@ -64,31 +64,31 @@ function CollapsibleSection({ Icon, title, children, defaultOpen = false, status
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
-        <div className={clsx('lumiverse-vp-collapsible', isOpen && 'lumiverse-vp-collapsible--open')}>
+        <div className={clsx('ado-vp-collapsible', isOpen && 'ado-vp-collapsible--open')}>
             <button
-                className="lumiverse-vp-collapsible-header"
+                className="ado-vp-collapsible-header"
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
             >
-                <span className={clsx('lumiverse-vp-collapsible-chevron', isOpen && 'lumiverse-vp-collapsible-chevron--open')}>
+                <span className={clsx('ado-vp-collapsible-chevron', isOpen && 'ado-vp-collapsible-chevron--open')}>
                     <ChevronDown size={14} strokeWidth={2} />
                 </span>
-                <span className="lumiverse-vp-collapsible-icon">
+                <span className="ado-vp-collapsible-icon">
                     <Icon size={16} strokeWidth={1.5} />
                 </span>
-                <span className="lumiverse-vp-collapsible-title">{title}</span>
+                <span className="ado-vp-collapsible-title">{title}</span>
                 {status !== undefined && (
-                    <span className={clsx('lumiverse-vp-collapsible-status', status && 'lumiverse-vp-collapsible-status--active')}>
+                    <span className={clsx('ado-vp-collapsible-status', status && 'ado-vp-collapsible-status--active')}>
                         {status ? 'Active' : 'Off'}
                     </span>
                 )}
             </button>
             <CollapsibleContent
                 isOpen={isOpen}
-                className="lumiverse-vp-collapsible-content"
+                className="ado-vp-collapsible-content"
                 duration={200}
             >
-                <div className="lumiverse-vp-collapsible-inner">
+                <div className="ado-vp-collapsible-inner">
                     {children}
                 </div>
             </CollapsibleContent>
@@ -101,22 +101,22 @@ function CollapsibleSection({ Icon, title, children, defaultOpen = false, status
  */
 function Toggle({ id, checked, onChange, label, hint }) {
     return (
-        <div className="lumiverse-vp-toggle-row">
-            <label className="lumiverse-vp-toggle-label" htmlFor={id}>
-                <span className="lumiverse-vp-toggle-text">{label}</span>
-                {hint && <span className="lumiverse-vp-toggle-hint">{hint}</span>}
+        <div className="ado-vp-toggle-row">
+            <label className="ado-vp-toggle-label" htmlFor={id}>
+                <span className="ado-vp-toggle-text">{label}</span>
+                {hint && <span className="ado-vp-toggle-hint">{hint}</span>}
             </label>
-            <div className="lumiverse-vp-toggle-switch-wrapper">
+            <div className="ado-vp-toggle-switch-wrapper">
                 <input
                     type="checkbox"
                     id={id}
-                    className="lumiverse-vp-toggle-input"
+                    className="ado-vp-toggle-input"
                     checked={checked}
                     onChange={(e) => onChange(e.target.checked)}
                 />
-                <label htmlFor={id} className="lumiverse-vp-toggle-switch-label">
-                    <div className={clsx('lumiverse-vp-toggle-track', checked && 'lumiverse-vp-toggle-track--on')}>
-                        <div className="lumiverse-vp-toggle-thumb" />
+                <label htmlFor={id} className="ado-vp-toggle-switch-label">
+                    <div className={clsx('ado-vp-toggle-track', checked && 'ado-vp-toggle-track--on')}>
+                        <div className="ado-vp-toggle-thumb" />
                     </div>
                 </label>
             </div>
@@ -129,7 +129,7 @@ function Toggle({ id, checked, onChange, label, hint }) {
  */
 function RadioOption({ name, value, checked, onChange, label }) {
     return (
-        <label className={clsx('lumiverse-vp-radio-option', checked && 'lumiverse-vp-radio-option--selected')}>
+        <label className={clsx('ado-vp-radio-option', checked && 'ado-vp-radio-option--selected')}>
             <input
                 type="radio"
                 name={name}
@@ -137,7 +137,7 @@ function RadioOption({ name, value, checked, onChange, label }) {
                 checked={checked}
                 onChange={() => onChange(value)}
             />
-            <span className="lumiverse-vp-radio-option-label">{label}</span>
+            <span className="ado-vp-radio-option-label">{label}</span>
         </label>
     );
 }
@@ -147,19 +147,19 @@ function RadioOption({ name, value, checked, onChange, label }) {
  */
 function NumberField({ id, label, hint, value, onChange, min, max, step = 1 }) {
     return (
-        <div className="lumiverse-vp-field">
-            <label className="lumiverse-vp-field-label" htmlFor={id}>{label}</label>
+        <div className="ado-vp-field">
+            <label className="ado-vp-field-label" htmlFor={id}>{label}</label>
             <input
                 type="number"
                 id={id}
-                className="lumiverse-vp-field-input lumiverse-vp-field-input--small"
+                className="ado-vp-field-input ado-vp-field-input--small"
                 value={value}
                 onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
                 min={min}
                 max={max}
                 step={step}
             />
-            {hint && <span className="lumiverse-vp-field-hint">{hint}</span>}
+            {hint && <span className="ado-vp-field-hint">{hint}</span>}
         </div>
     );
 }
@@ -169,17 +169,17 @@ function NumberField({ id, label, hint, value, onChange, min, max, step = 1 }) {
  */
 function TextField({ id, label, hint, value, onChange, placeholder, type = 'text' }) {
     return (
-        <div className="lumiverse-vp-field">
-            <label className="lumiverse-vp-field-label" htmlFor={id}>{label}</label>
+        <div className="ado-vp-field">
+            <label className="ado-vp-field-label" htmlFor={id}>{label}</label>
             <input
                 type={type}
                 id={id}
-                className="lumiverse-vp-field-input"
+                className="ado-vp-field-input"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
             />
-            {hint && <span className="lumiverse-vp-field-hint">{hint}</span>}
+            {hint && <span className="ado-vp-field-hint">{hint}</span>}
         </div>
     );
 }
@@ -189,11 +189,11 @@ function TextField({ id, label, hint, value, onChange, placeholder, type = 'text
  */
 function SelectField({ id, label, hint, value, onChange, options }) {
     return (
-        <div className="lumiverse-vp-field">
-            <label className="lumiverse-vp-field-label" htmlFor={id}>{label}</label>
+        <div className="ado-vp-field">
+            <label className="ado-vp-field-label" htmlFor={id}>{label}</label>
             <select
                 id={id}
-                className="lumiverse-vp-field-select"
+                className="ado-vp-field-select"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             >
@@ -201,7 +201,7 @@ function SelectField({ id, label, hint, value, onChange, options }) {
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
             </select>
-            {hint && <span className="lumiverse-vp-field-hint">{hint}</span>}
+            {hint && <span className="ado-vp-field-hint">{hint}</span>}
         </div>
     );
 }
@@ -212,7 +212,7 @@ function SelectField({ id, label, hint, value, onChange, options }) {
 function StatusIndicator({ hasContent, hasChat }) {
     if (!hasChat) {
         return (
-            <div className="lumiverse-vp-summary-status lumiverse-vp-summary-status--no-chat">
+            <div className="ado-vp-summary-status ado-vp-summary-status--no-chat">
                 <AlertCircle size={16} strokeWidth={2} />
                 <span>No active chat</span>
             </div>
@@ -221,7 +221,7 @@ function StatusIndicator({ hasContent, hasChat }) {
 
     if (hasContent) {
         return (
-            <div className="lumiverse-vp-summary-status lumiverse-vp-summary-status--exists">
+            <div className="ado-vp-summary-status ado-vp-summary-status--exists">
                 <Check size={16} strokeWidth={2} />
                 <span>Summary exists for this chat</span>
             </div>
@@ -229,7 +229,7 @@ function StatusIndicator({ hasContent, hasChat }) {
     }
 
     return (
-        <div className="lumiverse-vp-summary-status lumiverse-vp-summary-status--empty">
+        <div className="ado-vp-summary-status ado-vp-summary-status--empty">
             <AlertCircle size={16} strokeWidth={2} />
             <span>No summary yet</span>
         </div>
@@ -243,10 +243,10 @@ function ActionButton({ Icon, label, onClick, disabled, variant = 'secondary', l
     return (
         <motion.button
             className={clsx(
-                'lumiverse-vp-action-btn',
-                `lumiverse-vp-action-btn--${variant}`,
-                disabled && 'lumiverse-vp-action-btn--disabled',
-                iconOnly && 'lumiverse-vp-action-btn--icon-only'
+                'ado-vp-action-btn',
+                `ado-vp-action-btn--${variant}`,
+                disabled && 'ado-vp-action-btn--disabled',
+                iconOnly && 'ado-vp-action-btn--icon-only'
             )}
             onClick={onClick}
             disabled={disabled || loading}
@@ -256,7 +256,7 @@ function ActionButton({ Icon, label, onClick, disabled, variant = 'secondary', l
             title={label}
         >
             {loading ? (
-                <span className="lumiverse-vp-action-btn-spinner" />
+                <span className="ado-vp-action-btn-spinner" />
             ) : (
                 <Icon size={iconOnly ? 16 : 14} strokeWidth={2} />
             )}
@@ -322,7 +322,7 @@ function SummarizationConfig() {
     }));
 
     return (
-        <div className="lumiverse-vp-summary-config">
+        <div className="ado-vp-summary-config">
             {/* Mode Selection */}
             <CollapsibleSection
                 Icon={Settings}
@@ -330,7 +330,7 @@ function SummarizationConfig() {
                 status={mode !== 'disabled'}
                 defaultOpen={true}
             >
-                <div className="lumiverse-vp-radio-group">
+                <div className="ado-vp-radio-group">
                     <RadioOption
                         name="sum-mode"
                         value="disabled"
@@ -353,7 +353,7 @@ function SummarizationConfig() {
                         label="Manual"
                     />
                 </div>
-                <p className="lumiverse-vp-settings-desc">
+                <p className="ado-vp-settings-desc">
                     {mode === 'disabled' && 'Summarization is turned off.'}
                     {mode === 'auto' && 'Summaries are generated automatically at set intervals.'}
                     {mode === 'manual' && 'Use /loom-summarize command to generate summaries.'}
@@ -363,7 +363,7 @@ function SummarizationConfig() {
             {/* Auto Settings - uses CSS grid for smooth animation */}
             <CollapsibleContent isOpen={mode === 'auto'} duration={200}>
                 <CollapsibleSection Icon={Clock} title="Auto Settings" defaultOpen={true}>
-                    <div className="lumiverse-vp-field-row">
+                    <div className="ado-vp-field-row">
                         <NumberField
                             id="sum-interval"
                             label="Interval"
@@ -403,7 +403,7 @@ function SummarizationConfig() {
             {/* API Source - uses CSS grid for smooth animation */}
             <CollapsibleContent isOpen={mode !== 'disabled'} duration={200}>
                 <CollapsibleSection Icon={Cloud} title="API Source" defaultOpen={false}>
-                    <div className="lumiverse-vp-radio-group lumiverse-vp-radio-group--wide">
+                    <div className="ado-vp-radio-group ado-vp-radio-group--wide">
                         <RadioOption
                             name="sum-source"
                             value="main"
@@ -461,7 +461,7 @@ function SummarizationConfig() {
                         />
                     </CollapsibleContent>
 
-                    <div className="lumiverse-vp-field-row lumiverse-vp-field-row--3">
+                    <div className="ado-vp-field-row ado-vp-field-row--3">
                         <NumberField
                             id="sum-temp"
                             label="Temp"
@@ -495,7 +495,7 @@ function SummarizationConfig() {
             {/* Claude Cache Control - Show when using Anthropic provider or main API (which might be Claude) */}
             <CollapsibleContent isOpen={mode !== 'disabled' && (apiSource === 'main' || secondary.provider === 'anthropic')} duration={200}>
                 <CollapsibleSection Icon={RefreshCcw} title="Claude Cache" defaultOpen={false}>
-                    <p className="lumiverse-vp-settings-desc">
+                    <p className="ado-vp-settings-desc">
                         If Claude seems to ignore changes to your Lumia definitions,
                         clearing the cache will force fresh responses on the next summarization.
                     </p>
@@ -503,8 +503,8 @@ function SummarizationConfig() {
                         Icon={RefreshCcw}
                         label="Clear Claude Cache"
                         onClick={() => {
-                            if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.clearClaudeCache) {
-                                LumiverseBridge.clearClaudeCache();
+                            if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.clearClaudeCache) {
+                                AdoHelperBridge.clearClaudeCache();
                                 // Show success feedback
                                 if (typeof toastr !== 'undefined') {
                                     toastr.success('Claude cache cleared! Next request will use fresh definitions.');
@@ -545,7 +545,7 @@ function SummarizationConfig() {
                         min={5}
                         max={500}
                     />
-                    <div className="lumiverse-vp-warning-box">
+                    <div className="ado-vp-warning-box">
                         <AlertCircle size={14} strokeWidth={2} />
                         <span>Older messages will be excluded. Consider using summarization to preserve memories.</span>
                     </div>
@@ -634,8 +634,8 @@ function SummaryTextEditor() {
                 context.saveMetadata?.();
 
                 // Update button state if function exists
-                if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.updateSummaryButtonState) {
-                    LumiverseBridge.updateSummaryButtonState();
+                if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.updateSummaryButtonState) {
+                    AdoHelperBridge.updateSummaryButtonState();
                 }
 
                 setOriginalSummary(trimmedSummary);
@@ -659,8 +659,8 @@ function SummaryTextEditor() {
                         delete context.chatMetadata[LOOM_SUMMARY_KEY];
                         context.saveMetadata?.();
 
-                        if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.updateSummaryButtonState) {
-                            LumiverseBridge.updateSummaryButtonState();
+                        if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.updateSummaryButtonState) {
+                            AdoHelperBridge.updateSummaryButtonState();
                         }
                     }
                 }
@@ -683,15 +683,15 @@ function SummaryTextEditor() {
         setIsGenerating(true);
         try {
             // Check if bridge is available
-            if (typeof window.LumiverseBridge === 'undefined') {
-                console.error('[SummaryEditor] LumiverseBridge not available');
+            if (typeof window.AdoHelperBridge === 'undefined') {
+                console.error('[SummaryEditor] AdoHelperBridge not available');
                 if (typeof toastr !== 'undefined') {
                     toastr.error('Summary bridge not available. Try refreshing the page.');
                 }
                 return;
             }
 
-            if (typeof window.LumiverseBridge.getCallbacks !== 'function') {
+            if (typeof window.AdoHelperBridge.getCallbacks !== 'function') {
                 console.error('[SummaryEditor] getCallbacks is not a function');
                 if (typeof toastr !== 'undefined') {
                     toastr.error('Summary callbacks not configured.');
@@ -699,7 +699,7 @@ function SummaryTextEditor() {
                 return;
             }
 
-            const callbacks = window.LumiverseBridge.getCallbacks();
+            const callbacks = window.AdoHelperBridge.getCallbacks();
             if (!callbacks.generateSummary) {
                 console.error('[SummaryEditor] generateSummary callback not registered');
                 if (typeof toastr !== 'undefined') {
@@ -738,10 +738,10 @@ function SummaryTextEditor() {
             <StatusIndicator hasContent={originalSummary.length > 0} hasChat={hasChat} />
 
             {/* Textarea */}
-            <div className="lumiverse-vp-summary-textarea-wrapper">
+            <div className="ado-vp-summary-textarea-wrapper">
                 <textarea
                     ref={textareaRef}
-                    className="lumiverse-vp-summary-textarea"
+                    className="ado-vp-summary-textarea"
                     value={summary}
                     onChange={handleTextChange}
                     placeholder={PLACEHOLDER_TEXT}
@@ -750,7 +750,7 @@ function SummaryTextEditor() {
             </div>
 
             {/* Actions */}
-            <div className="lumiverse-vp-summary-actions">
+            <div className="ado-vp-summary-actions">
                 <ActionButton
                     Icon={Play}
                     label={isGenerating ? 'Generating...' : 'Generate'}
@@ -789,7 +789,7 @@ function SummaryTextEditor() {
             <AnimatePresence>
                 {hasChanges && (
                     <motion.div
-                        className="lumiverse-vp-summary-unsaved"
+                        className="ado-vp-summary-unsaved"
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 5 }}
@@ -808,7 +808,7 @@ function SummaryTextEditor() {
  */
 function SummaryEditor() {
     return (
-        <div className="lumiverse-vp-summary-editor">
+        <div className="ado-vp-summary-editor">
             {/* Summary Text Editor */}
             <SummaryTextEditor />
 

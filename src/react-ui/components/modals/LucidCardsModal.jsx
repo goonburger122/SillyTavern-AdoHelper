@@ -49,7 +49,7 @@ const styles = {
         alignItems: 'center',
         gap: '12px',
         padding: '16px 20px',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     headerIcon: {
@@ -60,7 +60,7 @@ const styles = {
         height: '40px',
         borderRadius: '10px',
         background: 'linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(147, 112, 219, 0.1))',
-        color: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
     },
     headerText: {
         flex: 1,
@@ -69,18 +69,18 @@ const styles = {
         margin: 0,
         fontSize: '16px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     subtitle: {
         margin: '4px 0 0',
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     tabs: {
         display: 'flex',
         gap: '2px',
         padding: '0 16px',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
         overflowX: 'auto',
     },
@@ -91,7 +91,7 @@ const styles = {
         padding: '12px 14px',
         fontSize: '12px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         background: 'transparent',
         border: 'none',
         borderBottom: '2px solid transparent',
@@ -100,8 +100,8 @@ const styles = {
         whiteSpace: 'nowrap',
     },
     tabActive: {
-        color: 'var(--lumiverse-primary)',
-        borderBottomColor: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
+        borderBottomColor: 'var(--ado-primary)',
     },
     scrollArea: {
         flex: '1 1 auto',
@@ -116,7 +116,7 @@ const styles = {
         justifyContent: 'center',
         gap: '12px',
         padding: '40px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     spinner: {
         animation: 'spin 1s linear infinite',
@@ -134,7 +134,7 @@ const styles = {
     },
     errorText: {
         fontSize: '13px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     retryButton: {
         display: 'flex',
@@ -143,9 +143,9 @@ const styles = {
         padding: '8px 16px',
         fontSize: '13px',
         fontWeight: 500,
-        background: 'var(--lumiverse-surface)',
-        color: 'var(--lumiverse-text)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-surface)',
+        color: 'var(--ado-text)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '6px',
         cursor: 'pointer',
     },
@@ -153,7 +153,7 @@ const styles = {
         textAlign: 'center',
         padding: '40px 20px',
         fontSize: '13px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     grid: {
         display: 'grid',
@@ -164,14 +164,14 @@ const styles = {
         position: 'relative',
         background: 'rgba(0, 0, 0, 0.2)',
         borderRadius: '12px',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
         overflow: 'hidden',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
     },
     cardSelected: {
-        borderColor: 'var(--lumiverse-primary)',
-        boxShadow: '0 0 0 1px var(--lumiverse-primary)',
+        borderColor: 'var(--ado-primary)',
+        boxShadow: '0 0 0 1px var(--ado-primary)',
     },
     cardImported: {
         opacity: 0.5,
@@ -190,7 +190,7 @@ const styles = {
         objectFit: 'cover',
     },
     cardPlaceholder: {
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     cardCheck: {
         position: 'absolute',
@@ -199,7 +199,7 @@ const styles = {
         width: '24px',
         height: '24px',
         borderRadius: '50%',
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -218,7 +218,7 @@ const styles = {
     cardTitle: {
         fontSize: '14px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         marginBottom: '4px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -226,12 +226,12 @@ const styles = {
     },
     cardAuthor: {
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         marginBottom: '6px',
     },
     cardCounts: {
         fontSize: '11px',
-        color: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
     },
     footer: {
         display: 'flex',
@@ -239,7 +239,7 @@ const styles = {
         justifyContent: 'space-between',
         gap: '12px',
         padding: '12px 16px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     footerLeft: {
@@ -252,7 +252,7 @@ const styles = {
         fontSize: '12px',
         fontWeight: 500,
         background: 'transparent',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         border: 'none',
         cursor: 'pointer',
         transition: 'color 0.2s ease',
@@ -264,7 +264,7 @@ const styles = {
     },
     selectedCount: {
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     button: {
         padding: '10px 16px',
@@ -276,15 +276,15 @@ const styles = {
         transition: 'all 0.2s ease',
     },
     buttonSecondary: {
-        background: 'var(--lumiverse-surface)',
-        color: 'var(--lumiverse-text)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-surface)',
+        color: 'var(--ado-text)',
+        border: '1px solid var(--ado-border)',
     },
     buttonPrimary: {
         display: 'flex',
         alignItems: 'center',
         gap: '6px',
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: 'white',
     },
     buttonDisabled: {
@@ -312,7 +312,7 @@ function LucidCardsModal({ onClose }) {
         setSelectedPacks([]);
         
         try {
-            const response = await fetch('https://lucid.cards/api/lumia-dlc');
+            const response = await fetch('https://lucid.cards/api/ado-dlc');
             if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
             const data = await response.json();
             setPacks(data.packs || []);
@@ -387,7 +387,7 @@ function LucidCardsModal({ onClose }) {
             const isUpdate = !!getPackByName(pack.packName);
 
             try {
-                const response = await fetch(`https://lucid.cards/api/lumia-dlc/${pack.slug}`);
+                const response = await fetch(`https://lucid.cards/api/ado-dlc/${pack.slug}`);
                 if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
                 
                 const data = await response.json();
@@ -410,7 +410,7 @@ function LucidCardsModal({ onClose }) {
                     loomItems: packData.loomItems || [],
                     loomTools: packData.loomTools || [],
                     isCustom: false, // Downloaded from Lucid.cards, not editable
-                    url: `https://lucid.cards/api/lumia-dlc/${pack.slug}`,
+                    url: `https://lucid.cards/api/ado-dlc/${pack.slug}`,
                 };
                 
                 // Save pack using the proper storage system (overwrites if already exists)
@@ -454,7 +454,7 @@ function LucidCardsModal({ onClose }) {
                 </div>
                 <div style={styles.headerText}>
                     <h3 style={styles.title}>Lucid Cards Browser</h3>
-                    <p style={styles.subtitle}>Browse and import official Lumiverse content</p>
+                    <p style={styles.subtitle}>Browse and import official Ado Helper content</p>
                 </div>
             </div>
 
@@ -504,7 +504,7 @@ function LucidCardsModal({ onClose }) {
                         No items available in this category.
                     </div>
                 ) : (
-                    <div className="lumiverse-responsive-card-grid">
+                    <div className="ado-responsive-card-grid">
                         {filteredPacks.map((pack) => {
                             const selected = isSelected(pack);
                             const counts = [];

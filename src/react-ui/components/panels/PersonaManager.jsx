@@ -1,5 +1,5 @@
 /**
- * PersonaManager — Glassmorphic persona management panel for the Lumiverse viewport.
+ * PersonaManager — Glassmorphic persona management panel for the Ado Helper viewport.
  *
  * Avatar-first card grid with inline editor expansion, lock badges,
  * search/filter, grid/list toggle, and streamlined create flow.
@@ -24,7 +24,7 @@ let stylesInjected = false;
 function ensureStyles() {
     if (stylesInjected) return;
     const style = document.createElement('style');
-    style.id = 'lumiverse-persona-manager-styles';
+    style.id = 'ado-persona-manager-styles';
     style.textContent = personaManagerStyles;
     document.head.appendChild(style);
     stylesInjected = true;
@@ -60,20 +60,20 @@ const SORT_OPTIONS = [
 // ─── Search Input ───────────────────────────────────────────────
 function SearchInput({ value, onChange, placeholder }) {
     return (
-        <div className="lumiverse-pm-search">
-            <span className="lumiverse-pm-search-icon">
+        <div className="ado-pm-search">
+            <span className="ado-pm-search-icon">
                 <Search size={15} strokeWidth={1.5} />
             </span>
             <input
                 type="text"
-                className="lumiverse-pm-search-input"
+                className="ado-pm-search-input"
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             />
             {value && (
                 <button
-                    className="lumiverse-pm-search-clear"
+                    className="ado-pm-search-clear"
                     onClick={() => onChange('')}
                     type="button"
                 >
@@ -87,11 +87,11 @@ function SearchInput({ value, onChange, placeholder }) {
 // ─── Filter Pills ───────────────────────────────────────────────
 function FilterPills({ active, onChange }) {
     return (
-        <div className="lumiverse-pm-filters">
+        <div className="ado-pm-filters">
             {FILTER_OPTIONS.map(f => (
                 <button
                     key={f.id}
-                    className={clsx('lumiverse-pm-filter-btn', active === f.id && 'lumiverse-pm-filter-btn--active')}
+                    className={clsx('ado-pm-filter-btn', active === f.id && 'ado-pm-filter-btn--active')}
                     onClick={() => onChange(f.id)}
                     type="button"
                 >
@@ -117,9 +117,9 @@ function SortDropdown({ sortBy, onSortChange }) {
     }, [isOpen]);
 
     return (
-        <div className="lumiverse-pm-sort" ref={ref}>
+        <div className="ado-pm-sort" ref={ref}>
             <button
-                className="lumiverse-pm-sort-btn"
+                className="ado-pm-sort-btn"
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
                 title="Sort by"
@@ -129,11 +129,11 @@ function SortDropdown({ sortBy, onSortChange }) {
                 <ChevronDown size={11} strokeWidth={2} style={{ transition: 'transform 0.15s', transform: isOpen ? 'rotate(180deg)' : 'none' }} />
             </button>
             {isOpen && (
-                <div className="lumiverse-pm-sort-dropdown">
+                <div className="ado-pm-sort-dropdown">
                     {SORT_OPTIONS.map(opt => (
                         <button
                             key={opt.id}
-                            className={clsx('lumiverse-pm-sort-option', sortBy === opt.id && 'lumiverse-pm-sort-option--active')}
+                            className={clsx('ado-pm-sort-option', sortBy === opt.id && 'ado-pm-sort-option--active')}
                             onClick={() => { onSortChange(opt.id); setIsOpen(false); }}
                             type="button"
                         >
@@ -150,7 +150,7 @@ function SortDropdown({ sortBy, onSortChange }) {
 function ViewToggle({ viewMode, onToggle }) {
     return (
         <button
-            className="lumiverse-pm-icon-btn"
+            className="ado-pm-icon-btn"
             onClick={() => onToggle(viewMode === 'grid' ? 'list' : 'grid')}
             type="button"
             title={viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'}
@@ -164,24 +164,24 @@ function ViewToggle({ viewMode, onToggle }) {
 function LockBadges({ isDefault, isChatLocked, hasConnections, isActive }) {
     if (!isDefault && !isChatLocked && !hasConnections && !isActive) return null;
     return (
-        <div className="lumiverse-pm-badges">
+        <div className="ado-pm-badges">
             {isActive && (
-                <span className="lumiverse-pm-badge lumiverse-pm-badge--locked" title="Active">
+                <span className="ado-pm-badge ado-pm-badge--locked" title="Active">
                     <UserCheck size={10} strokeWidth={2.5} />
                 </span>
             )}
             {isDefault && (
-                <span className="lumiverse-pm-badge lumiverse-pm-badge--default" title="Default persona">
+                <span className="ado-pm-badge ado-pm-badge--default" title="Default persona">
                     <Crown size={10} strokeWidth={2.5} />
                 </span>
             )}
             {isChatLocked && (
-                <span className="lumiverse-pm-badge lumiverse-pm-badge--locked" title="Chat locked">
+                <span className="ado-pm-badge ado-pm-badge--locked" title="Chat locked">
                     <Lock size={10} strokeWidth={2.5} />
                 </span>
             )}
             {hasConnections && (
-                <span className="lumiverse-pm-badge lumiverse-pm-badge--connected" title="Has connections">
+                <span className="ado-pm-badge ado-pm-badge--connected" title="Has connections">
                     <Link2 size={10} strokeWidth={2.5} />
                 </span>
             )}
@@ -194,9 +194,9 @@ const PersonaCardGrid = memo(function PersonaCardGrid({ persona, isSelected, onS
     return (
         <div
             className={clsx(
-                'lumiverse-pm-card',
-                isSelected && 'lumiverse-pm-card--selected',
-                persona.isActive && 'lumiverse-pm-card--active',
+                'ado-pm-card',
+                isSelected && 'ado-pm-card--selected',
+                persona.isActive && 'ado-pm-card--active',
             )}
             onClick={() => onSelect(persona.avatarId)}
             onDoubleClick={() => onDoubleClick(persona.avatarId)}
@@ -208,19 +208,19 @@ const PersonaCardGrid = memo(function PersonaCardGrid({ persona, isSelected, onS
                 hasConnections={persona.hasConnections}
                 isActive={persona.isActive}
             />
-            <div className="lumiverse-pm-card-avatar">
+            <div className="ado-pm-card-avatar">
                 <LazyImage
                     src={persona.avatarUrl}
                     alt={persona.name}
                     spinnerSize={16}
                     fallback={
-                        <div className="lumiverse-pm-card-avatar--placeholder" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="ado-pm-card-avatar--placeholder" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <User size={28} strokeWidth={1.5} />
                         </div>
                     }
                 />
             </div>
-            <span className="lumiverse-pm-card-name">{persona.name}</span>
+            <span className="ado-pm-card-name">{persona.name}</span>
         </div>
     );
 });
@@ -230,14 +230,14 @@ const PersonaCardList = memo(function PersonaCardList({ persona, isSelected, onS
     return (
         <div
             className={clsx(
-                'lumiverse-pm-list-card',
-                isSelected && 'lumiverse-pm-list-card--selected',
-                persona.isActive && 'lumiverse-pm-list-card--active',
+                'ado-pm-list-card',
+                isSelected && 'ado-pm-list-card--selected',
+                persona.isActive && 'ado-pm-list-card--active',
             )}
             onClick={() => onSelect(persona.avatarId)}
             onDoubleClick={() => onDoubleClick(persona.avatarId)}
         >
-            <div className="lumiverse-pm-list-avatar">
+            <div className="ado-pm-list-avatar">
                 <LazyImage
                     src={persona.avatarUrl}
                     alt={persona.name}
@@ -245,11 +245,11 @@ const PersonaCardList = memo(function PersonaCardList({ persona, isSelected, onS
                     fallback={<User size={18} strokeWidth={1.5} />}
                 />
             </div>
-            <div className="lumiverse-pm-list-info">
-                <div className="lumiverse-pm-list-name">{persona.name}</div>
-                {persona.title && <div className="lumiverse-pm-list-title">{persona.title}</div>}
+            <div className="ado-pm-list-info">
+                <div className="ado-pm-list-name">{persona.name}</div>
+                {persona.title && <div className="ado-pm-list-title">{persona.title}</div>}
             </div>
-            <div className="lumiverse-pm-list-badges">
+            <div className="ado-pm-list-badges">
                 <LockBadges
                     isDefault={persona.isDefault}
                     isChatLocked={persona.isChatLocked}
@@ -300,7 +300,7 @@ function CreatePersonaForm({ onCreate, onCancel }) {
     }, [handleSubmit, onCancel]);
 
     return (
-        <div className="lumiverse-pm-create">
+        <div className="ado-pm-create">
             <input
                 ref={fileInputRef}
                 type="file"
@@ -309,7 +309,7 @@ function CreatePersonaForm({ onCreate, onCancel }) {
                 onChange={handleFileChange}
             />
             <div
-                className="lumiverse-pm-create-avatar"
+                className="ado-pm-create-avatar"
                 onClick={() => fileInputRef.current?.click()}
                 title="Choose avatar image"
             >
@@ -320,16 +320,16 @@ function CreatePersonaForm({ onCreate, onCancel }) {
                 )}
             </div>
             <input
-                className="lumiverse-pm-create-input"
+                className="ado-pm-create-input"
                 placeholder="Persona name..."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={handleKeyDown}
                 autoFocus
             />
-            <div className="lumiverse-pm-create-actions">
+            <div className="ado-pm-create-actions">
                 <button
-                    className="lumiverse-pm-icon-btn lumiverse-pm-icon-btn--primary"
+                    className="ado-pm-icon-btn ado-pm-icon-btn--primary"
                     onClick={handleSubmit}
                     disabled={!name.trim() || !file || isSubmitting}
                     title="Create persona"
@@ -338,7 +338,7 @@ function CreatePersonaForm({ onCreate, onCancel }) {
                     <Check size={15} strokeWidth={2} />
                 </button>
                 <button
-                    className="lumiverse-pm-icon-btn"
+                    className="ado-pm-icon-btn"
                     onClick={onCancel}
                     title="Cancel"
                     type="button"
@@ -354,18 +354,18 @@ function CreatePersonaForm({ onCreate, onCancel }) {
 // ─── Toggle Switch ──────────────────────────────────────────────
 function ToggleSwitch({ label, icon: Icon, isOn, onToggle }) {
     return (
-        <div className="lumiverse-pm-toggle-row">
-            <span className="lumiverse-pm-toggle-label">
+        <div className="ado-pm-toggle-row">
+            <span className="ado-pm-toggle-label">
                 {Icon && <Icon size={14} strokeWidth={1.5} />}
                 {label}
             </span>
             <div
-                className={clsx('lumiverse-pm-toggle', isOn && 'lumiverse-pm-toggle--on')}
+                className={clsx('ado-pm-toggle', isOn && 'ado-pm-toggle--on')}
                 onClick={onToggle}
                 role="switch"
                 aria-checked={isOn}
             >
-                <div className="lumiverse-pm-toggle-knob" />
+                <div className="ado-pm-toggle-knob" />
             </div>
         </div>
     );
@@ -519,10 +519,10 @@ function PersonaEditor({
     }, []);
 
     return (
-        <div className="lumiverse-pm-editor" ref={editorRef}>
-            <div className="lumiverse-pm-editor-inner">
+        <div className="ado-pm-editor" ref={editorRef}>
+            <div className="ado-pm-editor-inner">
                 {/* Identity Section */}
-                <div className="lumiverse-pm-avatar-zone">
+                <div className="ado-pm-avatar-zone">
                     <input
                         ref={fileInputRef}
                         type="file"
@@ -531,7 +531,7 @@ function PersonaEditor({
                         onChange={handleAvatarUpload}
                     />
                     <div
-                        className="lumiverse-pm-avatar-preview"
+                        className="ado-pm-avatar-preview"
                         onClick={() => fileInputRef.current?.click()}
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
@@ -542,24 +542,24 @@ function PersonaEditor({
                             alt={persona.name}
                             spinnerSize={16}
                             fallback={
-                                <div className="lumiverse-pm-card-avatar--placeholder" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div className="ado-pm-card-avatar--placeholder" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <User size={24} strokeWidth={1.5} />
                                 </div>
                             }
                         />
-                        <div className="lumiverse-pm-avatar-overlay">
+                        <div className="ado-pm-avatar-overlay">
                             <Upload size={18} strokeWidth={2} />
                         </div>
                     </div>
-                    <div className="lumiverse-pm-avatar-fields">
+                    <div className="ado-pm-avatar-fields">
                         <input
-                            className="lumiverse-pm-input"
+                            className="ado-pm-input"
                             value={localName}
                             onChange={handleNameChange}
                             placeholder="Name"
                         />
                         <input
-                            className="lumiverse-pm-input"
+                            className="ado-pm-input"
                             value={localTitle}
                             onChange={handleTitleChange}
                             placeholder="Title (optional)"
@@ -569,17 +569,17 @@ function PersonaEditor({
 
                 {/* Description Section */}
                 <div>
-                    <div className="lumiverse-pm-section-title">Description</div>
+                    <div className="ado-pm-section-title">Description</div>
                     <textarea
-                        className="lumiverse-pm-textarea"
+                        className="ado-pm-textarea"
                         value={localDesc}
                         onChange={handleDescChange}
                         placeholder="Persona description..."
                         rows={3}
                     />
-                    <div className="lumiverse-pm-desc-controls" style={{ marginTop: '8px' }}>
+                    <div className="ado-pm-desc-controls" style={{ marginTop: '8px' }}>
                         <select
-                            className="lumiverse-pm-desc-select"
+                            className="ado-pm-desc-select"
                             value={localPosition}
                             onChange={handlePositionChange}
                             title="Injection position"
@@ -590,7 +590,7 @@ function PersonaEditor({
                         </select>
                         {localPosition === 4 && (
                             <input
-                                className="lumiverse-pm-input"
+                                className="ado-pm-input"
                                 type="number"
                                 value={localDepth}
                                 onChange={handleDepthChange}
@@ -600,7 +600,7 @@ function PersonaEditor({
                             />
                         )}
                         <select
-                            className="lumiverse-pm-desc-select"
+                            className="ado-pm-desc-select"
                             value={localRole}
                             onChange={handleRoleChange}
                             title="Message role"
@@ -614,7 +614,7 @@ function PersonaEditor({
 
                 {/* Locks Section */}
                 <div>
-                    <div className="lumiverse-pm-section-title">Locks</div>
+                    <div className="ado-pm-section-title">Locks</div>
                     <ToggleSwitch
                         label="Default Persona"
                         icon={Crown}
@@ -631,12 +631,12 @@ function PersonaEditor({
 
                 {/* Persona Lore Section */}
                 <div>
-                    <div className="lumiverse-pm-section-title">
+                    <div className="ado-pm-section-title">
                         <BookOpen size={12} strokeWidth={2} style={{ display: 'inline', verticalAlign: '-1px', marginRight: '4px' }} />
                         Persona Lore
                     </div>
                     <select
-                        className="lumiverse-pm-desc-select"
+                        className="ado-pm-desc-select"
                         value={localLorebook}
                         onChange={handleLorebookChange}
                         title="Attach a World Book to this persona"
@@ -648,7 +648,7 @@ function PersonaEditor({
                         ))}
                     </select>
                     {localLorebook && (
-                        <div style={{ marginTop: '4px', fontSize: '11px', color: 'var(--lumiverse-text-dim)', lineHeight: 1.4 }}>
+                        <div style={{ marginTop: '4px', fontSize: '11px', color: 'var(--ado-text-dim)', lineHeight: 1.4 }}>
                             Lorebook entries from "{localLorebook}" will activate when this persona is selected.
                         </div>
                     )}
@@ -657,16 +657,16 @@ function PersonaEditor({
                 {/* Connections Section */}
                 {persona.connections.length > 0 && (
                     <div>
-                        <div className="lumiverse-pm-section-title">Connections</div>
-                        <div className="lumiverse-pm-connections">
+                        <div className="ado-pm-section-title">Connections</div>
+                        <div className="ado-pm-connections">
                             {persona.connections.map((conn, idx) => (
-                                <div key={idx} className="lumiverse-pm-connection">
+                                <div key={idx} className="ado-pm-connection">
                                     <Link2 size={12} strokeWidth={1.5} />
-                                    <span className="lumiverse-pm-connection-name">
+                                    <span className="ado-pm-connection-name">
                                         {conn.type}: {conn.id}
                                     </span>
                                     <button
-                                        className="lumiverse-pm-connection-remove"
+                                        className="ado-pm-connection-remove"
                                         onClick={() => onRemoveConnection(persona.avatarId, idx)}
                                         title="Remove connection"
                                         type="button"
@@ -680,16 +680,16 @@ function PersonaEditor({
                 )}
 
                 {/* Action Buttons */}
-                <div className="lumiverse-pm-actions">
+                <div className="ado-pm-actions">
                     <button
-                        className="lumiverse-pm-btn lumiverse-pm-btn--primary"
+                        className="ado-pm-btn ado-pm-btn--primary"
                         onClick={() => onSwitch(persona.avatarId)}
                         type="button"
                     >
                         <UserCheck size={13} strokeWidth={2} /> Switch To
                     </button>
                     <button
-                        className="lumiverse-pm-btn"
+                        className="ado-pm-btn"
                         onClick={() => onDuplicate(persona.avatarId)}
                         type="button"
                     >
@@ -697,18 +697,18 @@ function PersonaEditor({
                     </button>
                     {!confirmDelete ? (
                         <button
-                            className="lumiverse-pm-btn lumiverse-pm-btn--danger"
+                            className="ado-pm-btn ado-pm-btn--danger"
                             onClick={() => setConfirmDelete(true)}
                             type="button"
                         >
                             <Trash2 size={13} strokeWidth={1.5} /> Delete
                         </button>
                     ) : (
-                        <div className="lumiverse-pm-confirm">
-                            <div className="lumiverse-pm-confirm-text">Delete "{persona.name}"?</div>
-                            <div className="lumiverse-pm-confirm-actions">
+                        <div className="ado-pm-confirm">
+                            <div className="ado-pm-confirm-text">Delete "{persona.name}"?</div>
+                            <div className="ado-pm-confirm-actions">
                                 <button
-                                    className="lumiverse-pm-btn lumiverse-pm-btn--danger"
+                                    className="ado-pm-btn ado-pm-btn--danger"
                                     onClick={handleDelete}
                                     disabled={isDeleting}
                                     type="button"
@@ -716,7 +716,7 @@ function PersonaEditor({
                                     {isDeleting ? 'Deleting...' : 'Confirm'}
                                 </button>
                                 <button
-                                    className="lumiverse-pm-btn"
+                                    className="ado-pm-btn"
                                     onClick={() => setConfirmDelete(false)}
                                     type="button"
                                 >
@@ -777,10 +777,10 @@ export default function PersonaManager() {
     }, [handleSwitch]);
 
     return (
-        <div className="lumiverse-pm-root">
+        <div className="ado-pm-root">
             {/* Toolbar */}
-            <div className="lumiverse-pm-toolbar">
-                <div className="lumiverse-pm-toolbar-row">
+            <div className="ado-pm-toolbar">
+                <div className="ado-pm-toolbar-row">
                     <SearchInput
                         value={searchQuery}
                         onChange={setSearchQuery}
@@ -789,7 +789,7 @@ export default function PersonaManager() {
                     <ViewToggle viewMode={viewMode} onToggle={setViewMode} />
                     <SortDropdown sortBy={sortBy} onSortChange={setSortBy} />
                     <button
-                        className={clsx('lumiverse-pm-icon-btn', isCreating && 'lumiverse-pm-icon-btn--primary')}
+                        className={clsx('ado-pm-icon-btn', isCreating && 'ado-pm-icon-btn--primary')}
                         onClick={() => setIsCreating(!isCreating)}
                         title="Create new persona"
                         type="button"
@@ -797,7 +797,7 @@ export default function PersonaManager() {
                         <Plus size={16} strokeWidth={2} />
                     </button>
                     <button
-                        className="lumiverse-pm-icon-btn"
+                        className="ado-pm-icon-btn"
                         onClick={refresh}
                         title="Refresh"
                         type="button"
@@ -805,9 +805,9 @@ export default function PersonaManager() {
                         <RefreshCw size={14} strokeWidth={1.5} />
                     </button>
                 </div>
-                <div className="lumiverse-pm-toolbar-row">
+                <div className="ado-pm-toolbar-row">
                     <FilterPills active={filterLock} onChange={setFilterLock} />
-                    <span className="lumiverse-pm-count">{personas.length}/{totalCount}</span>
+                    <span className="ado-pm-count">{personas.length}/{totalCount}</span>
                 </div>
             </div>
 
@@ -820,23 +820,23 @@ export default function PersonaManager() {
             )}
 
             {/* Content */}
-            <div className="lumiverse-pm-content">
+            <div className="ado-pm-content">
                 {personas.length === 0 ? (
-                    <div className="lumiverse-pm-empty">
-                        <div className="lumiverse-pm-empty-icon">
+                    <div className="ado-pm-empty">
+                        <div className="ado-pm-empty-icon">
                             <User size={40} strokeWidth={1} />
                         </div>
-                        <div className="lumiverse-pm-empty-title">
+                        <div className="ado-pm-empty-title">
                             {totalCount === 0 ? 'No personas yet' : 'No matches'}
                         </div>
-                        <div className="lumiverse-pm-empty-subtitle">
+                        <div className="ado-pm-empty-subtitle">
                             {totalCount === 0
                                 ? 'Create your first persona with the + button above.'
                                 : 'Try adjusting your search or filter.'}
                         </div>
                     </div>
                 ) : viewMode === 'grid' ? (
-                    <div className="lumiverse-pm-grid">
+                    <div className="ado-pm-grid">
                         {personas.map(p => (
                             <React.Fragment key={p.avatarId}>
                                 <PersonaCardGrid
@@ -865,7 +865,7 @@ export default function PersonaManager() {
                         ))}
                     </div>
                 ) : (
-                    <div className="lumiverse-pm-list">
+                    <div className="ado-pm-list">
                         {personas.map(p => (
                             <React.Fragment key={p.avatarId}>
                                 <PersonaCardList

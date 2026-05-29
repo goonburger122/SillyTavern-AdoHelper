@@ -11,7 +11,7 @@
 
 import { getRequestHeaders } from "../stContext.js";
 
-const MODULE_NAME = "lumia-injector";
+const MODULE_NAME = "ado-helper";
 const JOKES_FILENAME = "lumiverse_jokes.json";
 const JOKES_API_URL = "https://lucid.cards/api/inside-jokes";
 const REFRESH_INTERVAL_MS = 10 * 60 * 1000;   // Poll every 10 minutes

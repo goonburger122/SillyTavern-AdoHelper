@@ -67,13 +67,13 @@ export default function MessageEditArea({ mesId, content, reasoning, isUser, isS
     }, [onSave, content, reasoning, showReasoning]);
 
     return (
-        <div className="lcs-edit-area" onKeyDown={handleKeyDown}>
+        <div className="ado-edit-area" onKeyDown={handleKeyDown}>
             {showReasoning && (
                 <>
-                    <label className="lcs-edit-label">Reasoning</label>
+                    <label className="ado-edit-label">Reasoning</label>
                     <textarea
                         ref={reasoningRef}
-                        className="lcs-edit-textarea lcs-edit-textarea--reasoning"
+                        className="ado-edit-textarea ado-edit-textarea--reasoning"
                         defaultValue={reasoning || ''}
                         onInput={handleInput}
                         rows={3}
@@ -81,19 +81,19 @@ export default function MessageEditArea({ mesId, content, reasoning, isUser, isS
                     />
                 </>
             )}
-            <label className="lcs-edit-label">Message</label>
+            <label className="ado-edit-label">Message</label>
             <textarea
                 ref={contentRef}
-                className="lcs-edit-textarea"
+                className="ado-edit-textarea"
                 defaultValue={content}
                 onInput={handleInput}
                 rows={3}
                 autoFocus
                 placeholder="Message content..."
             />
-            <div className="lcs-edit-actions">
+            <div className="ado-edit-actions">
                 <button
-                    className="lcs-edit-btn lcs-edit-btn--cancel"
+                    className="ado-edit-btn ado-edit-btn--cancel"
                     onClick={onCancel}
                     type="button"
                     title="Cancel (Escape)"
@@ -102,7 +102,7 @@ export default function MessageEditArea({ mesId, content, reasoning, isUser, isS
                     <span>Cancel</span>
                 </button>
                 <button
-                    className="lcs-edit-btn lcs-edit-btn--save"
+                    className="ado-edit-btn ado-edit-btn--save"
                     onClick={handleSaveClick}
                     type="button"
                     title="Save (Ctrl+Enter)"

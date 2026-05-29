@@ -8,14 +8,14 @@
 import React, { useCallback, useState } from 'react';
 import { Copy, Check, Pencil, Trash2, GitBranch, BarChart3, X, EyeOff } from 'lucide-react';
 import { copyMessageContent, deleteMessageDirect, deleteSwipeDirect, triggerFork, hideMessage } from '../../../lib/chatSheldService';
-import { useLumiverseActions } from '../../store/LumiverseContext';
+import { useAdoHelperActions } from '../../store/AdoHelperContext';
 import ConfirmationModal from '../shared/ConfirmationModal';
 
 export default function MessageActions({ mesId, content, isUser, swipeId, swipeCount, onStartEdit }) {
     const [copied, setCopied] = useState(false);
     const [forkState, setForkState] = useState(null); // null | 'confirm' | 'success' | 'error'
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     // Can offer swipe deletion when: not a user message, has multiple swipes, and a swipe is selected
     const canDeleteSwipe = !isUser && swipeCount > 1 && swipeId != null;
@@ -69,9 +69,9 @@ export default function MessageActions({ mesId, content, isUser, swipeId, swipeC
 
     return (
         <>
-            <div className="lcs-message-actions">
+            <div className="ado-message-actions">
                 <button
-                    className="lcs-action-btn"
+                    className="ado-action-btn"
                     onClick={handleCopy}
                     title={copied ? 'Copied!' : 'Copy'}
                     type="button"
@@ -79,7 +79,7 @@ export default function MessageActions({ mesId, content, isUser, swipeId, swipeC
                     {copied ? <Check size={14} /> : <Copy size={14} />}
                 </button>
                 <button
-                    className="lcs-action-btn"
+                    className="ado-action-btn"
                     onClick={handleFork}
                     title={forkState === 'success' ? 'Forked!' : forkState === 'error' ? 'Fork failed' : 'Fork chat here'}
                     type="button"
@@ -87,7 +87,7 @@ export default function MessageActions({ mesId, content, isUser, swipeId, swipeC
                     {forkState === 'success' ? <Check size={14} /> : forkState === 'error' ? <X size={14} /> : <GitBranch size={14} />}
                 </button>
                 <button
-                    className="lcs-action-btn"
+                    className="ado-action-btn"
                     onClick={handlePrompt}
                     title="Prompt breakdown"
                     type="button"
@@ -96,7 +96,7 @@ export default function MessageActions({ mesId, content, isUser, swipeId, swipeC
                 </button>
                 {isUser && (
                     <button
-                        className="lcs-action-btn"
+                        className="ado-action-btn"
                         onClick={handleHide}
                         title="Hide from AI context (Draft)"
                         type="button"
@@ -105,7 +105,7 @@ export default function MessageActions({ mesId, content, isUser, swipeId, swipeC
                     </button>
                 )}
                 <button
-                    className="lcs-action-btn"
+                    className="ado-action-btn"
                     onClick={handleEdit}
                     title="Edit"
                     type="button"
@@ -113,7 +113,7 @@ export default function MessageActions({ mesId, content, isUser, swipeId, swipeC
                     <Pencil size={14} />
                 </button>
                 <button
-                    className="lcs-action-btn lcs-action-btn--danger"
+                    className="ado-action-btn ado-action-btn--danger"
                     onClick={handleDelete}
                     title="Delete"
                     type="button"

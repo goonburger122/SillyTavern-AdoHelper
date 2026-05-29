@@ -2,7 +2,7 @@
  * ManageChatsModal — Chat file manager for the current character/group
  *
  * Lists all chats with switch, rename, export, delete, and search.
- * Uses self-contained inline styles with var(--lumiverse-*) variables.
+ * Uses self-contained inline styles with var(--ado-*) variables.
  */
 
 import React, { useState, useEffect, useCallback, useRef, useMemo, useSyncExternalStore } from 'react';
@@ -19,46 +19,46 @@ import {
     getCharacterInfo,
 } from '../../../lib/chatSheldService';
 import { getContext } from '../../../stContext';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import ConfirmationModal from '../shared/ConfirmationModal';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const selectActiveChat = () => store.getState().chatSheld?.activeChat || null;
 
 /**
  * Inject scoped hover styles for ManageChatsModal action buttons.
  * Uses a <style> tag so hover states work without broken inline JS handlers.
  */
-const MANAGE_CHATS_STYLE_ID = 'lcs-manage-chats-styles';
+const MANAGE_CHATS_STYLE_ID = 'ado-manage-chats-styles';
 const manageChatsCss = `
-.lcs-mcm-action-btn {
+.ado-mcm-action-btn {
   width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
   background: transparent; border: none; border-radius: 6px;
-  color: var(--lumiverse-text-muted, rgba(230,230,240,0.5));
+  color: var(--ado-text-muted, rgba(230,230,240,0.5));
   cursor: pointer; padding: 0;
 }
-.lcs-mcm-action-btn:hover {
-  color: var(--lumiverse-text, rgba(230,230,240,0.92));
-  background: var(--lumiverse-fill, rgba(255,255,255,0.06));
+.ado-mcm-action-btn:hover {
+  color: var(--ado-text, rgba(230,230,240,0.92));
+  background: var(--ado-fill, rgba(255,255,255,0.06));
 }
-.lcs-mcm-action-btn--danger:hover {
-  color: var(--lumiverse-danger, #ef4444);
-  background: var(--lumiverse-danger-010, rgba(239,68,68,0.1));
+.ado-mcm-action-btn--danger:hover {
+  color: var(--ado-danger, #ef4444);
+  background: var(--ado-danger-010, rgba(239,68,68,0.1));
 }
-.lcs-mcm-action-btn--primary:hover {
-  color: var(--lumiverse-primary-text, rgba(160,150,255,0.95));
-  background: var(--lumiverse-fill, rgba(255,255,255,0.06));
+.ado-mcm-action-btn--primary:hover {
+  color: var(--ado-primary-text, rgba(160,150,255,0.95));
+  background: var(--ado-fill, rgba(255,255,255,0.06));
 }
-.lcs-mcm-sort-btn {
+.ado-mcm-sort-btn {
   display: flex; align-items: center; gap: 4px; padding: 6px 10px;
-  border-radius: 8px; background: var(--lumiverse-fill-subtle, rgba(255,255,255,0.04));
-  border: 1px solid var(--lumiverse-border, rgba(255,255,255,0.08));
-  color: var(--lumiverse-text-muted, rgba(230,230,240,0.6));
+  border-radius: 8px; background: var(--ado-fill-subtle, rgba(255,255,255,0.04));
+  border: 1px solid var(--ado-border, rgba(255,255,255,0.08));
+  color: var(--ado-text-muted, rgba(230,230,240,0.6));
   cursor: pointer; font-size: 11px; font-family: inherit;
 }
-.lcs-mcm-sort-btn:hover {
-  color: var(--lumiverse-text, rgba(230,230,240,0.92));
-  background: var(--lumiverse-fill, rgba(255,255,255,0.06));
+.ado-mcm-sort-btn:hover {
+  color: var(--ado-text, rgba(230,230,240,0.92));
+  background: var(--ado-fill, rgba(255,255,255,0.06));
 }
 `;
 
@@ -74,31 +74,31 @@ function ensureManageChatsStyles() {
 const s = {
     header: {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '20px 24px 16px', borderBottom: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        padding: '20px 24px 16px', borderBottom: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
     },
     headerLeft: { display: 'flex', flexDirection: 'column', gap: '4px' },
-    title: { fontSize: '18px', fontWeight: 600, color: 'var(--lumiverse-text, #e6e6f0)', margin: 0 },
-    subtitle: { fontSize: '12px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))' },
+    title: { fontSize: '18px', fontWeight: 600, color: 'var(--ado-text, #e6e6f0)', margin: 0 },
+    subtitle: { fontSize: '12px', color: 'var(--ado-text-dim, rgba(230,230,240,0.4))' },
     closeBtn: {
         width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.04))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
-        borderRadius: '8px', color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.6))',
+        background: 'var(--ado-fill-subtle, rgba(255,255,255,0.04))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
+        borderRadius: '8px', color: 'var(--ado-text-muted, rgba(230,230,240,0.6))',
         cursor: 'pointer', transition: 'all 0.15s',
     },
     toolbar: {
         display: 'flex', alignItems: 'center', gap: '10px',
-        padding: '12px 24px', borderBottom: '1px solid var(--lumiverse-border, rgba(255,255,255,0.06))',
+        padding: '12px 24px', borderBottom: '1px solid var(--ado-border, rgba(255,255,255,0.06))',
     },
     searchWrap: {
         flex: 1, display: 'flex', alignItems: 'center', gap: '8px',
         padding: '8px 12px', borderRadius: '10px',
-        background: 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.04))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        background: 'var(--ado-fill-subtle, rgba(255,255,255,0.04))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
     },
     searchInput: {
         flex: 1, background: 'transparent', border: 'none', outline: 'none',
-        fontSize: '13px', color: 'var(--lumiverse-text, #e6e6f0)', fontFamily: 'inherit',
+        fontSize: '13px', color: 'var(--ado-text, #e6e6f0)', fontFamily: 'inherit',
     },
     body: {
         flex: 1, overflowY: 'auto', padding: '12px 16px',
@@ -107,55 +107,55 @@ const s = {
     card: {
         display: 'flex', alignItems: 'center', gap: '12px',
         padding: '12px 14px', borderRadius: '12px',
-        background: 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.03))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.06))',
+        background: 'var(--ado-fill-subtle, rgba(255,255,255,0.03))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.06))',
         transition: 'all 0.15s', cursor: 'default',
     },
     cardActive: {
-        borderColor: 'var(--lumiverse-primary-030, rgba(140,130,255,0.3))',
-        background: 'var(--lumiverse-primary-005, rgba(140,130,255,0.05))',
+        borderColor: 'var(--ado-primary-030, rgba(140,130,255,0.3))',
+        background: 'var(--ado-primary-005, rgba(140,130,255,0.05))',
     },
     cardInfo: { flex: 1, display: 'flex', flexDirection: 'column', gap: '3px', minWidth: 0 },
     cardName: {
-        fontSize: '14px', fontWeight: 500, color: 'var(--lumiverse-text, #e6e6f0)',
+        fontSize: '14px', fontWeight: 500, color: 'var(--ado-text, #e6e6f0)',
         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
     },
     cardMeta: {
         display: 'flex', alignItems: 'center', gap: '10px',
-        fontSize: '11px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))',
+        fontSize: '11px', color: 'var(--ado-text-dim, rgba(230,230,240,0.4))',
     },
     cardMetaItem: { display: 'flex', alignItems: 'center', gap: '3px' },
     cardSnippet: {
-        fontSize: '12px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.35))',
+        fontSize: '12px', color: 'var(--ado-text-dim, rgba(230,230,240,0.35))',
         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '2px',
     },
     cardActions: { display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 },
     actionBtn: {
         width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: 'transparent', border: 'none', borderRadius: '6px',
-        color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.5))',
+        color: 'var(--ado-text-muted, rgba(230,230,240,0.5))',
         cursor: 'pointer', padding: 0,
     },
     editInput: {
-        flex: 1, background: 'var(--lumiverse-fill, rgba(255,255,255,0.06))',
-        border: '1px solid var(--lumiverse-primary-040, rgba(140,130,255,0.4))',
+        flex: 1, background: 'var(--ado-fill, rgba(255,255,255,0.06))',
+        border: '1px solid var(--ado-primary-040, rgba(140,130,255,0.4))',
         borderRadius: '6px', padding: '4px 8px', fontSize: '13px',
-        color: 'var(--lumiverse-text, #e6e6f0)', outline: 'none', fontFamily: 'inherit',
+        color: 'var(--ado-text, #e6e6f0)', outline: 'none', fontFamily: 'inherit',
     },
     activeBadge: {
         fontSize: '10px', fontWeight: 600, padding: '2px 6px', borderRadius: '4px',
-        background: 'var(--lumiverse-primary-015, rgba(140,130,255,0.15))',
-        color: 'var(--lumiverse-primary-text, rgba(160,150,255,0.95))',
+        background: 'var(--ado-primary-015, rgba(140,130,255,0.15))',
+        color: 'var(--ado-primary-text, rgba(160,150,255,0.95))',
         letterSpacing: '0.03em', textTransform: 'uppercase',
     },
     loading: {
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        gap: '12px', padding: '60px 20px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))',
+        gap: '12px', padding: '60px 20px', color: 'var(--ado-text-dim, rgba(230,230,240,0.4))',
         fontSize: '13px',
     },
     empty: {
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        gap: '10px', padding: '60px 20px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.35))',
+        gap: '10px', padding: '60px 20px', color: 'var(--ado-text-dim, rgba(230,230,240,0.35))',
         fontSize: '14px', textAlign: 'center',
     },
 };
@@ -301,7 +301,7 @@ export default function ManageChatsModal({ onClose }) {
             {/* Toolbar */}
             <div style={s.toolbar}>
                 <div style={s.searchWrap}>
-                    <Search size={14} style={{ color: 'var(--lumiverse-text-dim)', flexShrink: 0 }} />
+                    <Search size={14} style={{ color: 'var(--ado-text-dim)', flexShrink: 0 }} />
                     <input
                         style={s.searchInput}
                         value={search}
@@ -309,7 +309,7 @@ export default function ManageChatsModal({ onClose }) {
                         placeholder="Search chats..."
                     />
                 </div>
-                <button className="lcs-mcm-sort-btn" onClick={cycleSortBy} type="button" title={`Sort by ${sortBy}`}>
+                <button className="ado-mcm-sort-btn" onClick={cycleSortBy} type="button" title={`Sort by ${sortBy}`}>
                     <SortAsc size={12} />
                     {SORT_OPTIONS.find(o => o.key === sortBy)?.label}
                 </button>
@@ -319,7 +319,7 @@ export default function ManageChatsModal({ onClose }) {
             <div style={s.body}>
                 {isLoading ? (
                     <div style={s.loading}>
-                        <Loader2 size={24} style={{ animation: 'lcs-spin 0.75s linear infinite' }} />
+                        <Loader2 size={24} style={{ animation: 'ado-spin 0.75s linear infinite' }} />
                         Loading chats...
                     </div>
                 ) : filteredChats.length === 0 ? (
@@ -337,8 +337,8 @@ export default function ManageChatsModal({ onClose }) {
                             >
                                 <MessageSquare size={16} style={{
                                     color: isCurrent
-                                        ? 'var(--lumiverse-primary-text, rgba(160,150,255,0.95))'
-                                        : 'var(--lumiverse-text-dim, rgba(230,230,240,0.35))',
+                                        ? 'var(--ado-primary-text, rgba(160,150,255,0.95))'
+                                        : 'var(--ado-text-dim, rgba(230,230,240,0.35))',
                                     flexShrink: 0,
                                 }} />
 
@@ -385,7 +385,7 @@ export default function ManageChatsModal({ onClose }) {
                                 <div style={s.cardActions}>
                                     {!isCurrent && editingId !== chat.file_name && (
                                         <button
-                                            className="lcs-mcm-action-btn lcs-mcm-action-btn--primary"
+                                            className="ado-mcm-action-btn ado-mcm-action-btn--primary"
                                             onClick={() => handleSwitch(chat.file_name)}
                                             title="Switch to chat"
                                             type="button"
@@ -396,16 +396,16 @@ export default function ManageChatsModal({ onClose }) {
 
                                     {editingId === chat.file_name ? (
                                         <button
-                                            className="lcs-mcm-action-btn"
+                                            className="ado-mcm-action-btn"
                                             onClick={handleConfirmRename}
                                             title="Confirm rename"
                                             type="button"
                                         >
-                                            <Check size={14} style={{ color: 'var(--lumiverse-success, #22c55e)' }} />
+                                            <Check size={14} style={{ color: 'var(--ado-success, #22c55e)' }} />
                                         </button>
                                     ) : (
                                         <button
-                                            className="lcs-mcm-action-btn"
+                                            className="ado-mcm-action-btn"
                                             onClick={() => handleStartRename(chat.file_name)}
                                             title="Rename"
                                             type="button"
@@ -415,7 +415,7 @@ export default function ManageChatsModal({ onClose }) {
                                     )}
 
                                     <button
-                                        className="lcs-mcm-action-btn"
+                                        className="ado-mcm-action-btn"
                                         onClick={() => handleExport(chat.file_name)}
                                         title="Export as .jsonl"
                                         type="button"
@@ -425,7 +425,7 @@ export default function ManageChatsModal({ onClose }) {
 
                                     {!isCurrent && (
                                         <button
-                                            className="lcs-mcm-action-btn lcs-mcm-action-btn--danger"
+                                            className="ado-mcm-action-btn ado-mcm-action-btn--danger"
                                             onClick={() => setDeleteTarget(chat.file_name)}
                                             title="Delete chat"
                                             type="button"

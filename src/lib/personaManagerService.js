@@ -22,7 +22,7 @@ export { switchPersona, getCurrentPersonaAvatar, initPersonaListener } from './p
 // Also import getCurrentPersonaAvatar for internal use (getCurrentActivePersona delegates to it)
 import { getCurrentPersonaAvatar } from './personaService.js';
 
-/** @type {ReturnType<typeof import('../react-ui/store/LumiverseContext.jsx').useLumiverseStore> | null} */
+/** @type {ReturnType<typeof import('../react-ui/store/AdoHelperContext.jsx').useAdoHelperStore> | null} */
 let storeRef = null;
 
 /** Debounce timer for persona sync */
@@ -183,7 +183,7 @@ export async function createPersona(name, avatarFile) {
         debouncedSync();
         return avatarId;
     } catch (e) {
-        console.error('[Lumiverse] PersonaManager: createPersona failed:', e);
+        console.error('[Ado Helper] PersonaManager: createPersona failed:', e);
         return null;
     }
 }
@@ -215,7 +215,7 @@ export async function uploadPersonaAvatar(avatarId, file) {
             return true;
         }
     } catch (e) {
-        console.error('[Lumiverse] PersonaManager: uploadAvatar failed:', e);
+        console.error('[Ado Helper] PersonaManager: uploadAvatar failed:', e);
     }
     return false;
 }
@@ -281,11 +281,11 @@ export async function deletePersona(avatarId) {
         // 200 = file deleted, 404 = file already gone — both are acceptable.
         // Only bail on real errors (400 bad request, 403 malicious filename, 5xx).
         if (!resp.ok && resp.status !== 404) {
-            console.warn('[Lumiverse] PersonaManager: deletePersona server error:', resp.status, avatarId);
+            console.warn('[Ado Helper] PersonaManager: deletePersona server error:', resp.status, avatarId);
             return false;
         }
         if (resp.status === 404) {
-            console.debug('[Lumiverse] PersonaManager: avatar file already gone, cleaning up data for', avatarId);
+            console.debug('[Ado Helper] PersonaManager: avatar file already gone, cleaning up data for', avatarId);
         }
 
         // Clean up power_user
@@ -305,7 +305,7 @@ export async function deletePersona(avatarId) {
         debouncedSync();
         return true;
     } catch (e) {
-        console.error('[Lumiverse] PersonaManager: deletePersona failed:', e);
+        console.error('[Ado Helper] PersonaManager: deletePersona failed:', e);
         return false;
     }
 }
@@ -345,7 +345,7 @@ export async function duplicatePersona(avatarId) {
 
         return newId;
     } catch (e) {
-        console.error('[Lumiverse] PersonaManager: duplicatePersona failed:', e);
+        console.error('[Ado Helper] PersonaManager: duplicatePersona failed:', e);
         return null;
     }
 }
@@ -466,10 +466,10 @@ export async function syncPersonas() {
     }
     const dupes = Object.entries(nameGroups).filter(([, ids]) => ids.length > 1);
     if (dupes.length > 0) {
-        console.warn('[LumiverseHelper:Persona] syncPersonas: DUPLICATE persona names detected:',
+        console.warn('[AdoHelperHelper:Persona] syncPersonas: DUPLICATE persona names detected:',
             dupes.map(([name, ids]) => `"${name}" → [${ids.join(', ')}]`).join('; '));
     }
-    console.debug('[LumiverseHelper:Persona] syncPersonas: activeId=%s, defaultId=%s, chatLockedId=%s, total=%d',
+    console.debug('[AdoHelperHelper:Persona] syncPersonas: activeId=%s, defaultId=%s, chatLockedId=%s, total=%d',
         activeId, defaultId, chatLockedId, personas.length);
 
     storeRef.setState({
@@ -494,7 +494,7 @@ function debouncedSync() {
 /**
  * Initialize the persona manager service.
  * Subscribes to ST events and performs initial sync.
- * @param {Object} store - Lumiverse vanilla JS store
+ * @param {Object} store - Ado Helper vanilla JS store
  */
 export function initPersonaManager(store) {
     storeRef = store;
@@ -503,7 +503,7 @@ export function initPersonaManager(store) {
     const eventTypes = getEventTypes();
 
     if (!eventSource || !eventTypes) {
-        console.warn('[Lumiverse] PersonaManager: Event system not available');
+        console.warn('[Ado Helper] PersonaManager: Event system not available');
         return;
     }
 
@@ -523,7 +523,7 @@ export function initPersonaManager(store) {
         eventSource.on(eventTypes.SETTINGS_UPDATED, debouncedSync);
     }
 
-    // Intercept ST's persona management button to open Lumiverse Personas tab instead
+    // Intercept ST's persona management button to open Ado Helper Personas tab instead
     const personaBtn = document.getElementById('persona-management-button');
     if (personaBtn) {
         personaBtn.addEventListener(
@@ -536,7 +536,7 @@ export function initPersonaManager(store) {
                 e.stopImmediatePropagation();
                 e.preventDefault();
 
-                // Signal Lumiverse to open Personas tab
+                // Signal Ado Helper to open Personas tab
                 storeRef.setState({ _openToTab: 'personas' });
             },
             true // capture phase — fires before ST's handler

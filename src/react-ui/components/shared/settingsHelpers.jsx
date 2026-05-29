@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useSyncExternalStore } from 'react';
-import { useLumiverseActions, saveToExtension, useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperActions, saveToExtension, useAdoHelperStore } from '../../store/AdoHelperContext';
 import { useAdaptiveImagePosition } from '../../hooks/useAdaptiveImagePosition';
 import { CollapsibleContent } from '../Collapsible';
 import { motion, AnimatePresence } from 'motion/react';
@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { Sparkles, Wrench, Layers, Trash2, Users, Bookmark, Plus, ChevronDown, Check, X, Settings2 } from 'lucide-react';
 
 // Get the store for direct access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selector functions for QuickActionsSection
 const EMPTY_OBJECT = {};
@@ -143,21 +143,21 @@ export function LumiaPackItem({ item, packName, onEdit, onDelete, editIcon }) {
     const { objectPosition } = useAdaptiveImagePosition(avatarUrl);
 
     return (
-        <div className="lumia-pack-lumia-item">
+        <div className="ado-pack-ado-item">
             {avatarUrl && (
                 <img
                     src={avatarUrl}
                     alt=""
-                    className="lumia-pack-lumia-avatar"
+                    className="ado-pack-ado-avatar"
                     style={{ objectPosition }}
                     onError={(e) => { e.target.style.display = 'none'; }}
                 />
             )}
-            <span className="lumia-pack-lumia-name">
+            <span className="ado-pack-ado-name">
                 {displayName}
             </span>
             <button
-                className="lumia-btn lumia-btn-icon lumia-btn-icon-sm"
+                className="ado-btn ado-btn-icon ado-btn-icon-sm"
                 onClick={() => onEdit(packName, item)}
                 title="Edit Lumia"
                 type="button"
@@ -165,7 +165,7 @@ export function LumiaPackItem({ item, packName, onEdit, onDelete, editIcon }) {
                 {editIcon}
             </button>
             <button
-                className="lumia-btn lumia-btn-icon lumia-btn-icon-sm lumia-btn-icon-danger"
+                className="ado-btn ado-btn-icon ado-btn-icon-sm ado-btn-icon-danger"
                 onClick={() => onDelete(packName, item, displayName)}
                 title="Delete Lumia"
                 type="button"
@@ -195,15 +195,15 @@ export function LoomPackItem({ item, packName, onEdit, onDelete, editIcon }) {
     };
 
     return (
-        <div className="lumia-pack-loom-item">
-            <span className="lumia-pack-loom-icon">
+        <div className="ado-pack-loom-item">
+            <span className="ado-pack-loom-icon">
                 {getCategoryIcon()}
             </span>
-            <span className="lumia-pack-loom-name">
+            <span className="ado-pack-loom-name">
                 {itemName}
             </span>
             <button
-                className="lumia-btn lumia-btn-icon lumia-btn-icon-sm"
+                className="ado-btn ado-btn-icon ado-btn-icon-sm"
                 onClick={() => onEdit(packName, item)}
                 title="Edit Loom item"
                 type="button"
@@ -211,7 +211,7 @@ export function LoomPackItem({ item, packName, onEdit, onDelete, editIcon }) {
                 {editIcon}
             </button>
             <button
-                className="lumia-btn lumia-btn-icon lumia-btn-icon-sm lumia-btn-icon-danger"
+                className="ado-btn ado-btn-icon ado-btn-icon-sm ado-btn-icon-danger"
                 onClick={() => onDelete(packName, item, itemName)}
                 title="Delete Loom item"
                 type="button"
@@ -271,30 +271,30 @@ export function Panel({ title, icon, action, collapsible, collapsed, onToggle, c
     }, [isControlled, onToggle]);
 
     return (
-        <div className={clsx('lumia-panel', collapsible && isCollapsed && 'lumia-panel--collapsed')}>
+        <div className={clsx('ado-panel', collapsible && isCollapsed && 'ado-panel--collapsed')}>
             <div
-                className={clsx('lumia-panel-header', collapsible && 'lumia-panel-header-clickable')}
+                className={clsx('ado-panel-header', collapsible && 'ado-panel-header-clickable')}
                 onClick={collapsible ? handleToggle : undefined}
             >
-                <span className="lumia-panel-icon">{icon}</span>
-                <span className="lumia-panel-title">{title}</span>
+                <span className="ado-panel-icon">{icon}</span>
+                <span className="ado-panel-title">{title}</span>
                 {action && (
-                    <span className="lumia-panel-action" onClick={(e) => e.stopPropagation()}>
+                    <span className="ado-panel-action" onClick={(e) => e.stopPropagation()}>
                         {action}
                     </span>
                 )}
                 {collapsible && (
-                    <span className={clsx('lumia-panel-chevron', !isCollapsed && 'lumia-panel-chevron--expanded')}>
+                    <span className={clsx('ado-panel-chevron', !isCollapsed && 'ado-panel-chevron--expanded')}>
                         {Icons.chevronDown}
                     </span>
                 )}
             </div>
             {collapsible ? (
-                <CollapsibleContent isOpen={!isCollapsed} className="lumia-panel-content" duration={200}>
+                <CollapsibleContent isOpen={!isCollapsed} className="ado-panel-content" duration={200}>
                     {children}
                 </CollapsibleContent>
             ) : (
-                <div className="lumia-panel-content">
+                <div className="ado-panel-content">
                     {children}
                 </div>
             )}
@@ -310,18 +310,18 @@ export function CollapsiblePanel({ title, icon, children }) {
 
     return (
         <details
-            className="lumia-panel lumia-panel-collapsible"
+            className="ado-panel ado-panel-collapsible"
             open={isOpen}
             onToggle={(e) => setIsOpen(e.target.open)}
         >
-            <summary className="lumia-panel-header lumia-panel-header-clickable">
-                <span className="lumia-panel-icon">{icon}</span>
-                <span className="lumia-panel-title">{title}</span>
-                <span className="lumia-panel-chevron">
+            <summary className="ado-panel-header ado-panel-header-clickable">
+                <span className="ado-panel-icon">{icon}</span>
+                <span className="ado-panel-title">{title}</span>
+                <span className="ado-panel-chevron">
                     {Icons.chevronDown}
                 </span>
             </summary>
-            <div className="lumia-panel-content lumia-macro-reference">
+            <div className="ado-panel-content ado-macro-reference">
                 {children}
             </div>
         </details>
@@ -332,7 +332,7 @@ export function CollapsiblePanel({ title, icon, children }) {
  * Selection button that shows current selections and opens a modal
  */
 export function SelectionButton({ label, hint, selections, dominant, modalName }) {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const count = selections?.length || 0;
 
     const displayText = useMemo(() => {
@@ -357,17 +357,17 @@ export function SelectionButton({ label, hint, selections, dominant, modalName }
     }, [count, selections, label, dominant]);
 
     return (
-        <div className="lumia-selector">
-            <div className="lumia-selector-header">
-                <span className="lumia-selector-label">{label}</span>
-                <span className="lumia-selector-hint">{hint}</span>
+        <div className="ado-selector">
+            <div className="ado-selector-header">
+                <span className="ado-selector-label">{label}</span>
+                <span className="ado-selector-hint">{hint}</span>
             </div>
-            <div className="lumia-selector-row">
-                <div className="lumia-selector-value">
+            <div className="ado-selector-row">
+                <div className="ado-selector-value">
                     {displayText}
                 </div>
                 <button
-                    className="lumia-btn lumia-btn-sm"
+                    className="ado-btn ado-btn-sm"
                     onClick={() => actions.openModal(modalName)}
                     type="button"
                 >
@@ -384,7 +384,7 @@ export function SelectionButton({ label, hint, selections, dominant, modalName }
 export function ToolButton({ icon, label, onClick, accent = false }) {
     return (
         <button
-            className={clsx('lumia-tool-btn', accent && 'lumia-tool-btn-accent')}
+            className={clsx('ado-tool-btn', accent && 'ado-tool-btn-accent')}
             onClick={onClick}
             type="button"
         >
@@ -399,21 +399,21 @@ export function ToolButton({ icon, label, onClick, accent = false }) {
  */
 export function ModeToggle({ icon, label, description, checked, onChange, disabled }) {
     return (
-        <label className={clsx('lumiverse-mode-toggle', disabled && 'lumiverse-mode-toggle--disabled')}>
-            <span className="lumiverse-mode-toggle-icon">{icon}</span>
-            <div className="lumiverse-mode-toggle-text">
-                <span className="lumiverse-mode-toggle-label">{label}</span>
-                <span className="lumiverse-mode-toggle-description">{description}</span>
+        <label className={clsx('ado-mode-toggle', disabled && 'ado-mode-toggle--disabled')}>
+            <span className="ado-mode-toggle-icon">{icon}</span>
+            <div className="ado-mode-toggle-text">
+                <span className="ado-mode-toggle-label">{label}</span>
+                <span className="ado-mode-toggle-description">{description}</span>
             </div>
-            <div className={clsx('lumiverse-toggle lumiverse-toggle--sm', checked && 'lumiverse-toggle--on')}>
+            <div className={clsx('ado-toggle ado-toggle--sm', checked && 'ado-toggle--on')}>
                 <input
                     type="checkbox"
-                    className="lumiverse-toggle-input"
+                    className="ado-toggle-input"
                     checked={checked}
                     onChange={(e) => onChange(e.target.checked)}
                     disabled={disabled}
                 />
-                <span className="lumiverse-toggle-slider"></span>
+                <span className="ado-toggle-slider"></span>
             </div>
         </label>
     );
@@ -433,7 +433,7 @@ export function MacroItem({ code, description }) {
 
     return (
         <div
-            className={clsx('lumia-macro', copied && 'lumia-macro--copied')}
+            className={clsx('ado-macro', copied && 'ado-macro--copied')}
             onClick={handleCopy}
             title="Click to copy"
         >
@@ -506,13 +506,13 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
     };
 
     return (
-        <div className="lumia-quick-actions">
+        <div className="ado-quick-actions">
             {/* Council Config Button */}
             <button
                 className={clsx(
-                    'lumia-quick-action-btn',
-                    'lumia-quick-action-btn--council',
-                    !councilMode && 'lumia-quick-action-btn--disabled'
+                    'ado-quick-action-btn',
+                    'ado-quick-action-btn--council',
+                    !councilMode && 'ado-quick-action-btn--disabled'
                 )}
                 onClick={councilMode ? onOpenCouncil : undefined}
                 disabled={!councilMode}
@@ -520,7 +520,7 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                 title={councilMode ? 'Configure council members' : 'Enable Council Mode first'}
             >
                 <Users size={14} strokeWidth={1.5} />
-                <span className="lumia-quick-action-text">
+                <span className="ado-quick-action-text">
                     {councilMode
                         ? (councilMembers.length > 0
                             ? `${councilMembers.length} member${councilMembers.length !== 1 ? 's' : ''}`
@@ -530,11 +530,11 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
             </button>
 
             {/* Preset Management */}
-            <div className="lumia-quick-action-group">
+            <div className="ado-quick-action-group">
                 {!isCreating ? (
                     <>
                         <button
-                            className="lumia-quick-action-btn lumia-quick-action-btn--primary"
+                            className="ado-quick-action-btn ado-quick-action-btn--primary"
                             onClick={() => setIsCreating(true)}
                             title="Save current configuration as preset"
                             type="button"
@@ -542,38 +542,38 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                             <Plus size={14} strokeWidth={2} />
                         </button>
 
-                        <div className="lumia-quick-action-dropdown-wrapper">
+                        <div className="ado-quick-action-dropdown-wrapper">
                             <button
                                 className={clsx(
-                                    'lumia-quick-action-btn',
-                                    activePresetName && 'lumia-quick-action-btn--active'
+                                    'ado-quick-action-btn',
+                                    activePresetName && 'ado-quick-action-btn--active'
                                 )}
                                 onClick={() => setShowPresetDropdown(!showPresetDropdown)}
                                 title={activePresetName ? `Active: ${activePresetName}` : 'Load preset'}
                                 type="button"
                             >
                                 <Bookmark size={14} strokeWidth={1.5} />
-                                <span className="lumia-quick-action-text">
+                                <span className="ado-quick-action-text">
                                     {activePresetName || 'Presets'}
                                 </span>
                                 <ChevronDown
                                     size={12}
                                     strokeWidth={2}
-                                    className={clsx('lumia-quick-action-chevron', showPresetDropdown && 'lumia-quick-action-chevron--open')}
+                                    className={clsx('ado-quick-action-chevron', showPresetDropdown && 'ado-quick-action-chevron--open')}
                                 />
                             </button>
 
                             <AnimatePresence>
                                 {showPresetDropdown && (
                                     <motion.div
-                                        className="lumia-quick-action-dropdown"
+                                        className="ado-quick-action-dropdown"
                                         initial={{ opacity: 0, y: -8 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -8 }}
                                         transition={{ duration: 0.15 }}
                                     >
                                         {presetList.length === 0 ? (
-                                            <div className="lumia-quick-action-dropdown-empty">
+                                            <div className="ado-quick-action-dropdown-empty">
                                                 No presets saved
                                             </div>
                                         ) : (
@@ -581,8 +581,8 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                                                 <button
                                                     key={preset.name}
                                                     className={clsx(
-                                                        'lumia-quick-action-dropdown-item',
-                                                        activePresetName === preset.name && 'lumia-quick-action-dropdown-item--active'
+                                                        'ado-quick-action-dropdown-item',
+                                                        activePresetName === preset.name && 'ado-quick-action-dropdown-item--active'
                                                     )}
                                                     onClick={() => handleLoadPreset(preset.name)}
                                                     type="button"
@@ -600,7 +600,7 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                         </div>
 
                         <button
-                            className="lumia-quick-action-btn"
+                            className="ado-quick-action-btn"
                             onClick={() => actions.openModal('presetManage')}
                             title="Manage presets"
                             type="button"
@@ -609,10 +609,10 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                         </button>
                     </>
                 ) : (
-                    <div className="lumia-quick-action-form">
+                    <div className="ado-quick-action-form">
                         <input
                             type="text"
-                            className="lumia-quick-action-input"
+                            className="ado-quick-action-input"
                             placeholder="Preset name..."
                             value={newPresetName}
                             onChange={(e) => setNewPresetName(e.target.value)}
@@ -620,7 +620,7 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                             autoFocus
                         />
                         <button
-                            className="lumia-quick-action-btn lumia-quick-action-btn--primary"
+                            className="ado-quick-action-btn ado-quick-action-btn--primary"
                             onClick={handleSavePreset}
                             disabled={!newPresetName.trim()}
                             type="button"
@@ -629,7 +629,7 @@ export function QuickActionsSection({ councilMode, councilMembers, onOpenCouncil
                             <Check size={14} strokeWidth={2} />
                         </button>
                         <button
-                            className="lumia-quick-action-btn"
+                            className="ado-quick-action-btn"
                             onClick={() => {
                                 setIsCreating(false);
                                 setNewPresetName('');

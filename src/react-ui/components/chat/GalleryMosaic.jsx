@@ -12,27 +12,27 @@ import LazyImage from '../shared/LazyImage';
 export default function GalleryMosaic({ images, loading, onImageClick }) {
     if (loading) {
         return (
-            <div className="lcs-gallery-mosaic lcs-gallery-mosaic--loading">
-                <Loader2 size={20} className="lcs-gallery-spinner" />
+            <div className="ado-gallery-mosaic ado-gallery-mosaic--loading">
+                <Loader2 size={20} className="ado-gallery-spinner" />
             </div>
         );
     }
 
     if (!images || images.length === 0) {
         return (
-            <div className="lcs-gallery-mosaic lcs-gallery-mosaic--empty">
+            <div className="ado-gallery-mosaic ado-gallery-mosaic--empty">
                 <span>No gallery images found</span>
             </div>
         );
     }
 
     return (
-        <div className="lcs-gallery-mosaic">
-            <div className="lcs-gallery-grid">
+        <div className="ado-gallery-mosaic">
+            <div className="ado-gallery-grid">
                 {images.map((image, index) => (
                     <button
                         key={image.path || index}
-                        className="lcs-gallery-thumb"
+                        className="ado-gallery-thumb"
                         onClick={() => onImageClick(index)}
                         type="button"
                         title={image.title || `Image ${index + 1}`}
@@ -40,7 +40,7 @@ export default function GalleryMosaic({ images, loading, onImageClick }) {
                         <LazyImage
                             src={image.path}
                             alt={image.title || ''}
-                            className="lcs-gallery-thumb-img"
+                            className="ado-gallery-thumb-img"
                             spinnerSize={14}
                         />
                     </button>

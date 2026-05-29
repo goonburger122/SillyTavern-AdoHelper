@@ -1,14 +1,14 @@
 import React from 'react';
-import { useLoomSelections } from '../../store/LumiverseContext';
+import { useLoomSelections } from '../../store/AdoHelperContext';
 import { SelectionButton, Icons, Panel } from '../shared/settingsHelpers';
 
 export default function LoomConfigView() {
     const loomSelections = useLoomSelections();
 
     return (
-        <div className="lumiverse-settings-view">
+        <div className="ado-settings-view">
             <Panel title="Loom Configuration" icon={Icons.layers}>
-                <div className="lumia-selector-group">
+                <div className="ado-selector-group">
                     <SelectionButton
                         label="Narrative Style"
                         hint="Select Multiple"

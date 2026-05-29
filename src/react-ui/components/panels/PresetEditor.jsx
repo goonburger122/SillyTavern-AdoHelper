@@ -53,16 +53,16 @@ const styles = {
         height: '100%',
         maxHeight: '100%',
         minHeight: 0,
-        background: 'var(--lumiverse-bg)',
-        color: 'var(--lumiverse-text)',
+        background: 'var(--ado-bg)',
+        color: 'var(--ado-text)',
     },
     header: {
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
         padding: '12px 16px',
-        background: 'var(--lumiverse-bg-elevated)',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-bg-elevated)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     headerContent: {
@@ -83,7 +83,7 @@ const styles = {
         alignItems: 'center',
         gap: '8px',
         padding: '10px 16px',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
         // overflowX: 'auto', // Removed to allow dropdowns to overflow visibly
         flexShrink: 0,
         background: 'rgba(0,0,0,0.1)',
@@ -112,28 +112,28 @@ const styles = {
     label: {
         fontSize: '12px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         textTransform: 'uppercase',
         letterSpacing: '0.5px',
     },
     input: {
         padding: '10px 12px',
-        background: 'var(--lumiverse-input-bg, rgba(0, 0, 0, 0.2))',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg, rgba(0, 0, 0, 0.2))',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '14px',
         outline: 'none',
         fontFamily: 'inherit',
     },
     textarea: {
         padding: '12px',
-        background: 'var(--lumiverse-input-bg, rgba(0, 0, 0, 0.2))',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg, rgba(0, 0, 0, 0.2))',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '14px',
-        fontFamily: 'var(--lumiverse-font-mono)',
+        fontFamily: 'var(--ado-font-mono)',
         minHeight: '200px',
         resize: 'vertical',
         outline: 'none',
@@ -141,10 +141,10 @@ const styles = {
     },
     select: {
         padding: '10px 12px',
-        background: 'var(--lumiverse-input-bg, rgba(0, 0, 0, 0.2))',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg, rgba(0, 0, 0, 0.2))',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '14px',
         outline: 'none',
         cursor: 'pointer',
@@ -153,8 +153,8 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         padding: '8px 12px',
-        background: 'var(--lumiverse-bg-elevated)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-bg-elevated)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
         marginBottom: '8px',
         transition: 'all 0.2s ease',
@@ -163,7 +163,7 @@ const styles = {
     itemDragging: {
         opacity: 0.5,
         boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-        borderColor: 'var(--lumiverse-primary)',
+        borderColor: 'var(--ado-primary)',
     },
     category: {
         background: 'rgba(147, 112, 219, 0.1)',
@@ -185,7 +185,7 @@ const styles = {
         borderRadius: '6px',
         background: 'transparent',
         border: 'none',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
@@ -197,18 +197,18 @@ const styles = {
         gap: '6px',
         padding: '8px 12px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-bg-elevated)',
-        color: 'var(--lumiverse-text)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-bg-elevated)',
+        color: 'var(--ado-text)',
         fontSize: '13px',
         fontWeight: 500,
         cursor: 'pointer',
         whiteSpace: 'nowrap',
     },
     btnPrimary: {
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: 'white',
-        borderColor: 'var(--lumiverse-primary)',
+        borderColor: 'var(--ado-primary)',
     }
 };
 
@@ -248,14 +248,14 @@ function SortablePromptItem({ prompt, index, onEdit, onDelete, onToggleEnabled, 
             ref={setNodeRef}
             style={{ ...styles.item, ...(isCategory ? styles.category : {}), ...style }}
             className={clsx(
-                'lumiverse-prompt-item',
+                'ado-prompt-item',
                 !prompt.enabled && 'opacity-50 grayscale'
             )}
         >
             <div 
                 {...attributes} 
                 {...listeners} 
-                style={{ cursor: 'grab', padding: '4px', color: 'var(--lumiverse-text-dim)', marginRight: '8px' }}
+                style={{ cursor: 'grab', padding: '4px', color: 'var(--ado-text-dim)', marginRight: '8px' }}
             >
                 <GripVertical size={16} />
             </div>
@@ -282,7 +282,7 @@ function SortablePromptItem({ prompt, index, onEdit, onDelete, onToggleEnabled, 
                         )}
                     </div>
                     {!isCategory && (
-                        <div style={{ fontSize: '11px', color: 'var(--lumiverse-text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <div style={{ fontSize: '11px', color: 'var(--ado-text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                             {(prompt.content || '').substring(0, 80)}
                         </div>
                     )}
@@ -305,7 +305,7 @@ function SortablePromptItem({ prompt, index, onEdit, onDelete, onToggleEnabled, 
                     <Edit2 size={16} />
                 </button>
                 <button
-                    style={{ ...styles.iconBtn, color: 'var(--lumiverse-danger)' }}
+                    style={{ ...styles.iconBtn, color: 'var(--ado-danger)' }}
                     onClick={() => onDelete(prompt)}
                     title="Delete"
                 >
@@ -620,7 +620,7 @@ export default function PresetEditor({ onClose }) {
     if (isLoading && !currentPreset) {
         return (
             <div style={{ ...styles.layout, alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: 'var(--lumiverse-text-muted)' }}>Loading Preset...</div>
+                <div style={{ color: 'var(--ado-text-muted)' }}>Loading Preset...</div>
             </div>
         );
     }
@@ -630,7 +630,7 @@ export default function PresetEditor({ onClose }) {
             {/* Header */}
             <div style={styles.header}>
                 <div style={styles.headerContent}>
-                    <Settings2 size={20} color="var(--lumiverse-primary)" />
+                    <Settings2 size={20} color="var(--ado-primary)" />
                     <select 
                         style={{ ...styles.select, flex: 1, minWidth: '0' }}
                         value={currentPreset?.name || ''}
@@ -655,7 +655,7 @@ export default function PresetEditor({ onClose }) {
                     <Plus size={16} /> <span className="hidden-sm">Category</span>
                 </button>
                 
-                <div style={{ width: '1px', height: '20px', background: 'var(--lumiverse-border)', margin: '0 4px' }}></div>
+                <div style={{ width: '1px', height: '20px', background: 'var(--ado-border)', margin: '0 4px' }}></div>
                 
                 <div style={{ position: 'relative' }}>
                     <button 
@@ -670,9 +670,9 @@ export default function PresetEditor({ onClose }) {
                     {/* Dropdown Menu for States */}
                     {showToggleMenu && (
                         <>
-                            <div className="lumiverse-states-backdrop" onClick={() => setShowToggleMenu(false)} />
+                            <div className="ado-states-backdrop" onClick={() => setShowToggleMenu(false)} />
                             <div 
-                                className="lumiverse-states-menu"
+                                className="ado-states-menu"
                                 style={{
                                     position: 'absolute',
                                     top: '100%',
@@ -682,7 +682,7 @@ export default function PresetEditor({ onClose }) {
                                     transform: 'none'
                                 }}
                             >
-                                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--lumiverse-text-muted)' }}>
+                                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ado-text-muted)' }}>
                                     SAVE CURRENT STATE
                                 </div>
                             <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
@@ -696,12 +696,12 @@ export default function PresetEditor({ onClose }) {
                                     <Save size={14} />
                                 </button>
                             </div>
-                            {toggleMsg && <div style={{ fontSize: '11px', color: 'var(--lumiverse-success)' }}>{toggleMsg}</div>}
+                            {toggleMsg && <div style={{ fontSize: '11px', color: 'var(--ado-success)' }}>{toggleMsg}</div>}
 
                             {toggleStateNames.length > 0 && (
                                 <>
-                                    <div style={{ height: '1px', background: 'var(--lumiverse-border)', margin: '4px 0' }}></div>
-                                    <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--lumiverse-text-muted)' }}>
+                                    <div style={{ height: '1px', background: 'var(--ado-border)', margin: '4px 0' }}></div>
+                                    <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ado-text-muted)' }}>
                                         LOAD STATE
                                     </div>
                                     <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
@@ -714,7 +714,7 @@ export default function PresetEditor({ onClose }) {
                                                     {name}
                                                 </span>
                                                 <button 
-                                                    style={{ ...styles.iconBtn, color: 'var(--lumiverse-danger)', padding: '2px' }}
+                                                    style={{ ...styles.iconBtn, color: 'var(--ado-danger)', padding: '2px' }}
                                                     onClick={(e) => { e.stopPropagation(); deleteToggleState(name); }}
                                                 >
                                                     <Trash2 size={12} />
@@ -732,7 +732,7 @@ export default function PresetEditor({ onClose }) {
                 {/* Binding Menu - Save toggles to Chat/Character */}
                 <div style={{ position: 'relative' }}>
                     <button 
-                        style={{ ...styles.btn, ...(showBindingMenu ? styles.btnPrimary : {}), ...((hasChatBinding || hasCharacterBinding) ? { borderColor: 'var(--lumiverse-success)', color: 'var(--lumiverse-success)' } : {}) }}
+                        style={{ ...styles.btn, ...(showBindingMenu ? styles.btnPrimary : {}), ...((hasChatBinding || hasCharacterBinding) ? { borderColor: 'var(--ado-success)', color: 'var(--ado-success)' } : {}) }}
                         onClick={() => setShowBindingMenu(!showBindingMenu)}
                         title="Bind toggles to Chat/Character"
                     >
@@ -743,9 +743,9 @@ export default function PresetEditor({ onClose }) {
                     {/* Dropdown Menu for Bindings */}
                     {showBindingMenu && (
                         <>
-                            <div className="lumiverse-states-backdrop" onClick={() => setShowBindingMenu(false)} />
+                            <div className="ado-states-backdrop" onClick={() => setShowBindingMenu(false)} />
                             <div 
-                                className="lumiverse-states-menu"
+                                className="ado-states-menu"
                                 style={{
                                     position: 'absolute',
                                     top: '100%',
@@ -756,20 +756,20 @@ export default function PresetEditor({ onClose }) {
                                     minWidth: '220px',
                                 }}
                             >
-                                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--lumiverse-text-muted)', marginBottom: '8px' }}>
+                                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ado-text-muted)', marginBottom: '8px' }}>
                                     BIND CURRENT TOGGLES
                                 </div>
-                                <div style={{ fontSize: '11px', color: 'var(--lumiverse-text-muted)', marginBottom: '12px' }}>
+                                <div style={{ fontSize: '11px', color: 'var(--ado-text-muted)', marginBottom: '12px' }}>
                                     Save which prompts are enabled/disabled to auto-apply when switching to this chat or character.
                                 </div>
 
                                 {/* Chat Binding */}
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                                    <MessageSquare size={14} style={{ color: 'var(--lumiverse-text-muted)' }} />
+                                    <MessageSquare size={14} style={{ color: 'var(--ado-text-muted)' }} />
                                     <span style={{ flex: 1, fontSize: '13px' }}>This Chat</span>
                                     {hasChatBinding ? (
                                         <button 
-                                            style={{ ...styles.btn, padding: '4px 8px', fontSize: '11px', color: 'var(--lumiverse-danger)', borderColor: 'var(--lumiverse-danger)' }}
+                                            style={{ ...styles.btn, padding: '4px 8px', fontSize: '11px', color: 'var(--ado-danger)', borderColor: 'var(--ado-danger)' }}
                                             onClick={handleClearChatBinding}
                                         >
                                             <Unlink size={12} /> Clear
@@ -786,13 +786,13 @@ export default function PresetEditor({ onClose }) {
 
                                 {/* Character Binding */}
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <User size={14} style={{ color: 'var(--lumiverse-text-muted)' }} />
+                                    <User size={14} style={{ color: 'var(--ado-text-muted)' }} />
                                     <span style={{ flex: 1, fontSize: '13px' }}>
                                         {currentCharacterName || 'Character'}
                                     </span>
                                     {hasCharacterBinding ? (
                                         <button 
-                                            style={{ ...styles.btn, padding: '4px 8px', fontSize: '11px', color: 'var(--lumiverse-danger)', borderColor: 'var(--lumiverse-danger)' }}
+                                            style={{ ...styles.btn, padding: '4px 8px', fontSize: '11px', color: 'var(--ado-danger)', borderColor: 'var(--ado-danger)' }}
                                             onClick={handleClearCharacterBinding}
                                         >
                                             <Unlink size={12} /> Clear
@@ -808,13 +808,13 @@ export default function PresetEditor({ onClose }) {
                                 </div>
 
                                 {bindingMsg && (
-                                    <div style={{ fontSize: '11px', color: 'var(--lumiverse-success)', marginTop: '8px' }}>
+                                    <div style={{ fontSize: '11px', color: 'var(--ado-success)', marginTop: '8px' }}>
                                         {bindingMsg}
                                     </div>
                                 )}
 
-                                <div style={{ height: '1px', background: 'var(--lumiverse-border)', margin: '12px 0 8px' }}></div>
-                                <div style={{ fontSize: '10px', color: 'var(--lumiverse-text-dim)' }}>
+                                <div style={{ height: '1px', background: 'var(--ado-border)', margin: '12px 0 8px' }}></div>
+                                <div style={{ fontSize: '10px', color: 'var(--ado-text-dim)' }}>
                                     Priority: Chat &gt; Character
                                 </div>
                             </div>
@@ -832,7 +832,7 @@ export default function PresetEditor({ onClose }) {
             {/* Content List */}
             <div style={styles.scrollArea}>
                 {visiblePrompts.length === 0 ? (
-                    <div style={{ padding: '40px', textAlign: 'center', color: 'var(--lumiverse-text-muted)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ padding: '40px', textAlign: 'center', color: 'var(--ado-text-muted)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
                         <FileText size={48} strokeWidth={1} style={{ opacity: 0.3 }} />
                         <div>
                             {prompts.length === 0 

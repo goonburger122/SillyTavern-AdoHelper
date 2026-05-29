@@ -22,10 +22,10 @@ export const Collapsible = forwardRef(function Collapsible({
     return (
         <div
             ref={ref}
-            className={clsx('lumiverse-collapsible', className, { 'is-open': isOpen })}
+            className={clsx('ado-collapsible', className, { 'is-open': isOpen })}
             style={{ '--collapsible-duration': `${duration}ms` }}
         >
-            <div className="lumiverse-collapsible-inner">
+            <div className="ado-collapsible-inner">
                 {children}
             </div>
         </div>
@@ -67,11 +67,11 @@ export const CollapsibleContent = forwardRef(function CollapsibleContent({
     return (
         <div
             ref={ref}
-            className={clsx('lumiverse-collapsible', className, { 'is-open': isOpen })}
+            className={clsx('ado-collapsible', className, { 'is-open': isOpen })}
             style={{ '--collapsible-duration': `${duration}ms` }}
             {...props}
         >
-            <div className="lumiverse-collapsible-inner">
+            <div className="ado-collapsible-inner">
                 {children}
             </div>
         </div>

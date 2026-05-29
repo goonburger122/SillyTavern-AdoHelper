@@ -7,7 +7,7 @@
  * 2. Exposes callbacks for React components to trigger extension actions
  *
  * NOTE: In the bundled architecture, React is included in the same bundle,
- * so window.LumiverseUI is available immediately - no dynamic loading needed.
+ * so window.AdoHelperUI is available immediately - no dynamic loading needed.
  */
 
 import {
@@ -40,7 +40,7 @@ const registerDLCTools = () => {};
 // We need to go back 4 levels from the filename to get the extension folder
 const myUrl = import.meta.url;
 const pathParts = myUrl.split('/');
-const EXTENSION_FOLDER_NAME = pathParts[pathParts.length - 4] || 'SillyTavern-LumiverseHelper';
+const EXTENSION_FOLDER_NAME = pathParts[pathParts.length - 4] || 'SillyTavern-AdoHelperHelper';
 
 // Track if React UI is loaded
 let reactUILoaded = false;
@@ -311,8 +311,8 @@ async function syncPackChangesToFileStorage(reactPacks) {
  * Notify React UI of settings changes from the extension side
  */
 export function notifyReactOfSettingsChange() {
-  if (window.LumiverseUI?.syncSettings) {
-    window.LumiverseUI.syncSettings(settingsToReactFormat());
+  if (window.AdoHelperUI?.syncSettings) {
+    window.AdoHelperUI.syncSettings(settingsToReactFormat());
   }
 }
 
@@ -333,7 +333,7 @@ function setupEventSync() {
 
 /**
  * Initialize the React UI
- * In bundled mode, LumiverseUI is available immediately.
+ * In bundled mode, AdoHelperUI is available immediately.
  * @param {HTMLElement} container - Container element to mount into
  * @returns {Promise<boolean>} Success status
  */
@@ -344,9 +344,9 @@ export async function initializeReactUI(container) {
   }
 
   try {
-    // In bundled mode, LumiverseUI should already be available
-    if (!window.LumiverseUI) {
-      console.error("[ReactBridge] LumiverseUI not available - bundle issue");
+    // In bundled mode, AdoHelperUI should already be available
+    if (!window.AdoHelperUI) {
+      console.error("[ReactBridge] AdoHelperUI not available - bundle issue");
       return false;
     }
 
@@ -361,7 +361,7 @@ export async function initializeReactUI(container) {
     applyTheme(bootTheme);
 
     // Expose the bridge API to React
-    window.LumiverseBridge = {
+    window.AdoHelperBridge = {
       getSettings: settingsToReactFormat,
       saveSettings: reactFormatToSettings,
       getCallbacks,
@@ -376,7 +376,7 @@ export async function initializeReactUI(container) {
       extensionName: EXTENSION_FOLDER_NAME,
       // Push council tool results into React store for the Feedback panel
       setCouncilToolResults: (results) => {
-        window.LumiverseUI?.getStore()?.setState({ councilToolResults: results || [] });
+        window.AdoHelperUI?.getStore()?.setState({ councilToolResults: results || [] });
       },
       // Called by packCache when pack data changes
       onPackCacheChange: () => {
@@ -391,27 +391,27 @@ export async function initializeReactUI(container) {
     };
 
     // Mount the React settings panel
-    if (container && window.LumiverseUI.mountSettingsPanel) {
-      cleanupFn = window.LumiverseUI.mountSettingsPanel("lumiverse-react-root", initialSettings);
+    if (container && window.AdoHelperUI.mountSettingsPanel) {
+      cleanupFn = window.AdoHelperUI.mountSettingsPanel("ado-react-root", initialSettings);
     } else {
       console.error(
         "[ReactBridge] Cannot mount: container=",
         container,
         "mountSettingsPanel=",
-        window.LumiverseUI?.mountSettingsPanel,
+        window.AdoHelperUI?.mountSettingsPanel,
       );
     }
 
     // Mount the viewport panel (sidebar with profile, browser, analytics)
-    if (window.LumiverseUI.mountViewportPanel) {
-      viewportCleanupFn = window.LumiverseUI.mountViewportPanel(initialSettings);
+    if (window.AdoHelperUI.mountViewportPanel) {
+      viewportCleanupFn = window.AdoHelperUI.mountViewportPanel(initialSettings);
     }
 
     // Subscribe to theme changes from the React store for live updates
-    if (window.LumiverseUI.subscribe) {
+    if (window.AdoHelperUI.subscribe) {
       let lastTheme = initialSettings.theme;
-      window.LumiverseUI.subscribe(() => {
-        const state = window.LumiverseUI.getState();
+      window.AdoHelperUI.subscribe(() => {
+        const state = window.AdoHelperUI.getState();
         if (state.theme !== lastTheme) {
           lastTheme = state.theme;
           // Always apply — null means Default Purple, never remove the style element
@@ -458,8 +458,8 @@ export function destroyReactUI() {
     viewportCleanupFn = null;
   }
 
-  if (window.LumiverseUI && window.LumiverseUI.unmountAll) {
-    window.LumiverseUI.unmountAll();
+  if (window.AdoHelperUI && window.AdoHelperUI.unmountAll) {
+    window.AdoHelperUI.unmountAll();
   }
 
   reactUILoaded = false;
@@ -470,5 +470,5 @@ export function destroyReactUI() {
  * @returns {boolean}
  */
 export function isReactUIAvailable() {
-  return reactUILoaded && !!window.LumiverseUI;
+  return reactUILoaded && !!window.AdoHelperUI;
 }

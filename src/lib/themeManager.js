@@ -1,6 +1,6 @@
 /**
  * Theme Manager Module
- * Handles color theming for the Lumiverse Helper extension.
+ * Handles color theming for the Ado Helper extension.
  *
  * Architecture:
  * - Stores theme as 7 HSL base colors (primary, secondary, background, text, danger, success, warning)
@@ -305,79 +305,79 @@ function generateThemeVariables(baseColors) {
     const light = isLightMode(background);
 
     // ── Mode indicator ──
-    vars['--lumiverse-mode'] = light ? 'light' : 'dark';
+    vars['--ado-mode'] = light ? 'light' : 'dark';
 
     // ── Primary color variants ──
-    vars['--lumiverse-primary']       = hsla(primary, 0.9);
-    vars['--lumiverse-primary-hover'] = hsla(lighten(primary, 8), 0.95);
-    vars['--lumiverse-primary-light'] = hsla(primary, 0.1);
-    vars['--lumiverse-primary-muted'] = hsla(primary, 0.6);
+    vars['--ado-primary']       = hsla(primary, 0.9);
+    vars['--ado-primary-hover'] = hsla(lighten(primary, 8), 0.95);
+    vars['--ado-primary-light'] = hsla(primary, 0.1);
+    vars['--ado-primary-muted'] = hsla(primary, 0.6);
 
     // In light mode, darken the accent-text color for readability against light backgrounds
     const primaryLight = light ? darken(primary, 10) : lighten(primary, 15);
-    vars['--lumiverse-primary-text']  = hsla(primaryLight, 0.95);
+    vars['--ado-primary-text']  = hsla(primaryLight, 0.95);
 
     // Opacity-stepped variants (for migrated hardcoded values)
-    vars['--lumiverse-primary-003'] = hsla(primary, 0.03);
-    vars['--lumiverse-primary-004'] = hsla(primary, 0.04);
-    vars['--lumiverse-primary-005'] = hsla(primary, 0.05);
-    vars['--lumiverse-primary-006'] = hsla(primary, 0.06);
-    vars['--lumiverse-primary-008'] = hsla(primary, 0.08);
-    vars['--lumiverse-primary-010'] = hsla(primary, 0.1);
-    vars['--lumiverse-primary-012'] = hsla(primary, 0.12);
-    vars['--lumiverse-primary-015'] = hsla(primary, 0.15);
-    vars['--lumiverse-primary-018'] = hsla(primary, 0.18);
-    vars['--lumiverse-primary-020'] = hsla(primary, 0.2);
-    vars['--lumiverse-primary-025'] = hsla(primary, 0.25);
-    vars['--lumiverse-primary-030'] = hsla(primary, 0.3);
-    vars['--lumiverse-primary-035'] = hsla(primary, 0.35);
-    vars['--lumiverse-primary-040'] = hsla(primary, 0.4);
-    vars['--lumiverse-primary-045'] = hsla(primary, 0.45);
-    vars['--lumiverse-primary-050'] = hsla(primary, 0.5);
-    vars['--lumiverse-primary-060'] = hsla(primary, 0.6);
-    vars['--lumiverse-primary-070'] = hsla(primary, 0.7);
-    vars['--lumiverse-primary-080'] = hsla(primary, 0.8);
-    vars['--lumiverse-primary-085'] = hsla(primary, 0.85);
-    vars['--lumiverse-primary-090'] = hsla(primary, 0.9);
-    vars['--lumiverse-primary-095'] = hsla(primary, 0.95);
-    vars['--lumiverse-primary-100'] = hsl(primary);
+    vars['--ado-primary-003'] = hsla(primary, 0.03);
+    vars['--ado-primary-004'] = hsla(primary, 0.04);
+    vars['--ado-primary-005'] = hsla(primary, 0.05);
+    vars['--ado-primary-006'] = hsla(primary, 0.06);
+    vars['--ado-primary-008'] = hsla(primary, 0.08);
+    vars['--ado-primary-010'] = hsla(primary, 0.1);
+    vars['--ado-primary-012'] = hsla(primary, 0.12);
+    vars['--ado-primary-015'] = hsla(primary, 0.15);
+    vars['--ado-primary-018'] = hsla(primary, 0.18);
+    vars['--ado-primary-020'] = hsla(primary, 0.2);
+    vars['--ado-primary-025'] = hsla(primary, 0.25);
+    vars['--ado-primary-030'] = hsla(primary, 0.3);
+    vars['--ado-primary-035'] = hsla(primary, 0.35);
+    vars['--ado-primary-040'] = hsla(primary, 0.4);
+    vars['--ado-primary-045'] = hsla(primary, 0.45);
+    vars['--ado-primary-050'] = hsla(primary, 0.5);
+    vars['--ado-primary-060'] = hsla(primary, 0.6);
+    vars['--ado-primary-070'] = hsla(primary, 0.7);
+    vars['--ado-primary-080'] = hsla(primary, 0.8);
+    vars['--ado-primary-085'] = hsla(primary, 0.85);
+    vars['--ado-primary-090'] = hsla(primary, 0.9);
+    vars['--ado-primary-095'] = hsla(primary, 0.95);
+    vars['--ado-primary-100'] = hsl(primary);
 
     // Primary-text opacity variants
-    vars['--lumiverse-primary-text-015'] = hsla(primaryLight, 0.15);
-    vars['--lumiverse-primary-text-030'] = hsla(primaryLight, 0.3);
-    vars['--lumiverse-primary-text-050'] = hsla(primaryLight, 0.5);
-    vars['--lumiverse-primary-text-060'] = hsla(primaryLight, 0.6);
-    vars['--lumiverse-primary-text-080'] = hsla(primaryLight, 0.8);
-    vars['--lumiverse-primary-text-085'] = hsla(primaryLight, 0.85);
-    vars['--lumiverse-primary-text-090'] = hsla(primaryLight, 0.9);
-    vars['--lumiverse-primary-text-095'] = hsla(primaryLight, 0.95);
-    vars['--lumiverse-primary-text-100'] = hsl(primaryLight);
+    vars['--ado-primary-text-015'] = hsla(primaryLight, 0.15);
+    vars['--ado-primary-text-030'] = hsla(primaryLight, 0.3);
+    vars['--ado-primary-text-050'] = hsla(primaryLight, 0.5);
+    vars['--ado-primary-text-060'] = hsla(primaryLight, 0.6);
+    vars['--ado-primary-text-080'] = hsla(primaryLight, 0.8);
+    vars['--ado-primary-text-085'] = hsla(primaryLight, 0.85);
+    vars['--ado-primary-text-090'] = hsla(primaryLight, 0.9);
+    vars['--ado-primary-text-095'] = hsla(primaryLight, 0.95);
+    vars['--ado-primary-text-100'] = hsl(primaryLight);
 
     // ── Secondary color variants ──
-    vars['--lumiverse-secondary']        = hsla(secondary, 0.15);
-    vars['--lumiverse-secondary-hover']  = hsla(secondary, 0.25);
-    vars['--lumiverse-secondary-border'] = hsla(secondary, 0.25);
+    vars['--ado-secondary']        = hsla(secondary, 0.15);
+    vars['--ado-secondary-hover']  = hsla(secondary, 0.25);
+    vars['--ado-secondary-border'] = hsla(secondary, 0.25);
 
     // Secondary opacity variants
-    vars['--lumiverse-secondary-005'] = hsla(secondary, 0.05);
-    vars['--lumiverse-secondary-008'] = hsla(secondary, 0.08);
-    vars['--lumiverse-secondary-010'] = hsla(secondary, 0.1);
-    vars['--lumiverse-secondary-012'] = hsla(secondary, 0.12);
-    vars['--lumiverse-secondary-015'] = hsla(secondary, 0.15);
-    vars['--lumiverse-secondary-020'] = hsla(secondary, 0.2);
-    vars['--lumiverse-secondary-025'] = hsla(secondary, 0.25);
-    vars['--lumiverse-secondary-030'] = hsla(secondary, 0.3);
-    vars['--lumiverse-secondary-035'] = hsla(secondary, 0.35);
-    vars['--lumiverse-secondary-040'] = hsla(secondary, 0.4);
-    vars['--lumiverse-secondary-045'] = hsla(secondary, 0.45);
-    vars['--lumiverse-secondary-050'] = hsla(secondary, 0.5);
-    vars['--lumiverse-secondary-060'] = hsla(secondary, 0.6);
-    vars['--lumiverse-secondary-070'] = hsla(secondary, 0.7);
-    vars['--lumiverse-secondary-080'] = hsla(secondary, 0.8);
-    vars['--lumiverse-secondary-085'] = hsla(secondary, 0.85);
-    vars['--lumiverse-secondary-090'] = hsla(secondary, 0.9);
-    vars['--lumiverse-secondary-095'] = hsla(secondary, 0.95);
-    vars['--lumiverse-secondary-100'] = hsl(secondary);
+    vars['--ado-secondary-005'] = hsla(secondary, 0.05);
+    vars['--ado-secondary-008'] = hsla(secondary, 0.08);
+    vars['--ado-secondary-010'] = hsla(secondary, 0.1);
+    vars['--ado-secondary-012'] = hsla(secondary, 0.12);
+    vars['--ado-secondary-015'] = hsla(secondary, 0.15);
+    vars['--ado-secondary-020'] = hsla(secondary, 0.2);
+    vars['--ado-secondary-025'] = hsla(secondary, 0.25);
+    vars['--ado-secondary-030'] = hsla(secondary, 0.3);
+    vars['--ado-secondary-035'] = hsla(secondary, 0.35);
+    vars['--ado-secondary-040'] = hsla(secondary, 0.4);
+    vars['--ado-secondary-045'] = hsla(secondary, 0.45);
+    vars['--ado-secondary-050'] = hsla(secondary, 0.5);
+    vars['--ado-secondary-060'] = hsla(secondary, 0.6);
+    vars['--ado-secondary-070'] = hsla(secondary, 0.7);
+    vars['--ado-secondary-080'] = hsla(secondary, 0.8);
+    vars['--ado-secondary-085'] = hsla(secondary, 0.85);
+    vars['--ado-secondary-090'] = hsla(secondary, 0.9);
+    vars['--ado-secondary-095'] = hsla(secondary, 0.95);
+    vars['--ado-secondary-100'] = hsl(secondary);
 
     // ── Background variants (mode-aware elevation direction) ──
     // Dark mode: elevated = lighter, deep = darker
@@ -392,245 +392,245 @@ function generateThemeVariables(baseColors) {
     // Light mode: fully opaque colors — semi-transparent over dark ST page = muddy
     // Dark mode: semi-transparent for layered depth against dark backgrounds
     if (light) {
-        vars['--lumiverse-bg']          = hsl(background);
-        vars['--lumiverse-bg-elevated'] = hsl(bgElevated);
-        vars['--lumiverse-bg-hover']    = hsl(bgHover);
-        vars['--lumiverse-bg-dark']     = hsl(darken(background, 6));
-        vars['--lumiverse-bg-darker']   = hsl(darken(background, 10));
+        vars['--ado-bg']          = hsl(background);
+        vars['--ado-bg-elevated'] = hsl(bgElevated);
+        vars['--ado-bg-hover']    = hsl(bgHover);
+        vars['--ado-bg-dark']     = hsl(darken(background, 6));
+        vars['--ado-bg-darker']   = hsl(darken(background, 10));
 
         // Opacity-named variants → solid colors with progressive depth
-        vars['--lumiverse-bg-040']          = hsl(darken(background, 10));
-        vars['--lumiverse-bg-050']          = hsl(darken(background, 8));
-        vars['--lumiverse-bg-060']          = hsl(darken(background, 6));
-        vars['--lumiverse-bg-070']          = hsl(darken(background, 5));
-        vars['--lumiverse-bg-080']          = hsl(darken(background, 4));
-        vars['--lumiverse-bg-085']          = hsl(darken(background, 3));
-        vars['--lumiverse-bg-097']          = hsl(darken(background, 1));
-        vars['--lumiverse-bg-098']          = hsl(background);
-        vars['--lumiverse-bg-elevated-040'] = hsl(darken(bgElevated, 8));
-        vars['--lumiverse-bg-elevated-050'] = hsl(darken(bgElevated, 6));
-        vars['--lumiverse-bg-elevated-075'] = hsl(darken(bgElevated, 3));
-        vars['--lumiverse-bg-elevated-085'] = hsl(darken(bgElevated, 2));
-        vars['--lumiverse-bg-elevated-095'] = hsl(bgElevated);
-        vars['--lumiverse-bg-elevated-098'] = hsl(bgElevated);
-        vars['--lumiverse-bg-hover-080']    = hsl(darken(bgHover, 3));
-        vars['--lumiverse-bg-hover-085']    = hsl(darken(bgHover, 2));
-        vars['--lumiverse-bg-hover-095']    = hsl(bgHover);
+        vars['--ado-bg-040']          = hsl(darken(background, 10));
+        vars['--ado-bg-050']          = hsl(darken(background, 8));
+        vars['--ado-bg-060']          = hsl(darken(background, 6));
+        vars['--ado-bg-070']          = hsl(darken(background, 5));
+        vars['--ado-bg-080']          = hsl(darken(background, 4));
+        vars['--ado-bg-085']          = hsl(darken(background, 3));
+        vars['--ado-bg-097']          = hsl(darken(background, 1));
+        vars['--ado-bg-098']          = hsl(background);
+        vars['--ado-bg-elevated-040'] = hsl(darken(bgElevated, 8));
+        vars['--ado-bg-elevated-050'] = hsl(darken(bgElevated, 6));
+        vars['--ado-bg-elevated-075'] = hsl(darken(bgElevated, 3));
+        vars['--ado-bg-elevated-085'] = hsl(darken(bgElevated, 2));
+        vars['--ado-bg-elevated-095'] = hsl(bgElevated);
+        vars['--ado-bg-elevated-098'] = hsl(bgElevated);
+        vars['--ado-bg-hover-080']    = hsl(darken(bgHover, 3));
+        vars['--ado-bg-hover-085']    = hsl(darken(bgHover, 2));
+        vars['--ado-bg-hover-095']    = hsl(bgHover);
 
         // Deeper/surface shades — solid for light mode
-        vars['--lumiverse-bg-deep']      = hsl(bgDeep);
-        vars['--lumiverse-bg-deep-080']  = hsl(darken(bgDeep, 3));
-        vars['--lumiverse-bg-deepest']   = hsl(bgDeepest);
-        vars['--lumiverse-bg-surface']   = hsl(bgSurface);
-        vars['--lumiverse-bg-surface-2'] = hsl(bgSurface2);
+        vars['--ado-bg-deep']      = hsl(bgDeep);
+        vars['--ado-bg-deep-080']  = hsl(darken(bgDeep, 3));
+        vars['--ado-bg-deepest']   = hsl(bgDeepest);
+        vars['--ado-bg-surface']   = hsl(bgSurface);
+        vars['--ado-bg-surface-2'] = hsl(bgSurface2);
     } else {
-        vars['--lumiverse-bg']          = hsla(background, 0.95);
-        vars['--lumiverse-bg-elevated'] = hsla(bgElevated, 0.9);
-        vars['--lumiverse-bg-hover']    = hsla(bgHover, 0.9);
-        vars['--lumiverse-bg-dark']     = 'rgba(0, 0, 0, 0.15)';
-        vars['--lumiverse-bg-darker']   = 'rgba(0, 0, 0, 0.25)';
+        vars['--ado-bg']          = hsla(background, 0.95);
+        vars['--ado-bg-elevated'] = hsla(bgElevated, 0.9);
+        vars['--ado-bg-hover']    = hsla(bgHover, 0.9);
+        vars['--ado-bg-dark']     = 'rgba(0, 0, 0, 0.15)';
+        vars['--ado-bg-darker']   = 'rgba(0, 0, 0, 0.25)';
 
         // Background opacity variants
-        vars['--lumiverse-bg-040']          = hsla(background, 0.4);
-        vars['--lumiverse-bg-050']          = hsla(background, 0.5);
-        vars['--lumiverse-bg-060']          = hsla(background, 0.6);
-        vars['--lumiverse-bg-070']          = hsla(background, 0.7);
-        vars['--lumiverse-bg-080']          = hsla(background, 0.8);
-        vars['--lumiverse-bg-085']          = hsla(background, 0.85);
-        vars['--lumiverse-bg-097']          = hsla(background, 0.97);
-        vars['--lumiverse-bg-098']          = hsla(background, 0.98);
-        vars['--lumiverse-bg-elevated-040'] = hsla(bgElevated, 0.4);
-        vars['--lumiverse-bg-elevated-050'] = hsla(bgElevated, 0.5);
-        vars['--lumiverse-bg-elevated-075'] = hsla(bgElevated, 0.75);
-        vars['--lumiverse-bg-elevated-085'] = hsla(bgElevated, 0.85);
-        vars['--lumiverse-bg-elevated-095'] = hsla(bgElevated, 0.95);
-        vars['--lumiverse-bg-elevated-098'] = hsla(bgElevated, 0.98);
-        vars['--lumiverse-bg-hover-080']    = hsla(bgHover, 0.8);
-        vars['--lumiverse-bg-hover-085']    = hsla(bgHover, 0.85);
-        vars['--lumiverse-bg-hover-095']    = hsla(bgHover, 0.95);
+        vars['--ado-bg-040']          = hsla(background, 0.4);
+        vars['--ado-bg-050']          = hsla(background, 0.5);
+        vars['--ado-bg-060']          = hsla(background, 0.6);
+        vars['--ado-bg-070']          = hsla(background, 0.7);
+        vars['--ado-bg-080']          = hsla(background, 0.8);
+        vars['--ado-bg-085']          = hsla(background, 0.85);
+        vars['--ado-bg-097']          = hsla(background, 0.97);
+        vars['--ado-bg-098']          = hsla(background, 0.98);
+        vars['--ado-bg-elevated-040'] = hsla(bgElevated, 0.4);
+        vars['--ado-bg-elevated-050'] = hsla(bgElevated, 0.5);
+        vars['--ado-bg-elevated-075'] = hsla(bgElevated, 0.75);
+        vars['--ado-bg-elevated-085'] = hsla(bgElevated, 0.85);
+        vars['--ado-bg-elevated-095'] = hsla(bgElevated, 0.95);
+        vars['--ado-bg-elevated-098'] = hsla(bgElevated, 0.98);
+        vars['--ado-bg-hover-080']    = hsla(bgHover, 0.8);
+        vars['--ado-bg-hover-085']    = hsla(bgHover, 0.85);
+        vars['--ado-bg-hover-095']    = hsla(bgHover, 0.95);
 
         // Deeper/surface background shades
-        vars['--lumiverse-bg-deep']      = hsla(bgDeep, 0.98);
-        vars['--lumiverse-bg-deep-080']  = hsla(bgDeep, 0.8);
-        vars['--lumiverse-bg-deepest']   = hsla(bgDeepest, 0.98);
-        vars['--lumiverse-bg-surface']   = hsla(bgSurface, 0.9);
-        vars['--lumiverse-bg-surface-2'] = hsla(bgSurface2, 0.95);
+        vars['--ado-bg-deep']      = hsla(bgDeep, 0.98);
+        vars['--ado-bg-deep-080']  = hsla(bgDeep, 0.8);
+        vars['--ado-bg-deepest']   = hsla(bgDeepest, 0.98);
+        vars['--ado-bg-surface']   = hsla(bgSurface, 0.9);
+        vars['--ado-bg-surface-2'] = hsla(bgSurface2, 0.95);
     }
 
     // ── Border variants ──
-    vars['--lumiverse-border']       = hsla(primary, 0.12);
-    vars['--lumiverse-border-hover'] = hsla(primary, 0.25);
-    vars['--lumiverse-border-light'] = hsla(desaturate(primary, 100), 0.12);
+    vars['--ado-border']       = hsla(primary, 0.12);
+    vars['--ado-border-hover'] = hsla(primary, 0.25);
+    vars['--ado-border-light'] = hsla(desaturate(primary, 100), 0.12);
 
     // ── Text variants ──
-    vars['--lumiverse-text']       = hsla(text, 0.9);
-    vars['--lumiverse-text-muted'] = hsla(text, 0.65);
-    vars['--lumiverse-text-dim']   = hsla(text, 0.4);
-    vars['--lumiverse-text-hint']  = hsla(text, 0.3);
+    vars['--ado-text']       = hsla(text, 0.9);
+    vars['--ado-text-muted'] = hsla(text, 0.65);
+    vars['--ado-text-dim']   = hsla(text, 0.4);
+    vars['--ado-text-hint']  = hsla(text, 0.3);
 
     // ── Prose color variants (Chat Sheld themed text) ──
     // Speech/Thoughts use dedicated baseColors when available,
     // falling back to the original secondary/primary derivation for older themes.
     const speech = baseColors.speech
         || (light ? darken(secondary, 5) : lighten(secondary, 10));
-    vars['--lumiverse-prose-dialogue'] = hsla(speech, 0.88);
+    vars['--ado-prose-dialogue'] = hsla(speech, 0.88);
 
     const thoughts = baseColors.thoughts
         || (light ? darken(desaturate(primary, 15), 5) : lighten(desaturate(primary, 15), 12));
-    vars['--lumiverse-prose-italic'] = hsla(thoughts, 0.78);
+    vars['--ado-prose-italic'] = hsla(thoughts, 0.78);
 
     // Bold: slightly brighter base text for emphasis
     const boldColor = light ? darken(text, 5) : lighten(text, 5);
-    vars['--lumiverse-prose-bold'] = hsla(boldColor, 0.95);
+    vars['--ado-prose-bold'] = hsla(boldColor, 0.95);
 
     // Blockquote: muted primary
-    vars['--lumiverse-prose-blockquote'] = hsla(desaturate(primary, 20), 0.65);
+    vars['--ado-prose-blockquote'] = hsla(desaturate(primary, 20), 0.65);
 
     // ── Status colors ──
-    vars['--lumiverse-danger']       = hsl(danger);
-    vars['--lumiverse-danger-hover'] = hsl(darken(danger, 5));
-    vars['--lumiverse-success']      = hsl(success);
-    vars['--lumiverse-warning']      = hsl(warning);
+    vars['--ado-danger']       = hsl(danger);
+    vars['--ado-danger-hover'] = hsl(darken(danger, 5));
+    vars['--ado-success']      = hsl(success);
+    vars['--ado-warning']      = hsl(warning);
 
     // Status opacity variants
-    vars['--lumiverse-danger-008']  = hsla(danger, 0.08);
-    vars['--lumiverse-danger-010']  = hsla(danger, 0.1);
-    vars['--lumiverse-danger-015']  = hsla(danger, 0.15);
-    vars['--lumiverse-danger-020']  = hsla(danger, 0.2);
-    vars['--lumiverse-danger-025']  = hsla(danger, 0.25);
-    vars['--lumiverse-danger-040']  = hsla(danger, 0.4);
-    vars['--lumiverse-danger-050']  = hsla(danger, 0.5);
-    vars['--lumiverse-danger-070']  = hsla(danger, 0.7);
-    vars['--lumiverse-danger-080']  = hsla(danger, 0.8);
-    vars['--lumiverse-danger-090']  = hsla(danger, 0.9);
-    vars['--lumiverse-danger-095']  = hsla(danger, 0.95);
-    vars['--lumiverse-danger-100']  = hsl(danger);
-    vars['--lumiverse-success-015'] = hsla(success, 0.15);
-    vars['--lumiverse-success-030'] = hsla(success, 0.3);
-    vars['--lumiverse-success-090'] = hsla(success, 0.9);
-    vars['--lumiverse-success-095'] = hsla(success, 0.95);
-    vars['--lumiverse-warning-010'] = hsla(warning, 0.1);
-    vars['--lumiverse-warning-025'] = hsla(warning, 0.25);
-    vars['--lumiverse-warning-040'] = hsla(warning, 0.4);
-    vars['--lumiverse-warning-060'] = hsla(warning, 0.6);
-    vars['--lumiverse-warning-090'] = hsla(warning, 0.9);
-    vars['--lumiverse-warning-012'] = hsla(warning, 0.12);
+    vars['--ado-danger-008']  = hsla(danger, 0.08);
+    vars['--ado-danger-010']  = hsla(danger, 0.1);
+    vars['--ado-danger-015']  = hsla(danger, 0.15);
+    vars['--ado-danger-020']  = hsla(danger, 0.2);
+    vars['--ado-danger-025']  = hsla(danger, 0.25);
+    vars['--ado-danger-040']  = hsla(danger, 0.4);
+    vars['--ado-danger-050']  = hsla(danger, 0.5);
+    vars['--ado-danger-070']  = hsla(danger, 0.7);
+    vars['--ado-danger-080']  = hsla(danger, 0.8);
+    vars['--ado-danger-090']  = hsla(danger, 0.9);
+    vars['--ado-danger-095']  = hsla(danger, 0.95);
+    vars['--ado-danger-100']  = hsl(danger);
+    vars['--ado-success-015'] = hsla(success, 0.15);
+    vars['--ado-success-030'] = hsla(success, 0.3);
+    vars['--ado-success-090'] = hsla(success, 0.9);
+    vars['--ado-success-095'] = hsla(success, 0.95);
+    vars['--ado-warning-010'] = hsla(warning, 0.1);
+    vars['--ado-warning-025'] = hsla(warning, 0.25);
+    vars['--ado-warning-040'] = hsla(warning, 0.4);
+    vars['--ado-warning-060'] = hsla(warning, 0.6);
+    vars['--ado-warning-090'] = hsla(warning, 0.9);
+    vars['--ado-warning-012'] = hsla(warning, 0.12);
 
     // ── Shadows (mode-aware opacity) ──
     const shadowOp   = light ? 0.10 : 0.3;
     const shadowOpLg = light ? 0.18 : 0.5;
-    vars['--lumiverse-shadow']    = `0 4px 6px -1px rgba(0, 0, 0, ${shadowOp})`;
-    vars['--lumiverse-shadow-lg'] = `0 24px 80px rgba(0, 0, 0, ${shadowOpLg}), 0 0 1px ${hsla(primary, 0.3)}`;
+    vars['--ado-shadow']    = `0 4px 6px -1px rgba(0, 0, 0, ${shadowOp})`;
+    vars['--ado-shadow-lg'] = `0 24px 80px rgba(0, 0, 0, ${shadowOpLg}), 0 0 1px ${hsla(primary, 0.3)}`;
 
     // ── Fill colors (replace hardcoded rgba(0,0,0,X) backgrounds) ──
     // Light mode: solid colors derived from bg; Dark mode: black overlays
     if (light) {
-        vars['--lumiverse-fill-subtle']  = hsl(darken(background, 3));   // 0.08-0.12
-        vars['--lumiverse-fill']         = hsl(darken(background, 5));   // 0.15
-        vars['--lumiverse-fill-hover']   = hsl(darken(background, 7));   // 0.18-0.2
-        vars['--lumiverse-fill-medium']  = hsl(darken(background, 9));   // 0.25
-        vars['--lumiverse-fill-strong']  = hsl(darken(background, 12));  // 0.3-0.35
-        vars['--lumiverse-fill-heavy']   = hsl(darken(background, 20));  // 0.5
-        vars['--lumiverse-fill-deepest'] = hsl(darken(background, 30));  // 0.7
+        vars['--ado-fill-subtle']  = hsl(darken(background, 3));   // 0.08-0.12
+        vars['--ado-fill']         = hsl(darken(background, 5));   // 0.15
+        vars['--ado-fill-hover']   = hsl(darken(background, 7));   // 0.18-0.2
+        vars['--ado-fill-medium']  = hsl(darken(background, 9));   // 0.25
+        vars['--ado-fill-strong']  = hsl(darken(background, 12));  // 0.3-0.35
+        vars['--ado-fill-heavy']   = hsl(darken(background, 20));  // 0.5
+        vars['--ado-fill-deepest'] = hsl(darken(background, 30));  // 0.7
     } else {
-        vars['--lumiverse-fill-subtle']  = 'rgba(0, 0, 0, 0.1)';
-        vars['--lumiverse-fill']         = 'rgba(0, 0, 0, 0.15)';
-        vars['--lumiverse-fill-hover']   = 'rgba(0, 0, 0, 0.2)';
-        vars['--lumiverse-fill-medium']  = 'rgba(0, 0, 0, 0.25)';
-        vars['--lumiverse-fill-strong']  = 'rgba(0, 0, 0, 0.3)';
-        vars['--lumiverse-fill-heavy']   = 'rgba(0, 0, 0, 0.5)';
-        vars['--lumiverse-fill-deepest'] = 'rgba(0, 0, 0, 0.7)';
+        vars['--ado-fill-subtle']  = 'rgba(0, 0, 0, 0.1)';
+        vars['--ado-fill']         = 'rgba(0, 0, 0, 0.15)';
+        vars['--ado-fill-hover']   = 'rgba(0, 0, 0, 0.2)';
+        vars['--ado-fill-medium']  = 'rgba(0, 0, 0, 0.25)';
+        vars['--ado-fill-strong']  = 'rgba(0, 0, 0, 0.3)';
+        vars['--ado-fill-heavy']   = 'rgba(0, 0, 0, 0.5)';
+        vars['--ado-fill-deepest'] = 'rgba(0, 0, 0, 0.7)';
     }
 
     // ── Card backgrounds ──
-    vars['--lumiverse-card-bg'] = light
+    vars['--ado-card-bg'] = light
         ? `linear-gradient(165deg, ${hsl(background)} 0%, ${hsl(darken(background, 4))} 100%)`
         : `linear-gradient(165deg, ${hsla(background, 0.95)} 0%, ${hsla(darken(background, 2), 0.9)} 50%, ${hsla(darken(background, 4), 0.95)} 100%)`;
-    vars['--lumiverse-card-image-bg'] = light
+    vars['--ado-card-image-bg'] = light
         ? `linear-gradient(135deg, ${hsl(darken(background, 6))} 0%, ${hsl(darken(background, 10))} 100%)`
         : `linear-gradient(135deg, ${hsla(bgDeep, 0.8)} 0%, ${hsla(darken(background, 6), 0.6)} 100%)`;
 
     // ── Neutral border (replacing hardcoded rgba(128,128,128,X)) ──
-    vars['--lumiverse-border-neutral'] = light
+    vars['--ado-border-neutral'] = light
         ? `hsla(${background.h}, 5%, 50%, 0.25)`
         : 'rgba(128, 128, 128, 0.15)';
-    vars['--lumiverse-border-neutral-hover'] = light
+    vars['--ado-border-neutral-hover'] = light
         ? `hsla(${background.h}, 5%, 50%, 0.35)`
         : 'rgba(128, 128, 128, 0.25)';
 
     // ── Mode-aware highlights and overlays ──
-    vars['--lumiverse-highlight-inset']    = light
+    vars['--ado-highlight-inset']    = light
         ? 'inset 0 1px 0 rgba(255, 255, 255, 0.5)'
         : 'inset 0 1px 0 rgba(255, 255, 255, 0.1)';
-    vars['--lumiverse-highlight-inset-md'] = light
+    vars['--ado-highlight-inset-md'] = light
         ? 'inset 0 1px 0 rgba(255, 255, 255, 0.7)'
         : 'inset 0 1px 0 rgba(255, 255, 255, 0.2)';
-    vars['--lumiverse-highlight-inset-lg'] = light
+    vars['--ado-highlight-inset-lg'] = light
         ? 'inset 0 1px 0 rgba(255, 255, 255, 0.8)'
         : 'inset 0 1px 0 rgba(255, 255, 255, 0.25)';
-    vars['--lumiverse-modal-backdrop'] = light
+    vars['--ado-modal-backdrop'] = light
         ? 'rgba(0, 0, 0, 0.35)'
         : 'rgba(0, 0, 0, 0.6)';
-    vars['--lumiverse-swatch-border'] = light
+    vars['--ado-swatch-border'] = light
         ? 'rgba(0, 0, 0, 0.15)'
         : 'rgba(255, 255, 255, 0.15)';
 
     // ── Mode-aware shadows (medium/small for element-level shadows) ──
     const shadowMdOp = light ? 0.08 : 0.4;
     const shadowSmOp = light ? 0.05 : 0.2;
-    vars['--lumiverse-shadow-md'] = `0 8px 24px rgba(0, 0, 0, ${shadowMdOp})`;
-    vars['--lumiverse-shadow-sm'] = `0 2px 8px rgba(0, 0, 0, ${shadowSmOp})`;
-    vars['--lumiverse-shadow-xl'] = `0 20px 60px rgba(0, 0, 0, ${light ? 0.12 : 0.5})`;
-    vars['--lumiverse-text-shadow'] = 'none';
+    vars['--ado-shadow-md'] = `0 8px 24px rgba(0, 0, 0, ${shadowMdOp})`;
+    vars['--ado-shadow-sm'] = `0 2px 8px rgba(0, 0, 0, ${shadowSmOp})`;
+    vars['--ado-shadow-xl'] = `0 20px 60px rgba(0, 0, 0, ${light ? 0.12 : 0.5})`;
+    vars['--ado-text-shadow'] = 'none';
 
     // ── Icon colors (derived from text, for SVG stroke/fill) ──
-    vars['--lumiverse-icon']       = hsla(text, 0.9);
-    vars['--lumiverse-icon-muted'] = hsla(text, 0.6);
-    vars['--lumiverse-icon-dim']   = hsla(text, 0.4);
+    vars['--ado-icon']       = hsla(text, 0.9);
+    vars['--ado-icon-muted'] = hsla(text, 0.6);
+    vars['--ado-icon-dim']   = hsla(text, 0.4);
 
     // ── Gradient presets (mode-aware via derived bg values) ──
-    vars['--lumiverse-gradient-panel'] = light
+    vars['--ado-gradient-panel'] = light
         ? `linear-gradient(165deg, ${hsl(darken(background, 2))} 0%, ${hsl(bgElevated)} 100%)`
         : `linear-gradient(165deg, ${hsla(background, 0.6)} 0%, ${hsla(bgElevated, 0.5)} 100%)`;
-    vars['--lumiverse-gradient-header'] = `linear-gradient(180deg, ${hsla(primary, 0.08)} 0%, transparent 100%)`;
-    vars['--lumiverse-gradient-bg'] = light
+    vars['--ado-gradient-header'] = `linear-gradient(180deg, ${hsla(primary, 0.08)} 0%, transparent 100%)`;
+    vars['--ado-gradient-bg'] = light
         ? `linear-gradient(165deg, ${hsl(bgDeep)} 0%, ${hsl(background)} 50%, ${hsl(darken(background, 2))} 100%)`
         : `linear-gradient(165deg, ${hsla(bgDeep, 0.98)} 0%, ${hsla(background, 0.97)} 50%, ${hsla(darken(background, 2), 0.98)} 100%)`;
-    vars['--lumiverse-gradient-accent'] = `linear-gradient(135deg, ${hsla(primary, 0.9)} 0%, ${hsla(secondary, 0.85)} 100%)`;
-    vars['--lumiverse-gradient-accent-light'] = `linear-gradient(135deg, ${hsla(primary, 0.25)} 0%, ${hsla(secondary, 0.15)} 100%)`;
-    vars['--lumiverse-gradient-glow1'] = `radial-gradient(circle, ${hsla(primary, 0.25)} 0%, transparent 70%)`;
-    vars['--lumiverse-gradient-glow2'] = `radial-gradient(circle, ${hsla(secondary, 0.2)} 0%, transparent 70%)`;
-    vars['--lumiverse-gradient-glow3'] = `radial-gradient(circle, ${hsla(primaryLight, 0.15)} 0%, transparent 70%)`;
-    vars['--lumiverse-gradient-divider'] = `linear-gradient(90deg, transparent, ${hsla(primary, 0.15)}, transparent)`;
-    vars['--lumiverse-gradient-modal'] = `linear-gradient(135deg, ${hsla(bgElevated, 0.98)}, ${hsla(bgDeep, 0.98)})`;
+    vars['--ado-gradient-accent'] = `linear-gradient(135deg, ${hsla(primary, 0.9)} 0%, ${hsla(secondary, 0.85)} 100%)`;
+    vars['--ado-gradient-accent-light'] = `linear-gradient(135deg, ${hsla(primary, 0.25)} 0%, ${hsla(secondary, 0.15)} 100%)`;
+    vars['--ado-gradient-glow1'] = `radial-gradient(circle, ${hsla(primary, 0.25)} 0%, transparent 70%)`;
+    vars['--ado-gradient-glow2'] = `radial-gradient(circle, ${hsla(secondary, 0.2)} 0%, transparent 70%)`;
+    vars['--ado-gradient-glow3'] = `radial-gradient(circle, ${hsla(primaryLight, 0.15)} 0%, transparent 70%)`;
+    vars['--ado-gradient-divider'] = `linear-gradient(90deg, transparent, ${hsla(primary, 0.15)}, transparent)`;
+    vars['--ado-gradient-modal'] = `linear-gradient(135deg, ${hsla(bgElevated, 0.98)}, ${hsla(bgDeep, 0.98)})`;
 
     // ── OOC / inline style colors ──
-    vars['--lumiverse-ooc-color']  = hsl(primary);
-    vars['--lumiverse-ooc-border'] = hsla(primary, 0.4);
-    vars['--lumiverse-ooc-bg']     = hsla(primary, 0.03);
+    vars['--ado-ooc-color']  = hsl(primary);
+    vars['--ado-ooc-border'] = hsla(primary, 0.4);
+    vars['--ado-ooc-bg']     = hsla(primary, 0.03);
 
     // OOC card/bubble backgrounds (dark gradient in dark, solid in light)
-    vars['--lumiverse-ooc-card-bg'] = light
+    vars['--ado-ooc-card-bg'] = light
         ? `linear-gradient(168deg, ${hsl(darken(background, 3))} 0%, ${hsl(darken(background, 5))} 50%, ${hsl(darken(background, 4))} 100%)`
         : `linear-gradient(168deg, rgba(20, 16, 28, 0.85) 0%, rgba(30, 24, 42, 0.75) 50%, rgba(25, 20, 35, 0.8) 100%)`;
-    vars['--lumiverse-ooc-bubble-bg'] = light
+    vars['--ado-ooc-bubble-bg'] = light
         ? `linear-gradient(145deg, ${hsl(darken(background, 3))} 0%, ${hsl(darken(background, 5))} 50%, ${hsl(darken(background, 4))} 100%)`
         : `linear-gradient(145deg, rgba(30, 24, 42, 0.85) 0%, rgba(40, 32, 55, 0.8) 50%, rgba(35, 28, 48, 0.85) 100%)`;
-    vars['--lumiverse-ooc-margin-bg'] = light
+    vars['--ado-ooc-margin-bg'] = light
         ? `linear-gradient(135deg, ${hsl(darken(background, 3))} 0%, ${hsl(darken(background, 5))} 100%)`
         : 'linear-gradient(135deg, rgba(30, 24, 42, 0.8) 0%, rgba(40, 32, 55, 0.75) 100%)';
 
     // ── IRC-specific colors ──
-    vars['--lumiverse-irc-text'] = light ? 'hsl(120, 70%, 28%)' : '#00ff00';
-    vars['--lumiverse-irc-mention'] = hsl(danger);
-    vars['--lumiverse-irc-mention-bg'] = hsla(danger, 0.1);
+    vars['--ado-irc-text'] = light ? 'hsl(120, 70%, 28%)' : '#00ff00';
+    vars['--ado-irc-mention'] = hsl(danger);
+    vars['--ado-irc-mention-bg'] = hsla(danger, 0.1);
 
     return vars;
 }
 
 // ─── DOM Injection ───────────────────────────────────────────────────
 
-const STYLE_ID = 'lumiverse-theme-overrides';
+const STYLE_ID = 'ado-theme-overrides';
 let currentTheme = null;
 
 /**
@@ -697,7 +697,7 @@ export function getDefaultTheme() {
 /**
  * Read a computed CSS custom property value from the document root.
  * Useful for JS files that set inline styles and need theme-aware colors.
- * @param {string} varName - CSS variable name (e.g. '--lumiverse-ooc-color')
+ * @param {string} varName - CSS variable name (e.g. '--ado-ooc-color')
  * @param {string} [fallback=''] - Fallback if variable is not set
  * @returns {string}
  */
@@ -707,10 +707,10 @@ export function getThemeColor(varName, fallback = '') {
 }
 
 /**
- * Generate a CSS string with theme variable overrides scoped to .lcs-app.
+ * Generate a CSS string with theme variable overrides scoped to .ado-app.
  * Used to inject theme variables into the Chat Sheld container.
  * @param {Object} [theme] - Theme config. If null, uses the current applied theme.
- * @returns {string} CSS text with .lcs-app { ... } declarations, or empty string if no theme.
+ * @returns {string} CSS text with .ado-app { ... } declarations, or empty string if no theme.
  */
 export function generateThemeCSSForChatSheld(theme) {
     const t = theme || currentTheme;
@@ -719,35 +719,35 @@ export function generateThemeCSSForChatSheld(theme) {
     const vars = generateThemeVariables(t.baseColors);
 
     // ── Chat Sheld glass surface overrides ──
-    // Derive --lcs-glass-* from the theme so message cards match the active theme.
+    // Derive --ado-glass-* from the theme so message cards match the active theme.
     const { primary, secondary, background } = t.baseColors;
     const light = isLightMode(background);
 
     // ── Page background — prevents black void behind transparent glass ──
-    vars['--lcs-page-bg'] = hsl(background);
+    vars['--ado-page-bg'] = hsl(background);
 
     if (light) {
         // Light mode: solid tinted backgrounds, no transparency
-        vars['--lcs-glass-bg']            = hsl(darken(background, 3));
-        vars['--lcs-glass-bg-hover']      = hsl(darken(background, 6));
-        vars['--lcs-glass-border']        = hsla(darken(background, 15), 0.15);
-        vars['--lcs-glass-border-hover']  = hsla(darken(background, 20), 0.25);
-        vars['--lcs-glass-char-tint']     = hsla(primary, 0.04);
-        vars['--lcs-glass-user-tint']     = hsla(secondary, 0.04);
+        vars['--ado-glass-bg']            = hsl(darken(background, 3));
+        vars['--ado-glass-bg-hover']      = hsl(darken(background, 6));
+        vars['--ado-glass-border']        = hsla(darken(background, 15), 0.15);
+        vars['--ado-glass-border-hover']  = hsla(darken(background, 20), 0.25);
+        vars['--ado-glass-char-tint']     = hsla(primary, 0.04);
+        vars['--ado-glass-user-tint']     = hsla(secondary, 0.04);
     } else {
         // Dark mode: semi-transparent surfaces tinted by background hue
         const { r, g, b } = hslToRgb(background);
-        vars['--lcs-glass-bg']            = `rgba(${r}, ${g}, ${b}, 0.55)`;
-        vars['--lcs-glass-bg-hover']      = `rgba(${Math.min(255, r + 8)}, ${Math.min(255, g + 8)}, ${Math.min(255, b + 8)}, 0.65)`;
-        vars['--lcs-glass-border']        = `rgba(255, 255, 255, 0.06)`;
-        vars['--lcs-glass-border-hover']  = `rgba(255, 255, 255, 0.1)`;
+        vars['--ado-glass-bg']            = `rgba(${r}, ${g}, ${b}, 0.55)`;
+        vars['--ado-glass-bg-hover']      = `rgba(${Math.min(255, r + 8)}, ${Math.min(255, g + 8)}, ${Math.min(255, b + 8)}, 0.65)`;
+        vars['--ado-glass-border']        = `rgba(255, 255, 255, 0.06)`;
+        vars['--ado-glass-border-hover']  = `rgba(255, 255, 255, 0.1)`;
         const pRgb = hslToRgb(primary);
-        vars['--lcs-glass-char-tint']     = `rgba(${pRgb.r}, ${pRgb.g}, ${pRgb.b}, 0.03)`;
+        vars['--ado-glass-char-tint']     = `rgba(${pRgb.r}, ${pRgb.g}, ${pRgb.b}, 0.03)`;
         const sRgb = hslToRgb(secondary);
-        vars['--lcs-glass-user-tint']     = `rgba(${sRgb.r}, ${sRgb.g}, ${sRgb.b}, 0.03)`;
+        vars['--ado-glass-user-tint']     = `rgba(${sRgb.r}, ${sRgb.g}, ${sRgb.b}, 0.03)`;
     }
 
-    let css = '.lcs-app {\n';
+    let css = '.ado-app {\n';
     for (const [prop, value] of Object.entries(vars)) {
         css += `  ${prop}: ${value};\n`;
     }

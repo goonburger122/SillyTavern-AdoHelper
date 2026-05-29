@@ -7,7 +7,7 @@
  */
 
 import { useState, useMemo, useCallback, useSyncExternalStore, useRef } from 'react';
-import { useLumiverseStore } from '../store/LumiverseContext';
+import { useAdoHelperStore } from '../store/AdoHelperContext';
 import {
     switchPersona,
     createPersona,
@@ -24,7 +24,7 @@ import {
     syncPersonas,
 } from '../../lib/personaManagerService.js';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selectors
 const selectPersonaManager = () => store.getState().personaManager;

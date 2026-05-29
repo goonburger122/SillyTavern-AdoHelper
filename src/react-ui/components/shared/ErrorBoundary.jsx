@@ -21,7 +21,7 @@ class ErrorBoundary extends React.Component {
 
     componentDidCatch(error, errorInfo) {
         console.error(
-            `[Lumiverse ErrorBoundary${this.props.label ? ` — ${this.props.label}` : ''}]`,
+            `[Ado Helper ErrorBoundary${this.props.label ? ` — ${this.props.label}` : ''}]`,
             error,
             errorInfo?.componentStack
         );
@@ -42,7 +42,7 @@ class ErrorBoundary extends React.Component {
                     gap: '12px',
                     padding: '24px 16px',
                     textAlign: 'center',
-                    color: 'var(--lumiverse-text, #ccc)',
+                    color: 'var(--ado-text, #ccc)',
                     minHeight: '80px',
                 }}>
                     <span style={{ fontSize: '14px', opacity: 0.8 }}>
@@ -56,9 +56,9 @@ class ErrorBoundary extends React.Component {
                             padding: '6px 16px',
                             fontSize: '13px',
                             borderRadius: '6px',
-                            border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.15))',
-                            background: 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.06))',
-                            color: 'var(--lumiverse-text, #ccc)',
+                            border: '1px solid var(--ado-border, rgba(255,255,255,0.15))',
+                            background: 'var(--ado-fill-subtle, rgba(255,255,255,0.06))',
+                            color: 'var(--ado-text, #ccc)',
                             cursor: 'pointer',
                         }}
                     >

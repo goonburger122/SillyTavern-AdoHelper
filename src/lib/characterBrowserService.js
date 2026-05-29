@@ -22,7 +22,7 @@ import {
 /** Accepted file types for character import */
 export const IMPORT_ACCEPTED_TYPES = '.json,.png,.yaml,.yml,.charx,.byaf,image/png';
 
-/** @type {ReturnType<typeof import('../react-ui/store/LumiverseContext.jsx').useLumiverseStore> | null} */
+/** @type {ReturnType<typeof import('../react-ui/store/AdoHelperContext.jsx').useAdoHelperStore> | null} */
 let storeRef = null;
 
 /** Debounce timer for character sync */
@@ -366,7 +366,7 @@ export async function selectCharacter(item) {
       }
     }
   } catch (err) {
-    console.error("[Lumiverse] Error selecting character:", err);
+    console.error("[Ado Helper] Error selecting character:", err);
   }
 }
 
@@ -388,7 +388,7 @@ export async function importCharacterFiles(fileList) {
       throw new Error("processDroppedFiles not available");
     }
   } catch (err) {
-    console.error("[Lumiverse] Error importing character files:", err);
+    console.error("[Ado Helper] Error importing character files:", err);
     throw err;
   }
 
@@ -504,7 +504,7 @@ export async function deleteCharacterFromST(avatarKey, deleteChats = true) {
     await deleteCharacter(avatarKey, { deleteChats });
     return true;
   } catch (err) {
-    console.error("[Lumiverse] Error deleting character:", err);
+    console.error("[Ado Helper] Error deleting character:", err);
     throw err;
   }
 }
@@ -582,7 +582,7 @@ export async function batchDeleteCharacters(items, deleteChats, onProgress) {
 
   // If there were toastr errors captured during suppression, attach to failed list
   if (errors.length > 0) {
-    console.warn("[Lumiverse] Batch delete suppressed toastr errors:", errors);
+    console.warn("[Ado Helper] Batch delete suppressed toastr errors:", errors);
   }
 
   onProgress?.(total, total, "");
@@ -598,7 +598,7 @@ export function triggerCreateCharacter() {
   if (btn) {
     btn.click();
   }
-  // Signal Lumiverse to close the drawer/modal so the user sees ST's form
+  // Signal Ado Helper to close the drawer/modal so the user sees ST's form
   if (storeRef) {
     storeRef.setState({ _closeDrawer: Date.now() });
   }
@@ -607,7 +607,7 @@ export function triggerCreateCharacter() {
 /**
  * Initialize the character browser service.
  * Subscribes to ST events for live updates.
- * @param {Object} store - Lumiverse vanilla JS store instance
+ * @param {Object} store - Ado Helper vanilla JS store instance
  */
 export function initCharacterBrowser(store) {
   storeRef = store;
@@ -617,7 +617,7 @@ export function initCharacterBrowser(store) {
 
   if (!eventSource || !eventTypes) {
     console.warn(
-      "[Lumiverse] CharacterBrowser: Event system not available, will sync on demand"
+      "[Ado Helper] CharacterBrowser: Event system not available, will sync on demand"
     );
     return;
   }
@@ -647,7 +647,7 @@ export function initCharacterBrowser(store) {
     eventSource.on(eventTypes.CHAT_CHANGED, syncActiveCharacter);
   }
 
-  // Intercept ST's character panel button to open Lumiverse Character Browser instead
+  // Intercept ST's character panel button to open Ado Helper Character Browser instead
   const rightNavIcon = document.getElementById("rightNavDrawerIcon");
   if (rightNavIcon) {
     rightNavIcon.addEventListener(
@@ -669,7 +669,7 @@ export function initCharacterBrowser(store) {
           rightNavIcon.classList.add("closedIcon");
         }
 
-        // Signal Lumiverse to open Character Browser tab
+        // Signal Ado Helper to open Character Browser tab
         storeRef.setState({ _openToTab: "characters" });
       },
       true // capture phase — fires before ST's jQuery handler

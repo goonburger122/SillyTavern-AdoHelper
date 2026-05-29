@@ -1,7 +1,7 @@
 import { createContext, useEffect, useRef, useSyncExternalStore, useCallback, useMemo } from 'react';
 import { compareSemver, getCurrentVersion } from '../../lib/updateService.js';
 
-/* global SillyTavern, LumiverseBridge */
+/* global SillyTavern, AdoHelperBridge */
 
 // Debounce helper for saving
 let saveTimeout = null;
@@ -164,7 +164,7 @@ const initialState = {
     summarization: {},
 
     // UI preferences
-    showLumiverseDrawer: true,  // Whether to show the viewport drawer
+    showAdoHelperDrawer: true,  // Whether to show the viewport drawer
     dismissedUpdateVersion: null, // Version user dismissed update notification for
     drawerSettings: {
         side: 'right',         // 'left' or 'right' - which side of screen the drawer docks to
@@ -252,7 +252,7 @@ const initialState = {
     guidedGenerations: [],
 
     // Council tool results (React-only, not saved to extension)
-    // Populated by LumiverseBridge.setCouncilToolResults after council tool execution
+    // Populated by AdoHelperBridge.setCouncilToolResults after council tool execution
     councilToolResults: [],
 
     // Image Generation settings (persisted via preferences)
@@ -1690,20 +1690,20 @@ const actions = {
 
         try {
             // Use the centralized update function from stContext
-            // This is exposed via LumiverseBridge so React can access it
-            const triggerUpdate = typeof LumiverseBridge !== 'undefined' && LumiverseBridge.triggerExtensionUpdate
-                ? LumiverseBridge.triggerExtensionUpdate
+            // This is exposed via AdoHelperBridge so React can access it
+            const triggerUpdate = typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.triggerExtensionUpdate
+                ? AdoHelperBridge.triggerExtensionUpdate
                 : null;
 
             if (!triggerUpdate) {
-                console.error('[LumiverseHelper] triggerExtensionUpdate not available on LumiverseBridge');
+                console.error('[AdoHelperHelper] triggerExtensionUpdate not available on AdoHelperBridge');
                 return { success: false, message: 'Update API not available' };
             }
 
             // Get extension name from bridge (derived from import.meta.url per EXTENSION_GUIDE_UPDATES.md)
-            const extensionName = typeof LumiverseBridge !== 'undefined' && LumiverseBridge.extensionName
-                ? LumiverseBridge.extensionName
-                : 'SillyTavern-LumiverseHelper';
+            const extensionName = typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.extensionName
+                ? AdoHelperBridge.extensionName
+                : 'SillyTavern-AdoHelperHelper';
 
             const result = await triggerUpdate(extensionName);
 
@@ -1721,7 +1721,7 @@ const actions = {
 
             return result;
         } catch (error) {
-            console.error('[LumiverseHelper] Error updating extension:', error);
+            console.error('[AdoHelperHelper] Error updating extension:', error);
             const currentState = store.getState();
             store.setState({
                 ui: { ...currentState.ui, isUpdatingExtension: false },
@@ -1892,8 +1892,8 @@ function exportForExtension() {
 // Save to extension (debounced)
 function saveToExtension() {
     debouncedSave(() => {
-        if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.saveSettings) {
-            LumiverseBridge.saveSettings(exportForExtension());
+        if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.saveSettings) {
+            AdoHelperBridge.saveSettings(exportForExtension());
         }
     });
 }
@@ -1901,13 +1901,13 @@ function saveToExtension() {
 // Save to extension immediately (no debounce - for critical settings like OOC style)
 // Also passes immediate=true to ensure file storage saves immediately (no 500ms debounce)
 async function saveToExtensionImmediate() {
-    if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.saveSettings) {
-        await LumiverseBridge.saveSettings(exportForExtension(), true);
+    if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.saveSettings) {
+        await AdoHelperBridge.saveSettings(exportForExtension(), true);
     }
 }
 
 // Create a "store-like" object that matches what we were exporting before
-const useLumiverseStore = {
+const useAdoHelperStore = {
     getState: store.getState,
     setState: store.setState,
     subscribe: store.subscribe,
@@ -1917,15 +1917,15 @@ const useLumiverseStore = {
 };
 
 // Make it callable like zustand for compatibility
-useLumiverseStore.getState = store.getState;
+useAdoHelperStore.getState = store.getState;
 
 // Context for providing the store to components
-const LumiverseContext = createContext(null);
+const AdoHelperContext = createContext(null);
 
 /**
  * Provider component that wraps the app and provides the store
  */
-export function LumiverseProvider({ children, initialSettings = null }) {
+export function AdoHelperProvider({ children, initialSettings = null }) {
     const hasInitialized = useRef(false);
 
     useEffect(() => {
@@ -1936,9 +1936,9 @@ export function LumiverseProvider({ children, initialSettings = null }) {
             if (initialSettings) {
                 // Settings provided by reactBridge - already in React format (packs as array)
                 syncFromExtension(initialSettings);
-            } else if (typeof LumiverseBridge !== 'undefined' && LumiverseBridge.getSettings) {
+            } else if (typeof AdoHelperBridge !== 'undefined' && AdoHelperBridge.getSettings) {
                 // Fallback: Get settings via the bridge
-                const settings = LumiverseBridge.getSettings();
+                const settings = AdoHelperBridge.getSettings();
                 if (settings) {
                     syncFromExtension(settings);
                 }
@@ -1948,9 +1948,9 @@ export function LumiverseProvider({ children, initialSettings = null }) {
     }, [initialSettings]);
 
     return (
-        <LumiverseContext.Provider value={store}>
+        <AdoHelperContext.Provider value={store}>
             {children}
-        </LumiverseContext.Provider>
+        </AdoHelperContext.Provider>
     );
 }
 
@@ -1961,7 +1961,7 @@ export function LumiverseProvider({ children, initialSettings = null }) {
  * IMPORTANT: Only pass stable selector functions (defined outside components)
  * to prevent infinite re-renders.
  */
-export function useLumiverse(selector) {
+export function useAdoHelper(selector) {
     // Use useRef to store a stable reference to the selector
     const selectorRef = useRef(selector);
     selectorRef.current = selector;
@@ -1982,7 +1982,7 @@ export function useLumiverse(selector) {
 /**
  * Hook to access store actions
  */
-export function useLumiverseActions() {
+export function useAdoHelperActions() {
     return actions;
 }
 
@@ -2017,7 +2017,7 @@ const selectUpdates = () => store.getState().updates || DEFAULT_UPDATES;
  * Hook to access just the settings
  */
 export function useSettings() {
-    return useLumiverse(selectSettings);
+    return useAdoHelper(selectSettings);
 }
 
 /**
@@ -2148,7 +2148,7 @@ export function usePacks() {
  * Hook to access UI state
  */
 export function useUI() {
-    return useLumiverse(selectUI);
+    return useAdoHelper(selectUI);
 }
 
 /**
@@ -2200,7 +2200,7 @@ export function useUpdates() {
 }
 
 // Export the store object for external access
-export { useLumiverseStore, saveToExtension, saveToExtensionImmediate };
+export { useAdoHelperStore, saveToExtension, saveToExtensionImmediate };
 
 // Expose to window for console access
 if (typeof window !== 'undefined') {

@@ -17,29 +17,29 @@ import useCharacterBrowser from '../../hooks/useCharacterBrowser';
 import useIsMobile from '../../hooks/useIsMobile';
 import LazyImage from '../shared/LazyImage';
 import CharacterCardEditor from './CharacterCardEditor';
-import { useLumiverseStore, useLumiverseActions } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions } from '../../store/AdoHelperContext';
 import { IMPORT_ACCEPTED_TYPES } from '../../../lib/characterBrowserService';
 import ConfirmationModal from '../shared/ConfirmationModal';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // ─── Search Input ──────────────────────────────────────────────
 function SearchInput({ value, onChange, placeholder }) {
     return (
-        <div className="lumiverse-cb-search">
-            <span className="lumiverse-cb-search-icon">
+        <div className="ado-cb-search">
+            <span className="ado-cb-search-icon">
                 <Search size={16} strokeWidth={1.5} />
             </span>
             <input
                 type="text"
-                className="lumiverse-cb-search-input"
+                className="ado-cb-search-input"
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             />
             {value && (
                 <button
-                    className="lumiverse-cb-search-clear"
+                    className="ado-cb-search-clear"
                     onClick={() => onChange('')}
                     type="button"
                 >
@@ -60,11 +60,11 @@ const FILTER_OPTIONS = [
 
 function FilterTabs({ activeFilter, onFilterChange }) {
     return (
-        <div className="lumiverse-cb-filters">
+        <div className="ado-cb-filters">
             {FILTER_OPTIONS.map((f) => (
                 <button
                     key={f.id}
-                    className={clsx('lumiverse-cb-filter-btn', activeFilter === f.id && 'lumiverse-cb-filter-btn--active')}
+                    className={clsx('ado-cb-filter-btn', activeFilter === f.id && 'ado-cb-filter-btn--active')}
                     onClick={() => onFilterChange(f.id)}
                     type="button"
                 >
@@ -96,32 +96,32 @@ function SortDropdown({ sortBy, onSortChange, sortDirection, onToggleDirection, 
     }, [isOpen, onToggle]);
 
     return (
-        <div className="lumiverse-cb-sort" ref={ref}>
+        <div className="ado-cb-sort" ref={ref}>
             <button
-                className="lumiverse-cb-sort-btn"
+                className="ado-cb-sort-btn"
                 onClick={() => onToggle(!isOpen)}
                 type="button"
                 title="Sort by"
             >
                 <ArrowUpDown size={14} strokeWidth={1.5} />
-                <span className="lumiverse-cb-sort-label">{SORT_OPTIONS.find(s => s.id === sortBy)?.label}</span>
-                <ChevronDown size={12} strokeWidth={2} className={clsx('lumiverse-cb-sort-chevron', isOpen && 'lumiverse-cb-sort-chevron--open')} />
+                <span className="ado-cb-sort-label">{SORT_OPTIONS.find(s => s.id === sortBy)?.label}</span>
+                <ChevronDown size={12} strokeWidth={2} className={clsx('ado-cb-sort-chevron', isOpen && 'ado-cb-sort-chevron--open')} />
             </button>
             {isOpen && (
-                <div className="lumiverse-cb-sort-dropdown">
+                <div className="ado-cb-sort-dropdown">
                     {SORT_OPTIONS.map((opt) => (
                         <button
                             key={opt.id}
-                            className={clsx('lumiverse-cb-sort-option', sortBy === opt.id && 'lumiverse-cb-sort-option--active')}
+                            className={clsx('ado-cb-sort-option', sortBy === opt.id && 'ado-cb-sort-option--active')}
                             onClick={() => { onSortChange(opt.id); onToggle(false); }}
                             type="button"
                         >
                             {opt.label}
                         </button>
                     ))}
-                    <div className="lumiverse-cb-sort-divider" />
+                    <div className="ado-cb-sort-divider" />
                     <button
-                        className="lumiverse-cb-sort-option"
+                        className="ado-cb-sort-option"
                         onClick={() => { onToggleDirection(); onToggle(false); }}
                         type="button"
                     >
@@ -137,7 +137,7 @@ function SortDropdown({ sortBy, onSortChange, sortDirection, onToggleDirection, 
 function ViewToggle({ viewMode, onToggle }) {
     return (
         <button
-            className="lumiverse-cb-view-toggle"
+            className="ado-cb-view-toggle"
             onClick={() => onToggle(viewMode === 'grid' ? 'list' : 'grid')}
             type="button"
             title={viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'}
@@ -161,9 +161,9 @@ function AddMenu({ isOpen, onToggle, onCreateNew, onImportFile, onImportUrl }) {
     }, [isOpen, onToggle]);
 
     return (
-        <div className="lumiverse-cb-add" ref={ref}>
+        <div className="ado-cb-add" ref={ref}>
             <button
-                className="lumiverse-cb-add-btn"
+                className="ado-cb-add-btn"
                 onClick={() => onToggle(!isOpen)}
                 type="button"
                 title="Add character"
@@ -171,9 +171,9 @@ function AddMenu({ isOpen, onToggle, onCreateNew, onImportFile, onImportUrl }) {
                 <Plus size={15} strokeWidth={2} />
             </button>
             {isOpen && (
-                <div className="lumiverse-cb-add-dropdown">
+                <div className="ado-cb-add-dropdown">
                     <button
-                        className="lumiverse-cb-add-option"
+                        className="ado-cb-add-option"
                         onClick={() => { onCreateNew(); onToggle(false); }}
                         type="button"
                     >
@@ -181,7 +181,7 @@ function AddMenu({ isOpen, onToggle, onCreateNew, onImportFile, onImportUrl }) {
                         <span>Create New</span>
                     </button>
                     <button
-                        className="lumiverse-cb-add-option"
+                        className="ado-cb-add-option"
                         onClick={() => { onImportFile(); onToggle(false); }}
                         type="button"
                     >
@@ -189,7 +189,7 @@ function AddMenu({ isOpen, onToggle, onCreateNew, onImportFile, onImportUrl }) {
                         <span>Import File</span>
                     </button>
                     <button
-                        className="lumiverse-cb-add-option"
+                        className="ado-cb-add-option"
                         onClick={() => { onImportUrl(); onToggle(false); }}
                         type="button"
                     >
@@ -220,50 +220,50 @@ function TagMultiSelect({ tags, selectedTags, onToggleTag, onClear, isOpen, onTo
     const count = selectedTags.size;
 
     return (
-        <div className="lumiverse-cb-tag-select" ref={ref}>
+        <div className="ado-cb-tag-select" ref={ref}>
             <button
-                className={clsx('lumiverse-cb-tag-select-btn', count > 0 && 'lumiverse-cb-tag-select-btn--active')}
+                className={clsx('ado-cb-tag-select-btn', count > 0 && 'ado-cb-tag-select-btn--active')}
                 onClick={() => onToggle(!isOpen)}
                 type="button"
                 title="Filter by tags"
             >
                 <Tag size={14} strokeWidth={1.5} />
-                <span className="lumiverse-cb-tag-select-label">Tags</span>
-                {count > 0 && <span className="lumiverse-cb-tag-select-badge">{count}</span>}
-                <ChevronDown size={12} strokeWidth={2} className={clsx('lumiverse-cb-sort-chevron', isOpen && 'lumiverse-cb-sort-chevron--open')} />
+                <span className="ado-cb-tag-select-label">Tags</span>
+                {count > 0 && <span className="ado-cb-tag-select-badge">{count}</span>}
+                <ChevronDown size={12} strokeWidth={2} className={clsx('ado-cb-sort-chevron', isOpen && 'ado-cb-sort-chevron--open')} />
             </button>
             {isOpen && (
-                <div className="lumiverse-cb-tag-select-dropdown">
+                <div className="ado-cb-tag-select-dropdown">
                     {count > 0 && (
                         <>
                             <button
-                                className="lumiverse-cb-tag-select-item lumiverse-cb-tag-select-clear"
+                                className="ado-cb-tag-select-item ado-cb-tag-select-clear"
                                 onClick={() => { onClear(); onToggle(false); }}
                                 type="button"
                             >
                                 <X size={12} strokeWidth={2} />
                                 <span>Clear all</span>
                             </button>
-                            <div className="lumiverse-cb-sort-divider" />
+                            <div className="ado-cb-sort-divider" />
                         </>
                     )}
-                    <div className="lumiverse-cb-tag-select-list">
+                    <div className="ado-cb-tag-select-list">
                         {tags.map((tag) => {
                             const isSelected = selectedTags.has(tag.id);
                             return (
                                 <button
                                     key={tag.id}
-                                    className={clsx('lumiverse-cb-tag-select-item', isSelected && 'lumiverse-cb-tag-select-item--active')}
+                                    className={clsx('ado-cb-tag-select-item', isSelected && 'ado-cb-tag-select-item--active')}
                                     onClick={() => onToggleTag(tag.id)}
                                     type="button"
                                 >
                                     {tag.bg ? (
-                                        <span className="lumiverse-cb-tag-select-dot" style={{ background: tag.bg }} />
+                                        <span className="ado-cb-tag-select-dot" style={{ background: tag.bg }} />
                                     ) : (
-                                        <span className="lumiverse-cb-tag-select-dot lumiverse-cb-tag-select-dot--neutral" />
+                                        <span className="ado-cb-tag-select-dot ado-cb-tag-select-dot--neutral" />
                                     )}
-                                    <span className="lumiverse-cb-tag-select-name">{tag.name}</span>
-                                    {isSelected && <Check size={13} strokeWidth={2.5} className="lumiverse-cb-tag-select-check" />}
+                                    <span className="ado-cb-tag-select-name">{tag.name}</span>
+                                    {isSelected && <Check size={13} strokeWidth={2.5} className="ado-cb-tag-select-check" />}
                                 </button>
                             );
                         })}
@@ -278,17 +278,17 @@ function TagMultiSelect({ tags, selectedTags, onToggleTag, onClear, isOpen, onTo
 function FavoritesSlider({ items, activeCharacterId, onSelect }) {
     if (!items || items.length === 0) return null;
     return (
-        <div className="lumiverse-cb-favorites">
-            <div className="lumiverse-cb-favorites-scroll">
+        <div className="ado-cb-favorites">
+            <div className="ado-cb-favorites-scroll">
                 {items.map((item) => (
                     <button
                         key={item.id}
-                        className={clsx('lumiverse-cb-fav-item', item.id === activeCharacterId && 'lumiverse-cb-fav-item--active')}
+                        className={clsx('ado-cb-fav-item', item.id === activeCharacterId && 'ado-cb-fav-item--active')}
                         onClick={() => onSelect(item)}
                         type="button"
                         title={item.name}
                     >
-                        <div className="lumiverse-cb-fav-avatar">
+                        <div className="ado-cb-fav-avatar">
                             <LazyImage
                                 src={item.avatarUrl}
                                 alt=""
@@ -296,7 +296,7 @@ function FavoritesSlider({ items, activeCharacterId, onSelect }) {
                                 fallback={<User size={20} strokeWidth={1.5} />}
                             />
                         </div>
-                        <span className="lumiverse-cb-fav-name">{item.name}</span>
+                        <span className="ado-cb-fav-name">{item.name}</span>
                     </button>
                 ))}
             </div>
@@ -316,11 +316,11 @@ function GroupAvatarStack({ members }) {
     const countAttr = totalMembers >= 5 ? '5+' : String(totalMembers);
 
     return (
-        <div className="lumiverse-cb-group-stack" data-count={countAttr}>
+        <div className="ado-cb-group-stack" data-count={countAttr}>
             {shown.map((m, i) => (
                 <div
                     key={`${m.avatar || i}`}
-                    className="lumiverse-cb-group-avatar"
+                    className="ado-cb-group-avatar"
                     style={{ zIndex: maxAvatars - i }}
                 >
                     <LazyImage
@@ -332,7 +332,7 @@ function GroupAvatarStack({ members }) {
                 </div>
             ))}
             {overflow > 0 && (
-                <div className="lumiverse-cb-group-overflow">
+                <div className="ado-cb-group-overflow">
                     <span>+{overflow}</span>
                 </div>
             )}
@@ -348,9 +348,9 @@ const CharacterCardGrid = memo(function CharacterCardGrid({
     return (
         <div
             className={clsx(
-                'lumiverse-cb-card',
-                isActive && 'lumiverse-cb-card--active',
-                isSelected && 'lumiverse-cb-card--selected',
+                'ado-cb-card',
+                isActive && 'ado-cb-card--active',
+                isSelected && 'ado-cb-card--selected',
             )}
             onClick={() => onSelect(item)}
             role="button"
@@ -359,48 +359,48 @@ const CharacterCardGrid = memo(function CharacterCardGrid({
         >
             {/* Batch selection check overlay */}
             {isBatchMode && !item.isGroup && (
-                <div className={clsx('lumiverse-cb-card-check', isSelected && 'lumiverse-cb-card-check--active')}>
+                <div className={clsx('ado-cb-card-check', isSelected && 'ado-cb-card-check--active')}>
                     <Check size={16} strokeWidth={3} />
                 </div>
             )}
-            <div className="lumiverse-cb-card-avatar">
+            <div className="ado-cb-card-avatar">
                 {showGroupStack ? (
                     <GroupAvatarStack members={item.members} />
                 ) : item.avatarUrl ? (
                     <LazyImage src={item.avatarUrl} alt={item.name} />
                 ) : (
-                    <div className="lumiverse-cb-card-placeholder">
+                    <div className="ado-cb-card-placeholder">
                         {item.isGroup ? <UsersRound size={28} strokeWidth={1} /> : <User size={28} strokeWidth={1} />}
                     </div>
                 )}
                 {item.isGroup && (
-                    <span className="lumiverse-cb-card-group-badge" title="Group">
+                    <span className="ado-cb-card-group-badge" title="Group">
                         <UsersRound size={10} strokeWidth={2} />
                         <span>{item.memberCount}</span>
                     </span>
                 )}
             </div>
-            <div className="lumiverse-cb-card-info">
-                <span className="lumiverse-cb-card-name" title={item.name}>{item.name}</span>
-                {item.creator && <span className="lumiverse-cb-card-creator">{item.creator}</span>}
+            <div className="ado-cb-card-info">
+                <span className="ado-cb-card-name" title={item.name}>{item.name}</span>
+                {item.creator && <span className="ado-cb-card-creator">{item.creator}</span>}
                 {item.tagNames.length > 0 && (
-                    <div className="lumiverse-cb-card-tags">
+                    <div className="ado-cb-card-tags">
                         {item.tagNames.slice(0, 2).map((tag, i) => {
                             const tc = item.tagColors?.[i];
                             const pillStyle = tc?.bg ? { background: tc.bg, color: tc.fg || '#fff', borderColor: 'transparent' } : undefined;
                             return (
-                                <span key={i} className="lumiverse-cb-card-tag-pill" style={pillStyle}>{tag}</span>
+                                <span key={i} className="ado-cb-card-tag-pill" style={pillStyle}>{tag}</span>
                             );
                         })}
                         {item.tagNames.length > 2 && (
-                            <span className="lumiverse-cb-card-tag-pill lumiverse-cb-card-tag-more">+{item.tagNames.length - 2}</span>
+                            <span className="ado-cb-card-tag-pill ado-cb-card-tag-more">+{item.tagNames.length - 2}</span>
                         )}
                     </div>
                 )}
             </div>
             {!isBatchMode && onEdit && !item.isGroup && (
                 <button
-                    className="lumiverse-cb-card-edit"
+                    className="ado-cb-card-edit"
                     onClick={(e) => { e.stopPropagation(); onEdit(item); }}
                     type="button"
                     title="Edit character card"
@@ -410,7 +410,7 @@ const CharacterCardGrid = memo(function CharacterCardGrid({
             )}
             {!isBatchMode && onDelete && !item.isGroup && (
                 <button
-                    className="lumiverse-cb-card-delete"
+                    className="ado-cb-card-delete"
                     onClick={(e) => { e.stopPropagation(); onDelete(item); }}
                     type="button"
                     title="Delete character"
@@ -420,7 +420,7 @@ const CharacterCardGrid = memo(function CharacterCardGrid({
             )}
             {!isBatchMode && (
                 <button
-                    className={clsx('lumiverse-cb-card-star', item.isFavorite && 'lumiverse-cb-card-star--active')}
+                    className={clsx('ado-cb-card-star', item.isFavorite && 'ado-cb-card-star--active')}
                     onClick={(e) => { e.stopPropagation(); onToggleFavorite(item.id); }}
                     type="button"
                     title={item.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
@@ -439,9 +439,9 @@ const CharacterCardList = memo(function CharacterCardList({
     return (
         <div
             className={clsx(
-                'lumiverse-cb-list-row',
-                isActive && 'lumiverse-cb-list-row--active',
-                isSelected && 'lumiverse-cb-list-row--selected',
+                'ado-cb-list-row',
+                isActive && 'ado-cb-list-row--active',
+                isSelected && 'ado-cb-list-row--selected',
             )}
             onClick={() => onSelect(item)}
             role="button"
@@ -449,11 +449,11 @@ const CharacterCardList = memo(function CharacterCardList({
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(item); } }}
         >
             {isBatchMode && !item.isGroup && (
-                <div className={clsx('lumiverse-cb-list-check', isSelected && 'lumiverse-cb-list-check--active')}>
+                <div className={clsx('ado-cb-list-check', isSelected && 'ado-cb-list-check--active')}>
                     <Check size={14} strokeWidth={3} />
                 </div>
             )}
-            <div className="lumiverse-cb-list-avatar">
+            <div className="ado-cb-list-avatar">
                 <LazyImage
                     src={item.avatarUrl}
                     alt=""
@@ -461,17 +461,17 @@ const CharacterCardList = memo(function CharacterCardList({
                     fallback={item.isGroup ? <UsersRound size={18} strokeWidth={1.5} /> : <User size={18} strokeWidth={1.5} />}
                 />
             </div>
-            <span className="lumiverse-cb-list-name" title={item.name}>{item.name}</span>
-            {item.creator && <span className="lumiverse-cb-list-creator">{item.creator}</span>}
+            <span className="ado-cb-list-name" title={item.name}>{item.name}</span>
+            {item.creator && <span className="ado-cb-list-creator">{item.creator}</span>}
             {item.tagNames.length > 0 && (
-                <span className="lumiverse-cb-list-tags" title={item.tagNames.join(', ')}>
+                <span className="ado-cb-list-tags" title={item.tagNames.join(', ')}>
                     <Tag size={10} strokeWidth={1.5} />
                     {item.tagNames.length}
                 </span>
             )}
             {!isBatchMode && onEdit && !item.isGroup && (
                 <button
-                    className="lumiverse-cb-card-edit"
+                    className="ado-cb-card-edit"
                     onClick={(e) => { e.stopPropagation(); onEdit(item); }}
                     type="button"
                     title="Edit character card"
@@ -481,7 +481,7 @@ const CharacterCardList = memo(function CharacterCardList({
             )}
             {!isBatchMode && onDelete && !item.isGroup && (
                 <button
-                    className="lumiverse-cb-card-delete"
+                    className="ado-cb-card-delete"
                     onClick={(e) => { e.stopPropagation(); onDelete(item); }}
                     type="button"
                     title="Delete character"
@@ -491,7 +491,7 @@ const CharacterCardList = memo(function CharacterCardList({
             )}
             {!isBatchMode && (
                 <button
-                    className={clsx('lumiverse-cb-card-star', item.isFavorite && 'lumiverse-cb-card-star--active')}
+                    className={clsx('ado-cb-card-star', item.isFavorite && 'ado-cb-card-star--active')}
                     onClick={(e) => { e.stopPropagation(); onToggleFavorite(item.id); }}
                     type="button"
                     title={item.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
@@ -529,18 +529,18 @@ function areCardPropsEqual(prev, next) {
 function FolderHeaderButton({ folder, effectiveOpen, onToggle }) {
     return (
         <button
-            className="lumiverse-cb-folder-header"
+            className="ado-cb-folder-header"
             onClick={onToggle}
             type="button"
         >
             <ChevronDown
                 size={14}
                 strokeWidth={2}
-                className={clsx('lumiverse-cb-folder-chevron', effectiveOpen && 'lumiverse-cb-folder-chevron--open')}
+                className={clsx('ado-cb-folder-chevron', effectiveOpen && 'ado-cb-folder-chevron--open')}
             />
             <FolderOpen size={14} strokeWidth={1.5} />
-            <span className="lumiverse-cb-folder-name">{folder.name}</span>
-            <span className="lumiverse-cb-folder-count">{folder.count}</span>
+            <span className="ado-cb-folder-name">{folder.name}</span>
+            <span className="ado-cb-folder-count">{folder.count}</span>
         </button>
     );
 }
@@ -556,10 +556,10 @@ function FolderSection({ folder, expandedFolders, onToggle, items, renderContent
         : expandedFolders.has(folder.id);
 
     return (
-        <div className="lumiverse-cb-folder">
+        <div className="ado-cb-folder">
             <FolderHeaderButton folder={folder} effectiveOpen={effectiveOpen} onToggle={handleToggle} />
             {effectiveOpen && (
-                <div className="lumiverse-cb-folder-content">
+                <div className="ado-cb-folder-content">
                     {renderContent(items)}
                 </div>
             )}
@@ -586,15 +586,15 @@ function SortableFolderSection({ folder, expandedFolders, onToggle, items, rende
     };
 
     return (
-        <div className="lumiverse-cb-folder" ref={setNodeRef} style={style} {...attributes}>
-            <div className="lumiverse-cb-folder-header-row">
-                <span className="lumiverse-cb-folder-drag-handle" {...listeners}>
+        <div className="ado-cb-folder" ref={setNodeRef} style={style} {...attributes}>
+            <div className="ado-cb-folder-header-row">
+                <span className="ado-cb-folder-drag-handle" {...listeners}>
                     <GripVertical size={14} strokeWidth={1.5} />
                 </span>
                 <FolderHeaderButton folder={folder} effectiveOpen={effectiveOpen} onToggle={handleToggle} />
             </div>
             {effectiveOpen && (
-                <div className="lumiverse-cb-folder-content">
+                <div className="ado-cb-folder-content">
                     {renderContent(items)}
                 </div>
             )}
@@ -607,11 +607,11 @@ function ActiveCharacterBar({ item, onClick }) {
     if (!item) return null;
     return (
         <button
-            className="lumiverse-cb-active-bar"
+            className="ado-cb-active-bar"
             onClick={() => onClick(item)}
             type="button"
         >
-            <div className="lumiverse-cb-active-bar-avatar">
+            <div className="ado-cb-active-bar-avatar">
                 <LazyImage
                     src={item.avatarUrl}
                     alt=""
@@ -619,8 +619,8 @@ function ActiveCharacterBar({ item, onClick }) {
                     fallback={<User size={14} strokeWidth={1.5} />}
                 />
             </div>
-            <span className="lumiverse-cb-active-bar-name">{item.name}</span>
-            <span className="lumiverse-cb-active-bar-action">
+            <span className="ado-cb-active-bar-name">{item.name}</span>
+            <span className="ado-cb-active-bar-action">
                 <Pencil size={11} strokeWidth={2} />
                 <span>Edit</span>
                 <ChevronRight size={12} strokeWidth={2} />
@@ -683,7 +683,7 @@ function VirtualizedGrid({ items, activeCharacterId, onSelect, onToggleFavorite,
                             transform: `translateY(${virtualRow.start}px)`,
                         }}
                     >
-                        <div className="lumiverse-cb-grid-row" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
+                        <div className="ado-cb-grid-row" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
                             {row.map((item) => (
                                 <CharacterCardGrid
                                     key={item.id}
@@ -765,7 +765,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
     } = useCharacterBrowser();
 
     const isMobile = useIsMobile();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     // Sync batch state to parent (for modal footer rendering)
     useEffect(() => {
@@ -976,7 +976,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
         if (viewMode === 'grid') {
             const minCard = wideMode ? 200 : isMobile ? 120 : 140;
             return (
-                <div className="lumiverse-cb-grid" style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${minCard}px, 1fr))` }}>
+                <div className="ado-cb-grid" style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${minCard}px, 1fr))` }}>
                     {folderItems.map((item) => (
                         <CharacterCardGrid
                             key={item.id}
@@ -1039,7 +1039,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
     }
 
     return (
-        <div className={clsx('lumiverse-cb-panel', wideMode && 'lumiverse-cb-panel--wide')}>
+        <div className={clsx('ado-cb-panel', wideMode && 'ado-cb-panel--wide')}>
             {/* Active Character Edit Bar */}
             {!wideMode && <ActiveCharacterBar item={activeCharItem} onClick={handleEditActive} />}
 
@@ -1061,8 +1061,8 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
             />
 
             {/* Toolbar */}
-            <div className="lumiverse-cb-toolbar">
-                <div className="lumiverse-cb-search-row">
+            <div className="ado-cb-toolbar">
+                <div className="ado-cb-search-row">
                     <SearchInput
                         value={searchQuery}
                         onChange={setSearchQuery}
@@ -1077,7 +1077,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
                     />
                 </div>
                 <FilterTabs activeFilter={filterType} onFilterChange={setFilterType} />
-                <div className="lumiverse-cb-toolbar-actions">
+                <div className="ado-cb-toolbar-actions">
                     <TagMultiSelect
                         tags={tags}
                         selectedTags={selectedTags}
@@ -1097,7 +1097,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
                     <ViewToggle viewMode={viewMode} onToggle={setViewMode} />
                     {wideMode && (
                         <button
-                            className={clsx('lumiverse-cb-batch-toggle', batchMode && 'lumiverse-cb-batch-toggle--active')}
+                            className={clsx('ado-cb-batch-toggle', batchMode && 'ado-cb-batch-toggle--active')}
                             onClick={toggleBatchMode}
                             type="button"
                             title={batchMode ? 'Exit selection mode' : 'Select multiple characters'}
@@ -1107,7 +1107,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
                     )}
                     {!isMobile && !wideMode && (
                         <button
-                            className="lumiverse-cb-expand-btn"
+                            className="ado-cb-expand-btn"
                             onClick={() => {
                                 store.setState({ _closeDrawer: Date.now() });
                                 actions.openModal('characterGallery');
@@ -1123,7 +1123,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
 
             {/* Character List */}
             <div
-                className="lumiverse-cb-list-container"
+                className="ado-cb-list-container"
                 ref={scrollRef}
                 style={batchMode && wideMode ? { paddingBottom: 72 } : undefined}
                 onDragEnter={handleDragEnter}
@@ -1132,24 +1132,24 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
                 onDrop={handleDrop}
             >
                 {!hasCharacters ? (
-                    <div className="lumiverse-cb-empty">
+                    <div className="ado-cb-empty">
                         <User size={32} strokeWidth={1} />
                         <span>No characters found</span>
-                        <span className="lumiverse-cb-empty-sub">Characters will appear here once SillyTavern loads</span>
+                        <span className="ado-cb-empty-sub">Characters will appear here once SillyTavern loads</span>
                     </div>
                 ) : characters.length === 0 ? (
-                    <div className="lumiverse-cb-empty">
+                    <div className="ado-cb-empty">
                         <Search size={24} strokeWidth={1} />
                         <span>No matches</span>
-                        <span className="lumiverse-cb-empty-sub">Try adjusting your search or filters</span>
+                        <span className="ado-cb-empty-sub">Try adjusting your search or filters</span>
                     </div>
                 ) : folderGroups && enableResortableTagFolders && !wideMode ? (
                     // Sortable folder view with DnD (sidebar only)
                     <>
                         {tagFolderOrder.length > 0 && (
-                            <div className="lumiverse-cb-folder-reset-row">
+                            <div className="ado-cb-folder-reset-row">
                                 <button
-                                    className="lumiverse-cb-folder-reset-btn"
+                                    className="ado-cb-folder-reset-btn"
                                     onClick={resetTagFolderOrder}
                                     type="button"
                                     title="Reset to default folder order"
@@ -1214,7 +1214,7 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
 
                 {/* Drag-and-drop overlay */}
                 {isDragOver && (
-                    <div className="lumiverse-cb-drop-overlay">
+                    <div className="ado-cb-drop-overlay">
                         <Upload size={28} strokeWidth={1.5} />
                         <span>Drop to import</span>
                     </div>
@@ -1222,37 +1222,37 @@ function CharacterBrowser({ wideMode = false, onDismiss, onBatchStateChange } = 
             </div>
 
             {/* Status bar */}
-            <div className="lumiverse-cb-status">
+            <div className="ado-cb-status">
                 <span>{characters.length} of {totalCount}</span>
             </div>
 
             {/* Loading overlay — navigation */}
             {isNavigating && (
-                <div className="lumiverse-cb-loading-overlay">
-                    <Loader2 size={24} strokeWidth={1.5} className="lumiverse-cb-spinner" />
+                <div className="ado-cb-loading-overlay">
+                    <Loader2 size={24} strokeWidth={1.5} className="ado-cb-spinner" />
                     <span>Loading chat&hellip;</span>
                 </div>
             )}
 
             {/* Loading overlay — import */}
             {importState.isImporting && (
-                <div className="lumiverse-cb-loading-overlay">
-                    <Loader2 size={24} strokeWidth={1.5} className="lumiverse-cb-spinner" />
+                <div className="ado-cb-loading-overlay">
+                    <Loader2 size={24} strokeWidth={1.5} className="ado-cb-spinner" />
                     <span>Importing&hellip;</span>
                 </div>
             )}
 
             {/* Batch delete progress overlay */}
             {batchProgress && (
-                <div className="lumiverse-cb-loading-overlay">
-                    <Loader2 size={28} strokeWidth={1.5} className="lumiverse-cb-spinner" />
+                <div className="ado-cb-loading-overlay">
+                    <Loader2 size={28} strokeWidth={1.5} className="ado-cb-spinner" />
                     <span>Deleting {batchProgress.current} of {batchProgress.total}&hellip;</span>
                     {batchProgress.name && (
-                        <span className="lumiverse-cb-batch-progress-name">{batchProgress.name}</span>
+                        <span className="ado-cb-batch-progress-name">{batchProgress.name}</span>
                     )}
-                    <div className="lumiverse-cb-batch-progress-bar">
+                    <div className="ado-cb-batch-progress-bar">
                         <div
-                            className="lumiverse-cb-batch-progress-fill"
+                            className="ado-cb-batch-progress-fill"
                             style={{ width: `${batchProgress.total > 0 ? (batchProgress.current / batchProgress.total) * 100 : 0}%` }}
                         />
                     </div>

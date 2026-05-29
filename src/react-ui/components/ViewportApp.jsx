@@ -17,10 +17,10 @@ import ImageGenPanel from './panels/ImageGenPanel';
 import PackDetailModal from './modals/PackDetailModal';
 import LoomPackDetailModal from './modals/LoomPackDetailModal';
 import SettingsModal from './modals/SettingsModal';
-import { useLumiverseStore } from '../store/LumiverseContext';
+import { useAdoHelperStore } from '../store/AdoHelperContext';
 
 // Get the store for direct access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Default drawer settings
 const DEFAULT_DRAWER_SETTINGS = { side: 'right', verticalPosition: 15, tabSize: 'large', panelWidthMode: 'default', customPanelWidth: 35 };
@@ -28,7 +28,7 @@ const DEFAULT_DRAWER_SETTINGS = { side: 'right', verticalPosition: 15, tabSize: 
 /**
  * Main viewport application component
  * Contains the toggle button and panel as one unified sliding unit
- * Respects the showLumiverseDrawer setting from the store
+ * Respects the showAdoHelperDrawer setting from the store
  */
 function ViewportApp() {
     const [isPanelVisible, setIsPanelVisible] = useState(false);
@@ -37,8 +37,8 @@ function ViewportApp() {
     // Check if drawer should be shown at all
     const showDrawer = useSyncExternalStore(
         store.subscribe,
-        () => store.getState().showLumiverseDrawer ?? true,
-        () => store.getState().showLumiverseDrawer ?? true
+        () => store.getState().showAdoHelperDrawer ?? true,
+        () => store.getState().showAdoHelperDrawer ?? true
     );
 
     // Get drawer settings for positioning

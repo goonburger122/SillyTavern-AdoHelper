@@ -42,7 +42,7 @@ export function useChatPresetSettings() {
     // Post-processing state
     const [postProcessing, setPostProcessingState] = useState('');
 
-    // Adaptive thinking state (Lumiverse-only, per-model-profile)
+    // Adaptive thinking state (Ado Helper-only, per-model-profile)
     const [adaptiveThinking, setAdaptiveThinkingState] = useState(() => getAdaptiveThinkingEnabled());
 
     // Sync reference to prevent stale closures

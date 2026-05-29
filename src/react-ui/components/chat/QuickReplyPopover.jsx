@@ -74,42 +74,42 @@ export default function QuickReplyPopover({ onClose }) {
     const isEmpty = sets.length === 0;
 
     return (
-        <div className="lcs-qr-popover" ref={menuRef}>
+        <div className="ado-qr-popover" ref={menuRef}>
             {isEmpty ? (
-                <div className="lcs-qr-empty">
+                <div className="ado-qr-empty">
                     <MessageSquare size={20} style={{ opacity: 0.4 }} />
                     <span>No active Quick Reply sets</span>
                 </div>
             ) : (
                 sets.map(set => (
-                    <div className="lcs-qr-set-group" key={set.name}>
+                    <div className="ado-qr-set-group" key={set.name}>
                         <div
-                            className="lcs-qr-set-header"
+                            className="ado-qr-set-header"
                             style={set.color ? { borderLeftColor: set.color } : undefined}
                         >
-                            <span className="lcs-qr-set-name">{set.name}</span>
-                            <div className="lcs-qr-set-badges">
-                                {set.isGlobal && <span className="lcs-qr-badge lcs-qr-badge--global">Global</span>}
-                                {set.isChat && <span className="lcs-qr-badge lcs-qr-badge--chat">Chat</span>}
+                            <span className="ado-qr-set-name">{set.name}</span>
+                            <div className="ado-qr-set-badges">
+                                {set.isGlobal && <span className="ado-qr-badge ado-qr-badge--global">Global</span>}
+                                {set.isChat && <span className="ado-qr-badge ado-qr-badge--chat">Chat</span>}
                             </div>
                         </div>
                         {set.qrs.map(qr => (
-                            <div className="lcs-qr-entry" key={qr.id}>
-                                <div className="lcs-qr-entry-icon">
+                            <div className="ado-qr-entry" key={qr.id}>
+                                <div className="ado-qr-entry-icon">
                                     <QRIcon icon={qr.icon} />
                                 </div>
-                                <div className="lcs-qr-entry-text">
-                                    <span className="lcs-qr-entry-label" title={qr.title || qr.label}>
+                                <div className="ado-qr-entry-text">
+                                    <span className="ado-qr-entry-label" title={qr.title || qr.label}>
                                         {qr.label || '(untitled)'}
                                     </span>
                                     {qr.message && (
-                                        <span className="lcs-qr-entry-preview">
+                                        <span className="ado-qr-entry-preview">
                                             {truncate(qr.message)}
                                         </span>
                                     )}
                                 </div>
                                 <button
-                                    className="lcs-qr-entry-send"
+                                    className="ado-qr-entry-send"
                                     onClick={() => handleExecute(set.name, qr.id)}
                                     title={`Execute: ${qr.label}`}
                                     type="button"

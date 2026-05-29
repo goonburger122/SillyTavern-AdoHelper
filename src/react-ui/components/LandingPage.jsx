@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback, useLayoutEffect, useSyncExtern
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Clock, Sparkles, Users, Package, RefreshCw, Compass, Loader2, Trash2, X, MessageSquarePlus } from 'lucide-react';
 import { landingPageStyles } from './LandingPageStyles.js';
-import { useLumiverseStore } from '../store/LumiverseContext';
+import { useAdoHelperStore } from '../store/AdoHelperContext';
 import { getTopBarHeight } from '../../lib/domUtils.js';
 import ConfirmationModal from './shared/ConfirmationModal.jsx';
-import { getLumiverseVersion, getSillyTavernVersion, isPrerelease } from '../../lib/version.js';
+import { getAdoHelperVersion, getSillyTavernVersion, isPrerelease } from '../../lib/version.js';
 import { getRandomJoke, onJokesReady } from '../../lib/jokesService.js';
 import LazyImage from './shared/LazyImage';
 
@@ -21,7 +21,7 @@ import LazyImage from './shared/LazyImage';
  */
 
 // Stable selector
-const selectLandingPageChatsDisplayed = () => useLumiverseStore.getState().landingPageChatsDisplayed ?? 12;
+const selectLandingPageChatsDisplayed = () => useAdoHelperStore.getState().landingPageChatsDisplayed ?? 12;
 
 /**
  * Format relative time (e.g., "2 hours ago")
@@ -68,7 +68,7 @@ async function getAvatarUrl(itemOrAvatar) {
                 return stGetThumbnailUrl('avatar', avatar);
             }
         } catch (err) {
-            console.warn('[Lumiverse] Failed to import getThumbnailUrl, using fallback:', err);
+            console.warn('[Ado Helper] Failed to import getThumbnailUrl, using fallback:', err);
         }
         return `/characters/${encodeURIComponent(avatar)}`;
     }
@@ -126,19 +126,19 @@ const GroupAvatarStack = React.memo(({ members, groupName }) => {
     const allLoaded = loadedCount >= membersToShow.length && avatarUrls.length > 0;
 
     return (
-        <div className="lumiverse-lp-group-stack">
-            <div className="lumiverse-lp-group-stack-loading" style={{ opacity: allLoaded ? 0 : 1 }}>
-                <Loader2 className="lumiverse-lp-spin" size={24} />
+        <div className="ado-lp-group-stack">
+            <div className="ado-lp-group-stack-loading" style={{ opacity: allLoaded ? 0 : 1 }}>
+                <Loader2 className="ado-lp-spin" size={24} />
             </div>
             <div
-                className="lumiverse-lp-group-stack-avatars"
+                className="ado-lp-group-stack-avatars"
                 data-count={getCountAttr()}
                 style={{ opacity: allLoaded ? 1 : 0 }}
             >
                 {avatarUrls.map((url, index) => (
                     <div
                         key={`${membersToShow[index]}-${index}`}
-                        className="lumiverse-lp-group-avatar-wrapper"
+                        className="ado-lp-group-avatar-wrapper"
                         style={{
                             '--stack-index': index,
                             '--stack-total': membersToShow.length,
@@ -148,7 +148,7 @@ const GroupAvatarStack = React.memo(({ members, groupName }) => {
                         <LazyImage
                             src={url}
                             alt={`Group member ${index + 1}`}
-                            className="lumiverse-lp-group-avatar-img"
+                            className="ado-lp-group-avatar-img"
                             spinnerSize={12}
                             draggable={false}
                         />
@@ -156,7 +156,7 @@ const GroupAvatarStack = React.memo(({ members, groupName }) => {
                 ))}
                 {overflow > 0 && (
                     <div 
-                        className="lumiverse-lp-group-avatar-overflow"
+                        className="ado-lp-group-avatar-overflow"
                         style={{
                             '--stack-index': maxAvatars,
                             zIndex: 0,
@@ -289,7 +289,7 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
     return (
         <motion.div
             ref={cardRef}
-            className="lumiverse-lp-card"
+            className="ado-lp-card"
             onClick={onClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseMove={handleMouseMove}
@@ -302,7 +302,7 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
             {/* Glass shimmer effect */}
             {!shouldReduceMotion && (
                 <motion.div
-                    className="lumiverse-lp-card-shimmer"
+                    className="ado-lp-card-shimmer"
                     animate={{ opacity: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
                 />
@@ -311,7 +311,7 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
             {/* Delete button - top-right corner of card, appears on hover */}
             {onDelete && (isHovered || isConfirmingDelete) && (
                 <button
-                    className={`lumiverse-lp-card-delete-btn ${isConfirmingDelete ? 'lumiverse-lp-card-delete-btn--confirming' : ''}`}
+                    className={`ado-lp-card-delete-btn ${isConfirmingDelete ? 'ado-lp-card-delete-btn--confirming' : ''}`}
                     onClick={handleDeleteClick}
                     title={isConfirmingDelete ? 'Click again to confirm deletion' : 'Delete this chat'}
                     type="button"
@@ -322,7 +322,7 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
             )}
 
             {/* Avatar Container */}
-            <div className={`lumiverse-lp-card-image-container ${isGroup ? 'lumiverse-lp-card-image-group' : ''}`}>
+            <div className={`ado-lp-card-image-container ${isGroup ? 'ado-lp-card-image-group' : ''}`}>
                 {isGroup ? (
                     <GroupAvatarStack 
                         members={item.members} 
@@ -331,15 +331,15 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
                 ) : (
                     <>
                         <div
-                            className="lumiverse-lp-card-avatar-spinner"
+                            className="ado-lp-card-avatar-spinner"
                             style={{ opacity: imageLoaded ? 0 : 1 }}
                         >
-                            <Loader2 className="lumiverse-lp-spin" size={24} color="rgba(255,255,255,0.5)" />
+                            <Loader2 className="ado-lp-spin" size={24} color="rgba(255,255,255,0.5)" />
                         </div>
                         <img
                             src={avatarUrl}
                             alt={item.name}
-                            className="lumiverse-lp-card-avatar"
+                            className="ado-lp-card-avatar"
                             draggable={false}
                             style={{ opacity: imageLoaded ? 1 : 0 }}
                         />
@@ -347,25 +347,25 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
                 )}
 
                 {/* Time badge */}
-                <div className="lumiverse-lp-card-time-badge">
+                <div className="ado-lp-card-time-badge">
                     <Clock size={10} strokeWidth={2} />
                     <span>{formatRelativeTime(item.date_last_chat)}</span>
                 </div>
             </div>
 
             {/* Content */}
-            <div className="lumiverse-lp-card-content">
-                <h3 className="lumiverse-lp-card-name">{item.name || 'Unnamed'}</h3>
+            <div className="ado-lp-card-content">
+                <h3 className="ado-lp-card-name">{item.name || 'Unnamed'}</h3>
 
-                <div className="lumiverse-lp-card-meta">
+                <div className="ado-lp-card-meta">
                     {presetName && (
-                        <span className="lumiverse-lp-card-badge lumiverse-lp-card-badge-preset">
+                        <span className="ado-lp-card-badge ado-lp-card-badge-preset">
                             <Sparkles size={10} strokeWidth={2} />
                             {presetName}
                         </span>
                     )}
                     {isGroup && (
-                        <span className="lumiverse-lp-card-badge lumiverse-lp-card-badge-group">
+                        <span className="ado-lp-card-badge ado-lp-card-badge-group">
                             <Users size={10} strokeWidth={2} />
                             {(item.members?.length || 0)} Members
                         </span>
@@ -376,7 +376,7 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
             {/* Hover indicator */}
             {!shouldReduceMotion && (
                 <motion.div
-                    className="lumiverse-lp-card-indicator"
+                    className="ado-lp-card-indicator"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
@@ -392,12 +392,12 @@ const ChatCard = React.memo(({ item, presetName, onClick, onDelete, index }) => 
 function EmptyState() {
     return (
         <motion.div
-            className="lumiverse-lp-empty"
+            className="ado-lp-empty"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
         >
-            <div className="lumiverse-lp-empty-icon">
+            <div className="ado-lp-empty-icon">
                 <Compass size={64} strokeWidth={1} />
             </div>
             <h3>Begin Your Journey</h3>
@@ -408,13 +408,13 @@ function EmptyState() {
 
 /**
  * Version Info Component
- * Displays Lumiverse and SillyTavern versions in the bottom-right corner
+ * Displays Ado Helper and SillyTavern versions in the bottom-right corner
  * Click to copy version info to clipboard
  */
 function VersionInfo() {
     const [stVersionInfo, setStVersionInfo] = useState(null);
     const [copied, setCopied] = useState(false);
-    const lumiverseVersion = getLumiverseVersion();
+    const lumiverseVersion = getAdoHelperVersion();
     const isBeta = isPrerelease(lumiverseVersion);
 
     useEffect(() => {
@@ -427,7 +427,7 @@ function VersionInfo() {
 
     // Build the version text for clipboard
     const getVersionText = useCallback(() => {
-        let text = `Lumiverse: v${lumiverseVersion}`;
+        let text = `Ado Helper: v${lumiverseVersion}`;
         if (stVersionInfo) {
             text += `\nSillyTavern: v${stVersionInfo.pkgVersion}`;
             if (stVersionInfo.gitBranch) {
@@ -448,13 +448,13 @@ function VersionInfo() {
             setCopied(true);
             setTimeout(() => setCopied(false), 1500);
         } catch (err) {
-            console.error('[Lumiverse] Failed to copy version info:', err);
+            console.error('[Ado Helper] Failed to copy version info:', err);
         }
     }, [getVersionText]);
 
     return (
         <motion.div
-            className={`lumiverse-lp-version-info ${copied ? 'lumiverse-lp-version-info--copied' : ''}`}
+            className={`ado-lp-version-info ${copied ? 'ado-lp-version-info--copied' : ''}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -464,22 +464,22 @@ function VersionInfo() {
             tabIndex={0}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCopy(); }}
         >
-            <div className="lumiverse-lp-version-row">
-                <span className="lumiverse-lp-version-label">Lumiverse</span>
-                <span className={`lumiverse-lp-version-value ${isBeta ? 'lumiverse-lp-version-beta' : ''}`}>
+            <div className="ado-lp-version-row">
+                <span className="ado-lp-version-label">Ado Helper</span>
+                <span className={`ado-lp-version-value ${isBeta ? 'ado-lp-version-beta' : ''}`}>
                     v{lumiverseVersion}
                 </span>
             </div>
             {stVersionInfo && (
-                <div className="lumiverse-lp-version-row">
-                    <span className="lumiverse-lp-version-label">SillyTavern</span>
-                    <span className="lumiverse-lp-version-value">
+                <div className="ado-lp-version-row">
+                    <span className="ado-lp-version-label">SillyTavern</span>
+                    <span className="ado-lp-version-value">
                         v{stVersionInfo.pkgVersion}
                         {stVersionInfo.gitBranch && (
-                            <span className="lumiverse-lp-version-git">
+                            <span className="ado-lp-version-git">
                                 {stVersionInfo.gitBranch}
                                 {stVersionInfo.gitRevision && (
-                                    <span className="lumiverse-lp-version-commit">
+                                    <span className="ado-lp-version-commit">
                                         @{stVersionInfo.gitRevision}
                                     </span>
                                 )}
@@ -492,7 +492,7 @@ function VersionInfo() {
             <AnimatePresence>
                 {copied && (
                     <motion.div
-                        className="lumiverse-lp-version-copied"
+                        className="ado-lp-version-copied"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
@@ -523,7 +523,7 @@ function InsideJoke() {
     }, [joke]);
 
     if (!joke) return null;
-    return <span className="lumiverse-lp-joke">{joke}</span>;
+    return <span className="ado-lp-joke">{joke}</span>;
 }
 
 /**
@@ -532,15 +532,15 @@ function InsideJoke() {
 function SkeletonCard({ index }) {
     return (
         <motion.div
-            className="lumiverse-lp-card lumiverse-lp-skeleton"
+            className="ado-lp-card ado-lp-skeleton"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2, delay: index * 0.05 }}
         >
-            <div className="lumiverse-lp-skeleton-image" />
-            <div className="lumiverse-lp-skeleton-content">
-                <div className="lumiverse-lp-skeleton-line lumiverse-lp-skeleton-title" />
-                <div className="lumiverse-lp-skeleton-line lumiverse-lp-skeleton-meta" />
+            <div className="ado-lp-skeleton-image" />
+            <div className="ado-lp-skeleton-content">
+                <div className="ado-lp-skeleton-line ado-lp-skeleton-title" />
+                <div className="ado-lp-skeleton-line ado-lp-skeleton-meta" />
             </div>
         </motion.div>
     );
@@ -568,7 +568,7 @@ function LandingPage() {
 
     // Get setting from store
     const chatsDisplayed = useSyncExternalStore(
-        useLumiverseStore.subscribe,
+        useAdoHelperStore.subscribe,
         selectLandingPageChatsDisplayed,
         selectLandingPageChatsDisplayed
     );
@@ -581,7 +581,7 @@ function LandingPage() {
 
         const updateGrid = () => {
             // Target ALL grid instances (loading or active) to ensure variables are set
-            const grids = document.querySelectorAll('.lumiverse-lp-grid-cards');
+            const grids = document.querySelectorAll('.ado-lp-grid-cards');
             if (!grids.length) return;
 
             grids.forEach(grid => {
@@ -605,7 +605,7 @@ function LandingPage() {
                 const exactWidth = (containerWidth - (gap * (cols - 1))) / cols;
                 
                 // Subtract a tiny fraction (0.5px) to handle sub-pixel rounding errors in browsers
-                grid.style.setProperty('--lumiverse-card-width', `${exactWidth - 0.5}px`);
+                grid.style.setProperty('--ado-card-width', `${exactWidth - 0.5}px`);
             });
         };
         
@@ -621,7 +621,7 @@ function LandingPage() {
         window.addEventListener('resize', handleResize);
         
         // Use ResizeObserver for more robust container tracking
-        const mainContent = document.querySelector('.lumiverse-lp-main');
+        const mainContent = document.querySelector('.ado-lp-main');
         let observer = null;
         if (mainContent) {
             observer = new ResizeObserver(() => {
@@ -634,7 +634,7 @@ function LandingPage() {
         setTimeout(updateGrid, 0);
         setTimeout(updateGrid, 100); // Secondary check for slow renders
         
-        const styleId = 'lumiverse-landing-styles';
+        const styleId = 'ado-landing-styles';
         if (!document.getElementById(styleId)) {
             const styleEl = document.createElement('style');
             styleEl.id = styleId;
@@ -655,17 +655,17 @@ function LandingPage() {
         if (!container) return;
 
         // Also toggle on the root container so CSS can reach sibling elements (bg glows)
-        const rootContainer = container.closest('.lumiverse-lp-container');
+        const rootContainer = container.closest('.ado-lp-container');
 
         const onScroll = () => {
-            if (!container.classList.contains('lumiverse-lp-scrolling')) {
-                container.classList.add('lumiverse-lp-scrolling');
-                if (rootContainer) rootContainer.classList.add('lumiverse-lp-scrolling');
+            if (!container.classList.contains('ado-lp-scrolling')) {
+                container.classList.add('ado-lp-scrolling');
+                if (rootContainer) rootContainer.classList.add('ado-lp-scrolling');
             }
             clearTimeout(scrollTimerRef.current);
             scrollTimerRef.current = setTimeout(() => {
-                container.classList.remove('lumiverse-lp-scrolling');
-                if (rootContainer) rootContainer.classList.remove('lumiverse-lp-scrolling');
+                container.classList.remove('ado-lp-scrolling');
+                if (rootContainer) rootContainer.classList.remove('ado-lp-scrolling');
             }, 150);
         };
 
@@ -682,7 +682,7 @@ function LandingPage() {
         if (itemCount === 0) return;
         // Run updateGrid logic after render when cards are in the DOM
         const updateGrid = () => {
-            const grids = document.querySelectorAll('.lumiverse-lp-grid-cards');
+            const grids = document.querySelectorAll('.ado-lp-grid-cards');
             if (grids.length) {
                 window.dispatchEvent(new Event('resize'));
             }
@@ -738,7 +738,7 @@ function LandingPage() {
             setItems(sortedItems);
             setLoading(false);
         } catch (err) {
-            console.error('[Lumiverse] Error fetching chats:', err);
+            console.error('[Ado Helper] Error fetching chats:', err);
             setError(err.message);
             setLoading(false);
         }
@@ -753,7 +753,7 @@ function LandingPage() {
                 setPresetBindings(index.presetBindings);
             }
         } catch (err) {
-            console.warn('[Lumiverse] Could not fetch preset bindings:', err);
+            console.warn('[Ado Helper] Could not fetch preset bindings:', err);
         }
     }, []);
 
@@ -830,7 +830,7 @@ function LandingPage() {
                 }
             }
         } catch (err) {
-            console.error('[Lumiverse] Error opening chat:', err);
+            console.error('[Ado Helper] Error opening chat:', err);
             toastr?.error('Failed to open chat');
             setIsNavigating(false);
         }
@@ -908,7 +908,7 @@ function LandingPage() {
             fetchChats();
             
         } catch (err) {
-            console.error('[Lumiverse] Error deleting chat:', err);
+            console.error('[Ado Helper] Error deleting chat:', err);
             toastr?.error('Failed to delete chat');
         }
     }, [pendingDeleteItem, fetchChats]);
@@ -939,42 +939,42 @@ function LandingPage() {
             await newAssistantChat({ temporary: true });
             
         } catch (err) {
-            console.error('[Lumiverse] Error starting temporary chat:', err);
+            console.error('[Ado Helper] Error starting temporary chat:', err);
             toastr?.error('Failed to start temporary chat');
         }
     }, []);
 
     return (
-        <div className="lumiverse-lp-container" style={{ paddingTop: `${paddingTop}px`, pointerEvents: 'none' }}>
+        <div className="ado-lp-container" style={{ paddingTop: `${paddingTop}px`, pointerEvents: 'none' }}>
             {/* Navigation loading overlay — shown immediately on chat click,
                 before ST's heavy selectCharacterById blocks the main thread */}
             {isNavigating && (
                 <div style={{
                     position: 'fixed', inset: 0, zIndex: 99999,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: 'var(--lcs-page-bg, var(--lumiverse-bg, rgba(10,8,20,0.97)))',
+                    background: 'var(--ado-page-bg, var(--ado-bg, rgba(10,8,20,0.97)))',
                     pointerEvents: 'all',
                 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', opacity: 0.7 }}>
-                        <div className="lumiverse-lp-spinner" />
-                        <span style={{ fontSize: '13px', color: 'var(--lumiverse-text, #ccc)' }}>Loading chat&hellip;</span>
+                        <div className="ado-lp-spinner" />
+                        <span style={{ fontSize: '13px', color: 'var(--ado-text, #ccc)' }}>Loading chat&hellip;</span>
                     </div>
                     <InsideJoke />
                 </div>
             )}
             {/* Ambient background effects */}
-            <div className="lumiverse-lp-bg" style={{ top: `${paddingTop}px`, pointerEvents: 'auto' }}>
-                <div className="lumiverse-lp-bg-glow lumiverse-lp-bg-glow-1" />
-                <div className="lumiverse-lp-bg-glow lumiverse-lp-bg-glow-2" />
-                <div className="lumiverse-lp-bg-glow lumiverse-lp-bg-glow-3" />
+            <div className="ado-lp-bg" style={{ top: `${paddingTop}px`, pointerEvents: 'auto' }}>
+                <div className="ado-lp-bg-glow ado-lp-bg-glow-1" />
+                <div className="ado-lp-bg-glow ado-lp-bg-glow-2" />
+                <div className="ado-lp-bg-glow ado-lp-bg-glow-3" />
             </div>
 
             {/* Grid pattern overlay */}
-            <div className="lumiverse-lp-grid" style={{ top: `${paddingTop}px`, pointerEvents: 'none' }} />
+            <div className="ado-lp-grid" style={{ top: `${paddingTop}px`, pointerEvents: 'none' }} />
 
             {/* Main content */}
             <motion.div
-                className="lumiverse-lp-content"
+                className="ado-lp-content"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -982,15 +982,15 @@ function LandingPage() {
             >
                 {/* Header */}
                 <motion.header
-                    className="lumiverse-lp-header"
+                    className="ado-lp-header"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                    <div className="lumiverse-lp-header-left">
-                        <div className="lumiverse-lp-logo">
-                            <div className="lumiverse-lp-logo-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" className="lumiverse-spool-icon">
+                    <div className="ado-lp-header-left">
+                        <div className="ado-lp-logo">
+                            <div className="ado-lp-logo-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" className="ado-spool-icon">
                                     <g transform="rotate(-12, 32, 32)">
                                         <ellipse cx="32" cy="12" rx="18" ry="6" fill="#8B5A2B"/>
                                         <ellipse cx="32" cy="12" rx="14" ry="4" fill="#A0522D"/>
@@ -1010,16 +1010,16 @@ function LandingPage() {
                                     </g>
                                 </svg>
                             </div>
-                            <div className="lumiverse-lp-logo-text">
-                                <h1>Lumiverse</h1>
+                            <div className="ado-lp-logo-text">
+                                <h1>Ado Helper</h1>
                                 <span>Continue your story</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="lumiverse-lp-header-right">
+                    <div className="ado-lp-header-right">
                         <motion.button
-                            className="lumiverse-lp-btn lumiverse-lp-btn-temp-chat"
+                            className="ado-lp-btn ado-lp-btn-temp-chat"
                             onClick={handleTemporaryChat}
                             disabled={!isAppReady}
                             whileHover={{ scale: 1.05 }}
@@ -1030,20 +1030,20 @@ function LandingPage() {
                             <MessageSquarePlus size={16} strokeWidth={1.5} />
                         </motion.button>
                         <motion.button
-                            className="lumiverse-lp-btn lumiverse-lp-btn-refresh"
+                            className="ado-lp-btn ado-lp-btn-refresh"
                             onClick={fetchChats}
                             disabled={loading}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             type="button"
                         >
-                            <RefreshCw size={16} strokeWidth={1.5} className={loading ? 'lumiverse-lp-spin' : ''} />
+                            <RefreshCw size={16} strokeWidth={1.5} className={loading ? 'ado-lp-spin' : ''} />
                         </motion.button>
                     </div>
                 </motion.header>
 
                 {/* Main grid */}
-                <main className="lumiverse-lp-main" ref={scrollContainerRef}>
+                <main className="ado-lp-main" ref={scrollContainerRef}>
                     <AnimatePresence mode="wait">
                         {(() => {
                             // Show loading skeletons if:
@@ -1055,7 +1055,7 @@ function LandingPage() {
                                 return (
                                     <motion.div
                                         key="loading"
-                                        className="lumiverse-lp-grid-cards"
+                                        className="ado-lp-grid-cards"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
@@ -1072,13 +1072,13 @@ function LandingPage() {
                                 return (
                                     <motion.div
                                         key="error"
-                                        className="lumiverse-lp-error"
+                                        className="ado-lp-error"
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0 }}
                                     >
                                         <p>Failed to load chats</p>
-                                        <button onClick={fetchChats} className="lumiverse-lp-btn lumiverse-lp-btn-primary" type="button">
+                                        <button onClick={fetchChats} className="ado-lp-btn ado-lp-btn-primary" type="button">
                                             Try Again
                                         </button>
                                     </motion.div>
@@ -1090,7 +1090,7 @@ function LandingPage() {
                             return (
                                 <motion.div
                                     key="chats"
-                                    className="lumiverse-lp-grid-cards"
+                                    className="ado-lp-grid-cards"
                                     variants={containerVariants}
                                     initial="hidden"
                                     animate="visible"
@@ -1114,7 +1114,7 @@ function LandingPage() {
 
                 {/* Footer */}
                 <motion.footer
-                    className="lumiverse-lp-footer"
+                    className="ado-lp-footer"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.6 }}

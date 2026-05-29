@@ -6,9 +6,9 @@
  */
 
 import { useSyncExternalStore, useCallback, useMemo } from 'react';
-import { useLumiverseStore } from '../store/LumiverseContext';
+import { useAdoHelperStore } from '../store/AdoHelperContext';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 const selectChatSheld = () => store.getState().chatSheld || {};
 const selectMessages = () => store.getState().chatSheld?.messages || [];

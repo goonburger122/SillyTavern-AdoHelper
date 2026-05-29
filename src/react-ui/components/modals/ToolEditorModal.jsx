@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react';
-import { usePacks, useLumiverseActions, saveToExtension } from '../../store/LumiverseContext';
+import { usePacks, useAdoHelperActions, saveToExtension } from '../../store/AdoHelperContext';
 import { Wrench, Trash2, X, Plus, ChevronDown } from 'lucide-react';
 import ConfirmationModal from '../shared/ConfirmationModal';
 import { getToolNames } from '@lib/councilTools';
@@ -28,7 +28,7 @@ const PROPERTY_TYPES = [
 function CharCount({ text }) {
     if (!text) return null;
     return (
-        <span className="lumiverse-editor-char-count">
+        <span className="ado-editor-char-count">
             {text.length} chars
         </span>
     );
@@ -90,18 +90,18 @@ function SchemaPropertyRow({ property, onChange, onRemove }) {
     const update = (field, value) => onChange({ ...property, [field]: value });
 
     return (
-        <div className="lumiverse-tool-schema-row">
-            <div className="lumiverse-tool-schema-row-fields">
+        <div className="ado-tool-schema-row">
+            <div className="ado-tool-schema-row-fields">
                 <input
                     type="text"
-                    className="lumiverse-editor-input lumiverse-tool-schema-name"
+                    className="ado-editor-input ado-tool-schema-name"
                     value={property.name}
                     onChange={(e) => update('name', e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
                     placeholder="property_name"
                 />
-                <div className="lumiverse-tool-schema-type-wrap">
+                <div className="ado-tool-schema-type-wrap">
                     <select
-                        className="lumiverse-editor-input lumiverse-tool-schema-type"
+                        className="ado-editor-input ado-tool-schema-type"
                         value={property.type}
                         onChange={(e) => update('type', e.target.value)}
                     >
@@ -109,9 +109,9 @@ function SchemaPropertyRow({ property, onChange, onRemove }) {
                             <option key={t.value} value={t.value}>{t.label}</option>
                         ))}
                     </select>
-                    <ChevronDown size={12} className="lumiverse-tool-schema-type-chevron" />
+                    <ChevronDown size={12} className="ado-tool-schema-type-chevron" />
                 </div>
-                <label className="lumiverse-tool-schema-required">
+                <label className="ado-tool-schema-required">
                     <input
                         type="checkbox"
                         checked={property.required}
@@ -121,7 +121,7 @@ function SchemaPropertyRow({ property, onChange, onRemove }) {
                 </label>
                 <button
                     type="button"
-                    className="lumiverse-tool-schema-remove"
+                    className="ado-tool-schema-remove"
                     onClick={onRemove}
                     title="Remove property"
                 >
@@ -130,7 +130,7 @@ function SchemaPropertyRow({ property, onChange, onRemove }) {
             </div>
             <input
                 type="text"
-                className="lumiverse-editor-input lumiverse-tool-schema-desc"
+                className="ado-editor-input ado-tool-schema-desc"
                 value={property.description}
                 onChange={(e) => update('description', e.target.value)}
                 placeholder="Description of this property"
@@ -138,7 +138,7 @@ function SchemaPropertyRow({ property, onChange, onRemove }) {
             {property.type === 'string' && (
                 <input
                     type="text"
-                    className="lumiverse-editor-input lumiverse-tool-schema-enum"
+                    className="ado-editor-input ado-tool-schema-enum"
                     value={property.enumValues}
                     onChange={(e) => update('enumValues', e.target.value)}
                     placeholder="Enum values (comma-separated, optional)"
@@ -153,7 +153,7 @@ function SchemaPropertyRow({ property, onChange, onRemove }) {
    ============================================ */
 function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
     const { allPacks } = usePacks();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const isEditing = editingItem !== null;
 
     const pack = allPacks.find(p => (p.name || p.packName) === packName);
@@ -335,51 +335,51 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
 
     if (!pack) {
         return (
-            <div className="lumiverse-editor-layout">
-                <div className="lumiverse-editor-scroll" style={{ textAlign: 'center', paddingTop: '40px' }}>
-                    <p style={{ color: 'var(--lumiverse-text-muted)' }}>Pack "{packName}" not found.</p>
-                    <button className="lumiverse-editor-btn-secondary" onClick={onClose}>Close</button>
+            <div className="ado-editor-layout">
+                <div className="ado-editor-scroll" style={{ textAlign: 'center', paddingTop: '40px' }}>
+                    <p style={{ color: 'var(--ado-text-muted)' }}>Pack "{packName}" not found.</p>
+                    <button className="ado-editor-btn-secondary" onClick={onClose}>Close</button>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="lumiverse-editor-layout">
+        <div className="ado-editor-layout">
             {/* Mobile swipe handle */}
-            <div className="lumiverse-editor-swipe-handle" />
+            <div className="ado-editor-swipe-handle" />
 
             {/* Header */}
-            <div className="lumiverse-editor-header">
-                <div className="lumiverse-editor-header-icon">
+            <div className="ado-editor-header">
+                <div className="ado-editor-header-icon">
                     <Wrench size={18} />
                 </div>
-                <div className="lumiverse-editor-header-text">
-                    <h2 className="lumiverse-editor-header-title">{isEditing ? 'Edit Tool' : 'Create New Tool'}</h2>
-                    <div className="lumiverse-editor-header-subtitle">{pack.packName || pack.name}</div>
+                <div className="ado-editor-header-text">
+                    <h2 className="ado-editor-header-title">{isEditing ? 'Edit Tool' : 'Create New Tool'}</h2>
+                    <div className="ado-editor-header-subtitle">{pack.packName || pack.name}</div>
                 </div>
-                <button className="lumiverse-editor-close-btn" onClick={handleClose}>
+                <button className="ado-editor-close-btn" onClick={handleClose}>
                     <X size={18} />
                 </button>
             </div>
 
             {/* Scrollable Content */}
-            <div className="lumiverse-editor-scroll">
+            <div className="ado-editor-scroll">
                 {/* Tool Details Section */}
-                <div className="lumiverse-editor-section">
-                    <div className="lumiverse-editor-section-header">
-                        <div className="lumiverse-editor-section-icon"><Wrench size={15} /></div>
-                        <span className="lumiverse-editor-section-title">Tool Details</span>
+                <div className="ado-editor-section">
+                    <div className="ado-editor-section-header">
+                        <div className="ado-editor-section-icon"><Wrench size={15} /></div>
+                        <span className="ado-editor-section-title">Tool Details</span>
                     </div>
 
                     {/* Tool Name */}
-                    <div className="lumiverse-editor-field">
-                        <label className="lumiverse-editor-label">
-                            Tool Name <span className="lumiverse-editor-required">*</span>
+                    <div className="ado-editor-field">
+                        <label className="ado-editor-label">
+                            Tool Name <span className="ado-editor-required">*</span>
                         </label>
                         <input
                             type="text"
-                            className="lumiverse-editor-input"
+                            className="ado-editor-input"
                             value={toolName}
                             onChange={(e) => {
                                 setToolName(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''));
@@ -388,18 +388,18 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                             placeholder="e.g., analyze_mood"
                             autoFocus
                         />
-                        <div className="lumiverse-editor-hint">Alphanumeric + underscore only. Must not match a built-in tool name.</div>
-                        {errors.toolName && <div className="lumiverse-editor-error">{errors.toolName}</div>}
+                        <div className="ado-editor-hint">Alphanumeric + underscore only. Must not match a built-in tool name.</div>
+                        {errors.toolName && <div className="ado-editor-error">{errors.toolName}</div>}
                     </div>
 
                     {/* Display Name */}
-                    <div className="lumiverse-editor-field">
-                        <label className="lumiverse-editor-label">
-                            Display Name <span className="lumiverse-editor-required">*</span>
+                    <div className="ado-editor-field">
+                        <label className="ado-editor-label">
+                            Display Name <span className="ado-editor-required">*</span>
                         </label>
                         <input
                             type="text"
-                            className="lumiverse-editor-input"
+                            className="ado-editor-input"
                             value={displayName}
                             onChange={(e) => {
                                 setDisplayName(e.target.value);
@@ -407,15 +407,15 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                             }}
                             placeholder="e.g., Mood Analyzer"
                         />
-                        {errors.displayName && <div className="lumiverse-editor-error">{errors.displayName}</div>}
+                        {errors.displayName && <div className="ado-editor-error">{errors.displayName}</div>}
                     </div>
 
                     {/* Description */}
-                    <div className="lumiverse-editor-field">
-                        <label className="lumiverse-editor-label">Description</label>
+                    <div className="ado-editor-field">
+                        <label className="ado-editor-label">Description</label>
                         <input
                             type="text"
-                            className="lumiverse-editor-input"
+                            className="ado-editor-input"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="Brief description of what this tool does"
@@ -423,11 +423,11 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                     </div>
 
                     {/* Author */}
-                    <div className="lumiverse-editor-field">
-                        <label className="lumiverse-editor-label">Author</label>
+                    <div className="ado-editor-field">
+                        <label className="ado-editor-label">Author</label>
                         <input
                             type="text"
-                            className="lumiverse-editor-input"
+                            className="ado-editor-input"
                             value={authorName}
                             onChange={(e) => setAuthorName(e.target.value)}
                             placeholder="Your name"
@@ -436,19 +436,19 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                 </div>
 
                 {/* Tool Prompt Section */}
-                <div className="lumiverse-editor-section">
-                    <div className="lumiverse-editor-section-header">
-                        <div className="lumiverse-editor-section-icon"><Wrench size={15} /></div>
-                        <span className="lumiverse-editor-section-title">Tool Prompt</span>
+                <div className="ado-editor-section">
+                    <div className="ado-editor-section-header">
+                        <div className="ado-editor-section-icon"><Wrench size={15} /></div>
+                        <span className="ado-editor-section-title">Tool Prompt</span>
                         <CharCount text={prompt} />
                     </div>
 
-                    <div className="lumiverse-editor-field">
-                        <label className="lumiverse-editor-label">
-                            Prompt <span className="lumiverse-editor-required">*</span>
+                    <div className="ado-editor-field">
+                        <label className="ado-editor-label">
+                            Prompt <span className="ado-editor-required">*</span>
                         </label>
                         <textarea
-                            className="lumiverse-editor-textarea lumiverse-tool-prompt-textarea"
+                            className="ado-editor-textarea ado-tool-prompt-textarea"
                             value={prompt}
                             onChange={(e) => {
                                 setPrompt(e.target.value);
@@ -457,17 +457,17 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                             placeholder="Describe what this tool should analyze, produce, or evaluate. This is the instruction sent to the council member's LLM when this tool is invoked."
                             rows={8}
                         />
-                        {errors.prompt && <div className="lumiverse-editor-error">{errors.prompt}</div>}
+                        {errors.prompt && <div className="ado-editor-error">{errors.prompt}</div>}
                     </div>
                 </div>
 
                 {/* Input Schema Builder */}
-                <div className="lumiverse-editor-section">
-                    <div className="lumiverse-editor-section-header">
-                        <div className="lumiverse-editor-section-icon"><Wrench size={15} /></div>
-                        <span className="lumiverse-editor-section-title">Input Schema</span>
+                <div className="ado-editor-section">
+                    <div className="ado-editor-section-header">
+                        <div className="ado-editor-section-icon"><Wrench size={15} /></div>
+                        <span className="ado-editor-section-title">Input Schema</span>
                     </div>
-                    <div className="lumiverse-editor-hint" style={{ marginBottom: '8px' }}>
+                    <div className="ado-editor-hint" style={{ marginBottom: '8px' }}>
                         Define the structured output properties the LLM should return when calling this tool.
                     </div>
 
@@ -482,29 +482,29 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
 
                     <button
                         type="button"
-                        className="lumiverse-editor-btn-secondary lumiverse-tool-add-property"
+                        className="ado-editor-btn-secondary ado-tool-add-property"
                         onClick={handleAddProperty}
                     >
                         <Plus size={14} /> Add Property
                     </button>
-                    {errors.properties && <div className="lumiverse-editor-error">{errors.properties}</div>}
+                    {errors.properties && <div className="ado-editor-error">{errors.properties}</div>}
                 </div>
 
                 {/* Result Routing Section */}
-                <div className="lumiverse-editor-section">
-                    <div className="lumiverse-editor-section-header">
-                        <div className="lumiverse-editor-section-icon"><Wrench size={15} /></div>
-                        <span className="lumiverse-editor-section-title">Result Routing</span>
+                <div className="ado-editor-section">
+                    <div className="ado-editor-section-header">
+                        <div className="ado-editor-section-icon"><Wrench size={15} /></div>
+                        <span className="ado-editor-section-title">Result Routing</span>
                     </div>
-                    <div className="lumiverse-editor-hint" style={{ marginBottom: '8px' }}>
+                    <div className="ado-editor-hint" style={{ marginBottom: '8px' }}>
                         Optionally store tool results in a named variable accessible via {'{{loomCouncilResult::variable_name}}'}.
                     </div>
 
-                    <div className="lumiverse-editor-field">
-                        <label className="lumiverse-editor-label">Result Variable</label>
+                    <div className="ado-editor-field">
+                        <label className="ado-editor-label">Result Variable</label>
                         <input
                             type="text"
-                            className="lumiverse-editor-input"
+                            className="ado-editor-input"
                             value={resultVariable}
                             onChange={(e) => {
                                 setResultVariable(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''));
@@ -512,15 +512,15 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                             }}
                             placeholder="e.g., story_direction"
                         />
-                        <div className="lumiverse-editor-hint">
+                        <div className="ado-editor-hint">
                             When set, results go to this variable only (excluded from deliberation by default).
                         </div>
-                        {errors.resultVariable && <div className="lumiverse-editor-error">{errors.resultVariable}</div>}
+                        {errors.resultVariable && <div className="ado-editor-error">{errors.resultVariable}</div>}
                     </div>
 
                     {resultVariable.trim() && (
-                        <div className="lumiverse-editor-field">
-                            <label className="lumiverse-tool-toggle-label">
+                        <div className="ado-editor-field">
+                            <label className="ado-tool-toggle-label">
                                 <input
                                     type="checkbox"
                                     checked={storeInDeliberation}
@@ -528,7 +528,7 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
                                 />
                                 <span>Also include in deliberation</span>
                             </label>
-                            <div className="lumiverse-editor-hint">
+                            <div className="ado-editor-hint">
                                 When enabled, results appear in both the named variable and {'{{lumiaCouncilDeliberation}}'}.
                             </div>
                         </div>
@@ -537,18 +537,18 @@ function ToolEditorModal({ packName, editingItem = null, onClose, onSaved }) {
             </div>
 
             {/* Footer */}
-            <div className="lumiverse-editor-footer">
+            <div className="ado-editor-footer">
                 {isEditing && (
                     <button
-                        className="lumiverse-editor-btn-danger"
+                        className="ado-editor-btn-danger"
                         onClick={handleDelete}
                     >
                         <Trash2 size={14} /> Delete
                     </button>
                 )}
-                <div className="lumiverse-editor-footer-spacer" />
-                <button className="lumiverse-editor-btn-secondary" onClick={handleClose}>Cancel</button>
-                <button className="lumiverse-editor-btn-primary" onClick={handleSave}>
+                <div className="ado-editor-footer-spacer" />
+                <button className="ado-editor-btn-secondary" onClick={handleClose}>Cancel</button>
+                <button className="ado-editor-btn-primary" onClick={handleSave}>
                     {isEditing ? 'Save Changes' : 'Create Tool'}
                 </button>
             </div>

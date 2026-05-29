@@ -1,12 +1,12 @@
 import React, { useCallback, useSyncExternalStore } from 'react';
-import { useLumiverseActions, saveToExtension, useLumiverseStore } from '../store/LumiverseContext';
+import { useAdoHelperActions, saveToExtension, useAdoHelperStore } from '../store/AdoHelperContext';
 import { Settings } from 'lucide-react';
 import clsx from 'clsx';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selectors (must be defined outside the component)
-const selectShowDrawer = () => store.getState().showLumiverseDrawer ?? true;
+const selectShowDrawer = () => store.getState().showAdoHelperDrawer ?? true;
 
 /**
  * Minimal stub that replaces the full SettingsPanel inside
@@ -14,49 +14,49 @@ const selectShowDrawer = () => store.getState().showLumiverseDrawer ?? true;
  *
  * Provides:
  *  - Drawer visibility toggle (useful inline)
- *  - "Open Lumiverse Settings" button → opens the settings modal
+ *  - "Open Ado Helper Settings" button → opens the settings modal
  */
 export default function SettingsPanelStub() {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const showDrawer = useSyncExternalStore(store.subscribe, selectShowDrawer);
 
     const handleDrawerToggle = useCallback((checked) => {
-        store.setState({ showLumiverseDrawer: checked });
+        store.setState({ showAdoHelperDrawer: checked });
         saveToExtension();
     }, []);
 
     return (
-        <div className="lumia-injector-settings">
+        <div className="ado-helper-settings">
             {/* Drawer Toggle */}
-            <div className="lumia-drawer-toggle-container">
-                <label className="lumiverse-toggle-wrapper">
-                    <div className="lumiverse-toggle-text">
-                        <span className="lumiverse-toggle-label">Show Lumiverse Drawer</span>
-                        <span className="lumiverse-toggle-description">
+            <div className="ado-drawer-toggle-container">
+                <label className="ado-toggle-wrapper">
+                    <div className="ado-toggle-text">
+                        <span className="ado-toggle-label">Show Ado Helper Drawer</span>
+                        <span className="ado-toggle-description">
                             Access quick settings from a slide-out panel
                         </span>
                     </div>
-                    <div className={clsx('lumiverse-toggle', showDrawer && 'lumiverse-toggle--on')}>
+                    <div className={clsx('ado-toggle', showDrawer && 'ado-toggle--on')}>
                         <input
                             type="checkbox"
-                            className="lumiverse-toggle-input"
+                            className="ado-toggle-input"
                             checked={showDrawer}
                             onChange={(e) => handleDrawerToggle(e.target.checked)}
                         />
-                        <span className="lumiverse-toggle-slider"></span>
+                        <span className="ado-toggle-slider"></span>
                     </div>
                 </label>
             </div>
 
             {/* Open full settings modal */}
             <button
-                className="lumia-btn lumia-btn-primary lumia-btn-full"
+                className="ado-btn ado-btn-primary ado-btn-full"
                 onClick={() => actions.openSettingsModal()}
                 type="button"
                 style={{ marginTop: '12px' }}
             >
                 <Settings size={16} strokeWidth={1.5} />
-                Open Lumiverse Settings
+                Open Ado Helper Settings
             </button>
         </div>
     );

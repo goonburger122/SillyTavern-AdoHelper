@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useUI, useLumiverseActions } from '../../store/LumiverseContext';
+import { useUI, useAdoHelperActions } from '../../store/AdoHelperContext';
 import useFixedPositionFix from '../../hooks/useFixedPositionFix';
 import SettingsNav from '../settings/SettingsNav';
 import GeneralSettingsView from '../settings/GeneralSettingsView';
@@ -24,15 +24,15 @@ import GuidedGenView from '../settings/GuidedGenView';
 function SettingsViewRouter({ activeView }) {
     switch (activeView) {
         case 'general':        return <GeneralSettingsView />;
-        case 'theme':          return <div className="lumiverse-settings-view"><ThemePanel /></div>;
+        case 'theme':          return <div className="ado-settings-view"><ThemePanel /></div>;
         case 'packs':          return <PacksView />;
-        case 'chatPresets':    return <div className="lumiverse-settings-view"><ChatPresetsPanel /></div>;
-        case 'presetBindings': return <div className="lumiverse-settings-view"><PresetBindingsPanel /></div>;
+        case 'chatPresets':    return <div className="ado-settings-view"><ChatPresetsPanel /></div>;
+        case 'presetBindings': return <div className="ado-settings-view"><PresetBindingsPanel /></div>;
         case 'lumiaConfig':    return <LumiaConfigView />;
         case 'loomConfig':     return <LoomConfigView />;
-        case 'ooc':            return <div className="lumiverse-settings-view"><OOCSettings /></div>;
+        case 'ooc':            return <div className="ado-settings-view"><OOCSettings /></div>;
         case 'summarization':  return <SummarizationView />;
-        case 'promptSettings': return <div className="lumiverse-settings-view"><PromptSettings /></div>;
+        case 'promptSettings': return <div className="ado-settings-view"><PromptSettings /></div>;
         case 'quickReplies':   return <QuickRepliesView />;
         case 'guidedGen':      return <GuidedGenView />;
         case 'macros':         return <MacroReferenceView />;
@@ -42,14 +42,14 @@ function SettingsViewRouter({ activeView }) {
 }
 
 /**
- * Full settings modal — renders the Lumiverse settings in a dedicated
+ * Full settings modal — renders the Ado Helper settings in a dedicated
  * modal with sidebar navigation. Portals directly to document.body with
  * useFixedPositionFix to neutralize SillyTavern's html transforms that
  * break position:fixed.
  */
 export default function SettingsModal({ onDismissDrawer }) {
     const ui = useUI();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     const isOpen = ui.settingsModal?.isOpen;
     const activeView = ui.settingsModal?.activeView || 'general';
@@ -103,7 +103,7 @@ export default function SettingsModal({ onDismissDrawer }) {
 
     return createPortal(
         <div
-            className="lumiverse-settings-modal-backdrop"
+            className="ado-settings-modal-backdrop"
             onClick={handleBackdropClick}
             onMouseDown={stopPropagation}
             onMouseUp={stopPropagation}
@@ -113,10 +113,10 @@ export default function SettingsModal({ onDismissDrawer }) {
             onTouchEnd={stopPropagation}
         >
             <div
-                className="lumiverse-settings-modal"
+                className="ado-settings-modal"
                 role="dialog"
                 aria-modal="true"
-                aria-label="Lumiverse Settings"
+                aria-label="Ado Helper Settings"
                 onClick={(e) => e.stopPropagation()}
             >
                 <SettingsNav
@@ -124,7 +124,7 @@ export default function SettingsModal({ onDismissDrawer }) {
                     onNavigate={actions.setSettingsModalView}
                     onClose={actions.closeSettingsModal}
                 />
-                <div className="lumiverse-settings-content">
+                <div className="ado-settings-content">
                     <SettingsViewRouter activeView={activeView} />
                 </div>
             </div>

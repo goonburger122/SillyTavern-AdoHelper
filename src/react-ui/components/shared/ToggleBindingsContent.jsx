@@ -116,20 +116,20 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
 
     // Default State Settings - shown in both ST and Loom modes
     const defaultStateSettingsSection = (
-        <div className="lumiverse-bindings-defaults-section">
-            <div className="lumiverse-bindings-defaults-header">
+        <div className="ado-bindings-defaults-section">
+            <div className="ado-bindings-defaults-header">
                 <Settings size={14} strokeWidth={1.5} />
                 <span>Default State Settings</span>
             </div>
 
             {/* Auto-restore toggle */}
-            <div className="lumiverse-bindings-toggle-row">
-                <div className="lumiverse-bindings-toggle-label">
+            <div className="ado-bindings-toggle-row">
+                <div className="ado-bindings-toggle-label">
                     <span>Restore defaults automatically</span>
                 </div>
-                <div className="lumiverse-bindings-toggle-actions">
+                <div className="ado-bindings-toggle-actions">
                     <button
-                        className={`lumia-btn lumia-btn-sm ${disableDefaultStateRestore ? 'lumia-btn-secondary' : 'lumia-btn-primary'}`}
+                        className={`ado-btn ado-btn-sm ${disableDefaultStateRestore ? 'ado-btn-secondary' : 'ado-btn-primary'}`}
                         onClick={handleToggleAutoRestore}
                         type="button"
                         title={disableDefaultStateRestore
@@ -152,16 +152,16 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
             </div>
 
             {/* Capture current as defaults button */}
-            <div className="lumiverse-bindings-toggle-row">
-                <div className="lumiverse-bindings-toggle-label">
+            <div className="ado-bindings-toggle-row">
+                <div className="ado-bindings-toggle-label">
                     <span>Capture current as defaults</span>
                     {hasDefaultToggles && (
-                        <span className="lumiverse-bindings-toggle-badge">Captured</span>
+                        <span className="ado-bindings-toggle-badge">Captured</span>
                     )}
                 </div>
-                <div className="lumiverse-bindings-toggle-actions">
+                <div className="ado-bindings-toggle-actions">
                     <button
-                        className="lumia-btn lumia-btn-secondary lumia-btn-sm"
+                        className="ado-btn ado-btn-secondary ado-btn-sm"
                         onClick={handleRecaptureDefaults}
                         type="button"
                         title="Save current toggle states as the defaults to restore for unbound chats"
@@ -172,7 +172,7 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
                 </div>
             </div>
 
-            <div className="lumiverse-bindings-defaults-info">
+            <div className="ado-bindings-defaults-info">
                 <span>
                     {isLoomMode
                         ? 'When auto-restore is on, unbound chats will revert to captured default block states.'
@@ -185,8 +185,8 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
     // If no chat context, only show default state settings (ST mode) or a message (Loom mode)
     if (!hasContext) {
         return (
-            <div className="lumiverse-bindings-toggles">
-                <div className="lumiverse-bindings-no-context">
+            <div className="ado-bindings-toggles">
+                <div className="ado-bindings-no-context">
                     <ToggleLeft size={20} strokeWidth={1.5} />
                     <span>
                         {isLoomMode
@@ -200,8 +200,8 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
     }
 
     return (
-        <div className="lumiverse-bindings-toggles">
-            <div className="lumiverse-bindings-toggles-info">
+        <div className="ado-bindings-toggles">
+            <div className="ado-bindings-toggles-info">
                 <span>
                     {isLoomMode
                         ? 'Save which blocks are enabled/disabled to auto-apply when switching to this chat or character.'
@@ -210,18 +210,18 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
             </div>
 
             {/* Chat Toggle Binding */}
-            <div className="lumiverse-bindings-toggle-row">
-                <div className="lumiverse-bindings-toggle-label">
+            <div className="ado-bindings-toggle-row">
+                <div className="ado-bindings-toggle-label">
                     <MessageSquare size={14} strokeWidth={1.5} />
                     <span>This Chat</span>
                     {hasChatToggleBinding && (
-                        <span className="lumiverse-bindings-toggle-badge">Bound</span>
+                        <span className="ado-bindings-toggle-badge">Bound</span>
                     )}
                 </div>
-                <div className="lumiverse-bindings-toggle-actions">
+                <div className="ado-bindings-toggle-actions">
                     {hasChatToggleBinding ? (
                         <button
-                            className="lumia-btn lumia-btn-danger lumia-btn-sm"
+                            className="ado-btn ado-btn-danger ado-btn-sm"
                             onClick={handleClearChatToggleBinding}
                             type="button"
                         >
@@ -230,7 +230,7 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
                         </button>
                     ) : (
                         <button
-                            className="lumia-btn lumia-btn-primary lumia-btn-sm"
+                            className="ado-btn ado-btn-primary ado-btn-sm"
                             onClick={handleSaveTogglesToChat}
                             disabled={!contextInfo.chatId}
                             type="button"
@@ -243,18 +243,18 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
             </div>
 
             {/* Character Toggle Binding */}
-            <div className="lumiverse-bindings-toggle-row">
-                <div className="lumiverse-bindings-toggle-label">
+            <div className="ado-bindings-toggle-row">
+                <div className="ado-bindings-toggle-label">
                     <User size={14} strokeWidth={1.5} />
                     <span>{contextInfo.characterName || 'Character'}</span>
                     {hasCharacterToggleBinding && (
-                        <span className="lumiverse-bindings-toggle-badge">Bound</span>
+                        <span className="ado-bindings-toggle-badge">Bound</span>
                     )}
                 </div>
-                <div className="lumiverse-bindings-toggle-actions">
+                <div className="ado-bindings-toggle-actions">
                     {hasCharacterToggleBinding ? (
                         <button
-                            className="lumia-btn lumia-btn-danger lumia-btn-sm"
+                            className="ado-btn ado-btn-danger ado-btn-sm"
                             onClick={handleClearCharacterToggleBinding}
                             type="button"
                         >
@@ -263,7 +263,7 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
                         </button>
                     ) : (
                         <button
-                            className="lumia-btn lumia-btn-primary lumia-btn-sm"
+                            className="ado-btn ado-btn-primary ado-btn-sm"
                             onClick={handleSaveTogglesToCharacter}
                             disabled={!contextInfo.characterAvatar}
                             type="button"
@@ -275,7 +275,7 @@ export function ToggleBindingsContent({ compact = false, isLoomMode: isLoomModeP
                 </div>
             </div>
 
-            <div className="lumiverse-bindings-toggles-priority">
+            <div className="ado-bindings-toggles-priority">
                 <span>Priority: Chat &gt; Character (chat binding applied first)</span>
             </div>
 

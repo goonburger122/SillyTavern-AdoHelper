@@ -1,12 +1,12 @@
 import React, { useCallback, useSyncExternalStore } from 'react';
 import clsx from 'clsx';
 import { Trash2 } from 'lucide-react';
-import { useSelections, useLumiverseActions, useLumiverseStore, saveToExtension } from '../../store/LumiverseContext';
+import { useSelections, useAdoHelperActions, useAdoHelperStore, saveToExtension } from '../../store/AdoHelperContext';
 import { ModeIcons, ModeToggle, SelectionButton, QuickActionsSection, ToolButton, Icons } from '../shared/settingsHelpers';
 
 /* global toastr */
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const EMPTY_ARRAY = [];
 const selectChimeraMode = () => store.getState().chimeraMode || false;
 const selectCouncilMode = () => store.getState().councilMode || false;
@@ -15,7 +15,7 @@ const selectSelectedDefinitions = () => store.getState().selectedDefinitions || 
 
 export default function LumiaConfigView() {
     const selections = useSelections();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     const chimeraMode = useSyncExternalStore(store.subscribe, selectChimeraMode, selectChimeraMode);
     const councilMode = useSyncExternalStore(store.subscribe, selectCouncilMode, selectCouncilMode);
@@ -43,14 +43,14 @@ export default function LumiaConfigView() {
     }, [actions]);
 
     return (
-        <div className="lumiverse-settings-view">
-            <div className="lumia-panel">
-                <div className="lumia-panel-header">
-                    <span className="lumia-panel-icon">{Icons.settings}</span>
-                    <span className="lumia-panel-title">Lumia Configuration</span>
-                    <span className="lumia-panel-action" onClick={(e) => e.stopPropagation()}>
+        <div className="ado-settings-view">
+            <div className="ado-panel">
+                <div className="ado-panel-header">
+                    <span className="ado-panel-icon">{Icons.settings}</span>
+                    <span className="ado-panel-title">Lumia Configuration</span>
+                    <span className="ado-panel-action" onClick={(e) => e.stopPropagation()}>
                         <button
-                            className="lumia-clear-all-btn"
+                            className="ado-clear-all-btn"
                             onClick={handleClearAll}
                             title="Clear all Lumia selections"
                             type="button"
@@ -60,8 +60,8 @@ export default function LumiaConfigView() {
                         </button>
                     </span>
                 </div>
-                <div className="lumia-panel-content">
-                    <div className="lumia-mode-toggles">
+                <div className="ado-panel-content">
+                    <div className="ado-mode-toggles">
                         <ModeToggle
                             icon={ModeIcons.chimera}
                             label="Chimera Mode"
@@ -87,7 +87,7 @@ export default function LumiaConfigView() {
                         actions={actions}
                     />
 
-                    <div className={clsx('lumia-selector-group', isCouncilActive && 'lumia-selector-group--disabled')}>
+                    <div className={clsx('ado-selector-group', isCouncilActive && 'ado-selector-group--disabled')}>
                         <SelectionButton
                             label={chimeraMode ? "Chimera Definitions" : "Definition"}
                             hint={chimeraMode ? "Select Multiple" : "Select One"}
@@ -113,13 +113,13 @@ export default function LumiaConfigView() {
             </div>
 
             {/* Tools that open overlay modals */}
-            <div className="lumia-panel" style={{ marginTop: '12px' }}>
-                <div className="lumia-panel-header">
-                    <span className="lumia-panel-icon">{Icons.tools}</span>
-                    <span className="lumia-panel-title">Tools</span>
+            <div className="ado-panel" style={{ marginTop: '12px' }}>
+                <div className="ado-panel-header">
+                    <span className="ado-panel-icon">{Icons.tools}</span>
+                    <span className="ado-panel-title">Tools</span>
                 </div>
-                <div className="lumia-panel-content">
-                    <div className="lumia-tools-row">
+                <div className="ado-panel-content">
+                    <div className="ado-tools-row">
                         <ToolButton
                             icon={Icons.plus}
                             label="Lumia Editor"

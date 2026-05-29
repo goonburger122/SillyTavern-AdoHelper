@@ -80,10 +80,10 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
 
     // Variant styles matching ConfirmationModal 'safe' variant
     const accentGlow = 'rgba(147, 112, 219, 0.3)';
-    const borderAccent = 'var(--lumiverse-primary-020, rgba(147, 112, 219, 0.2))';
+    const borderAccent = 'var(--ado-primary-020, rgba(147, 112, 219, 0.2))';
     const confirmBg = 'linear-gradient(135deg, rgba(147, 112, 219, 0.9), rgba(124, 58, 237, 0.9))';
     const confirmHoverBg = 'linear-gradient(135deg, rgba(167, 139, 250, 0.95), rgba(147, 112, 219, 0.95))';
-    const confirmBorder = 'var(--lumiverse-primary-050, rgba(147, 112, 219, 0.5))';
+    const confirmBorder = 'var(--ado-primary-050, rgba(147, 112, 219, 0.5))';
 
     return createPortal(
         <AnimatePresence>
@@ -102,7 +102,7 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         padding: '20px',
-                        background: 'var(--lumiverse-modal-backdrop, rgba(0, 0, 0, 0.6))',
+                        background: 'var(--ado-modal-backdrop, rgba(0, 0, 0, 0.6))',
                         backdropFilter: 'blur(4px)',
                         WebkitBackdropFilter: 'blur(4px)',
                         pointerEvents: 'auto',
@@ -117,12 +117,12 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                             position: 'relative',
                             width: '100%',
                             maxWidth: '480px',
-                            background: 'var(--lumiverse-gradient-modal, linear-gradient(135deg, rgba(30, 25, 45, 0.98), rgba(20, 18, 30, 0.98)))',
+                            background: 'var(--ado-gradient-modal, linear-gradient(135deg, rgba(30, 25, 45, 0.98), rgba(20, 18, 30, 0.98)))',
                             borderRadius: '16px',
                             border: `1px solid ${borderAccent}`,
                             boxShadow: `
                                 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                                0 0 0 1px var(--lumiverse-border),
+                                0 0 0 1px var(--ado-border),
                                 0 0 40px ${accentGlow}
                             `,
                             overflow: 'hidden',
@@ -144,9 +144,9 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    background: 'var(--lumiverse-primary-015, rgba(147, 112, 219, 0.15))',
+                                    background: 'var(--ado-primary-015, rgba(147, 112, 219, 0.15))',
                                     borderRadius: '10px',
-                                    color: 'var(--lumiverse-primary, #9370db)',
+                                    color: 'var(--ado-primary, #9370db)',
                                 }}>
                                     <Crop size={18} />
                                 </div>
@@ -154,7 +154,7 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                     margin: 0,
                                     fontSize: '16px',
                                     fontWeight: 600,
-                                    color: 'var(--lumiverse-text, #ffffff)',
+                                    color: 'var(--ado-text, #ffffff)',
                                 }}>
                                     Crop Avatar
                                 </h3>
@@ -169,20 +169,20 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    background: 'var(--lumiverse-bg-dark, rgba(255, 255, 255, 0.05))',
-                                    border: '1px solid var(--lumiverse-border, rgba(255, 255, 255, 0.1))',
+                                    background: 'var(--ado-bg-dark, rgba(255, 255, 255, 0.05))',
+                                    border: '1px solid var(--ado-border, rgba(255, 255, 255, 0.1))',
                                     borderRadius: '8px',
-                                    color: 'var(--lumiverse-text-muted, rgba(255, 255, 255, 0.6))',
+                                    color: 'var(--ado-text-muted, rgba(255, 255, 255, 0.6))',
                                     cursor: 'pointer',
                                     transition: 'all 0.15s ease',
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'var(--lumiverse-bg-darker, rgba(255, 255, 255, 0.1))';
-                                    e.currentTarget.style.color = 'var(--lumiverse-text, rgba(255, 255, 255, 0.9))';
+                                    e.currentTarget.style.background = 'var(--ado-bg-darker, rgba(255, 255, 255, 0.1))';
+                                    e.currentTarget.style.color = 'var(--ado-text, rgba(255, 255, 255, 0.9))';
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'var(--lumiverse-bg-dark, rgba(255, 255, 255, 0.05))';
-                                    e.currentTarget.style.color = 'var(--lumiverse-text-muted, rgba(255, 255, 255, 0.6))';
+                                    e.currentTarget.style.background = 'var(--ado-bg-dark, rgba(255, 255, 255, 0.05))';
+                                    e.currentTarget.style.color = 'var(--ado-text-muted, rgba(255, 255, 255, 0.6))';
                                 }}
                             >
                                 <X size={16} />
@@ -212,7 +212,7 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                         height: '100%',
                                     },
                                     cropAreaStyle: {
-                                        border: '2px solid var(--lumiverse-primary, #9370db)',
+                                        border: '2px solid var(--ado-primary, #9370db)',
                                         borderRadius: '8px',
                                     },
                                 }}
@@ -230,7 +230,7 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                 size={16}
                                 strokeWidth={1.5}
                                 style={{
-                                    color: 'var(--lumiverse-text-muted, rgba(255, 255, 255, 0.6))',
+                                    color: 'var(--ado-text-muted, rgba(255, 255, 255, 0.6))',
                                     flexShrink: 0,
                                     cursor: 'pointer',
                                 }}
@@ -248,7 +248,7 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                     height: '4px',
                                     appearance: 'none',
                                     WebkitAppearance: 'none',
-                                    background: `linear-gradient(to right, var(--lumiverse-primary, #9370db) ${((zoom - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100}%, rgba(255,255,255,0.15) ${((zoom - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100}%)`,
+                                    background: `linear-gradient(to right, var(--ado-primary, #9370db) ${((zoom - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100}%, rgba(255,255,255,0.15) ${((zoom - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)) * 100}%)`,
                                     borderRadius: '2px',
                                     outline: 'none',
                                     cursor: 'pointer',
@@ -258,7 +258,7 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                 size={16}
                                 strokeWidth={1.5}
                                 style={{
-                                    color: 'var(--lumiverse-text-muted, rgba(255, 255, 255, 0.6))',
+                                    color: 'var(--ado-text-muted, rgba(255, 255, 255, 0.6))',
                                     flexShrink: 0,
                                     cursor: 'pointer',
                                 }}
@@ -274,21 +274,21 @@ const ImageCropModal = ({ isOpen, imageSrc, onCropDone, onCancel }) => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    background: 'var(--lumiverse-bg-dark, rgba(255, 255, 255, 0.05))',
-                                    border: '1px solid var(--lumiverse-border, rgba(255, 255, 255, 0.1))',
+                                    background: 'var(--ado-bg-dark, rgba(255, 255, 255, 0.05))',
+                                    border: '1px solid var(--ado-border, rgba(255, 255, 255, 0.1))',
                                     borderRadius: '8px',
-                                    color: 'var(--lumiverse-text-muted, rgba(255, 255, 255, 0.6))',
+                                    color: 'var(--ado-text-muted, rgba(255, 255, 255, 0.6))',
                                     cursor: 'pointer',
                                     flexShrink: 0,
                                     transition: 'all 0.15s ease',
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'var(--lumiverse-bg-darker, rgba(255, 255, 255, 0.1))';
-                                    e.currentTarget.style.color = 'var(--lumiverse-text, rgba(255, 255, 255, 0.9))';
+                                    e.currentTarget.style.background = 'var(--ado-bg-darker, rgba(255, 255, 255, 0.1))';
+                                    e.currentTarget.style.color = 'var(--ado-text, rgba(255, 255, 255, 0.9))';
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'var(--lumiverse-bg-dark, rgba(255, 255, 255, 0.05))';
-                                    e.currentTarget.style.color = 'var(--lumiverse-text-muted, rgba(255, 255, 255, 0.6))';
+                                    e.currentTarget.style.background = 'var(--ado-bg-dark, rgba(255, 255, 255, 0.05))';
+                                    e.currentTarget.style.color = 'var(--ado-text-muted, rgba(255, 255, 255, 0.6))';
                                 }}
                             >
                                 <RotateCcw size={13} />

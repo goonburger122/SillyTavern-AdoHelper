@@ -18,7 +18,7 @@ import { generateThemeCSSForChatSheld } from './themeManager.js';
 import { getRandomJoke, onJokesReady } from './jokesService.js';
 import { getCurrentPersonaAvatar } from './personaService.js';
 
-const MODULE_NAME = "lumia-injector";
+const MODULE_NAME = "ado-helper";
 
 // ── State ──────────────────────────────────────────────────────────────
 
@@ -42,12 +42,12 @@ let reasoningStartMs = null;  // When we first see reasoning content during stre
 let lastReasoningContent = ''; // To detect reasoning content changes
 
 /**
- * Dispatch a Lumiverse chat interaction event on window.
+ * Dispatch a Ado Helper chat interaction event on window.
  * Extensions can listen via window.addEventListener('lumiverse:event-name', handler).
  * @param {string} eventName - Event name (without 'lumiverse:' prefix)
  * @param {Object} detail - Event detail payload
  */
-function emitLumiverseEvent(eventName, detail) {
+function emitAdoHelperEvent(eventName, detail) {
     window.dispatchEvent(new CustomEvent(`lumiverse:${eventName}`, {
         bubbles: false,
         detail,
@@ -68,7 +68,7 @@ export function isChatSheldEnabled() {
 /**
  * Set the store reference for state updates.
  * Called during mount from index.js.
- * @param {Object} store - The vanilla JS store (useLumiverseStore)
+ * @param {Object} store - The vanilla JS store (useAdoHelperStore)
  */
 export function setStoreRef(store) {
     storeRef = store;
@@ -80,7 +80,7 @@ export function setStoreRef(store) {
  * @returns {HTMLElement|null} The container element, or null on failure
  */
 export function activateChatSheld() {
-    if (isActive) return document.getElementById('lumiverse-chat-root');
+    if (isActive) return document.getElementById('ado-chat-root');
 
     const sheld = document.querySelector('#sheld');
     if (!sheld) {
@@ -94,10 +94,10 @@ export function activateChatSheld() {
     // so scroll measurements work). #chat and #form_sheld are NOT hidden
     // here; ChatSheld's useLayoutEffect does the swap atomically so there's
     // no frame where #chat is gone but our content hasn't appeared yet.
-    let container = document.getElementById('lumiverse-chat-root');
+    let container = document.getElementById('ado-chat-root');
     if (!container) {
         container = document.createElement('div');
-        container.id = 'lumiverse-chat-root';
+        container.id = 'ado-chat-root';
         container.style.cssText = 'display:flex;flex-direction:column;flex:1 1 auto;min-height:0;width:100%;visibility:hidden;position:absolute;inset:0;';
 
         // Insert into #sheld
@@ -111,15 +111,15 @@ export function activateChatSheld() {
     // ── Eager visual swap ──
     // Pre-inject styles so the container looks correct before React mounts.
     // ChatSheld's useLayoutEffect will find these and skip re-creation.
-    if (!document.getElementById('lcs-chat-sheld-styles')) {
+    if (!document.getElementById('ado-chat-sheld-styles')) {
         const styleEl = document.createElement('style');
-        styleEl.id = 'lcs-chat-sheld-styles';
+        styleEl.id = 'ado-chat-sheld-styles';
         styleEl.textContent = chatSheldStyles;
         document.head.appendChild(styleEl);
     }
-    if (!document.getElementById('lcs-chat-sheld-theme')) {
+    if (!document.getElementById('ado-chat-sheld-theme')) {
         const themeEl = document.createElement('style');
-        themeEl.id = 'lcs-chat-sheld-theme';
+        themeEl.id = 'ado-chat-sheld-theme';
         const themeCSS = generateThemeCSSForChatSheld();
         if (themeCSS) themeEl.textContent = themeCSS;
         document.head.appendChild(themeEl);
@@ -128,20 +128,20 @@ export function activateChatSheld() {
     // Inject loading skeleton — dedicated styles center it in the sheld
     const joke = getRandomJoke();
     const skeleton = document.createElement('div');
-    skeleton.id = 'lcs-loading-skeleton';
-    skeleton.className = 'lcs-app';
+    skeleton.id = 'ado-loading-skeleton';
+    skeleton.className = 'ado-app';
     skeleton.innerHTML = `
-        <div class="lcs-container">
-            <div class="lcs-skeleton-spinner"></div>
-            <div class="lcs-skeleton-label">Loading chat\u2026</div>
-            <div class="lcs-skeleton-joke">${joke || ''}</div>
+        <div class="ado-container">
+            <div class="ado-skeleton-spinner"></div>
+            <div class="ado-skeleton-label">Loading chat\u2026</div>
+            <div class="ado-skeleton-joke">${joke || ''}</div>
         </div>`;
     container.appendChild(skeleton);
 
     // If jokes cache wasn't ready yet, patch the DOM once it loads
     if (!joke) {
         const unsub = onJokesReady(() => {
-            const jokeEl = skeleton.querySelector('.lcs-skeleton-joke');
+            const jokeEl = skeleton.querySelector('.ado-skeleton-joke');
             if (jokeEl) jokeEl.textContent = getRandomJoke() || '';
         });
         // Clean up if skeleton is removed before jokes load
@@ -196,14 +196,14 @@ export function deactivateChatSheld() {
     }
 
     // Remove container element
-    const container = document.getElementById('lumiverse-chat-root');
+    const container = document.getElementById('ado-chat-root');
     if (container) {
         container.remove();
     }
 
     // Clean up pre-injected style elements
-    document.getElementById('lcs-chat-sheld-styles')?.remove();
-    document.getElementById('lcs-chat-sheld-theme')?.remove();
+    document.getElementById('ado-chat-sheld-styles')?.remove();
+    document.getElementById('ado-chat-sheld-theme')?.remove();
 
     // Stop streaming
     stopStreaming();
@@ -914,7 +914,7 @@ function subscribeToEvents() {
             if (typeof mesId === 'number') {
                 const ctx = getContext();
                 const msg = ctx?.chat?.[mesId];
-                emitLumiverseEvent('swipe-navigated', {
+                emitAdoHelperEvent('swipe-navigated', {
                     mesId,
                     swipeId: msg?.swipe_id ?? 0,
                     totalSwipes: msg?.swipes?.length ?? 1,
@@ -974,7 +974,7 @@ function subscribeToEvents() {
         // Emit swipe-generation for extensions when a swipe triggers new content
         if (type === 'swipe') {
             const ctx = getContext();
-            emitLumiverseEvent('swipe-generation', {
+            emitAdoHelperEvent('swipe-generation', {
                 mesId: (ctx?.chat?.length ?? 1) - 1,
             });
         }
@@ -1169,7 +1169,7 @@ export async function navigateToGreeting(swipeIndex) {
 
         // Emit swipe-navigated for greeting navigation
         const msg = ctx.chat[0];
-        emitLumiverseEvent('swipe-navigated', {
+        emitAdoHelperEvent('swipe-navigated', {
             mesId: 0,
             swipeId: msg?.swipe_id ?? swipeIndex,
             totalSwipes: msg?.swipes?.length ?? 1,
@@ -1197,7 +1197,7 @@ export function getCharacterGreetings() {
         const alts = char.data?.alternate_greetings;
         if (primary || (Array.isArray(alts) && alts.length > 0)) {
             const result = [primary, ...(Array.isArray(alts) ? alts : [])];
-            console.debug(`[Lumiverse] getCharacterGreetings: ${result.length} greetings from character card (charId=${charId})`);
+            console.debug(`[Ado Helper] getCharacterGreetings: ${result.length} greetings from character card (charId=${charId})`);
             return result;
         }
     }
@@ -1205,11 +1205,11 @@ export function getCharacterGreetings() {
     // Source 2: Live chat[0] swipes (fallback — has runtime greeting text after macro resolution)
     const firstMsg = ctx?.chat?.[0];
     if (firstMsg?.swipes?.length > 0) {
-        console.debug(`[Lumiverse] getCharacterGreetings: ${firstMsg.swipes.length} greetings from chat[0].swipes (charId=${charId})`);
+        console.debug(`[Ado Helper] getCharacterGreetings: ${firstMsg.swipes.length} greetings from chat[0].swipes (charId=${charId})`);
         return [...firstMsg.swipes];
     }
 
-    console.warn(`[Lumiverse] getCharacterGreetings: no greetings found (charId=${charId}, characters loaded=${!!ctx?.characters})`);
+    console.warn(`[Ado Helper] getCharacterGreetings: no greetings found (charId=${charId}, characters loaded=${!!ctx?.characters})`);
     return [];
 }
 
@@ -1240,7 +1240,7 @@ export async function deleteMessageDirect(mesId) {
         syncFullChat();
 
         // Emit for extensions that need to refresh data after deletion
-        emitLumiverseEvent('message-deleted', { mesId, type: 'message' });
+        emitAdoHelperEvent('message-deleted', { mesId, type: 'message' });
 
         return true;
     } catch (e) {
@@ -1272,7 +1272,7 @@ export async function deleteSwipeDirect(mesId, swipeId) {
         syncFullChat();
 
         // Emit for extensions that need to refresh data after swipe deletion
-        emitLumiverseEvent('message-deleted', { mesId, type: 'swipe', swipeId });
+        emitAdoHelperEvent('message-deleted', { mesId, type: 'swipe', swipeId });
 
         return true;
     } catch (e) {
@@ -1342,7 +1342,7 @@ export async function editMessageContent(mesId, newContent) {
         }
 
         // Emit for extensions that need to refresh data after edits
-        emitLumiverseEvent('message-edited', { mesId, field: 'content' });
+        emitAdoHelperEvent('message-edited', { mesId, field: 'content' });
 
         // No syncFullChat() here — visual-first update already applied above,
         // and MESSAGE_EDITED handler calls syncSingleMessage(mesId) for reconciliation.
@@ -1395,7 +1395,7 @@ export async function editMessageReasoning(mesId, newReasoning) {
         }
 
         // Emit for extensions that need to refresh data after edits
-        emitLumiverseEvent('message-edited', { mesId, field: 'reasoning' });
+        emitAdoHelperEvent('message-edited', { mesId, field: 'reasoning' });
 
         // No syncFullChat() here — visual-first update already applied above.
         return true;
@@ -1767,7 +1767,7 @@ export async function triggerContinue() {
  * this produces a separate new message.
  *
  * Works because ST's Generate('normal') reads from #send_textarea, which is
- * empty when Chat Sheld is active (the user types in .lcs-textarea instead).
+ * empty when Chat Sheld is active (the user types in .ado-textarea instead).
  * With an empty textarea, ST skips sendMessageAsUser() and proceeds directly
  * to prompt assembly and generation.
  */
@@ -2107,7 +2107,7 @@ export async function triggerBatchDelete(fromMesId) {
         syncFullChat();
 
         // Emit for extensions that need to refresh data after batch deletion
-        emitLumiverseEvent('message-deleted', { mesId: fromMesId, type: 'batch' });
+        emitAdoHelperEvent('message-deleted', { mesId: fromMesId, type: 'batch' });
 
         return true;
     } catch (e) {
@@ -2456,7 +2456,7 @@ function getLoomStorage() {
     if (loomBreakdownStorage) return loomBreakdownStorage;
     try {
         if (typeof localforage !== 'undefined') {
-            loomBreakdownStorage = localforage.createInstance({ name: 'LumiverseHelper_LoomBreakdowns' });
+            loomBreakdownStorage = localforage.createInstance({ name: 'AdoHelperHelper_LoomBreakdowns' });
             return loomBreakdownStorage;
         }
     } catch { /* localforage not available */ }
@@ -2487,7 +2487,7 @@ export async function loadLoomBreakdowns() {
             }
         }
     } catch (e) {
-        console.warn('[LumiverseHelper] Failed to load Loom breakdowns from storage:', e.message);
+        console.warn('[AdoHelperHelper] Failed to load Loom breakdowns from storage:', e.message);
     }
 }
 
@@ -2510,7 +2510,7 @@ function persistLoomBreakdowns() {
     }
 
     storage.setItem(chatId, toStore).catch(e => {
-        console.warn('[LumiverseHelper] Failed to persist Loom breakdowns:', e.message);
+        console.warn('[AdoHelperHelper] Failed to persist Loom breakdowns:', e.message);
     });
 }
 

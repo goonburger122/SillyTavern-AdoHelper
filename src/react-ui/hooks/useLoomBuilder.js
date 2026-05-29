@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useLumiverse, useLumiverseActions } from '../store/LumiverseContext';
+import { useAdoHelper, useAdoHelperActions } from '../store/AdoHelperContext';
 import * as loomService from '../../lib/lucidLoomService';
 import {
     DEFAULT_SAMPLER_OVERRIDES,
@@ -17,8 +17,8 @@ import { handleLoomPresetTransition } from '../../lib/oaiPresetSync';
  * Connects lucidLoomService ↔ store ↔ component.
  */
 export function useLoomBuilder() {
-    const loomBuilder = useLumiverse(s => s.loomBuilder);
-    const actions = useLumiverseActions();
+    const loomBuilder = useAdoHelper(s => s.loomBuilder);
+    const actions = useAdoHelperActions();
 
     const registry = loomBuilder?.registry || {};
     const activePresetId = loomBuilder?.activePresetId || null;

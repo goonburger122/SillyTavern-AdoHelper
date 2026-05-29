@@ -21,7 +21,7 @@ const s = {
         alignItems: 'center',
         gap: '6px',
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         cursor: 'pointer',
         userSelect: 'none',
         whiteSpace: 'nowrap',
@@ -29,16 +29,16 @@ const s = {
     checkbox: {
         width: '14px',
         height: '14px',
-        accentColor: 'var(--lumiverse-primary)',
+        accentColor: 'var(--ado-primary)',
         cursor: 'pointer',
     },
     numberInput: {
         width: '80px',
         padding: '6px 8px',
-        background: 'var(--lumiverse-bg, rgba(0,0,0,0.2))',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-bg, rgba(0,0,0,0.2))',
+        border: '1px solid var(--ado-border)',
         borderRadius: '6px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '13px',
         fontFamily: 'inherit',
     },
@@ -49,7 +49,7 @@ const s = {
     },
     toggleLabel: {
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
 };
 

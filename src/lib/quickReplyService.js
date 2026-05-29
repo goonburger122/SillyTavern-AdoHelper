@@ -2,7 +2,7 @@
  * quickReplyService — Thin wrapper around SillyTavern's Quick Replies v2 API
  *
  * All access goes through `globalThis.quickReplyApi` with null-safety.
- * Provides Lumiverse-friendly data shaping for both the Chat Sheld popover
+ * Provides Ado Helper-friendly data shaping for both the Chat Sheld popover
  * and the settings editor.
  */
 
@@ -63,7 +63,7 @@ export function getActiveQRSets() {
             };
         }).filter(Boolean);
     } catch (err) {
-        console.warn('[Lumiverse] Failed to read active QR sets:', err);
+        console.warn('[Ado Helper] Failed to read active QR sets:', err);
         return [];
     }
 }
@@ -78,7 +78,7 @@ export async function executeQR(setName, id) {
     try {
         await qr.executeQuickReply?.(setName, id);
     } catch (err) {
-        console.error('[Lumiverse] Failed to execute QR:', err);
+        console.error('[Ado Helper] Failed to execute QR:', err);
     }
 }
 
@@ -129,7 +129,7 @@ export function getAllSets() {
             };
         }).filter(Boolean);
     } catch (err) {
-        console.warn('[Lumiverse] Failed to list QR sets:', err);
+        console.warn('[Ado Helper] Failed to list QR sets:', err);
         return [];
     }
 }
@@ -144,7 +144,7 @@ export async function createSet(name, props = {}) {
     try {
         await qr.createSet?.(name, props);
     } catch (err) {
-        console.error('[Lumiverse] Failed to create QR set:', err);
+        console.error('[Ado Helper] Failed to create QR set:', err);
     }
 }
 
@@ -158,7 +158,7 @@ export async function deleteSet(name) {
     try {
         await qr.deleteSet?.(name);
     } catch (err) {
-        console.error('[Lumiverse] Failed to delete QR set:', err);
+        console.error('[Ado Helper] Failed to delete QR set:', err);
     }
 }
 
@@ -172,7 +172,7 @@ export async function createQR(setName, label, props = {}) {
     try {
         await qr.createQuickReply?.(setName, label, props);
     } catch (err) {
-        console.error('[Lumiverse] Failed to create QR:', err);
+        console.error('[Ado Helper] Failed to create QR:', err);
     }
 }
 
@@ -186,7 +186,7 @@ export async function updateQR(setName, id, props) {
     try {
         await qr.updateQuickReply?.(setName, id, props);
     } catch (err) {
-        console.error('[Lumiverse] Failed to update QR:', err);
+        console.error('[Ado Helper] Failed to update QR:', err);
     }
 }
 
@@ -200,7 +200,7 @@ export async function deleteQR(setName, id) {
     try {
         await qr.deleteQuickReply?.(setName, id);
     } catch (err) {
-        console.error('[Lumiverse] Failed to delete QR:', err);
+        console.error('[Ado Helper] Failed to delete QR:', err);
     }
 }
 
@@ -218,7 +218,7 @@ export async function toggleGlobalSet(name, active) {
             await qr.removeGlobalSet?.(name);
         }
     } catch (err) {
-        console.error('[Lumiverse] Failed to toggle global set:', err);
+        console.error('[Ado Helper] Failed to toggle global set:', err);
     }
 }
 
@@ -236,6 +236,6 @@ export async function toggleChatSet(name, active) {
             await qr.removeChatSet?.(name);
         }
     } catch (err) {
-        console.error('[Lumiverse] Failed to toggle chat set:', err);
+        console.error('[Ado Helper] Failed to toggle chat set:', err);
     }
 }

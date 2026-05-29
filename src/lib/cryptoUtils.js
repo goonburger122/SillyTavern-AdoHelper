@@ -11,7 +11,7 @@ import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
 // Deterministic app key for obfuscation-at-rest
-const APP_KEY = 'lumiverse-helper-key-v1';
+const APP_KEY = 'ado-helper-key-v1';
 
 // Prefix sentinel — encrypted values are stored as 'enc:' + ciphertext
 const ENC_PREFIX = 'enc:';

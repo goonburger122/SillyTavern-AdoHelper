@@ -51,14 +51,14 @@ export default function TagPillInput({ value = [], onChange, placeholder = 'Add 
 
     return (
         <div
-            className="lumiverse-tag-pill-input"
+            className="ado-tag-pill-input"
             onClick={handleContainerClick}
         >
             {value.map((tag, i) => (
-                <span key={`${tag}-${i}`} className="lumiverse-tag-pill">
-                    <span className="lumiverse-tag-pill-text">{tag}</span>
+                <span key={`${tag}-${i}`} className="ado-tag-pill">
+                    <span className="ado-tag-pill-text">{tag}</span>
                     <button
-                        className="lumiverse-tag-pill-remove"
+                        className="ado-tag-pill-remove"
                         onClick={(e) => { e.stopPropagation(); removeTag(i); }}
                         type="button"
                         aria-label={`Remove ${tag}`}
@@ -69,7 +69,7 @@ export default function TagPillInput({ value = [], onChange, placeholder = 'Add 
             ))}
             <input
                 ref={inputRef}
-                className="lumiverse-tag-pill-input-field"
+                className="ado-tag-pill-input-field"
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}

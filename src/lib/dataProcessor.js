@@ -333,7 +333,7 @@ export async function fetchWorldBook(url) {
   if (!url) return;
 
   try {
-    const statusDiv = document.getElementById("lumia-book-status");
+    const statusDiv = document.getElementById("ado-book-status");
     if (statusDiv) statusDiv.textContent = "Fetching...";
 
     const response = await fetch(url);
@@ -344,11 +344,11 @@ export async function fetchWorldBook(url) {
     // Use filename from URL or just URL as name
     const name = url.split("/").pop() || url;
 
-    // Use importPack which handles both native Lumiverse format and World Book format
+    // Use importPack which handles both native Ado Helper format and World Book format
     await importPack(data, name, true);
   } catch (error) {
     console.error("Lumia Injector Error:", error);
-    const statusDiv = document.getElementById("lumia-book-status");
+    const statusDiv = document.getElementById("ado-book-status");
     if (statusDiv) statusDiv.textContent = "Error";
     toastr.error("Failed to load book: " + error.message);
   }
@@ -356,16 +356,16 @@ export async function fetchWorldBook(url) {
 
 /**
  * Import a pack from data, automatically detecting format
- * Supports both native Lumiverse format and World Book format
+ * Supports both native Ado Helper format and World Book format
  * @param {Object} data - The pack/world book data
  * @param {string} sourceName - Name/identifier for the source
  * @param {boolean} isURL - Whether the source was a URL
  * @returns {Promise<Object|null>} The imported pack or null on failure
  */
 export async function importPack(data, sourceName, isURL = false) {
-  // Detect format: native Lumiverse format has lumiaItems or loomItems arrays
+  // Detect format: native Ado Helper format has lumiaItems or loomItems arrays
   if (data.lumiaItems || data.loomItems) {
-    // Native Lumiverse format - import directly
+    // Native Ado Helper format - import directly
     // Use packName from data if available, otherwise fall back to sourceName (filename/URL)
     // This ensures the storage key matches what the UI uses for selections
     const packKey = data.packName || sourceName;

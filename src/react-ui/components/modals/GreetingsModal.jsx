@@ -24,12 +24,12 @@ export default function GreetingsModal({ swipes, swipeId, onClose }) {
 
     if (greetingCount <= 1) {
         return (
-            <div className="lcs-greetings-modal">
-                <div className="lcs-greetings-header">
+            <div className="ado-greetings-modal">
+                <div className="ado-greetings-header">
                     <MessageCircle size={18} />
                     <h3>Greetings</h3>
                 </div>
-                <p className="lcs-greetings-empty">No alternate greetings available.</p>
+                <p className="ado-greetings-empty">No alternate greetings available.</p>
             </div>
         );
     }
@@ -57,13 +57,13 @@ export default function GreetingsModal({ swipes, swipeId, onClose }) {
     });
 
     return (
-        <div className="lcs-greetings-modal">
-            <div className="lcs-greetings-header">
+        <div className="ado-greetings-modal">
+            <div className="ado-greetings-header">
                 <MessageCircle size={18} />
                 <h3>Greetings</h3>
-                <span className="lcs-greetings-count">{greetingCount} greetings</span>
+                <span className="ado-greetings-count">{greetingCount} greetings</span>
             </div>
-            <div className="lcs-greetings-list">
+            <div className="ado-greetings-list">
                 {entries.map((preview, index) => {
                     const isActive = index === swipeId;
                     const label = index === 0 ? 'Primary Greeting' : `Alternate ${index}`;
@@ -73,20 +73,20 @@ export default function GreetingsModal({ swipes, swipeId, onClose }) {
                             key={index}
                             role="button"
                             tabIndex={0}
-                            className={`lcs-greeting-card${isActive ? ' lcs-greeting-card--active' : ''}`}
+                            className={`ado-greeting-card${isActive ? ' ado-greeting-card--active' : ''}`}
                             onClick={() => handleSelect(index)}
                             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSelect(index); } }}
                         >
-                            <div className="lcs-greeting-card-header">
-                                <span className="lcs-greeting-label">{label}</span>
+                            <div className="ado-greeting-card-header">
+                                <span className="ado-greeting-label">{label}</span>
                                 {isActive && (
-                                    <span className="lcs-greeting-active-badge">
+                                    <span className="ado-greeting-active-badge">
                                         <Check size={12} />
                                         Active
                                     </span>
                                 )}
                             </div>
-                            <div className="lcs-greeting-preview">
+                            <div className="ado-greeting-preview">
                                 {preview || 'Empty greeting'}
                             </div>
                         </div>

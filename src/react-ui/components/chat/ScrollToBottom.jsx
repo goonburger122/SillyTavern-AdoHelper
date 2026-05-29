@@ -34,7 +34,7 @@ export default function ScrollToBottom({ scrollContainerRef }) {
 
     return (
         <button
-            className={`lcs-scroll-fab ${!isVisible ? 'lcs-scroll-fab--hidden' : ''}`}
+            className={`ado-scroll-fab ${!isVisible ? 'ado-scroll-fab--hidden' : ''}`}
             onClick={handleClick}
             title="Scroll to bottom"
             type="button"

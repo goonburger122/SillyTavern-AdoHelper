@@ -15,9 +15,9 @@ import {
     closeAuthorNotePanel,
 } from '../../../lib/chatSheldService';
 import { getTokenCountAsync } from '../../../stContext';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 const selectPanelOpen = () => store.getState().chatSheld?.authorNotePanelOpen || false;
 const selectPanelSide = () => store.getState().authorNotePanelSide || 'right';
@@ -131,32 +131,32 @@ function AuthorsNoteForm({ isOpen }) {
     }, [scheduleSave]);
 
     return (
-        <div className="lcs-an-panel-body">
+        <div className="ado-an-panel-body">
             {/* Note Text */}
-            <div className="lcs-an-field">
-                <label className="lcs-an-label">Note</label>
+            <div className="ado-an-field">
+                <label className="ado-an-label">Note</label>
                 <textarea
-                    className="lcs-an-textarea"
+                    className="ado-an-textarea"
                     rows={8}
                     value={noteText}
                     onChange={handleTextChange}
                     placeholder="Write instructions or context for the AI..."
                 />
-                <div className="lcs-an-token-count">
+                <div className="ado-an-token-count">
                     {tokenCount !== null ? `${tokenCount} tokens` : ''}
                 </div>
             </div>
 
             {/* Position */}
-            <div className="lcs-an-field">
-                <label className="lcs-an-label">Position</label>
-                <div className="lcs-an-radio-group">
+            <div className="ado-an-field">
+                <label className="ado-an-label">Position</label>
+                <div className="ado-an-radio-group">
                     {POSITIONS.map(p => (
-                        <label key={p.value} className="lcs-an-radio-label">
+                        <label key={p.value} className="ado-an-radio-label">
                             <input
                                 type="radio"
                                 name="an-position"
-                                className="lcs-an-radio"
+                                className="ado-an-radio"
                                 checked={position === p.value}
                                 onChange={() => handlePositionChange(p.value)}
                             />
@@ -168,11 +168,11 @@ function AuthorsNoteForm({ isOpen }) {
 
             {/* Depth — visible when position is "In-chat @ Depth" (1) */}
             {position === 1 && (
-                <div className="lcs-an-field">
-                    <label className="lcs-an-label">Depth</label>
+                <div className="ado-an-field">
+                    <label className="ado-an-label">Depth</label>
                     <input
                         type="number"
-                        className="lcs-an-input"
+                        className="ado-an-input"
                         min={0}
                         max={9999}
                         value={depth}
@@ -183,10 +183,10 @@ function AuthorsNoteForm({ isOpen }) {
 
             {/* Role — visible when position is "In-chat @ Depth" (1) */}
             {position === 1 && (
-                <div className="lcs-an-field">
-                    <label className="lcs-an-label">Role</label>
+                <div className="ado-an-field">
+                    <label className="ado-an-label">Role</label>
                     <select
-                        className="lcs-an-select"
+                        className="ado-an-select"
                         value={role}
                         onChange={handleRoleChange}
                     >
@@ -198,17 +198,17 @@ function AuthorsNoteForm({ isOpen }) {
             )}
 
             {/* Insertion Frequency */}
-            <div className="lcs-an-field">
-                <label className="lcs-an-label">Insertion Frequency</label>
+            <div className="ado-an-field">
+                <label className="ado-an-label">Insertion Frequency</label>
                 <input
                     type="number"
-                    className="lcs-an-input"
+                    className="ado-an-input"
                     min={0}
                     max={9999}
                     value={interval}
                     onChange={handleIntervalChange}
                 />
-                <span className="lcs-an-helper">0 = Disable, 1 = Always</span>
+                <span className="ado-an-helper">0 = Disable, 1 = Always</span>
             </div>
         </div>
     );
@@ -256,23 +256,23 @@ export default function AuthorsNotePanel() {
         };
     }, [isOpen]);
 
-    const sideClass = side === 'left' ? 'lcs-an-panel--left' : 'lcs-an-panel--right';
-    const openClass = isOpen ? ' lcs-an-panel--open' : '';
+    const sideClass = side === 'left' ? 'ado-an-panel--left' : 'ado-an-panel--right';
+    const openClass = isOpen ? ' ado-an-panel--open' : '';
 
     return (
-        <div className={`lcs-an-panel ${sideClass}${openClass}`} ref={panelRef}>
-            <div className="lcs-an-panel-header">
+        <div className={`ado-an-panel ${sideClass}${openClass}`} ref={panelRef}>
+            <div className="ado-an-panel-header">
                 <button
-                    className="lcs-an-header-btn"
+                    className="ado-an-header-btn"
                     onClick={handleSwapSide}
                     title={`Move to ${side === 'right' ? 'left' : 'right'} side`}
                     type="button"
                 >
                     <ArrowLeftRight size={14} />
                 </button>
-                <span className="lcs-an-title">Author's Note</span>
+                <span className="ado-an-title">Author's Note</span>
                 <button
-                    className="lcs-an-header-btn"
+                    className="ado-an-header-btn"
                     onClick={closeAuthorNotePanel}
                     title="Close"
                     type="button"
@@ -294,11 +294,11 @@ export default function AuthorsNotePanel() {
  */
 export function AuthorsNoteModalContent({ onClose }) {
     return (
-        <div className="lcs-an-modal-content">
-            <div className="lcs-an-panel-header">
-                <span className="lcs-an-title" style={{ paddingLeft: 36 }}>Author's Note</span>
+        <div className="ado-an-modal-content">
+            <div className="ado-an-panel-header">
+                <span className="ado-an-title" style={{ paddingLeft: 36 }}>Author's Note</span>
                 <button
-                    className="lcs-an-header-btn"
+                    className="ado-an-header-btn"
                     onClick={onClose}
                     title="Close"
                     type="button"

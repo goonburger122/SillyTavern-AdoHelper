@@ -33,8 +33,8 @@ let _savedSTPresetName = null;
 let _isSwitchingPreset = false;
 
 /**
- * Guard: suppress reasoning reapply during Lumiverse-initiated updates.
- * When the user changes reasoning settings from the Lumiverse UI, the
+ * Guard: suppress reasoning reapply during Ado Helper-initiated updates.
+ * When the user changes reasoning settings from the Ado Helper UI, the
  * presetsService functions update ST globals → SETTINGS_UPDATED fires →
  * this module's handler would call reapplyLoomReasoningSettings(), overwriting
  * the user's changes with the saved model profile. This flag prevents that.
@@ -167,8 +167,8 @@ export function reapplyLoomReasoningSettings() {
 }
 
 /**
- * Temporarily suppress reasoning reapply for Lumiverse-initiated changes.
- * Call this BEFORE modifying reasoning settings from the Lumiverse UI.
+ * Temporarily suppress reasoning reapply for Ado Helper-initiated changes.
+ * Call this BEFORE modifying reasoning settings from the Ado Helper UI.
  * Prevents the SETTINGS_UPDATED / OAI_PRESET_CHANGED_AFTER event handlers
  * from overwriting the user's changes with the saved model profile values.
  * Auto-clears after the specified duration.

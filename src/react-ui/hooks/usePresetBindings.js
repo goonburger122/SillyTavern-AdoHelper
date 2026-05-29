@@ -37,7 +37,7 @@ import {
     subscribeToCacheChanges,
 } from '../../lib/packCache.js';
 import { chatPresetService } from '../../lib/chatPresetService.js';
-import { useLumiverse, useLumiverseActions } from '../store/LumiverseContext.jsx';
+import { useAdoHelper, useAdoHelperActions } from '../store/AdoHelperContext.jsx';
 
 // Stable selectors (defined outside component)
 const selectDisableDefaultStateRestore = state => state.disableDefaultStateRestore ?? true;
@@ -57,11 +57,11 @@ export function usePresetBindings() {
     const [hasCharacterToggleBinding, setHasCharacterToggleBinding] = useState(false);
 
     // Get disableDefaultStateRestore from store
-    const disableDefaultStateRestore = useLumiverse(selectDisableDefaultStateRestore);
-    const actions = useLumiverseActions();
+    const disableDefaultStateRestore = useAdoHelper(selectDisableDefaultStateRestore);
+    const actions = useAdoHelperActions();
 
     // Loom mode detection
-    const loomBuilder = useLumiverse(selectLoomBuilder);
+    const loomBuilder = useAdoHelper(selectLoomBuilder);
     const isLoomMode = !!loomBuilder?.activePresetId;
 
     // Helper: check Loom toggle binding status for current context

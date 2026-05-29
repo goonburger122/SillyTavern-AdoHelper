@@ -11,7 +11,7 @@
 
 import { getContext, getRequestHeaders, getEventSource, getEventTypes } from '../stContext.js';
 
-const LOG_TAG = '[LumiverseHelper:Persona]';
+const LOG_TAG = '[AdoHelperHelper:Persona]';
 
 let _currentUserAvatar = null;
 let _listenerBound = false;
@@ -31,7 +31,7 @@ async function getPersonasModule() {
         _personasModule = await import(/* webpackIgnore: true */ '/scripts/personas.js');
         return _personasModule;
     } catch (e) {
-        console.warn('[LumiverseHelper] Could not dynamically import personas.js:', e.message);
+        console.warn('[AdoHelperHelper] Could not dynamically import personas.js:', e.message);
     }
     return null;
 }
@@ -186,13 +186,13 @@ export async function switchPersona(avatarId) {
         try {
             await setUA(avatarId);
             _currentUserAvatar = avatarId;
-            console.debug('[LumiverseHelper] switchPersona: used setUserAvatar() for', avatarId);
+            console.debug('[AdoHelperHelper] switchPersona: used setUserAvatar() for', avatarId);
             return;
         } catch (e) {
-            console.warn('[LumiverseHelper] setUserAvatar() failed:', e.message);
+            console.warn('[AdoHelperHelper] setUserAvatar() failed:', e.message);
         }
     } else {
-        console.warn('[LumiverseHelper] switchPersona: dynamic import of setUserAvatar unavailable, trying fallbacks');
+        console.warn('[AdoHelperHelper] switchPersona: dynamic import of setUserAvatar unavailable, trying fallbacks');
     }
 
     // DOM fallback — click the persona entry by data-avatar-id attribute
@@ -201,7 +201,7 @@ export async function switchPersona(avatarId) {
         if (item) {
             item.click();
             _currentUserAvatar = avatarId;
-            console.debug('[LumiverseHelper] switchPersona: used DOM click fallback for', avatarId);
+            console.debug('[AdoHelperHelper] switchPersona: used DOM click fallback for', avatarId);
             return;
         }
     } catch { /* ignore */ }
@@ -212,7 +212,7 @@ export async function switchPersona(avatarId) {
     // setNameCallback resolves through display names via autoSelectPersona(),
     // which does first-match iteration and picks the wrong persona when
     // multiple personas share the same display name.
-    console.warn('[LumiverseHelper] switchPersona: all methods failed for', avatarId,
+    console.warn('[AdoHelperHelper] switchPersona: all methods failed for', avatarId,
         '— setUserAvatar unavailable and DOM element not found.',
         'Open the persona panel in ST settings and try again.');
 }

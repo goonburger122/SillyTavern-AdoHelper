@@ -332,7 +332,7 @@ export class ChatPresetService {
     /**
      * Save current prompts' enabled states to the current chat.
      * This creates a per-chat override that is automatically applied when
-     * switching to this chat. Persisted to the Lumiverse index file.
+     * switching to this chat. Persisted to the Ado Helper index file.
      * @param {Array} prompts - Current prompts array
      * @returns {Promise<boolean>} Success status
      */
@@ -410,7 +410,7 @@ export class ChatPresetService {
     /**
      * Save current prompts' enabled states for the current character.
      * This creates a per-character override that is automatically applied
-     * when switching to any chat with this character. Persisted to the Lumiverse index file.
+     * when switching to any chat with this character. Persisted to the Ado Helper index file.
      * @param {Array} prompts - Current prompts array
      * @returns {Promise<boolean>} Success status
      */

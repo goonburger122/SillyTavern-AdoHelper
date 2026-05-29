@@ -6,9 +6,9 @@
  * injection position per guide.
  */
 
-import { useLumiverseStore, saveToExtension } from '../react-ui/store/LumiverseContext';
+import { useAdoHelperStore, saveToExtension } from '../react-ui/store/AdoHelperContext';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 /**
  * Generate a unique ID for a new guide.

@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 import clsx from 'clsx';
 import { User, Package, MessageSquare, Sliders, FileText, X, Sparkles, Bookmark, Users, BarChart2, Layers, Settings, PenTool, Contact, UserCircle, MoreHorizontal, Plug, Image as ImageIcon } from 'lucide-react';
-import { useLumiverseStore, useLumiverseActions, useUpdates } from '../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, useUpdates } from '../store/AdoHelperContext';
 import { UpdateDot } from './UpdateBanner';
 import UpdateBanner from './UpdateBanner';
 import useOverflowTabs from '../hooks/useOverflowTabs';
 import ErrorBoundary from './shared/ErrorBoundary';
 
 // Get store for direct access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 const DEFAULT_DRAWER_SETTINGS = { side: 'right', verticalPosition: 15, tabSize: 'large', panelWidthMode: 'default', customPanelWidth: 35 };
@@ -47,25 +47,25 @@ function DrawerTab({ isVisible, onClick, hasUpdates, side = 'right', verticalPos
     return (
         <button
             className={clsx(
-                'lumiverse-drawer-tab',
-                isVisible && 'lumiverse-drawer-tab--active',
-                hasUpdates && 'lumiverse-drawer-tab--has-updates',
-                isLeft && 'lumiverse-drawer-tab--left',
-                isCompact && 'lumiverse-drawer-tab--compact'
+                'ado-drawer-tab',
+                isVisible && 'ado-drawer-tab--active',
+                hasUpdates && 'ado-drawer-tab--has-updates',
+                isLeft && 'ado-drawer-tab--left',
+                isCompact && 'ado-drawer-tab--compact'
             )}
             onClick={onClick}
-            title={isVisible ? 'Hide Lumiverse Panel' : 'Show Lumiverse Panel'}
+            title={isVisible ? 'Hide Ado Helper Panel' : 'Show Ado Helper Panel'}
             type="button"
             aria-expanded={isVisible}
-            aria-label="Toggle Lumiverse drawer"
+            aria-label="Toggle Ado Helper drawer"
             style={{
                 marginTop: `${Math.max(8, Math.min(85, verticalPosition))}vh`,
             }}
         >
-            <span className="lumiverse-drawer-tab-icon">
+            <span className="ado-drawer-tab-icon">
                 <Sparkles size={isCompact ? 14 : 16} strokeWidth={2.5} />
             </span>
-            <span className="lumiverse-drawer-tab-label">Lumia</span>
+            <span className="ado-drawer-tab-label">Lumia</span>
             <UpdateDot />
         </button>
     );
@@ -77,15 +77,15 @@ function DrawerTab({ isVisible, onClick, hasUpdates, side = 'right', verticalPos
 function TabButton({ id, Icon, label, isActive, onClick }) {
     return (
         <button
-            className={clsx('lumiverse-vp-tab', isActive && 'lumiverse-vp-tab--active')}
+            className={clsx('ado-vp-tab', isActive && 'ado-vp-tab--active')}
             onClick={() => onClick(id)}
             title={label}
             type="button"
         >
-            <span className="lumiverse-vp-tab-icon">
+            <span className="ado-vp-tab-icon">
                 <Icon size={20} strokeWidth={1.5} />
             </span>
-            <span className="lumiverse-vp-tab-label">{label}</span>
+            <span className="ado-vp-tab-label">{label}</span>
         </button>
     );
 }
@@ -95,13 +95,13 @@ function TabButton({ id, Icon, label, isActive, onClick }) {
  */
 function PanelHeader({ title, Icon, onClose }) {
     return (
-        <div className="lumiverse-vp-header">
-            <span className="lumiverse-vp-header-icon">
+        <div className="ado-vp-header">
+            <span className="ado-vp-header-icon">
                 <Icon size={18} strokeWidth={1.5} />
             </span>
-            <span className="lumiverse-vp-header-title">{title}</span>
+            <span className="ado-vp-header-title">{title}</span>
             <button
-                className="lumiverse-vp-close-btn"
+                className="ado-vp-close-btn"
                 onClick={onClose}
                 title="Close panel"
                 type="button"
@@ -119,16 +119,16 @@ function PanelHeader({ title, Icon, onClose }) {
 function OverflowButton({ onClick, hasActiveInOverflow, isOpen }) {
     return (
         <button
-            className={clsx('lumiverse-vp-tab lumiverse-vp-overflow-btn', isOpen && 'lumiverse-vp-tab--active')}
+            className={clsx('ado-vp-tab ado-vp-overflow-btn', isOpen && 'ado-vp-tab--active')}
             onClick={onClick}
             title="More tabs"
             type="button"
         >
-            <span className="lumiverse-vp-tab-icon">
+            <span className="ado-vp-tab-icon">
                 <MoreHorizontal size={20} strokeWidth={1.5} />
             </span>
-            <span className="lumiverse-vp-tab-label">More</span>
-            {hasActiveInOverflow && !isOpen && <span className="lumiverse-vp-overflow-dot" />}
+            <span className="ado-vp-tab-label">More</span>
+            {hasActiveInOverflow && !isOpen && <span className="ado-vp-overflow-dot" />}
         </button>
     );
 }
@@ -141,15 +141,15 @@ function OverflowMenu({ tabs, activeTab, onSelect, onClose, side }) {
     const isLeft = side === 'left';
     return (
         <>
-            <div className="lumiverse-vp-overflow-backdrop" onClick={onClose} />
+            <div className="ado-vp-overflow-backdrop" onClick={onClose} />
             <div
-                className="lumiverse-vp-overflow-menu"
+                className="ado-vp-overflow-menu"
                 style={isLeft ? { right: 'auto', left: '100%' } : { left: 'auto', right: '100%' }}
             >
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
-                        className={clsx('lumiverse-vp-overflow-item', activeTab === tab.id && 'lumiverse-vp-overflow-item--active')}
+                        className={clsx('ado-vp-overflow-item', activeTab === tab.id && 'ado-vp-overflow-item--active')}
                         onClick={() => onSelect(tab.id)}
                         type="button"
                     >
@@ -289,7 +289,7 @@ function ViewportPanel({
     const tabsContainerRef = useRef(null);
     const isMobile = useIsMobile();
     const { hasAnyUpdate } = useUpdates();
-    const storeActions = useLumiverseActions();
+    const storeActions = useAdoHelperActions();
 
     // Track viewport width for responsive panel sizing on desktop
     const [viewportWidth, setViewportWidth] = useState(() =>
@@ -530,16 +530,16 @@ function ViewportPanel({
             {/* only translates by panelWidth, so the tab remains visible at the edge */}
             <div
                 className={clsx(
-                    'lumiverse-viewport-wrapper',
-                    isVisible && 'lumiverse-viewport-wrapper--visible',
-                    isLeft && 'lumiverse-viewport-wrapper--left'
+                    'ado-viewport-wrapper',
+                    isVisible && 'ado-viewport-wrapper--visible',
+                    isLeft && 'ado-viewport-wrapper--left'
                 )}
                 style={getWrapperStyle()}
             >
             <div
                 className={clsx(
-                    'lumiverse-viewport-panel',
-                    isLeft && 'lumiverse-viewport-panel--left'
+                    'ado-viewport-panel',
+                    isLeft && 'ado-viewport-panel--left'
                 )}
                 style={{
                     // Panel is pass-through; children (DrawerTab, vp-tabs, vp-main) opt-in.
@@ -557,7 +557,7 @@ function ViewportPanel({
                     tabSize={tabSize}
                 />
                 {/* Tab sidebar */}
-                <div className="lumiverse-vp-tabs" ref={tabsContainerRef} style={{ position: 'relative' }}>
+                <div className="ado-vp-tabs" ref={tabsContainerRef} style={{ position: 'relative' }}>
                     {directTabs.map(tab => (
                         <TabButton
                             key={tab.id}
@@ -575,7 +575,7 @@ function ViewportPanel({
                             isOpen={overflowOpen}
                         />
                     ) : (
-                        <div className="lumiverse-vp-tabs-spacer" />
+                        <div className="ado-vp-tabs-spacer" />
                     )}
                     {/* Overflow floating menu */}
                     {overflowOpen && needsOverflow && (
@@ -587,11 +587,11 @@ function ViewportPanel({
                             side={side}
                         />
                     )}
-                    <div className="lumiverse-vp-tabs-spacer" />
+                    <div className="ado-vp-tabs-spacer" />
                     <button
-                        className="lumiverse-vp-settings-btn"
+                        className="ado-vp-settings-btn"
                         onClick={() => storeActions.openSettingsModal()}
-                        title="Lumiverse Settings"
+                        title="Ado Helper Settings"
                         type="button"
                     >
                         <Settings size={18} strokeWidth={1.5} />
@@ -600,7 +600,7 @@ function ViewportPanel({
 
                 {/* Main panel content */}
                 <div
-                    className="lumiverse-vp-main"
+                    className="ado-vp-main"
                     style={{
                         // On desktop, use fixed width. On mobile, flex handles it via CSS
                         width: isMobile ? undefined : mainContentWidth,
@@ -613,14 +613,14 @@ function ViewportPanel({
                     />
                     {/* Update banner at top of sidebar */}
                     <UpdateBanner variant="full" />
-                    <div className="lumiverse-vp-content">
+                    <div className="ado-vp-content">
                         {/* All tabs stay mounted - CSS handles visibility */}
                         {visibleTabs.map(tab => (
                             <div
                                 key={tab.id}
                                 className={clsx(
-                                    'lumiverse-vp-tab-content',
-                                    activeTab === tab.id && 'lumiverse-vp-tab-content--active'
+                                    'ado-vp-tab-content',
+                                    activeTab === tab.id && 'ado-vp-tab-content--active'
                                 )}
                                 aria-hidden={activeTab !== tab.id}
                             >
@@ -701,15 +701,15 @@ function PlaceholderContent({ tab }) {
     const { Icon } = config;
 
     return (
-        <div className="lumiverse-vp-placeholder">
+        <div className="ado-vp-placeholder">
             {Icon && (
-                <span className="lumiverse-vp-placeholder-icon">
+                <span className="ado-vp-placeholder-icon">
                     <Icon size={32} strokeWidth={1.5} />
                 </span>
             )}
             <h3>{config.title}</h3>
             <p>{config.description}</p>
-            <span className="lumiverse-vp-placeholder-badge">Coming Soon</span>
+            <span className="ado-vp-placeholder-badge">Coming Soon</span>
         </div>
     );
 }

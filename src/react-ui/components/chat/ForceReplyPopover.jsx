@@ -53,31 +53,31 @@ export default function ForceReplyPopover({ onClose }) {
     const isEmpty = members.length === 0;
 
     return (
-        <div className="lcs-force-reply-popover" ref={menuRef}>
-            <div className="lcs-force-reply-header">Force Reply</div>
+        <div className="ado-force-reply-popover" ref={menuRef}>
+            <div className="ado-force-reply-header">Force Reply</div>
             {isEmpty ? (
-                <div className="lcs-persona-empty">
+                <div className="ado-persona-empty">
                     <Users size={20} style={{ opacity: 0.4 }} />
                     <span>No group members found</span>
                 </div>
             ) : (
-                <div className="lcs-force-reply-list">
+                <div className="ado-force-reply-list">
                     {members.map((m) => (
                         <button
                             key={m.chid}
-                            className={`lcs-force-reply-item${m.disabled ? ' lcs-force-reply-item--disabled' : ''}`}
+                            className={`ado-force-reply-item${m.disabled ? ' ado-force-reply-item--disabled' : ''}`}
                             onClick={() => !m.disabled && handleSelect(m.chid)}
                             type="button"
                             disabled={m.disabled}
                         >
                             <LazyImage
-                                className="lcs-force-reply-avatar"
+                                className="ado-force-reply-avatar"
                                 src={m.avatarUrl}
                                 alt={m.name}
                                 spinnerSize={10}
                             />
-                            <span className="lcs-force-reply-name">{m.name}</span>
-                            {m.disabled && <span className="lcs-force-reply-disabled-label">disabled</span>}
+                            <span className="ado-force-reply-name">{m.name}</span>
+                            {m.disabled && <span className="ado-force-reply-disabled-label">disabled</span>}
                         </button>
                     ))}
                 </div>

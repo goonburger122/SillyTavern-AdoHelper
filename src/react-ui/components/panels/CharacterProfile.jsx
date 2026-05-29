@@ -1,6 +1,6 @@
 import React, { useMemo, forwardRef, useSyncExternalStore, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { useSelections, useLoomSelections, usePacks, useLumiverseStore } from '../../store/LumiverseContext';
+import { useSelections, useLoomSelections, usePacks, useAdoHelperStore } from '../../store/AdoHelperContext';
 import { motion, AnimatePresence } from 'motion/react';
 import clsx from 'clsx';
 import { User, FileText, Zap, Heart, Sparkles, Star, X, Layers, Users, ArrowRight, Package, Link2, Link2Off, MessageSquare, ToggleLeft } from 'lucide-react';
@@ -8,7 +8,7 @@ import { usePresetBindings } from '../../hooks/usePresetBindings';
 import LazyImage from '../shared/LazyImage';
 
 // Get store for direct state access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 const EMPTY_ARRAY = [];
@@ -66,7 +66,7 @@ function useCurrentCharacter() {
                     };
                 }
             } catch (e) {
-                console.warn('[LumiverseUI] Could not get character:', e);
+                console.warn('[AdoHelperUI] Could not get character:', e);
             }
         }
         return { name: 'No Character', avatar: null, description: '' };
@@ -91,29 +91,29 @@ const TraitCard = forwardRef(function TraitCard({ trait, type, isDominant, onRem
     return (
         <motion.div
             ref={ref}
-            className={clsx('lumiverse-trait-card', isDominant && 'lumiverse-trait-card--dominant')}
+            className={clsx('ado-trait-card', isDominant && 'ado-trait-card--dominant')}
             style={{ background: config.bg, borderColor: config.border }}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.1 }}
         >
-            <span className="lumiverse-trait-icon">
+            <span className="ado-trait-icon">
                 <Icon size={16} strokeWidth={1.5} />
             </span>
-            <div className="lumiverse-trait-info">
-                <span className="lumiverse-trait-name">
+            <div className="ado-trait-info">
+                <span className="ado-trait-name">
                     {trait.name || trait.itemName || trait.lumiaDefName || 'Unknown'}
                 </span>
                 {isDominant && (
-                    <span className="lumiverse-trait-dominant-badge">
+                    <span className="ado-trait-dominant-badge">
                         <Star size={12} strokeWidth={2} /> Dominant
                     </span>
                 )}
             </div>
             {onRemove && (
                 <button
-                    className="lumiverse-trait-remove"
+                    className="ado-trait-remove"
                     onClick={() => onRemove(trait)}
                     title="Remove trait"
                     type="button"
@@ -130,13 +130,13 @@ const TraitCard = forwardRef(function TraitCard({ trait, type, isDominant, onRem
  */
 function SectionHeader({ Icon, title, count }) {
     return (
-        <div className="lumiverse-profile-section-header">
-            <span className="lumiverse-profile-section-icon">
+        <div className="ado-profile-section-header">
+            <span className="ado-profile-section-icon">
                 <Icon size={16} strokeWidth={1.5} />
             </span>
-            <span className="lumiverse-profile-section-title">{title}</span>
+            <span className="ado-profile-section-title">{title}</span>
             {count !== undefined && (
-                <span className="lumiverse-profile-section-count">{count}</span>
+                <span className="ado-profile-section-count">{count}</span>
             )}
         </div>
     );
@@ -147,7 +147,7 @@ function SectionHeader({ Icon, title, count }) {
  */
 function EmptySection({ message }) {
     return (
-        <div className="lumiverse-profile-empty">
+        <div className="ado-profile-empty">
             <span>{message}</span>
         </div>
     );
@@ -187,31 +187,31 @@ function CouncilBanner({ councilMembers, allPacks, onManageCouncil }) {
     const moreCount = memberCount - 4;
 
     return (
-        <div className="lumiverse-council-banner">
-            <div className="lumiverse-council-banner-icon">
+        <div className="ado-council-banner">
+            <div className="ado-council-banner-icon">
                 <Users size={28} strokeWidth={1.5} />
             </div>
-            <div className="lumiverse-council-banner-content">
-                <h4 className="lumiverse-council-banner-title">Council of Lumiae Active</h4>
-                <div className="lumiverse-council-banner-stats">
-                    <span className="lumiverse-council-banner-stat">
+            <div className="ado-council-banner-content">
+                <h4 className="ado-council-banner-title">Council of Lumiae Active</h4>
+                <div className="ado-council-banner-stats">
+                    <span className="ado-council-banner-stat">
                         <Users size={14} /> {memberCount} member{memberCount !== 1 ? 's' : ''}
                     </span>
-                    <span className="lumiverse-council-banner-stat">
+                    <span className="ado-council-banner-stat">
                         <Zap size={14} /> {totalBehaviors} behavior{totalBehaviors !== 1 ? 's' : ''}
                     </span>
-                    <span className="lumiverse-council-banner-stat">
+                    <span className="ado-council-banner-stat">
                         <Heart size={14} /> {totalPersonalities} personalit{totalPersonalities !== 1 ? 'ies' : 'y'}
                     </span>
                 </div>
                 {previewMembers.length > 0 && (
-                    <div className="lumiverse-council-banner-avatars">
+                    <div className="ado-council-banner-avatars">
                         {previewMembers.map((member, index) => {
                             const img = getLumiaImage(allPacks, member.packName, member.itemName);
                             return (
                                 <div
                                     key={member.id}
-                                    className="lumiverse-council-banner-avatar"
+                                    className="ado-council-banner-avatar"
                                     style={{ zIndex: previewMembers.length - index }}
                                     title={member.itemName}
                                 >
@@ -225,14 +225,14 @@ function CouncilBanner({ councilMembers, allPacks, onManageCouncil }) {
                             );
                         })}
                         {moreCount > 0 && (
-                            <div className="lumiverse-council-banner-more">+{moreCount}</div>
+                            <div className="ado-council-banner-more">+{moreCount}</div>
                         )}
                     </div>
                 )}
             </div>
             {onManageCouncil && (
                 <button
-                    className="lumiverse-council-banner-btn"
+                    className="ado-council-banner-btn"
                     onClick={onManageCouncil}
                     type="button"
                 >
@@ -254,7 +254,7 @@ function LoomSection() {
 
     if (!hasSelections) {
         return (
-            <div className="lumiverse-profile-section">
+            <div className="ado-profile-section">
                 <SectionHeader Icon={Sparkles} title="Loom Configuration" />
                 <EmptySection message="No Loom items selected" />
             </div>
@@ -262,29 +262,29 @@ function LoomSection() {
     }
 
     return (
-        <div className="lumiverse-profile-section">
+        <div className="ado-profile-section">
             <SectionHeader Icon={Sparkles} title="Loom Configuration" />
-            <div className="lumiverse-loom-summary">
+            <div className="ado-loom-summary">
                 {styles.length > 0 && (
-                    <div className="lumiverse-loom-group">
-                        <span className="lumiverse-loom-label">Styles:</span>
-                        <span className="lumiverse-loom-items">
+                    <div className="ado-loom-group">
+                        <span className="ado-loom-label">Styles:</span>
+                        <span className="ado-loom-items">
                             {styles.map(s => s.name || s.itemName || 'Unknown').join(', ')}
                         </span>
                     </div>
                 )}
                 {utilities.length > 0 && (
-                    <div className="lumiverse-loom-group">
-                        <span className="lumiverse-loom-label">Utilities:</span>
-                        <span className="lumiverse-loom-items">
+                    <div className="ado-loom-group">
+                        <span className="ado-loom-label">Utilities:</span>
+                        <span className="ado-loom-items">
                             {utilities.map(u => u.name || u.itemName || 'Unknown').join(', ')}
                         </span>
                     </div>
                 )}
                 {retrofits.length > 0 && (
-                    <div className="lumiverse-loom-group">
-                        <span className="lumiverse-loom-label">Retrofits:</span>
-                        <span className="lumiverse-loom-items">
+                    <div className="ado-loom-group">
+                        <span className="ado-loom-label">Retrofits:</span>
+                        <span className="ado-loom-items">
                             {retrofits.map(r => r.name || r.itemName || 'Unknown').join(', ')}
                         </span>
                     </div>
@@ -440,36 +440,36 @@ function ProfileBindingsModal({ onClose }) {
 
     return createPortal(
         <div
-            className="lumiverse-modal-backdrop lumiverse-profile-bindings-backdrop"
+            className="ado-modal-backdrop ado-profile-bindings-backdrop"
             onClick={handleBackdropClick}
         >
             <div
-                className="lumiverse-profile-bindings-modal"
+                className="ado-profile-bindings-modal"
                 onClick={(e) => e.stopPropagation()}
                 role="dialog"
                 aria-modal="true"
             >
                 {/* Header */}
-                <div className="lumiverse-profile-bindings-header">
-                    <div className="lumiverse-profile-bindings-header-icon">
+                <div className="ado-profile-bindings-header">
+                    <div className="ado-profile-bindings-header-icon">
                         <Link2 size={18} strokeWidth={2} />
                     </div>
-                    <div className="lumiverse-profile-bindings-header-text">
-                        <span className="lumiverse-profile-bindings-title">
+                    <div className="ado-profile-bindings-header-text">
+                        <span className="ado-profile-bindings-title">
                             Preset Binding
                             {isLoomMode && (
-                                <span className="lumiverse-bindings-mode-badge lumiverse-bindings-mode-badge--loom">
+                                <span className="ado-bindings-mode-badge ado-bindings-mode-badge--loom">
                                     <Layers size={10} strokeWidth={2} />
                                     Loom
                                 </span>
                             )}
                         </span>
-                        <span className="lumiverse-profile-bindings-subtitle">
+                        <span className="ado-profile-bindings-subtitle">
                             {contextInfo.characterName || 'No character'}
                         </span>
                     </div>
                     <button
-                        className="lumiverse-profile-bindings-close"
+                        className="ado-profile-bindings-close"
                         onClick={onClose}
                         type="button"
                     >
@@ -479,21 +479,21 @@ function ProfileBindingsModal({ onClose }) {
 
                 {/* Content */}
                 {hasContext ? (
-                    <div className="lumiverse-profile-bindings-content">
+                    <div className="ado-profile-bindings-content">
                         {/* Current bindings status */}
-                        <div className="lumiverse-profile-bindings-status">
+                        <div className="ado-profile-bindings-status">
                             <div className={clsx(
-                                'lumiverse-profile-bindings-status-row',
+                                'ado-profile-bindings-status-row',
                                 currentCharacterBinding && 'is-bound'
                             )}>
                                 <User size={14} strokeWidth={1.5} />
-                                <span className="lumiverse-profile-bindings-status-label">Character:</span>
-                                <span className="lumiverse-profile-bindings-status-value">
+                                <span className="ado-profile-bindings-status-label">Character:</span>
+                                <span className="ado-profile-bindings-status-value">
                                     {currentCharacterBinding || 'Not bound'}
                                 </span>
                                 {currentCharacterBinding && (
                                     <button
-                                        className="lumiverse-profile-bindings-status-remove"
+                                        className="ado-profile-bindings-status-remove"
                                         onClick={handleRemoveCharacterBinding}
                                         title="Remove binding"
                                         type="button"
@@ -503,17 +503,17 @@ function ProfileBindingsModal({ onClose }) {
                                 )}
                             </div>
                             <div className={clsx(
-                                'lumiverse-profile-bindings-status-row',
+                                'ado-profile-bindings-status-row',
                                 currentChatBinding && 'is-bound'
                             )}>
                                 <MessageSquare size={14} strokeWidth={1.5} />
-                                <span className="lumiverse-profile-bindings-status-label">Chat:</span>
-                                <span className="lumiverse-profile-bindings-status-value">
+                                <span className="ado-profile-bindings-status-label">Chat:</span>
+                                <span className="ado-profile-bindings-status-value">
                                     {currentChatBinding || 'Not bound'}
                                 </span>
                                 {currentChatBinding && (
                                     <button
-                                        className="lumiverse-profile-bindings-status-remove"
+                                        className="ado-profile-bindings-status-remove"
                                         onClick={handleRemoveChatBinding}
                                         title="Remove binding"
                                         type="button"
@@ -525,11 +525,11 @@ function ProfileBindingsModal({ onClose }) {
                         </div>
 
                         {/* Create new binding */}
-                        <div className="lumiverse-profile-bindings-create">
-                            <div className="lumiverse-profile-bindings-type-toggle">
+                        <div className="ado-profile-bindings-create">
+                            <div className="ado-profile-bindings-type-toggle">
                                 <button
                                     className={clsx(
-                                        'lumiverse-profile-bindings-type-btn',
+                                        'ado-profile-bindings-type-btn',
                                         bindingType === 'character' && 'is-active'
                                     )}
                                     onClick={() => setBindingType('character')}
@@ -541,7 +541,7 @@ function ProfileBindingsModal({ onClose }) {
                                 </button>
                                 <button
                                     className={clsx(
-                                        'lumiverse-profile-bindings-type-btn',
+                                        'ado-profile-bindings-type-btn',
                                         bindingType === 'chat' && 'is-active'
                                     )}
                                     onClick={() => setBindingType('chat')}
@@ -552,9 +552,9 @@ function ProfileBindingsModal({ onClose }) {
                                     Chat
                                 </button>
                             </div>
-                            <div className="lumiverse-profile-bindings-select-row">
+                            <div className="ado-profile-bindings-select-row">
                                 <select
-                                    className="lumiverse-profile-bindings-select"
+                                    className="ado-profile-bindings-select"
                                     value={selectedPreset}
                                     onChange={(e) => setSelectedPreset(e.target.value)}
                                 >
@@ -568,7 +568,7 @@ function ProfileBindingsModal({ onClose }) {
                                     ))}
                                 </select>
                                 <button
-                                    className="lumiverse-profile-bindings-bind-btn"
+                                    className="ado-profile-bindings-bind-btn"
                                     onClick={handleBind}
                                     disabled={!selectedPreset}
                                     type="button"
@@ -579,33 +579,33 @@ function ProfileBindingsModal({ onClose }) {
                         </div>
 
                         {/* Toggle Bindings Section */}
-                        <div className="lumiverse-profile-bindings-toggles">
-                            <div className="lumiverse-profile-bindings-toggles-header">
+                        <div className="ado-profile-bindings-toggles">
+                            <div className="ado-profile-bindings-toggles-header">
                                 <ToggleLeft size={14} strokeWidth={1.5} />
                                 <span>{isLoomMode ? 'Block Toggle Bindings' : 'Prompt Toggle Bindings'}</span>
                             </div>
-                            <div className="lumiverse-profile-bindings-toggles-info">
+                            <div className="ado-profile-bindings-toggles-info">
                                 {isLoomMode
                                     ? 'Save current block enabled/disabled states'
                                     : 'Save current prompt enabled/disabled states'}
                             </div>
-                            <div className="lumiverse-profile-bindings-toggles-rows">
+                            <div className="ado-profile-bindings-toggles-rows">
                                 {/* Character toggle binding */}
                                 <div className={clsx(
-                                    'lumiverse-profile-bindings-toggle-row',
+                                    'ado-profile-bindings-toggle-row',
                                     hasCharacterToggleBinding && 'is-bound'
                                 )}>
                                     <User size={14} strokeWidth={1.5} />
-                                    <span className="lumiverse-profile-bindings-toggle-label">
+                                    <span className="ado-profile-bindings-toggle-label">
                                         Character
                                     </span>
                                     {hasCharacterToggleBinding ? (
                                         <>
-                                            <span className="lumiverse-profile-bindings-toggle-badge">
+                                            <span className="ado-profile-bindings-toggle-badge">
                                                 Bound
                                             </span>
                                             <button
-                                                className="lumiverse-profile-bindings-toggle-clear"
+                                                className="ado-profile-bindings-toggle-clear"
                                                 onClick={handleClearCharacterToggleBinding}
                                                 title={`Clear ${toggleNoun} toggle binding`}
                                                 type="button"
@@ -615,7 +615,7 @@ function ProfileBindingsModal({ onClose }) {
                                         </>
                                     ) : (
                                         <button
-                                            className="lumiverse-profile-bindings-toggle-bind"
+                                            className="ado-profile-bindings-toggle-bind"
                                             onClick={handleBindTogglesToCharacter}
                                             disabled={!contextInfo.characterAvatar}
                                             title={`Bind current ${toggleNoun} toggles to character`}
@@ -627,20 +627,20 @@ function ProfileBindingsModal({ onClose }) {
                                 </div>
                                 {/* Chat toggle binding */}
                                 <div className={clsx(
-                                    'lumiverse-profile-bindings-toggle-row',
+                                    'ado-profile-bindings-toggle-row',
                                     hasChatToggleBinding && 'is-bound'
                                 )}>
                                     <MessageSquare size={14} strokeWidth={1.5} />
-                                    <span className="lumiverse-profile-bindings-toggle-label">
+                                    <span className="ado-profile-bindings-toggle-label">
                                         Chat
                                     </span>
                                     {hasChatToggleBinding ? (
                                         <>
-                                            <span className="lumiverse-profile-bindings-toggle-badge">
+                                            <span className="ado-profile-bindings-toggle-badge">
                                                 Bound
                                             </span>
                                             <button
-                                                className="lumiverse-profile-bindings-toggle-clear"
+                                                className="ado-profile-bindings-toggle-clear"
                                                 onClick={handleClearChatToggleBinding}
                                                 title={`Clear ${toggleNoun} toggle binding`}
                                                 type="button"
@@ -650,7 +650,7 @@ function ProfileBindingsModal({ onClose }) {
                                         </>
                                     ) : (
                                         <button
-                                            className="lumiverse-profile-bindings-toggle-bind"
+                                            className="ado-profile-bindings-toggle-bind"
                                             onClick={handleBindTogglesToChat}
                                             disabled={!contextInfo.chatId}
                                             title={`Bind current ${toggleNoun} toggles to chat`}
@@ -661,13 +661,13 @@ function ProfileBindingsModal({ onClose }) {
                                     )}
                                 </div>
                             </div>
-                            <div className="lumiverse-profile-bindings-toggles-priority">
+                            <div className="ado-profile-bindings-toggles-priority">
                                 Priority: Chat &gt; Character
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <div className="lumiverse-profile-bindings-empty">
+                    <div className="ado-profile-bindings-empty">
                         <User size={24} strokeWidth={1.5} />
                         <span>Select a character first</span>
                     </div>
@@ -723,8 +723,8 @@ function QuickBindButton({
     return (
         <button
             className={clsx(
-                'lumiverse-profile-bind-btn',
-                hasBound && 'lumiverse-profile-bind-btn--active'
+                'ado-profile-bind-btn',
+                hasBound && 'ado-profile-bind-btn--active'
             )}
             onClick={onClick}
             title={getTooltip()}
@@ -818,35 +818,35 @@ function CharacterProfile({ onTabChange }) {
     }, []);
 
     return (
-        <div className="lumiverse-character-profile">
+        <div className="ado-character-profile">
             {/* Character Header */}
-            <div className="lumiverse-profile-header">
-                <div className="lumiverse-profile-avatar">
+            <div className="ado-profile-header">
+                <div className="ado-profile-avatar">
                     <LazyImage
                         src={character.avatar}
                         alt={character.name}
                         spinnerSize={16}
                         fallback={
-                            <span className="lumiverse-profile-avatar-placeholder">
+                            <span className="ado-profile-avatar-placeholder">
                                 <User size={32} strokeWidth={1.5} />
                             </span>
                         }
                     />
                 </div>
-                <div className="lumiverse-profile-info">
-                    <h3 className="lumiverse-profile-name">{character.name}</h3>
-                    <div className="lumiverse-profile-stats">
-                        <span className="lumiverse-stat" title="Behaviors">
-                            <Zap size={14} strokeWidth={1.5} className="lumiverse-stat-icon" />
-                            <span className="lumiverse-stat-value">{stats.behaviors}</span>
+                <div className="ado-profile-info">
+                    <h3 className="ado-profile-name">{character.name}</h3>
+                    <div className="ado-profile-stats">
+                        <span className="ado-stat" title="Behaviors">
+                            <Zap size={14} strokeWidth={1.5} className="ado-stat-icon" />
+                            <span className="ado-stat-value">{stats.behaviors}</span>
                         </span>
-                        <span className="lumiverse-stat" title="Personalities">
-                            <Heart size={14} strokeWidth={1.5} className="lumiverse-stat-icon" />
-                            <span className="lumiverse-stat-value">{stats.personalities}</span>
+                        <span className="ado-stat" title="Personalities">
+                            <Heart size={14} strokeWidth={1.5} className="ado-stat-icon" />
+                            <span className="ado-stat-value">{stats.personalities}</span>
                         </span>
-                        <span className="lumiverse-stat" title="Packs">
-                            <Package size={14} strokeWidth={1.5} className="lumiverse-stat-icon" />
-                            <span className="lumiverse-stat-value">{stats.totalPacks}</span>
+                        <span className="ado-stat" title="Packs">
+                            <Package size={14} strokeWidth={1.5} className="ado-stat-icon" />
+                            <span className="ado-stat-value">{stats.totalPacks}</span>
                         </span>
                     </div>
                 </div>
@@ -876,14 +876,14 @@ function CharacterProfile({ onTabChange }) {
             ) : (
                 <>
                     {/* Definition Section */}
-                    <div className="lumiverse-profile-section">
+                    <div className="ado-profile-section">
                         <SectionHeader
                             Icon={chimeraMode ? Layers : FileText}
                             title={chimeraMode ? "Chimera Definitions" : "Definition"}
                             count={stats.definitionCount}
                         />
                         {/* Removed mode="popLayout" for better ARM performance */}
-                        <div className="lumiverse-traits-list">
+                        <div className="ado-traits-list">
                             <AnimatePresence initial={false}>
                                 {chimeraMode ? (
                                     // Chimera mode: show multiple definitions
@@ -915,9 +915,9 @@ function CharacterProfile({ onTabChange }) {
                     </div>
 
                     {/* Behaviors Section */}
-                    <div className="lumiverse-profile-section">
+                    <div className="ado-profile-section">
                         <SectionHeader Icon={Zap} title="Behaviors" count={stats.behaviors} />
-                        <div className="lumiverse-traits-list">
+                        <div className="ado-traits-list">
                             {/* Removed mode="popLayout" for better ARM performance */}
                             <AnimatePresence initial={false}>
                                 {selections.behaviors?.length > 0 ? (
@@ -937,9 +937,9 @@ function CharacterProfile({ onTabChange }) {
                     </div>
 
                     {/* Personalities Section */}
-                    <div className="lumiverse-profile-section">
+                    <div className="ado-profile-section">
                         <SectionHeader Icon={Heart} title="Personalities" count={stats.personalities} />
-                        <div className="lumiverse-traits-list">
+                        <div className="ado-traits-list">
                             {/* Removed mode="popLayout" for better ARM performance */}
                             <AnimatePresence initial={false}>
                                 {selections.personalities?.length > 0 ? (

@@ -2,12 +2,12 @@ import React, { useState, useCallback, useEffect, useRef, useMemo, useSyncExtern
 import { HslColorPicker } from 'react-colorful';
 import clsx from 'clsx';
 import { RotateCcw, Download, Upload, Check, Sun, Moon } from 'lucide-react';
-import { useLumiverseActions, useLumiverseStore, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperActions, useAdoHelperStore, saveToExtension } from '../../store/AdoHelperContext';
 import { applyTheme, getDefaultTheme, THEME_PRESETS, exportTheme, importTheme, isValidTheme, isLightMode, ensureProseColors, hslToRgb, rgbToHsl, hslToHex, hexToHsl } from '../../../lib/themeManager';
 
 /* global toastr */
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selector
 const selectTheme = () => store.getState().theme;
@@ -47,23 +47,23 @@ function hslToCSS({ h, s, l }) {
  */
 function PresetRow({ presets, activePreset, onSelect }) {
     return (
-        <div className="lumiverse-theme-preset-row">
+        <div className="ado-theme-preset-row">
             {presets.map(name => (
                 <button
                     key={name}
                     type="button"
                     className={clsx(
-                        'lumiverse-theme-preset-btn',
-                        activePreset === name && 'lumiverse-theme-preset-btn--active'
+                        'ado-theme-preset-btn',
+                        activePreset === name && 'ado-theme-preset-btn--active'
                     )}
                     onClick={() => onSelect(name)}
                     title={name}
                 >
                     <span
-                        className="lumiverse-theme-preset-dot"
+                        className="ado-theme-preset-dot"
                         style={{ background: hslToCSS(THEME_PRESETS[name].baseColors.primary) }}
                     />
-                    <span className="lumiverse-theme-preset-name">{name}</span>
+                    <span className="ado-theme-preset-name">{name}</span>
                     {activePreset === name && <Check size={12} strokeWidth={2.5} />}
                 </button>
             ))}
@@ -76,7 +76,7 @@ function PresetRow({ presets, activePreset, onSelect }) {
  */
 export default function ThemePanel() {
     const theme = useSyncExternalStore(store.subscribe, selectTheme);
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const fileInputRef = useRef(null);
 
     // Local editing state - initialized from store or defaults
@@ -207,7 +207,7 @@ export default function ThemePanel() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `lumiverse-theme-${(localTheme.name || 'custom').toLowerCase().replace(/\s+/g, '-')}.json`;
+        a.download = `ado-theme-${(localTheme.name || 'custom').toLowerCase().replace(/\s+/g, '-')}.json`;
         a.click();
         URL.revokeObjectURL(url);
         if (typeof toastr !== 'undefined') {
@@ -270,82 +270,82 @@ export default function ThemePanel() {
     }, [currentRgb, handleColorChange]);
 
     return (
-        <div className="lumiverse-theme-panel">
+        <div className="ado-theme-panel">
             {/* Mode Toggle */}
-            <div className="lumiverse-theme-mode-toggle">
-                <label className="lumiverse-theme-label">Mode</label>
+            <div className="ado-theme-mode-toggle">
+                <label className="ado-theme-label">Mode</label>
                 <button
                     type="button"
                     className={clsx(
-                        'lumiverse-theme-mode-btn',
-                        currentlyLight && 'lumiverse-theme-mode-btn--light'
+                        'ado-theme-mode-btn',
+                        currentlyLight && 'ado-theme-mode-btn--light'
                     )}
                     onClick={handleModeToggle}
                     title={currentlyLight ? 'Switch to dark mode' : 'Switch to light mode'}
                 >
-                    <Moon size={15} strokeWidth={1.5} className="lumiverse-theme-mode-icon-moon" />
-                    <div className="lumiverse-theme-mode-track">
-                        <div className="lumiverse-theme-mode-thumb" />
+                    <Moon size={15} strokeWidth={1.5} className="ado-theme-mode-icon-moon" />
+                    <div className="ado-theme-mode-track">
+                        <div className="ado-theme-mode-thumb" />
                     </div>
-                    <Sun size={15} strokeWidth={1.5} className="lumiverse-theme-mode-icon-sun" />
+                    <Sun size={15} strokeWidth={1.5} className="ado-theme-mode-icon-sun" />
                 </button>
             </div>
 
             {/* Preset Selector */}
-            <div className="lumiverse-theme-presets">
-                <label className="lumiverse-theme-label">Presets</label>
-                <div className="lumiverse-theme-preset-group">
-                    <span className="lumiverse-theme-preset-group-label">Dark</span>
+            <div className="ado-theme-presets">
+                <label className="ado-theme-label">Presets</label>
+                <div className="ado-theme-preset-group">
+                    <span className="ado-theme-preset-group-label">Dark</span>
                     <PresetRow presets={darkPresets} activePreset={activePreset} onSelect={handlePresetSelect} />
                 </div>
-                <div className="lumiverse-theme-preset-group">
-                    <span className="lumiverse-theme-preset-group-label">Light</span>
+                <div className="ado-theme-preset-group">
+                    <span className="ado-theme-preset-group-label">Light</span>
                     <PresetRow presets={lightPresets} activePreset={activePreset} onSelect={handlePresetSelect} />
                 </div>
             </div>
 
             {/* Color Swatches */}
-            <div className="lumiverse-theme-swatches-section">
-                <label className="lumiverse-theme-label">Base Colors</label>
-                <div className="lumiverse-theme-swatches">
+            <div className="ado-theme-swatches-section">
+                <label className="ado-theme-label">Base Colors</label>
+                <div className="ado-theme-swatches">
                     {COLOR_SLOTS.map(slot => (
                         <button
                             key={slot.key}
                             type="button"
                             className={clsx(
-                                'lumiverse-theme-swatch',
-                                activeSlot === slot.key && 'lumiverse-theme-swatch--active'
+                                'ado-theme-swatch',
+                                activeSlot === slot.key && 'ado-theme-swatch--active'
                             )}
                             onClick={() => setActiveSlot(slot.key)}
                             title={slot.label}
                         >
                             <span
-                                className="lumiverse-theme-swatch-color"
+                                className="ado-theme-swatch-color"
                                 style={{ background: hslToCSS(localTheme.baseColors[slot.key]) }}
                             />
-                            <span className="lumiverse-theme-swatch-label">{slot.label}</span>
+                            <span className="ado-theme-swatch-label">{slot.label}</span>
                         </button>
                     ))}
                 </div>
             </div>
 
             {/* Color Picker */}
-            <div className="lumiverse-theme-picker-section">
-                <label className="lumiverse-theme-label">
+            <div className="ado-theme-picker-section">
+                <label className="ado-theme-label">
                     Editing: <strong>{COLOR_SLOTS.find(s => s.key === activeSlot)?.label}</strong>
                 </label>
-                <div className="lumiverse-theme-picker" onPointerDown={() => { presetLockRef.current = false; }}>
+                <div className="ado-theme-picker" onPointerDown={() => { presetLockRef.current = false; }}>
                     <HslColorPicker
                         color={currentColor}
                         onChange={handleColorChange}
                     />
                 </div>
-                <div className="lumiverse-color-inputs">
-                    <div className="lumiverse-color-input-group lumiverse-color-input-group--hex">
-                        <label className="lumiverse-color-input-label">HEX</label>
+                <div className="ado-color-inputs">
+                    <div className="ado-color-input-group ado-color-input-group--hex">
+                        <label className="ado-color-input-label">HEX</label>
                         <input
                             type="text"
-                            className="lumiverse-input lumiverse-color-input-hex"
+                            className="ado-input ado-color-input-hex"
                             value={hexInput}
                             onChange={(e) => setHexInput(e.target.value)}
                             onBlur={() => commitHex(hexInput)}
@@ -355,11 +355,11 @@ export default function ThemePanel() {
                         />
                     </div>
                     {['r', 'g', 'b'].map(ch => (
-                        <div key={ch} className="lumiverse-color-input-group">
-                            <label className="lumiverse-color-input-label">{ch.toUpperCase()}</label>
+                        <div key={ch} className="ado-color-input-group">
+                            <label className="ado-color-input-label">{ch.toUpperCase()}</label>
                             <input
                                 type="number"
-                                className="lumiverse-input lumiverse-color-input-rgb"
+                                className="ado-input ado-color-input-rgb"
                                 value={currentRgb[ch]}
                                 onChange={(e) => handleRgbChange(ch, e.target.value)}
                                 min={0}
@@ -371,10 +371,10 @@ export default function ThemePanel() {
             </div>
 
             {/* Actions */}
-            <div className="lumiverse-theme-actions">
+            <div className="ado-theme-actions">
                 <button
                     type="button"
-                    className="lumia-btn lumia-btn-secondary lumia-btn-small"
+                    className="ado-btn ado-btn-secondary ado-btn-small"
                     onClick={handleReset}
                     title="Reset to default theme"
                 >
@@ -383,7 +383,7 @@ export default function ThemePanel() {
                 </button>
                 <button
                     type="button"
-                    className="lumia-btn lumia-btn-secondary lumia-btn-small"
+                    className="ado-btn ado-btn-secondary ado-btn-small"
                     onClick={handleExport}
                     title="Export theme as JSON"
                 >
@@ -392,7 +392,7 @@ export default function ThemePanel() {
                 </button>
                 <button
                     type="button"
-                    className="lumia-btn lumia-btn-secondary lumia-btn-small"
+                    className="ado-btn ado-btn-secondary ado-btn-small"
                     onClick={() => fileInputRef.current?.click()}
                     title="Import theme from JSON"
                 >

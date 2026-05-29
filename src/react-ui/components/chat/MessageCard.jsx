@@ -13,14 +13,14 @@ import SwipeControls from './SwipeControls';
 import ReasoningBlock from './ReasoningBlock';
 import TokenBadge from './TokenBadge';
 import LazyImage from '../shared/LazyImage';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { getRawMessageForEdit, editMessageContent, editMessageReasoning, unhideMessage } from '../../../lib/chatSheldService';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 /** SVG spool icon matching the original summarization.js design */
 const SpoolIcon = () => (
-    <svg className="lcs-summary-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="ado-summary-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="12" cy="12" rx="8" ry="10" stroke="currentColor" strokeWidth="1.5" fill="none"/>
         <ellipse cx="12" cy="12" rx="3" ry="10" stroke="currentColor" strokeWidth="1.5" fill="none"/>
         <line x1="4" y1="8" x2="20" y2="8" stroke="currentColor" strokeWidth="1.5"/>
@@ -77,9 +77,9 @@ const MessageCard = memo(function MessageCard({ message, isLastMessage, isStream
     } = message;
 
     // Determine variant class — draft-hidden messages keep user variant
-    let variantClass = 'lcs-message--character';
-    if (isUser) variantClass = 'lcs-message--user';
-    if (isSystem && !isDraftHidden) variantClass = 'lcs-message--system';
+    let variantClass = 'ado-message--character';
+    if (isUser) variantClass = 'ado-message--user';
+    if (isSystem && !isDraftHidden) variantClass = 'ado-message--system';
 
     // Format timestamp
     const formattedTime = timestamp ? formatTime(timestamp) : '';
@@ -145,16 +145,16 @@ const MessageCard = memo(function MessageCard({ message, isLastMessage, isStream
     }, [mesId]);
 
     // Build class string
-    let className = `lcs-message ${variantClass}`;
-    if (isStreaming) className += ' lcs-message--streaming';
-    if (isBatchMarked) className += ' lcs-message--batch-marked';
-    if (isBatchCutpoint) className += ' lcs-message--batch-cutpoint';
+    let className = `ado-message ${variantClass}`;
+    if (isStreaming) className += ' ado-message--streaming';
+    if (isBatchMarked) className += ' ado-message--batch-marked';
+    if (isBatchCutpoint) className += ' ado-message--batch-cutpoint';
 
     // ── Draft-hidden collapsed card (early return) ────────────────
     if (isDraftHidden) {
-        let draftClassName = `lcs-message lcs-message--draft-hidden`;
-        if (isBatchMarked) draftClassName += ' lcs-message--batch-marked';
-        if (isBatchCutpoint) draftClassName += ' lcs-message--batch-cutpoint';
+        let draftClassName = `ado-message ado-message--draft-hidden`;
+        if (isBatchMarked) draftClassName += ' ado-message--batch-marked';
+        if (isBatchCutpoint) draftClassName += ' ado-message--batch-cutpoint';
 
         const preview = (content || '').replace(/\n/g, ' ').slice(0, 60);
 
@@ -170,13 +170,13 @@ const MessageCard = memo(function MessageCard({ message, isLastMessage, isStream
                 onClick={batchDeleteMode ? handleBatchClick : undefined}
                 style={batchDeleteMode ? { cursor: 'pointer' } : undefined}
             >
-                <div className="lcs-draft-hidden-inner">
-                    <span className="lcs-draft-hidden-id">#{mesId}</span>
-                    <span className="lcs-draft-hidden-label">Draft Hidden</span>
-                    <span className="lcs-draft-hidden-preview">{preview}</span>
+                <div className="ado-draft-hidden-inner">
+                    <span className="ado-draft-hidden-id">#{mesId}</span>
+                    <span className="ado-draft-hidden-label">Draft Hidden</span>
+                    <span className="ado-draft-hidden-preview">{preview}</span>
                     {!batchDeleteMode && (
                         <button
-                            className="lcs-draft-hidden-unhide"
+                            className="ado-draft-hidden-unhide"
                             onClick={handleUnhide}
                             title="Restore message (unhide from AI context)"
                             type="button"
@@ -193,17 +193,17 @@ const MessageCard = memo(function MessageCard({ message, isLastMessage, isStream
     const summaryMarkers = (
         <>
             {summaryMarker === 'loading' && (
-                <span className="lcs-summary-marker lcs-summary-marker--loading" title="Weaving summary...">
-                    <Loader2 size={11} className="lcs-summary-spinner" />
+                <span className="ado-summary-marker ado-summary-marker--loading" title="Weaving summary...">
+                    <Loader2 size={11} className="ado-summary-spinner" />
                 </span>
             )}
             {summaryMarker === 'complete' && (
-                <span className="lcs-summary-marker lcs-summary-marker--complete" title="Summary woven up to this message">
+                <span className="ado-summary-marker ado-summary-marker--complete" title="Summary woven up to this message">
                     <SpoolIcon />
                 </span>
             )}
             {summaryMarker === 'error' && (
-                <span className="lcs-summary-marker lcs-summary-marker--error" title="Summary generation failed">
+                <span className="ado-summary-marker ado-summary-marker--error" title="Summary generation failed">
                     <SpoolIcon />
                 </span>
             )}
@@ -218,62 +218,62 @@ const MessageCard = memo(function MessageCard({ message, isLastMessage, isStream
             style={batchDeleteMode ? { cursor: 'pointer' } : undefined}
         >
             {isBookmark && (
-                <span className="lcs-bookmark" title="Bookmark">
+                <span className="ado-bookmark" title="Bookmark">
                     <Bookmark size={14} />
                 </span>
             )}
 
             {/* Immersive mode: message number badge */}
             {isImmersive && !isSystem && (
-                <span className="lcs-immersive-mesid">#{mesId}</span>
+                <span className="ado-immersive-mesid">#{mesId}</span>
             )}
 
             {/* Immersive mode: large blended avatar background (decorative — CSS opacity would conflict with LazyImage) */}
             {isImmersive && !isSystem && avatarSrc && (
-                <div className="lcs-immersive-avatar-bg" onClick={handleAvatarClick} style={{ cursor: 'pointer', pointerEvents: 'auto' }}>
-                    <img className="lcs-immersive-avatar-img" src={avatarSrc} alt="" loading="lazy" />
+                <div className="ado-immersive-avatar-bg" onClick={handleAvatarClick} style={{ cursor: 'pointer', pointerEvents: 'auto' }}>
+                    <img className="ado-immersive-avatar-img" src={avatarSrc} alt="" loading="lazy" />
                 </div>
             )}
 
             {/* Immersive mode: floating depth elements (assistant messages only) */}
             {isImmersive && !isSystem && !isUser && (
-                <div className="lcs-immersive-depth" />
+                <div className="ado-immersive-depth" />
             )}
 
             {/* Bubble mode: dissolving avatar background with mask-composite (decorative — CSS opacity would conflict with LazyImage) */}
             {isBubble && !isSystem && avatarSrc && (
-                <div className="lcs-bubble-avatar-bg" onClick={handleAvatarClick} style={{ cursor: 'pointer', pointerEvents: 'auto' }}>
-                    <img className="lcs-bubble-avatar-img" src={avatarSrc} alt="" loading="lazy" />
-                    <div className="lcs-bubble-avatar-scrim" />
+                <div className="ado-bubble-avatar-bg" onClick={handleAvatarClick} style={{ cursor: 'pointer', pointerEvents: 'auto' }}>
+                    <img className="ado-bubble-avatar-img" src={avatarSrc} alt="" loading="lazy" />
+                    <div className="ado-bubble-avatar-scrim" />
                 </div>
             )}
 
             {/* Bubble mode: header with squircle avatar + name + meta pill */}
             {isBubble && !isSystem && (
-                <div className="lcs-message-header lcs-bubble-header">
-                    <div className="lcs-bubble-header-left">
+                <div className="ado-message-header ado-bubble-header">
+                    <div className="ado-bubble-header-left">
                         <LazyImage
-                            containerClassName="lcs-message-avatar"
+                            containerClassName="ado-message-avatar"
                             src={avatarSrc}
                             alt={name}
                             spinnerSize={12}
                             containerStyle={{ cursor: 'pointer' }}
                             onClick={handleAvatarClick}
                             fallback={
-                                <div className="lcs-message-avatar lcs-message-avatar--placeholder">
+                                <div className="ado-message-avatar ado-message-avatar--placeholder">
                                     {initial}
                                 </div>
                             }
                         />
-                        <div className="lcs-message-meta">
-                            <span className="lcs-message-name">{name}</span>
-                            <span className="lcs-bubble-meta-pill">
+                        <div className="ado-message-meta">
+                            <span className="ado-message-name">{name}</span>
+                            <span className="ado-bubble-meta-pill">
                                 <span>#{mesId}</span>
-                                <span className="lcs-bubble-meta-dot">&middot;</span>
+                                <span className="ado-bubble-meta-dot">&middot;</span>
                                 <span>{formattedTime}</span>
                                 {tokenCount > 0 && (
                                     <>
-                                        <span className="lcs-bubble-meta-dot">&middot;</span>
+                                        <span className="ado-bubble-meta-dot">&middot;</span>
                                         <span>{tokenCount}t</span>
                                     </>
                                 )}
@@ -286,21 +286,21 @@ const MessageCard = memo(function MessageCard({ message, isLastMessage, isStream
 
             {/* Standard header (minimal + immersive modes) */}
             {!isBubble && !isSystem && (
-                <div className="lcs-message-header">
+                <div className="ado-message-header">
                     <LazyImage
-                        containerClassName="lcs-message-avatar"
+                        containerClassName="ado-message-avatar"
                         src={avatarSrc}
                         alt=""
                         spinnerSize={12}
                         fallback={
-                            <div className="lcs-message-avatar lcs-message-avatar--placeholder">
+                            <div className="ado-message-avatar ado-message-avatar--placeholder">
                                 {initial}
                             </div>
                         }
                     />
-                    <div className="lcs-message-meta">
-                        <span className="lcs-message-name">{name}</span>
-                        <span className="lcs-message-timestamp">
+                    <div className="ado-message-meta">
+                        <span className="ado-message-name">{name}</span>
+                        <span className="ado-message-timestamp">
                             {formattedTime}
                             <TokenBadge tokenCount={tokenCount} content={content} />
                             {summaryMarkers}

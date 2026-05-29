@@ -1,5 +1,5 @@
 /**
- * ConnectionMigrateModal — Import ST Connection Manager profiles into Lumiverse
+ * ConnectionMigrateModal — Import ST Connection Manager profiles into Ado Helper
  *
  * Detects existing ST connection profiles, lets the user select which ones to import,
  * and migrates them using the connection service.
@@ -14,14 +14,14 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         maxHeight: '70vh',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     header: {
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
         padding: '16px 20px',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
     },
     headerIcon: {
         display: 'flex',
@@ -30,7 +30,7 @@ const styles = {
         width: '36px',
         height: '36px',
         borderRadius: '8px',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
     },
     headerText: {
         flex: 1,
@@ -71,19 +71,19 @@ const styles = {
         padding: '10px 12px',
         marginBottom: '6px',
         borderRadius: '8px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
         cursor: 'pointer',
         transition: 'border-color 0.15s',
     },
     profileRowSelected: {
-        borderColor: 'var(--lumiverse-primary)',
+        borderColor: 'var(--ado-primary)',
     },
     checkbox: {
         width: '18px',
         height: '18px',
         borderRadius: '4px',
-        border: '2px solid var(--lumiverse-border)',
+        border: '2px solid var(--ado-border)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -91,8 +91,8 @@ const styles = {
         transition: 'background 0.15s, border-color 0.15s',
     },
     checkboxChecked: {
-        background: 'var(--lumiverse-primary)',
-        borderColor: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
+        borderColor: 'var(--ado-primary)',
     },
     profileInfo: {
         flex: 1,
@@ -115,7 +115,7 @@ const styles = {
         fontWeight: 600,
         padding: '2px 6px',
         borderRadius: '4px',
-        background: 'var(--lumiverse-success, #22c55e)',
+        background: 'var(--ado-success, #22c55e)',
         color: '#fff',
     },
     footer: {
@@ -123,7 +123,7 @@ const styles = {
         alignItems: 'center',
         gap: '8px',
         padding: '12px 20px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
     },
     footerCount: {
         flex: 1,
@@ -133,9 +133,9 @@ const styles = {
     btn: {
         padding: '8px 16px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
         background: 'transparent',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '13px',
         cursor: 'pointer',
     },
@@ -143,7 +143,7 @@ const styles = {
         padding: '8px 16px',
         borderRadius: '6px',
         border: 'none',
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: '#fff',
         fontSize: '13px',
         fontWeight: 600,
@@ -155,7 +155,7 @@ const styles = {
         gap: '8px',
         padding: '12px',
         borderRadius: '8px',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
         marginTop: '12px',
         fontSize: '13px',
     },
@@ -300,14 +300,14 @@ export default function ConnectionMigrateModal({ onClose }) {
                 })}
 
                 {failed.length > 0 && (
-                    <div style={{ ...styles.summary, color: 'var(--lumiverse-danger, #ef4444)' }}>
+                    <div style={{ ...styles.summary, color: 'var(--ado-danger, #ef4444)' }}>
                         <AlertTriangle size={16} />
                         Failed to import: {failed.join(', ')}
                     </div>
                 )}
 
                 {allDone && failed.length === 0 && (
-                    <div style={{ ...styles.summary, color: 'var(--lumiverse-success, #22c55e)' }}>
+                    <div style={{ ...styles.summary, color: 'var(--ado-success, #22c55e)' }}>
                         <Check size={16} />
                         {imported.size} profile{imported.size !== 1 ? 's' : ''} imported successfully.
                     </div>

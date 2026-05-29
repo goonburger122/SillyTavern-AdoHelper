@@ -8,7 +8,7 @@ import * as versionModule from "./version.js";
 export const MODULE_NAME = "update-service";
 
 // Extension name constant
-const EXTENSION_NAME = "SillyTavern-LumiverseHelper";
+const EXTENSION_NAME = "SillyTavern-AdoHelperHelper";
 
 // Lucid.cards API endpoint for version checking
 const LUCID_API_URL = "https://lucid.cards/api/extension-versions";

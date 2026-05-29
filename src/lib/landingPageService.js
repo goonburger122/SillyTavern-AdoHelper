@@ -3,13 +3,13 @@
  *
  * Handles fetching and managing recent chats for the custom landing page.
  * Uses global characters and groups arrays (compatible with lazy loading).
- * Integrates with Lumiverse preset bindings to show contextual information.
+ * Integrates with Ado Helper preset bindings to show contextual information.
  */
 
 import { getSettings } from "./settingsManager.js";
 const getCachedIndex = () => ({ packs: {}, selections: {}, preferences: {}, presets: {} });
 
-const MODULE_NAME = "lumia-injector";
+const MODULE_NAME = "ado-helper";
 
 /**
  * Get recent chats from global characters and groups arrays

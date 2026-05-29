@@ -16,11 +16,11 @@ import {
     Layers,
 } from 'lucide-react';
 import { usePresetBindings } from '../../hooks/usePresetBindings';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { ToggleBindingsContent } from '../shared/ToggleBindingsContent';
 
 // Get store for direct state access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selector for active preset name
 const selectActivePresetName = () => store.getState().activePresetName || '';
@@ -57,17 +57,17 @@ export function PresetBindingsPanel() {
     return (
         <>
             {/* Current Context Status */}
-            <div className="lumiverse-bindings-status">
+            <div className="ado-bindings-status">
                 {hasCurrentContext ? (
                     <>
-                        <div className="lumiverse-bindings-context">
+                        <div className="ado-bindings-context">
                             {contextInfo.characterName && (
-                                <div className="lumiverse-bindings-context-item">
+                                <div className="ado-bindings-context-item">
                                     <User size={12} strokeWidth={2} />
-                                    <span className="lumiverse-bindings-context-label">Character:</span>
-                                    <span className="lumiverse-bindings-context-value">{contextInfo.characterName}</span>
+                                    <span className="ado-bindings-context-label">Character:</span>
+                                    <span className="ado-bindings-context-value">{contextInfo.characterName}</span>
                                     {currentCharacterBinding && (
-                                        <span className="lumiverse-bindings-context-bound">
+                                        <span className="ado-bindings-context-bound">
                                             <Link2 size={10} />
                                             {currentCharacterBinding}
                                         </span>
@@ -75,16 +75,16 @@ export function PresetBindingsPanel() {
                                 </div>
                             )}
                             {contextInfo.chatId && (
-                                <div className="lumiverse-bindings-context-item">
+                                <div className="ado-bindings-context-item">
                                     <MessageSquare size={12} strokeWidth={2} />
-                                    <span className="lumiverse-bindings-context-label">Chat:</span>
-                                    <span className="lumiverse-bindings-context-value lumiverse-bindings-context-value--mono">
+                                    <span className="ado-bindings-context-label">Chat:</span>
+                                    <span className="ado-bindings-context-value ado-bindings-context-value--mono">
                                         {contextInfo.chatId.length > 25
                                             ? contextInfo.chatId.slice(0, 25) + '...'
                                             : contextInfo.chatId}
                                     </span>
                                     {currentChatBinding && (
-                                        <span className="lumiverse-bindings-context-bound">
+                                        <span className="ado-bindings-context-bound">
                                             <Link2 size={10} />
                                             {currentChatBinding}
                                         </span>
@@ -93,14 +93,14 @@ export function PresetBindingsPanel() {
                             )}
                         </div>
                         {activeBindingLabel && (
-                            <div className="lumiverse-bindings-active">
+                            <div className="ado-bindings-active">
                                 <Link2 size={12} strokeWidth={2} />
                                 <span>Active: {activeBindingLabel}</span>
                             </div>
                         )}
                     </>
                 ) : (
-                    <div className="lumiverse-bindings-empty-context">
+                    <div className="ado-bindings-empty-context">
                         <User size={16} strokeWidth={1.5} />
                         <span>Select a character to manage bindings</span>
                     </div>
@@ -109,15 +109,15 @@ export function PresetBindingsPanel() {
 
             {/* Bindings Summary */}
             {(hasAnyBinding || hasAnyToggleBinding) && (
-                <div className="lumiverse-bindings-summary">
+                <div className="ado-bindings-summary">
                     {hasAnyBinding && (
-                        <span className="lumiverse-bindings-summary-label">
+                        <span className="ado-bindings-summary-label">
                             <Link2 size={11} strokeWidth={2} />
                             {allBindings.length} preset binding{allBindings.length !== 1 ? 's' : ''}
                         </span>
                     )}
                     {hasAnyToggleBinding && (
-                        <span className="lumiverse-bindings-summary-label">
+                        <span className="ado-bindings-summary-label">
                             <Zap size={11} strokeWidth={2} />
                             {hasChatToggleBinding && hasCharacterToggleBinding ? '2 toggle bindings' : '1 toggle binding'}
                         </span>
@@ -127,7 +127,7 @@ export function PresetBindingsPanel() {
 
             {/* Manage Button */}
             <button
-                className="lumia-btn lumia-btn-secondary lumia-btn-full"
+                className="ado-btn ado-btn-secondary ado-btn-full"
                 onClick={() => setIsModalOpen(true)}
                 type="button"
             >
@@ -251,34 +251,34 @@ function PresetBindingsModal({ onClose }) {
 
     return createPortal(
         <div
-            className="lumiverse-modal-backdrop"
+            className="ado-modal-backdrop"
             onClick={handleBackdropClick}
             onMouseDown={handleModalClick}
             onMouseUp={handleModalClick}
         >
             <div
-                className="lumiverse-modal lumiverse-bindings-modal"
+                className="ado-modal ado-bindings-modal"
                 onClick={handleModalClick}
                 role="dialog"
                 aria-modal="true"
             >
                 {/* Header */}
-                <div className="lumiverse-bindings-modal-header">
-                    <div className="lumiverse-bindings-modal-header-info">
-                        <span className="lumiverse-bindings-modal-header-icon">
+                <div className="ado-bindings-modal-header">
+                    <div className="ado-bindings-modal-header-info">
+                        <span className="ado-bindings-modal-header-icon">
                             <Link2 size={22} strokeWidth={1.5} />
                         </span>
-                        <div className="lumiverse-bindings-modal-header-text">
-                            <h3 className="lumiverse-bindings-modal-title">
+                        <div className="ado-bindings-modal-header-text">
+                            <h3 className="ado-bindings-modal-title">
                                 Preset Bindings
                                 {isLoomMode && (
-                                    <span className="lumiverse-bindings-mode-badge lumiverse-bindings-mode-badge--loom">
+                                    <span className="ado-bindings-mode-badge ado-bindings-mode-badge--loom">
                                         <Layers size={12} strokeWidth={2} />
                                         Loom Mode
                                     </span>
                                 )}
                             </h3>
-                            <p className="lumiverse-bindings-modal-subtitle">
+                            <p className="ado-bindings-modal-subtitle">
                                 {isLoomMode
                                     ? 'Auto-switch Loom presets and block states per character or chat'
                                     : 'Auto-switch presets when changing characters or chats'}
@@ -286,7 +286,7 @@ function PresetBindingsModal({ onClose }) {
                         </div>
                     </div>
                     <button
-                        className="lumiverse-bindings-modal-close"
+                        className="ado-bindings-modal-close"
                         onClick={onClose}
                         title="Close"
                         type="button"
@@ -296,21 +296,21 @@ function PresetBindingsModal({ onClose }) {
                 </div>
 
                 {/* Content */}
-                <div className="lumiverse-bindings-modal-content">
+                <div className="ado-bindings-modal-content">
                     {/* Create New Binding */}
-                    <div className="lumiverse-bindings-section">
-                        <div className="lumiverse-bindings-section-header">
+                    <div className="ado-bindings-section">
+                        <div className="ado-bindings-section-header">
                             <Plus size={14} strokeWidth={2} />
                             <span>Create Binding</span>
                         </div>
 
                         {hasContext ? (
-                            <div className="lumiverse-bindings-create">
+                            <div className="ado-bindings-create">
                                 {/* Binding Type Toggle */}
-                                <div className="lumiverse-bindings-type-toggle">
+                                <div className="ado-bindings-type-toggle">
                                     <button
                                         className={clsx(
-                                            'lumiverse-bindings-type-btn',
+                                            'ado-bindings-type-btn',
                                             bindingType === 'character' && 'is-active'
                                         )}
                                         onClick={() => setBindingType('character')}
@@ -322,7 +322,7 @@ function PresetBindingsModal({ onClose }) {
                                     </button>
                                     <button
                                         className={clsx(
-                                            'lumiverse-bindings-type-btn',
+                                            'ado-bindings-type-btn',
                                             bindingType === 'chat' && 'is-active'
                                         )}
                                         onClick={() => setBindingType('chat')}
@@ -335,13 +335,13 @@ function PresetBindingsModal({ onClose }) {
                                 </div>
 
                                 {/* Context Info */}
-                                <div className="lumiverse-bindings-create-context">
+                                <div className="ado-bindings-create-context">
                                     {bindingType === 'character' ? (
                                         <span>
                                             <User size={12} />
                                             {contextInfo.characterName || contextInfo.characterAvatar || 'No character'}
                                             {currentCharacterBinding && (
-                                                <span className="lumiverse-bindings-create-existing">
+                                                <span className="ado-bindings-create-existing">
                                                     (currently: {currentCharacterBinding})
                                                 </span>
                                             )}
@@ -355,7 +355,7 @@ function PresetBindingsModal({ onClose }) {
                                                     : contextInfo.chatId)
                                                 : 'No chat'}
                                             {currentChatBinding && (
-                                                <span className="lumiverse-bindings-create-existing">
+                                                <span className="ado-bindings-create-existing">
                                                     (currently: {currentChatBinding})
                                                 </span>
                                             )}
@@ -364,9 +364,9 @@ function PresetBindingsModal({ onClose }) {
                                 </div>
 
                                 {/* Preset Selector */}
-                                <div className="lumiverse-bindings-create-row">
+                                <div className="ado-bindings-create-row">
                                     <select
-                                        className="lumiverse-bindings-select"
+                                        className="ado-bindings-select"
                                         value={selectedPreset}
                                         onChange={(e) => setSelectedPreset(e.target.value)}
                                     >
@@ -380,7 +380,7 @@ function PresetBindingsModal({ onClose }) {
                                         ))}
                                     </select>
                                     <button
-                                        className="lumia-btn lumia-btn-primary"
+                                        className="ado-btn ado-btn-primary"
                                         onClick={handleBind}
                                         disabled={!selectedPreset}
                                         type="button"
@@ -391,7 +391,7 @@ function PresetBindingsModal({ onClose }) {
                                 </div>
 
                                 {availablePresets.length === 0 && (
-                                    <div className="lumiverse-bindings-no-presets">
+                                    <div className="ado-bindings-no-presets">
                                         <AlertTriangle size={14} strokeWidth={2} />
                                         <span>
                                             {isLoomMode
@@ -402,7 +402,7 @@ function PresetBindingsModal({ onClose }) {
                                 )}
                             </div>
                         ) : (
-                            <div className="lumiverse-bindings-no-context">
+                            <div className="ado-bindings-no-context">
                                 <User size={20} strokeWidth={1.5} />
                                 <span>Select a character to create bindings</span>
                             </div>
@@ -410,8 +410,8 @@ function PresetBindingsModal({ onClose }) {
                     </div>
 
                     {/* Prompt Toggle Bindings Section */}
-                    <div className="lumiverse-bindings-section">
-                        <div className="lumiverse-bindings-section-header">
+                    <div className="ado-bindings-section">
+                        <div className="ado-bindings-section-header">
                             <Zap size={14} strokeWidth={2} />
                             <span>{isLoomMode ? 'Block Toggle Bindings' : 'Prompt Toggle Bindings'}</span>
                         </div>
@@ -420,35 +420,35 @@ function PresetBindingsModal({ onClose }) {
                     </div>
 
                     {/* Existing Bindings List */}
-                    <div className="lumiverse-bindings-section">
-                        <div className="lumiverse-bindings-section-header">
+                    <div className="ado-bindings-section">
+                        <div className="ado-bindings-section-header">
                             <Link2 size={14} strokeWidth={2} />
                             <span>Active Bindings ({allBindings.length})</span>
                         </div>
 
                         {allBindings.length > 0 ? (
-                            <div className="lumiverse-bindings-list">
+                            <div className="ado-bindings-list">
                                 {allBindings.map((binding) => (
                                     <div
                                         key={`${binding.presetType}-${binding.type}-${binding.id}`}
-                                        className="lumiverse-bindings-list-item"
+                                        className="ado-bindings-list-item"
                                     >
-                                        <div className="lumiverse-bindings-list-item-icon">
+                                        <div className="ado-bindings-list-item-icon">
                                             {binding.type === 'character' ? (
                                                 <User size={14} strokeWidth={1.5} />
                                             ) : (
                                                 <MessageSquare size={14} strokeWidth={1.5} />
                                             )}
                                         </div>
-                                        <div className="lumiverse-bindings-list-item-info">
-                                            <span className="lumiverse-bindings-list-item-name">
+                                        <div className="ado-bindings-list-item-info">
+                                            <span className="ado-bindings-list-item-name">
                                                 {binding.displayName}
                                             </span>
-                                            <span className="lumiverse-bindings-list-item-type">
+                                            <span className="ado-bindings-list-item-type">
                                                 {binding.type === 'character' ? 'Character' : 'Chat'}
                                             </span>
                                         </div>
-                                        <div className="lumiverse-bindings-list-item-preset">
+                                        <div className="ado-bindings-list-item-preset">
                                             {binding.presetType === 'loom' ? (
                                                 <Layers size={12} strokeWidth={1.5} />
                                             ) : (
@@ -456,13 +456,13 @@ function PresetBindingsModal({ onClose }) {
                                             )}
                                             {binding.presetName}
                                             {binding.presetType === 'loom' && (
-                                                <span className="lumiverse-bindings-list-item-badge lumiverse-bindings-list-item-badge--loom">
+                                                <span className="ado-bindings-list-item-badge ado-bindings-list-item-badge--loom">
                                                     Loom
                                                 </span>
                                             )}
                                         </div>
                                         <button
-                                            className="lumiverse-bindings-list-item-remove"
+                                            className="ado-bindings-list-item-remove"
                                             onClick={() => handleRemoveBinding(binding.type, binding.id, binding.presetType)}
                                             title="Remove binding"
                                             type="button"
@@ -473,10 +473,10 @@ function PresetBindingsModal({ onClose }) {
                                 ))}
                             </div>
                         ) : (
-                            <div className="lumiverse-bindings-empty">
+                            <div className="ado-bindings-empty">
                                 <Link2Off size={20} strokeWidth={1.5} />
                                 <span>No bindings configured</span>
-                                <span className="lumiverse-bindings-empty-hint">
+                                <span className="ado-bindings-empty-hint">
                                     Bindings auto-switch presets when you change characters or chats
                                 </span>
                             </div>
@@ -484,9 +484,9 @@ function PresetBindingsModal({ onClose }) {
                     </div>
 
                     {/* Info Box */}
-                    <div className="lumiverse-bindings-info">
-                        <div className="lumiverse-bindings-info-title">How it works</div>
-                        <ul className="lumiverse-bindings-info-list">
+                    <div className="ado-bindings-info">
+                        <div className="ado-bindings-info-title">How it works</div>
+                        <ul className="ado-bindings-info-list">
                             {isLoomMode ? (
                                 <>
                                     <li><strong>Loom preset bindings</strong> auto-switch to a Loom preset and activate Loom mode when you change characters/chats</li>
@@ -507,9 +507,9 @@ function PresetBindingsModal({ onClose }) {
                 </div>
 
                 {/* Footer */}
-                <div className="lumiverse-bindings-modal-footer">
+                <div className="ado-bindings-modal-footer">
                     <button
-                        className="lumiverse-bindings-modal-btn lumiverse-bindings-modal-btn--primary"
+                        className="ado-bindings-modal-btn ado-bindings-modal-btn--primary"
                         onClick={onClose}
                         type="button"
                     >

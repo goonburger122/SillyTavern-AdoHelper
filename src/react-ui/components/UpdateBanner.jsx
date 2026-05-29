@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { ArrowUpCircle, ExternalLink, X, Loader2, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import clsx from 'clsx';
-import { useUpdates, useLumiverseActions, useLumiverse } from '../store/LumiverseContext';
+import { useUpdates, useAdoHelperActions, useAdoHelper } from '../store/AdoHelperContext';
 
 /**
  * Update Banner Component
  * Displays a notification banner when extension or preset updates are available.
  * 
- * Design: Warm amber/orange gradient with purple accents to blend with Lumiverse theme.
+ * Design: Warm amber/orange gradient with purple accents to blend with Ado Helper theme.
  * Shows extension updates prominently, with preset updates listed below.
  */
 export default function UpdateBanner({ variant = 'full', onDismiss }) {
     const { extensionUpdate, presetUpdates, hasAnyUpdate, hasExtensionUpdate } = useUpdates();
-    const isUpdating = useLumiverse(state => state.ui.isUpdatingExtension);
-    const actions = useLumiverseActions();
+    const isUpdating = useAdoHelper(state => state.ui.isUpdatingExtension);
+    const actions = useAdoHelperActions();
     const [updateResult, setUpdateResult] = useState(null);
 
     const handleUpdateClick = async () => {
@@ -43,7 +43,7 @@ export default function UpdateBanner({ variant = 'full', onDismiss }) {
     // Compact variant for sidebar toggle area
     if (variant === 'compact') {
         return (
-            <div className="lumiverse-update-indicator">
+            <div className="ado-update-indicator">
                 <ArrowUpCircle size={12} strokeWidth={2.5} />
             </div>
         );
@@ -52,25 +52,25 @@ export default function UpdateBanner({ variant = 'full', onDismiss }) {
     // Minimal variant for accordion title
     if (variant === 'badge') {
         return (
-            <span className="lumiverse-update-badge">New!</span>
+            <span className="ado-update-badge">New!</span>
         );
     }
 
     // Full banner for settings panel and sidebar
     return (
-        <div className={clsx('lumiverse-update-banner', hasExtensionUpdate && 'has-extension-update')}>
-            <div className="lumiverse-update-banner-content">
-                <div className="lumiverse-update-banner-icon">
+        <div className={clsx('ado-update-banner', hasExtensionUpdate && 'has-extension-update')}>
+            <div className="ado-update-banner-content">
+                <div className="ado-update-banner-icon">
                     <ArrowUpCircle size={20} strokeWidth={2} />
                 </div>
                 
-                <div className="lumiverse-update-banner-text">
+                <div className="ado-update-banner-text">
                     {hasExtensionUpdate && (
-                        <div className="lumiverse-update-banner-main">
-                            <strong>Lumiverse Helper {extensionUpdate.latestVersion}</strong> available
+                        <div className="ado-update-banner-main">
+                            <strong>Ado Helper {extensionUpdate.latestVersion}</strong> available
                             {!updateResult ? (
                                 <button 
-                                    className="lumiverse-update-banner-link"
+                                    className="ado-update-banner-link"
                                     onClick={handleUpdateClick}
                                     disabled={isUpdating}
                                     style={{ 
@@ -90,7 +90,7 @@ export default function UpdateBanner({ variant = 'full', onDismiss }) {
                                 </button>
                             ) : (
                                 <span 
-                                    className={clsx("lumiverse-update-result", updateResult.success ? "success" : "error")} 
+                                    className={clsx("ado-update-result", updateResult.success ? "success" : "error")} 
                                     style={{ 
                                         display: 'inline-flex', 
                                         alignItems: 'center', 
@@ -104,7 +104,7 @@ export default function UpdateBanner({ variant = 'full', onDismiss }) {
                                     {updateResult.success ? 'Updated!' : updateResult.message}
                                     {updateResult.success && (
                                         <button
-                                            className="lumiverse-update-banner-link"
+                                            className="ado-update-banner-link"
                                             onClick={handleReload}
                                             style={{
                                                 background: 'none',
@@ -128,7 +128,7 @@ export default function UpdateBanner({ variant = 'full', onDismiss }) {
                     )}
                     
                     {presetCount > 0 && (
-                        <div className="lumiverse-update-banner-presets">
+                        <div className="ado-update-banner-presets">
                             {presetCount} preset{presetCount !== 1 ? 's' : ''} {presetCount !== 1 ? 'have' : 'has'} updates: {
                                 presetUpdates.slice(0, 3).map(p => p.name).join(', ')
                             }{presetCount > 3 ? `, +${presetCount - 3} more` : ''}
@@ -138,7 +138,7 @@ export default function UpdateBanner({ variant = 'full', onDismiss }) {
 
                 {onDismiss && (
                     <button 
-                        className="lumiverse-update-banner-dismiss"
+                        className="ado-update-banner-dismiss"
                         onClick={onDismiss}
                         title="Dismiss"
                     >
@@ -161,7 +161,7 @@ export function UpdateDot() {
         return null;
     }
 
-    return <span className="lumiverse-update-dot" />;
+    return <span className="ado-update-dot" />;
 }
 
 /**
@@ -182,5 +182,5 @@ export function UpdateBadge() {
         badgeText = `${presetUpdates.length} updates`;
     }
 
-    return <span className="lumiverse-update-badge">{badgeText}</span>;
+    return <span className="ado-update-badge">{badgeText}</span>;
 }

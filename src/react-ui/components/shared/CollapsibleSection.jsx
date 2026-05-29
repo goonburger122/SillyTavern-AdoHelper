@@ -21,31 +21,31 @@ export function CollapsibleSection({ Icon, title, status, children, defaultOpen 
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
-        <div className={clsx('lumiverse-vp-collapsible', isOpen && 'lumiverse-vp-collapsible--open')}>
+        <div className={clsx('ado-vp-collapsible', isOpen && 'ado-vp-collapsible--open')}>
             <button
-                className="lumiverse-vp-collapsible-header"
+                className="ado-vp-collapsible-header"
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
             >
-                <span className={clsx('lumiverse-vp-collapsible-chevron', isOpen && 'lumiverse-vp-collapsible-chevron--open')}>
+                <span className={clsx('ado-vp-collapsible-chevron', isOpen && 'ado-vp-collapsible-chevron--open')}>
                     <ChevronDown size={14} strokeWidth={2} />
                 </span>
-                <span className="lumiverse-vp-collapsible-icon">
+                <span className="ado-vp-collapsible-icon">
                     <Icon size={16} strokeWidth={1.5} />
                 </span>
-                <span className="lumiverse-vp-collapsible-title">{title}</span>
+                <span className="ado-vp-collapsible-title">{title}</span>
                 {status !== undefined && (
-                    <span className={clsx('lumiverse-vp-collapsible-status', status && 'lumiverse-vp-collapsible-status--active')}>
+                    <span className={clsx('ado-vp-collapsible-status', status && 'ado-vp-collapsible-status--active')}>
                         {status ? 'Active' : 'Inactive'}
                     </span>
                 )}
             </button>
             <CollapsibleContent
                 isOpen={isOpen}
-                className="lumiverse-vp-collapsible-content"
+                className="ado-vp-collapsible-content"
                 duration={200}
             >
-                <div className="lumiverse-vp-collapsible-inner">
+                <div className="ado-vp-collapsible-inner">
                     {children}
                 </div>
             </CollapsibleContent>

@@ -275,7 +275,7 @@ export async function reloadCharacterInST(avatarUrl) {
 
     return freshChar;
   } catch (err) {
-    console.error("[Lumiverse] Failed to reload character in ST:", err);
+    console.error("[Ado Helper] Failed to reload character in ST:", err);
     return null;
   }
 }

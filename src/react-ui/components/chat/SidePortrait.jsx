@@ -14,12 +14,12 @@
 import React, { useState, useEffect, useCallback, useMemo, useSyncExternalStore } from 'react';
 import { Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import LazyImage from '../shared/LazyImage';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { fetchGalleryImages, getGroupMemberList } from '../../../lib/chatSheldService';
 import { isGroupChat } from '../../../stContext';
 import GalleryMosaic from './GalleryMosaic';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const selectMessages = () => store.getState().chatSheld?.messages || [];
 
 export default function SidePortrait() {
@@ -153,39 +153,39 @@ export default function SidePortrait() {
 
     if (!lastCharMessage && !displayMember) {
         return (
-            <div className="lcs-side-portrait">
-                <div className="lcs-side-portrait-empty">
-                    <div className="lcs-side-portrait-placeholder" />
+            <div className="ado-side-portrait">
+                <div className="ado-side-portrait-empty">
+                    <div className="ado-side-portrait-placeholder" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="lcs-side-portrait">
+        <div className="ado-side-portrait">
             {/* Group member navigation */}
             {isGroup && groupMembers.length > 1 && (
-                <div className="lcs-portrait-member-nav">
+                <div className="ado-portrait-member-nav">
                     <button
-                        className="lcs-portrait-nav-btn"
+                        className="ado-portrait-nav-btn"
                         onClick={handlePrev}
                         title="Previous member"
                         type="button"
                     >
                         <ChevronLeft size={14} />
                     </button>
-                    <div className="lcs-portrait-member-dots">
+                    <div className="ado-portrait-member-dots">
                         {groupMembers.map((m, i) => (
                             <span
                                 key={m.chid}
-                                className={`lcs-portrait-dot${i === viewingIndex ? ' lcs-portrait-dot--active' : ''}`}
+                                className={`ado-portrait-dot${i === viewingIndex ? ' ado-portrait-dot--active' : ''}`}
                                 onClick={() => handleDotClick(i)}
                                 title={m.name}
                             />
                         ))}
                     </div>
                     <button
-                        className="lcs-portrait-nav-btn"
+                        className="ado-portrait-nav-btn"
                         onClick={handleNext}
                         title="Next member"
                         type="button"
@@ -195,25 +195,25 @@ export default function SidePortrait() {
                 </div>
             )}
 
-            <div className="lcs-side-portrait-frame" onClick={handleAvatarClick}>
+            <div className="ado-side-portrait-frame" onClick={handleAvatarClick}>
                 <LazyImage
                     src={avatarSrc}
                     alt={charName}
-                    className="lcs-side-portrait-img"
+                    className="ado-side-portrait-img"
                     spinnerSize={18}
                     fallback={
-                        <div className="lcs-side-portrait-placeholder">
+                        <div className="ado-side-portrait-placeholder">
                             {(charName || '?')[0].toUpperCase()}
                         </div>
                     }
                 />
             </div>
-            <span className="lcs-side-portrait-name">{charName}</span>
+            <span className="ado-side-portrait-name">{charName}</span>
 
             {/* Auto-follow toggle (group only) */}
             {isGroup && groupMembers.length > 1 && (
                 <button
-                    className={`lcs-portrait-auto-follow${autoFollow ? ' lcs-portrait-auto-follow--active' : ''}`}
+                    className={`ado-portrait-auto-follow${autoFollow ? ' ado-portrait-auto-follow--active' : ''}`}
                     onClick={toggleAutoFollow}
                     title={autoFollow ? 'Following last speaker — click to pin' : 'Pinned to selection — click to follow'}
                     type="button"
@@ -223,7 +223,7 @@ export default function SidePortrait() {
             )}
 
             <button
-                className="lcs-side-portrait-gallery-btn"
+                className="ado-side-portrait-gallery-btn"
                 onClick={handleToggleGallery}
                 title={galleryOpen ? 'Close gallery' : 'View gallery'}
                 type="button"

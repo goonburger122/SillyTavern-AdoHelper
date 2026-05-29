@@ -33,7 +33,7 @@ import {
     REASONING_EFFORT_LEVELS
 } from '../../../lib/presetsService';
 import { useChatPresetSettings } from '../../hooks/useChatPresetSettings';
-import { useLumiverseActions } from '../../store/LumiverseContext';
+import { useAdoHelperActions } from '../../store/AdoHelperContext';
 import { ReasoningSettingsContent } from '../shared/ReasoningSettings';
 import { detectConnectionProfile } from '../../../lib/lucidLoomService';
 
@@ -47,7 +47,7 @@ const UPDATE_CHECK_INTERVAL = 30 * 60 * 1000;
  * Displays tracked presets from Lucid.cards with version info and update indicators
  */
 export function ChatPresetsPanel() {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [trackedPresets, setTrackedPresets] = useState({});
     const [reasoningSettings, setReasoningSettings] = useState(null);
@@ -149,40 +149,40 @@ export function ChatPresetsPanel() {
         <>
             {/* Imported Presets List */}
             {presetList.length > 0 ? (
-                <div className="lumiverse-presets-inventory">
-                    <div className="lumiverse-presets-inventory-header">
-                        <span className="lumiverse-presets-inventory-label">
+                <div className="ado-presets-inventory">
+                    <div className="ado-presets-inventory-header">
+                        <span className="ado-presets-inventory-label">
                             <Package size={12} strokeWidth={2} />
                             Imported Presets
                         </span>
                         {updateCount > 0 && (
-                            <span className="lumiverse-presets-inventory-updates">
+                            <span className="ado-presets-inventory-updates">
                                 <ArrowUpCircle size={11} strokeWidth={2} />
                                 {updateCount} update{updateCount !== 1 ? 's' : ''}
                             </span>
                         )}
                     </div>
-                    <div className="lumiverse-presets-inventory-list">
+                    <div className="ado-presets-inventory-list">
                         {presetList.map((preset) => (
                             <div 
                                 key={preset.slug}
                                 className={clsx(
-                                    'lumiverse-presets-inventory-item',
+                                    'ado-presets-inventory-item',
                                     preset.hasUpdate && 'has-update'
                                 )}
                             >
-                                <div className="lumiverse-presets-inventory-item-icon">
+                                <div className="ado-presets-inventory-item-icon">
                                     {preset.hasUpdate ? (
                                         <ArrowUpCircle size={14} strokeWidth={1.5} />
                                     ) : (
                                         <FileJson size={14} strokeWidth={1.5} />
                                     )}
                                 </div>
-                                <div className="lumiverse-presets-inventory-item-info">
-                                    <span className="lumiverse-presets-inventory-item-name">
+                                <div className="ado-presets-inventory-item-info">
+                                    <span className="ado-presets-inventory-item-name">
                                         {preset.name}
                                     </span>
-                                    <span className="lumiverse-presets-inventory-item-version">
+                                    <span className="ado-presets-inventory-item-version">
                                         {preset.hasUpdate ? (
                                             <>
                                                 {formatVersion(preset.version)} → {preset.latestVersionName}
@@ -193,7 +193,7 @@ export function ChatPresetsPanel() {
                                     </span>
                                 </div>
                                 {preset.hasUpdate && (
-                                    <span className="lumiverse-presets-inventory-item-badge">
+                                    <span className="ado-presets-inventory-item-badge">
                                         Update
                                     </span>
                                 )}
@@ -202,7 +202,7 @@ export function ChatPresetsPanel() {
                     </div>
                 </div>
             ) : (
-                <div className="lumiverse-presets-empty-state">
+                <div className="ado-presets-empty-state">
                     <Cloud size={20} strokeWidth={1.5} />
                     <span>No presets imported yet</span>
                 </div>
@@ -210,16 +210,16 @@ export function ChatPresetsPanel() {
 
             {/* Reasoning Quick Status */}
             {(reasoningStatus || biasPreview) && (
-                <div className="lumiverse-presets-reasoning-status">
+                <div className="ado-presets-reasoning-status">
                     {reasoningStatus && (
-                        <div className="lumiverse-presets-reasoning-status-item">
+                        <div className="ado-presets-reasoning-status-item">
                             <Brain size={12} strokeWidth={2} />
                             <span>CoT:</span>
                             <code>{reasoningStatus}</code>
                         </div>
                     )}
                     {biasPreview && (
-                        <div className="lumiverse-presets-reasoning-status-item">
+                        <div className="ado-presets-reasoning-status-item">
                             <Zap size={12} strokeWidth={2} />
                             <span>Bias:</span>
                             <code>{biasPreview}</code>
@@ -229,9 +229,9 @@ export function ChatPresetsPanel() {
             )}
 
             {/* Configure Button */}
-            <div className="lumia-chat-presets-actions" style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
+            <div className="ado-chat-presets-actions" style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
                 <button
-                    className="lumia-btn lumia-btn-primary lumia-btn-full"
+                    className="ado-btn ado-btn-primary ado-btn-full"
                     onClick={handleOpenModal}
                     type="button"
                 >
@@ -239,7 +239,7 @@ export function ChatPresetsPanel() {
                     {updateCount > 0 ? `Configure (${updateCount} update${updateCount !== 1 ? 's' : ''})` : 'Download & Configure'}
                 </button>
                 <button
-                    className="lumia-btn lumia-btn-secondary lumia-btn-full"
+                    className="ado-btn ado-btn-secondary ado-btn-full"
                     onClick={() => actions.openModal('loomBuilder')}
                     type="button"
                 >
@@ -370,33 +370,33 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
 
     return createPortal(
         <div
-            className="lumiverse-modal-backdrop"
+            className="ado-modal-backdrop"
             onClick={handleBackdropClick}
             onMouseDown={handleModalClick}
             onMouseUp={handleModalClick}
         >
             <div
                 ref={modalRef}
-                className="lumiverse-modal lumiverse-presets-modal"
+                className="ado-modal ado-presets-modal"
                 onClick={handleModalClick}
                 role="dialog"
                 aria-modal="true"
             >
                 {/* Header */}
-                <div className="lumiverse-presets-modal-header">
-                    <div className="lumiverse-presets-modal-header-info">
-                        <span className="lumiverse-presets-modal-header-icon">
+                <div className="ado-presets-modal-header">
+                    <div className="ado-presets-modal-header-info">
+                        <span className="ado-presets-modal-header-icon">
                             <Cloud size={22} strokeWidth={1.5} />
                         </span>
-                        <div className="lumiverse-presets-modal-header-text">
-                            <h3 className="lumiverse-presets-modal-title">Chat Presets</h3>
-                            <p className="lumiverse-presets-modal-subtitle">
+                        <div className="ado-presets-modal-header-text">
+                            <h3 className="ado-presets-modal-title">Chat Presets</h3>
+                            <p className="ado-presets-modal-subtitle">
                                 Download presets from Lucid.cards & configure reasoning
                             </p>
                         </div>
                     </div>
                     <button
-                        className="lumiverse-presets-modal-close"
+                        className="ado-presets-modal-close"
                         onClick={onClose}
                         title="Close"
                         type="button"
@@ -406,17 +406,17 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
                 </div>
 
                 {/* Content */}
-                <div className="lumiverse-presets-modal-content" ref={scrollContainerRef}>
+                <div className="ado-presets-modal-content" ref={scrollContainerRef}>
                     {/* Preset Browser Section */}
-                    <div className="lumiverse-presets-section">
-                        <div className="lumiverse-presets-section-header">
-                            <div className="lumiverse-presets-section-title">
+                    <div className="ado-presets-section">
+                        <div className="ado-presets-section-header">
+                            <div className="ado-presets-section-title">
                                 <Download size={14} strokeWidth={2} />
                                 <span>Download Presets</span>
                             </div>
                             <button
                                 className={clsx(
-                                    'lumiverse-presets-refresh',
+                                    'ado-presets-refresh',
                                     isLoading && 'is-loading'
                                 )}
                                 onClick={loadPresets}
@@ -430,15 +430,15 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
 
                         {/* Initial state - prompt to load */}
                         {!presets && !isLoading && !error && (
-                            <div className="lumiverse-presets-empty">
-                                <div className="lumiverse-presets-empty-icon">
+                            <div className="ado-presets-empty">
+                                <div className="ado-presets-empty-icon">
                                     <Package size={28} strokeWidth={1} />
                                 </div>
-                                <span className="lumiverse-presets-empty-text">
+                                <span className="ado-presets-empty-text">
                                     Browse curated Chat Completion presets
                                 </span>
                                 <button 
-                                    className="lumiverse-presets-empty-btn"
+                                    className="ado-presets-empty-btn"
                                     onClick={loadPresets}
                                     type="button"
                                 >
@@ -450,8 +450,8 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
 
                         {/* Loading state */}
                         {isLoading && (
-                            <div className="lumiverse-presets-loading">
-                                <div className="lumiverse-presets-loading-spinner">
+                            <div className="ado-presets-loading">
+                                <div className="ado-presets-loading-spinner">
                                     <Loader2 size={22} strokeWidth={1.5} />
                                 </div>
                                 <span>Fetching presets...</span>
@@ -460,7 +460,7 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
 
                         {/* Error state */}
                         {error && (
-                            <div className="lumiverse-presets-error">
+                            <div className="ado-presets-error">
                                 <AlertCircle size={16} strokeWidth={1.5} />
                                 <span>{error}</span>
                                 <button onClick={loadPresets} type="button">Retry</button>
@@ -469,7 +469,7 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
 
                         {/* Preset list */}
                         {presets && presets.length > 0 && (
-                            <div className="lumiverse-presets-list">
+                            <div className="ado-presets-list">
                                 {presets.map((preset, index) => {
                                     const updateInfo = availableUpdates.find(u => u.slug === preset.slug);
                                     return (
@@ -492,9 +492,9 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
                     </div>
 
                     {/* Reasoning / CoT Section */}
-                    <div className="lumiverse-presets-section">
-                        <div className="lumiverse-presets-section-header">
-                            <div className="lumiverse-presets-section-title">
+                    <div className="ado-presets-section">
+                        <div className="ado-presets-section-header">
+                            <div className="ado-presets-section-title">
                                 <Brain size={14} strokeWidth={2} />
                                 <span>Reasoning / Chain of Thought</span>
                             </div>
@@ -521,9 +521,9 @@ function ChatPresetsModal({ onClose, availableUpdates = [], onUpdateComplete }) 
                 </div>
 
                 {/* Footer */}
-                <div className="lumiverse-presets-modal-footer">
+                <div className="ado-presets-modal-footer">
                     <button
-                        className="lumiverse-presets-modal-btn lumiverse-presets-modal-btn--primary"
+                        className="ado-presets-modal-btn ado-presets-modal-btn--primary"
                         onClick={onClose}
                         type="button"
                     >
@@ -612,7 +612,7 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
     return (
         <div 
             className={clsx(
-                'lumiverse-preset-card',
+                'ado-preset-card',
                 isExpanded && 'is-expanded',
                 updateAvailable && 'has-update'
             )}
@@ -624,9 +624,9 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
             aria-expanded={isExpanded}
             aria-label={`${preset.name} preset${updateAvailable ? ' - update available' : ''}`}
         >
-            <div className="lumiverse-preset-card-header">
+            <div className="ado-preset-card-header">
                 <div className={clsx(
-                    'lumiverse-preset-card-icon',
+                    'ado-preset-card-icon',
                     updateAvailable && 'has-update'
                 )}>
                     {updateAvailable ? (
@@ -635,14 +635,14 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                         <FileJson size={16} strokeWidth={1.5} />
                     )}
                 </div>
-                <div className="lumiverse-preset-card-info">
-                    <span className="lumiverse-preset-card-name">
+                <div className="ado-preset-card-info">
+                    <span className="ado-preset-card-name">
                         {preset.name}
                         {updateAvailable && (
-                            <span className="lumiverse-preset-card-update-badge">Update</span>
+                            <span className="ado-preset-card-update-badge">Update</span>
                         )}
                     </span>
-                    <span className="lumiverse-preset-card-meta">
+                    <span className="ado-preset-card-meta">
                         {updateAvailable ? (
                             <>
                                 <ArrowUpCircle size={10} strokeWidth={2} />
@@ -656,10 +656,10 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                         )}
                     </span>
                 </div>
-                <div className="lumiverse-preset-card-actions">
+                <div className="ado-preset-card-actions">
                     {/* Quick download latest */}
                     <button
-                        className="lumiverse-preset-card-download"
+                        className="ado-preset-card-download"
                         onClick={(e) => {
                             e.stopPropagation();
                             onDownload(preset.slug, 'latest', preset.latestVersion?.name);
@@ -669,7 +669,7 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                         type="button"
                     >
                         {downloadingVersion === `${preset.slug}-latest` ? (
-                            <Loader2 size={14} strokeWidth={2} className="lumiverse-spin" />
+                            <Loader2 size={14} strokeWidth={2} className="ado-spin" />
                         ) : (
                             <Download size={14} strokeWidth={2} />
                         )}
@@ -677,7 +677,7 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                     <ChevronRight 
                         size={14} 
                         strokeWidth={2}
-                        className="lumiverse-preset-card-chevron"
+                        className="ado-preset-card-chevron"
                     />
                 </div>
             </div>
@@ -685,13 +685,13 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
             {/* Expanded version list - CSS grid collapse for smooth animation */}
             <div 
                 className={clsx(
-                    'lumiverse-preset-card-versions',
+                    'ado-preset-card-versions',
                     isExpanded && 'is-expanded'
                 )}
                 role="region"
                 aria-label={`${preset.name} versions`}
             >
-                <div className="lumiverse-preset-card-versions-inner">
+                <div className="ado-preset-card-versions-inner">
                     {visibleVersions.map((version) => {
                         const versionKey = `${preset.slug}-${version.slug}`;
                         const isDownloading = downloadingVersion === versionKey;
@@ -700,30 +700,30 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                             <div 
                                 key={version.slug}
                                 className={clsx(
-                                    'lumiverse-preset-version',
+                                    'ado-preset-version',
                                     version.isProlix && 'is-prolix',
                                     version.isLatest && 'is-latest'
                                 )}
                             >
-                                <div className="lumiverse-preset-version-info">
-                                    <span className="lumiverse-preset-version-name">
+                                <div className="ado-preset-version-info">
+                                    <span className="ado-preset-version-name">
                                         {version.name}
                                     </span>
-                                    <div className="lumiverse-preset-version-badges">
+                                    <div className="ado-preset-version-badges">
                                         {version.isLatest && (
-                                            <span className="lumiverse-preset-version-badge is-latest">
+                                            <span className="ado-preset-version-badge is-latest">
                                                 Latest
                                             </span>
                                         )}
                                         {version.isProlix && (
-                                            <span className="lumiverse-preset-version-badge is-prolix">
+                                            <span className="ado-preset-version-badge is-prolix">
                                                 Prolix
                                             </span>
                                         )}
                                     </div>
                                 </div>
                                 <button
-                                    className="lumiverse-preset-version-download"
+                                    className="ado-preset-version-download"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onDownload(preset.slug, version.slug, version.name);
@@ -733,7 +733,7 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                                     aria-label={`Download ${version.name}`}
                                 >
                                     {isDownloading ? (
-                                        <Loader2 size={12} strokeWidth={2} className="lumiverse-spin" />
+                                        <Loader2 size={12} strokeWidth={2} className="ado-spin" />
                                     ) : (
                                         <>
                                             <Download size={12} strokeWidth={2} />
@@ -748,7 +748,7 @@ function PresetCard({ preset, isExpanded, onToggle, onDownload, downloadingVersi
                     {/* Show more button for pagination */}
                     {hasMore && (
                         <button
-                            className="lumiverse-preset-versions-showmore"
+                            className="ado-preset-versions-showmore"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setShowAllVersions(true);

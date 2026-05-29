@@ -31,7 +31,7 @@ export default function TokenBadge({ tokenCount, content }) {
 
     return (
         <span
-            className="lcs-token-badge"
+            className="ado-token-badge"
             onClick={handleClick}
             title={count ? `${count} tokens` : 'Click to count tokens'}
         >

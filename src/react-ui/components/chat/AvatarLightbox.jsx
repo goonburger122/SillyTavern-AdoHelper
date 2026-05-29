@@ -12,10 +12,10 @@
 import React, { useEffect, useCallback, useRef, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import useFixedPositionFix from '../../hooks/useFixedPositionFix';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const selectLightbox = () => store.getState().chatSheld?.avatarLightbox || null;
 
 const MIN_SCALE = 1;
@@ -249,12 +249,12 @@ export default function AvatarLightbox() {
     if (!lightbox) return null;
 
     return createPortal(
-        <div className="lcs-avatar-lightbox" onClick={dismiss}>
-            <div className="lcs-avatar-lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <div className="ado-avatar-lightbox" onClick={dismiss}>
+            <div className="ado-avatar-lightbox-content" onClick={(e) => e.stopPropagation()}>
                 {/* Gallery prev button */}
                 {isGalleryMode && (
                     <button
-                        className="lcs-lightbox-nav lcs-lightbox-nav--prev"
+                        className="ado-lightbox-nav ado-lightbox-nav--prev"
                         onClick={() => navigateGallery('prev')}
                         disabled={galleryIndex <= 0}
                         title="Previous image"
@@ -266,7 +266,7 @@ export default function AvatarLightbox() {
 
                 <img
                     ref={imgRef}
-                    className="lcs-avatar-lightbox-img"
+                    className="ado-avatar-lightbox-img"
                     src={lightbox.src}
                     alt={lightbox.name || ''}
                     onClick={handleImgClick}
@@ -278,7 +278,7 @@ export default function AvatarLightbox() {
                 {/* Gallery next button */}
                 {isGalleryMode && (
                     <button
-                        className="lcs-lightbox-nav lcs-lightbox-nav--next"
+                        className="ado-lightbox-nav ado-lightbox-nav--next"
                         onClick={() => navigateGallery('next')}
                         disabled={galleryIndex >= galleryLength - 1}
                         title="Next image"
@@ -290,12 +290,12 @@ export default function AvatarLightbox() {
 
                 {/* Name label */}
                 {lightbox.name && (
-                    <span className="lcs-avatar-lightbox-name">{lightbox.name}</span>
+                    <span className="ado-avatar-lightbox-name">{lightbox.name}</span>
                 )}
 
                 {/* Gallery counter */}
                 {isGalleryMode && (
-                    <span className="lcs-lightbox-counter">
+                    <span className="ado-lightbox-counter">
                         {galleryIndex + 1} / {galleryLength}
                     </span>
                 )}

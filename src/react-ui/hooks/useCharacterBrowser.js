@@ -7,7 +7,7 @@
  */
 
 import { useState, useMemo, useCallback, useSyncExternalStore, useRef, useEffect } from "react";
-import { useLumiverseStore, saveToExtension } from "../store/LumiverseContext";
+import { useAdoHelperStore, saveToExtension } from "../store/AdoHelperContext";
 import {
   selectCharacter,
   importCharacterFiles,
@@ -17,7 +17,7 @@ import {
   batchDeleteCharacters,
 } from "../../lib/characterBrowserService.js";
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const MAX_FAVORITES = 15;
 
 // Stable selectors

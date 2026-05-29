@@ -118,24 +118,24 @@ jQuery(async () => {
           return new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
         };
 
-        let html = `<div class="lumiverse-lp-container"><div class="lumiverse-lp-bg"><div class="lumiverse-lp-bg-glow lumiverse-lp-bg-glow-1"></div><div class="lumiverse-lp-bg-glow lumiverse-lp-bg-glow-2"></div><div class="lumiverse-lp-bg-glow lumiverse-lp-bg-glow-3"></div></div><div class="lumiverse-lp-grid"></div><div class="lumiverse-lp-content"><header class="lumiverse-lp-header"><div class="lumiverse-lp-logo"><div class="lumiverse-lp-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div><div class="lumiverse-lp-logo-text"><h1>Ado Helper</h1><span>Continue your story</span></div></div><button class="lumiverse-lp-btn lumiverse-lp-btn-toggle" id="ado-lp-toggle" type="button"><span>Show Sheld</span></button></header><main class="lumiverse-lp-main">`;
+        let html = `<div class="ado-lp-container"><div class="ado-lp-bg"><div class="ado-lp-bg-glow ado-lp-bg-glow-1"></div><div class="ado-lp-bg-glow ado-lp-bg-glow-2"></div><div class="ado-lp-bg-glow ado-lp-bg-glow-3"></div></div><div class="ado-lp-grid"></div><div class="ado-lp-content"><header class="ado-lp-header"><div class="ado-lp-logo"><div class="ado-lp-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div><div class="ado-lp-logo-text"><h1>Ado Helper</h1><span>Continue your story</span></div></div><button class="ado-lp-btn ado-lp-btn-toggle" id="ado-lp-toggle" type="button"><span>Show Sheld</span></button></header><main class="ado-lp-main">`;
 
         if (allItems.length === 0) {
-          html += `<div class="lumiverse-lp-empty"><h3>Begin Your Journey</h3><p>No recent conversations found.</p></div>`;
+          html += `<div class="ado-lp-empty"><h3>Begin Your Journey</h3><p>No recent conversations found.</p></div>`;
         } else {
-          html += '<div class="lumiverse-lp-grid-cards">';
+          html += '<div class="ado-lp-grid-cards">';
           allItems.forEach((item, i) => {
             const isGroup = item._type === 'group';
             let av = isGroup ? (item.avatar_url || '/img/fa-solid-groups.svg') : item.avatar && getThumbnailUrl ? getThumbnailUrl('avatar', item.avatar) : item.avatar ? `/characters/${encodeURIComponent(item.avatar)}` : '/img/fa-solid-user.svg';
-            html += `<div class="lumiverse-lp-card" data-type="${item._type}" data-id="${isGroup ? item.id : item._index}" style="animation-delay:${i*60}ms"><div class="lumiverse-lp-card-shimmer"></div><div class="lumiverse-lp-card-image-container"><div class="lumiverse-lp-card-glow"></div>${isGroup ? '<div class="lumiverse-lp-card-avatar-group"></div>' : `<img src="${av}" alt="${item.name}" class="lumiverse-lp-card-avatar" loading="lazy" onerror="this.src='/img/fa-solid-user.svg'">`}<div class="lumiverse-lp-card-time-badge"><span>${fmt(item._sortDate)}</span></div></div><div class="lumiverse-lp-card-content"><h3 class="lumiverse-lp-card-name">${item.name||'Unnamed'}</h3>${isGroup?'<span class="lumiverse-lp-card-badge">Group</span>':''}</div></div>`;
+            html += `<div class="ado-lp-card" data-type="${item._type}" data-id="${isGroup ? item.id : item._index}" style="animation-delay:${i*60}ms"><div class="ado-lp-card-shimmer"></div><div class="ado-lp-card-image-container"><div class="ado-lp-card-glow"></div>${isGroup ? '<div class="ado-lp-card-avatar-group"></div>' : `<img src="${av}" alt="${item.name}" class="ado-lp-card-avatar" loading="lazy" onerror="this.src='/img/fa-solid-user.svg'">`}<div class="ado-lp-card-time-badge"><span>${fmt(item._sortDate)}</span></div></div><div class="ado-lp-card-content"><h3 class="ado-lp-card-name">${item.name||'Unnamed'}</h3>${isGroup?'<span class="ado-lp-card-badge">Group</span>':''}</div></div>`;
           });
           html += '</div>';
         }
 
-        html += `</main><footer class="lumiverse-lp-footer"><p>Select a character to continue</p></footer></div></div>`;
+        html += `</main><footer class="ado-lp-footer"><p>Select a character to continue</p></footer></div></div>`;
         container.innerHTML = html;
 
-        container.querySelectorAll('.lumiverse-lp-card').forEach(card => {
+        container.querySelectorAll('.ado-lp-card').forEach(card => {
           card.addEventListener('click', async () => {
             try {
               if (card.dataset.type === 'group') { if (openGroupById) await openGroupById(card.dataset.id); }

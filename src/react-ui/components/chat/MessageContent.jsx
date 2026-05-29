@@ -15,9 +15,9 @@ const cleanOOCContent = (t) => t;
 const getLumiaAvatarByName = () => null;
 const refreshOocColorCache = () => {};
 const applyRegexToContent = (t) => t;
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore (prevents new-reference-every-call loops)
 const EMPTY_COUNCIL_CHAT_STYLE = { enabled: false };
@@ -32,8 +32,8 @@ const selectTheme = () => store.getState().theme;
 // heavy regex/sanitize passes and keep rendering fully under our control.
 //
 // Custom renderer adds themed prose classes:
-// - <em> → .lcs-prose-italic (thoughts / internal monologue)
-// - <strong> → .lcs-prose-bold (emphasis)
+// - <em> → .ado-prose-italic (thoughts / internal monologue)
+// - <strong> → .ado-prose-bold (emphasis)
 // - <blockquote> inherits themed color from CSS
 // Dialogue coloring ("quoted speech") is handled in post-processing
 // since Marked doesn't have a dedicated token for quoted strings.
@@ -44,11 +44,11 @@ const md = new Marked({
     renderer: {
         em({ tokens }) {
             const body = this.parser.parseInline(tokens);
-            return `<em class="lcs-prose-italic">${body}</em>`;
+            return `<em class="ado-prose-italic">${body}</em>`;
         },
         strong({ tokens }) {
             const body = this.parser.parseInline(tokens);
-            return `<strong class="lcs-prose-bold">${body}</strong>`;
+            return `<strong class="ado-prose-bold">${body}</strong>`;
         },
         // Add data-code-lang attribute to <pre> for fenced code blocks.
         // This lets extensions (e.g. SimTracker) target specific code blocks
@@ -139,7 +139,7 @@ function colorizeDialogue(html) {
 
             if (isLiteral || isEntity) {
                 if (!inQuote) {
-                    output += '<span class="lcs-prose-dialogue">&quot;';
+                    output += '<span class="ado-prose-dialogue">&quot;';
                     inQuote = true;
                 } else {
                     output += '&quot;</span>';
@@ -316,7 +316,7 @@ export default function MessageContent({ content, oocMatches, isSystem, isUser, 
                 targetNode = textNode.splitText(splitAt);
             }
             const wrapper = document.createElement('span');
-            wrapper.className = 'lcs-chunk-fade';
+            wrapper.className = 'ado-chunk-fade';
             targetNode.parentNode.insertBefore(wrapper, targetNode);
             wrapper.appendChild(targetNode);
         }
@@ -351,12 +351,12 @@ export default function MessageContent({ content, oocMatches, isSystem, isUser, 
         // with backdrop-filter doesn't repaint correctly (browser compositing bug),
         // causing a "blank" viewport that only scrolling fixes.
         return (
-            <div className="lcs-message-content">
+            <div className="ado-message-content">
                 {isStreaming && (
-                    <div className="lcs-streaming">
-                        <div className="lcs-streaming-dot" />
-                        <div className="lcs-streaming-dot" />
-                        <div className="lcs-streaming-dot" />
+                    <div className="ado-streaming">
+                        <div className="ado-streaming-dot" />
+                        <div className="ado-streaming-dot" />
+                        <div className="ado-streaming-dot" />
                     </div>
                 )}
             </div>
@@ -368,7 +368,7 @@ export default function MessageContent({ content, oocMatches, isSystem, isUser, 
         return (
             <div
                 ref={contentRef}
-                className="lcs-message-content"
+                className="ado-message-content"
                 dangerouslySetInnerHTML={{ __html: formattedContent }}
             />
         );
@@ -378,7 +378,7 @@ export default function MessageContent({ content, oocMatches, isSystem, isUser, 
     const activeSegments = useIrcMode ? processedSegments : segments;
 
     return (
-        <div ref={contentRef} className="lcs-message-content">
+        <div ref={contentRef} className="ado-message-content">
             {activeSegments.map((segment, i) => {
                 // IRC batch → single container with all entries
                 if (segment.type === 'irc-batch') {

@@ -7,9 +7,9 @@
  * caused by ST's `-webkit-transform: translateZ(0)` on <html> and other
  * containing-block quirks that interfere with `position: fixed` in CSS classes.
  *
- * The mount element carries .lcs-app so CSS custom properties (--lcs-*,
- * --lumiverse-*) cascade to the panel, but its layout styles are overridden
- * inline to prevent .lcs-app's flex/sizing rules from interfering.
+ * The mount element carries .ado-app so CSS custom properties (--ado-*,
+ * --ado-*) cascade to the panel, but its layout styles are overridden
+ * inline to prevent .ado-app's flex/sizing rules from interfering.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -17,7 +17,7 @@ import { createPortal } from 'react-dom';
 import AuthorsNotePanel from './AuthorsNotePanel';
 import { getTopBarHeight } from '../../../lib/domUtils';
 
-const MOUNT_ID = 'lumiverse-an-portal';
+const MOUNT_ID = 'ado-an-portal';
 
 export default function AuthorsNotePortal() {
     const [portalTarget, setPortalTarget] = useState(null);
@@ -28,9 +28,9 @@ export default function AuthorsNotePortal() {
         if (!el) {
             el = document.createElement('div');
             el.id = MOUNT_ID;
-            // .lcs-app provides CSS custom variable cascade (--lcs-*, --lumiverse-*)
-            el.className = 'lcs-app';
-            // Inline styles override .lcs-app's layout rules (display:flex,
+            // .ado-app provides CSS custom variable cascade (--ado-*, --ado-*)
+            el.className = 'ado-app';
+            // Inline styles override .ado-app's layout rules (display:flex,
             // width:100%, height:100%) and establish reliable fixed positioning.
             // Mirrors the ViewportPanel body-level mount pattern.
             const topOffset = getTopBarHeight();

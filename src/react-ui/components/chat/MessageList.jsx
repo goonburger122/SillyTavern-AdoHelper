@@ -10,11 +10,11 @@
 
 import React, { useRef, useEffect, useLayoutEffect, useSyncExternalStore } from 'react';
 import { MessageSquare } from 'lucide-react';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { loadOlderMessages } from '../../../lib/chatSheldService.js';
 import MessageCard from './MessageCard';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const selectBatchDeleteMode = () => store.getState().chatSheld?.batchDeleteMode || false;
 const selectBatchDeleteFromId = () => store.getState().chatSheld?.batchDeleteFromId ?? null;
 const selectActiveChat = () => store.getState().chatSheld?.activeChat || null;
@@ -58,7 +58,7 @@ export default function MessageList({ messages, isStreaming, streamingContent, s
      */
     function getScrollContainer() {
         return scrollContainerRef?.current
-            || bottomRef.current?.closest('.lcs-scroll-container');
+            || bottomRef.current?.closest('.ado-scroll-container');
     }
 
     /**
@@ -349,8 +349,8 @@ export default function MessageList({ messages, isStreaming, streamingContent, s
 
     // ── Viewport-gated blur for bubble mode ──
     // In bubble mode, backdrop-filter is only applied to cards visible in the
-    // viewport (+ 200px buffer). An IntersectionObserver toggles .lcs-in-viewport
-    // on each card, and the CSS rule `.lcs-bubble .lcs-message.lcs-in-viewport`
+    // viewport (+ 200px buffer). An IntersectionObserver toggles .ado-in-viewport
+    // on each card, and the CSS rule `.ado-bubble .ado-message.ado-in-viewport`
     // applies the blur. Off-screen cards skip the expensive GPU compositing layer.
     // This reduces active blur layers from N (entire chat) to ~5-8 (visible cards).
     useEffect(() => {
@@ -361,29 +361,29 @@ export default function MessageList({ messages, isStreaming, streamingContent, s
         const observer = new IntersectionObserver(
             (entries) => {
                 for (let i = 0; i < entries.length; i++) {
-                    entries[i].target.classList.toggle('lcs-in-viewport', entries[i].isIntersecting);
+                    entries[i].target.classList.toggle('ado-in-viewport', entries[i].isIntersecting);
                 }
             },
             { root: container, rootMargin: '200px 0px' }
         );
 
-        const cards = container.querySelectorAll('.lcs-message');
+        const cards = container.querySelectorAll('.ado-message');
         cards.forEach(el => observer.observe(el));
 
         return () => {
             observer.disconnect();
-            const remaining = container.querySelectorAll('.lcs-in-viewport');
-            remaining.forEach(el => el.classList.remove('lcs-in-viewport'));
+            const remaining = container.querySelectorAll('.ado-in-viewport');
+            remaining.forEach(el => el.classList.remove('ado-in-viewport'));
         };
     }, [displayMode, messages.length, scrollContainerRef]);
 
     if (messages.length === 0) {
         return (
-            <div className="lcs-empty">
-                <div className="lcs-empty-icon">
+            <div className="ado-empty">
+                <div className="ado-empty-icon">
                     <MessageSquare size={32} />
                 </div>
-                <div className="lcs-empty-text">
+                <div className="ado-empty-text">
                     No messages yet. Start a conversation!
                 </div>
             </div>
@@ -391,11 +391,11 @@ export default function MessageList({ messages, isStreaming, streamingContent, s
     }
 
     return (
-        <div className="lcs-message-list">
+        <div className="ado-message-list">
             {/* Load more sentinel — visible when older messages exist in ST's chat[] */}
             {canFetchMore && (
-                <div className="lcs-load-more" ref={sentinelRef}>
-                    <div className="lcs-load-more-spinner" />
+                <div className="ado-load-more" ref={sentinelRef}>
+                    <div className="ado-load-more-spinner" />
                 </div>
             )}
 

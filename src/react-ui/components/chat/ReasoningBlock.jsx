@@ -88,24 +88,24 @@ export default function ReasoningBlock({ content, duration, isStreaming }) {
     }
 
     return (
-        <div className="lcs-reasoning">
+        <div className="ado-reasoning">
             <button
-                className="lcs-reasoning-toggle"
+                className="ado-reasoning-toggle"
                 onClick={toggle}
                 type="button"
                 aria-expanded={isOpen}
             >
                 <ChevronRight
                     size={14}
-                    className={`lcs-reasoning-chevron ${isOpen ? 'lcs-reasoning-chevron--open' : ''}`}
+                    className={`ado-reasoning-chevron ${isOpen ? 'ado-reasoning-chevron--open' : ''}`}
                 />
                 <Brain size={14} style={{ opacity: 0.6 }} />
                 <span>{labelText}</span>
             </button>
-            <div className={`lcs-reasoning-body-wrap${isOpen ? ' lcs-reasoning-body-wrap--open' : ''}`}>
-                <div className="lcs-reasoning-body-overflow">
+            <div className={`ado-reasoning-body-wrap${isOpen ? ' ado-reasoning-body-wrap--open' : ''}`}>
+                <div className="ado-reasoning-body-overflow">
                     <div
-                        className="lcs-reasoning-body"
+                        className="ado-reasoning-body"
                         dangerouslySetInnerHTML={{ __html: html }}
                     />
                 </div>

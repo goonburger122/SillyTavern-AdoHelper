@@ -106,7 +106,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
             );
         }
         return (
-            <div className="lumiverse-ce-expandable">
+            <div className="ado-ce-expandable">
                 <TextArea
                     value={fieldValue}
                     onChange={onFieldChange}
@@ -114,7 +114,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                     rows={rows}
                 />
                 <button
-                    className="lumiverse-ce-expand-btn"
+                    className="ado-ce-expand-btn"
                     onClick={() => setExpanderField({ field: expandField, title: expandTitle })}
                     type="button"
                     title="Expand editor"
@@ -128,8 +128,8 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
     // ─── Loading State ────────────────────────────────────────
     if (isLoading) {
         return (
-            <div className="lumiverse-ce-loading">
-                <Loader2 size={24} strokeWidth={1.5} className="lumiverse-cb-spinner" />
+            <div className="ado-ce-loading">
+                <Loader2 size={24} strokeWidth={1.5} className="ado-cb-spinner" />
                 <span>Loading character data&hellip;</span>
             </div>
         );
@@ -138,12 +138,12 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
     // ─── Error State ──────────────────────────────────────────
     if (loadError || !formState) {
         return (
-            <div className="lumiverse-ce-loading">
-                <span style={{ color: 'var(--lumiverse-danger)' }}>
+            <div className="ado-ce-loading">
+                <span style={{ color: 'var(--ado-danger)' }}>
                     {loadError || 'Failed to load character data'}
                 </span>
                 <button
-                    className="lumiverse-ce-btn lumiverse-ce-btn--secondary"
+                    className="ado-ce-btn ado-ce-btn--secondary"
                     onClick={onBack}
                     type="button"
                     style={{ marginTop: '12px' }}
@@ -211,18 +211,18 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
     const renderGreetings = () => (
         <>
             {formState.alternate_greetings.length === 0 ? (
-                <div style={{ fontSize: '12px', color: 'var(--lumiverse-text-dim)', marginBottom: '12px' }}>
+                <div style={{ fontSize: '12px', color: 'var(--ado-text-dim)', marginBottom: '12px' }}>
                     No alternate greetings. Add one below.
                 </div>
             ) : (
                 formState.alternate_greetings.map((greeting, idx) => (
-                    <div key={idx} className="lumiverse-ce-greeting-item">
-                        <div className="lumiverse-ce-greeting-header">
-                            <span className="lumiverse-ce-greeting-label">Greeting {idx + 1}</span>
+                    <div key={idx} className="ado-ce-greeting-item">
+                        <div className="ado-ce-greeting-header">
+                            <span className="ado-ce-greeting-label">Greeting {idx + 1}</span>
                             <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                                 {!wideMode && (
                                     <button
-                                        className="lumiverse-ce-greeting-action"
+                                        className="ado-ce-greeting-action"
                                         onClick={() => setExpanderField({ field: `greeting_${idx}`, title: `Greeting ${idx + 1}` })}
                                         type="button"
                                         title="Expand editor"
@@ -231,7 +231,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                                     </button>
                                 )}
                                 <button
-                                    className="lumiverse-ce-greeting-delete"
+                                    className="ado-ce-greeting-delete"
                                     onClick={() => removeGreeting(idx)}
                                     type="button"
                                     title="Remove greeting"
@@ -259,7 +259,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                 ))
             )}
             <button
-                className="lumiverse-ce-btn lumiverse-ce-btn--secondary lumiverse-ce-add-greeting"
+                className="ado-ce-btn ado-ce-btn--secondary ado-ce-add-greeting"
                 onClick={addGreeting}
                 type="button"
             >
@@ -311,7 +311,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
     const renderAdvanced = () => (
         <>
             <FormField label="Talkativeness" hint={`${(formState.talkativeness * 100).toFixed(0)}%`}>
-                <div className="lumiverse-ce-talkativeness">
+                <div className="ado-ce-talkativeness">
                     <input
                         type="range"
                         min="0"
@@ -319,15 +319,15 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                         step="0.05"
                         value={formState.talkativeness}
                         onChange={(e) => updateField('talkativeness', parseFloat(e.target.value))}
-                        className="lumiverse-ce-range"
+                        className="ado-ce-range"
                     />
-                    <span className="lumiverse-ce-range-value">
+                    <span className="ado-ce-range-value">
                         {(formState.talkativeness * 100).toFixed(0)}%
                     </span>
                 </div>
             </FormField>
             <FormField label="Favorite">
-                <label className="lumiverse-ce-checkbox-label">
+                <label className="ado-ce-checkbox-label">
                     <input
                         type="checkbox"
                         checked={formState.fav}
@@ -353,7 +353,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                 })}
             </FormField>
             <div style={{ display: 'flex', gap: '12px' }}>
-                <FormField label="Depth" className="lumiverse-ce-half-field">
+                <FormField label="Depth" className="ado-ce-half-field">
                     <TextInput
                         value={String(formState.depth_prompt_depth)}
                         onChange={(v) => {
@@ -363,7 +363,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                         placeholder="4"
                     />
                 </FormField>
-                <FormField label="Role" className="lumiverse-ce-half-field">
+                <FormField label="Role" className="ado-ce-half-field">
                     <Select
                         value={formState.depth_prompt_role}
                         onChange={(v) => updateField('depth_prompt_role', v)}
@@ -381,18 +381,18 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
     const TAB_RENDERERS = { core: renderCorePrompts, system: renderSystem, greetings: renderGreetings, identity: renderIdentity, advanced: renderAdvanced };
 
     return (
-        <div className={clsx('lumiverse-ce-panel', wideMode && 'lumiverse-ce-panel--wide')}>
+        <div className={clsx('ado-ce-panel', wideMode && 'ado-ce-panel--wide')}>
             {/* ─── Hero Header ─────────────────────────────── */}
-            <div className="lumiverse-ce-hero">
-                <div className="lumiverse-ce-hero-avatar" onClick={handleAvatarClick} title="Click to change avatar">
+            <div className="ado-ce-hero">
+                <div className="ado-ce-hero-avatar" onClick={handleAvatarClick} title="Click to change avatar">
                     <LazyImage
                         src={displayAvatarUrl}
                         alt={formState.name}
-                        className="lumiverse-ce-hero-avatar-img"
+                        className="ado-ce-hero-avatar-img"
                         spinnerSize={16}
                         fallback={<User size={28} strokeWidth={1.5} />}
                     />
-                    <div className="lumiverse-ce-avatar-overlay">
+                    <div className="ado-ce-avatar-overlay">
                         <Upload size={14} strokeWidth={2} />
                     </div>
                     <input
@@ -403,20 +403,20 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                         style={{ display: 'none' }}
                     />
                 </div>
-                <div className="lumiverse-ce-hero-info">
-                    <span className="lumiverse-ce-hero-name" title={formState.name}>
+                <div className="ado-ce-hero-info">
+                    <span className="ado-ce-hero-name" title={formState.name}>
                         {formState.name}
                     </span>
                     {formState.creator && (
-                        <span className="lumiverse-ce-hero-creator">by {formState.creator}</span>
+                        <span className="ado-ce-hero-creator">by {formState.creator}</span>
                     )}
                 </div>
             </div>
 
             {/* ─── Action Bar ─────────────────────────────── */}
-            <div className="lumiverse-ce-header">
+            <div className="ado-ce-header">
                 <button
-                    className="lumiverse-ce-back-btn"
+                    className="ado-ce-back-btn"
                     onClick={handleBack}
                     type="button"
                     title="Back to browser"
@@ -425,12 +425,12 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                     <span>Back</span>
                 </button>
 
-                {isDirty && <span className="lumiverse-ce-dirty-dot" title="Unsaved changes" />}
+                {isDirty && <span className="ado-ce-dirty-dot" title="Unsaved changes" />}
 
-                <div className="lumiverse-ce-actions">
+                <div className="ado-ce-actions">
                     {!isNew && (
                         <button
-                            className="lumiverse-ce-btn lumiverse-ce-btn--danger"
+                            className="ado-ce-btn ado-ce-btn--danger"
                             onClick={() => setShowDeleteModal(true)}
                             disabled={isSaving || isDeletePending}
                             type="button"
@@ -441,7 +441,7 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                     )}
                     {!isNew && (
                         <button
-                            className="lumiverse-ce-btn lumiverse-ce-btn--secondary"
+                            className="ado-ce-btn ado-ce-btn--secondary"
                             onClick={revert}
                             disabled={!isDirty || isSaving}
                             type="button"
@@ -451,14 +451,14 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                         </button>
                     )}
                     <button
-                        className="lumiverse-ce-btn lumiverse-ce-btn--primary"
+                        className="ado-ce-btn ado-ce-btn--primary"
                         onClick={save}
                         disabled={isNew ? isSaving : (!isDirty || isSaving)}
                         type="button"
                         title={isNew ? "Create character" : "Save changes"}
                     >
                         {isSaving ? (
-                            <Loader2 size={13} strokeWidth={2} className="lumiverse-cb-spinner" />
+                            <Loader2 size={13} strokeWidth={2} className="ado-cb-spinner" />
                         ) : isNew ? (
                             <Plus size={13} strokeWidth={2} />
                         ) : (
@@ -473,11 +473,11 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
             {wideMode ? (
                 <>
                     {/* Tab Bar */}
-                    <div className="lumiverse-ce-tabs">
+                    <div className="ado-ce-tabs">
                         {WIDE_TABS.map(({ id, label, Icon }) => (
                             <button
                                 key={id}
-                                className={clsx('lumiverse-ce-tab', activeTab === id && 'lumiverse-ce-tab--active')}
+                                className={clsx('ado-ce-tab', activeTab === id && 'ado-ce-tab--active')}
                                 onClick={() => setActiveTab(id)}
                                 type="button"
                             >
@@ -488,12 +488,12 @@ export default function CharacterCardEditor({ item, onBack, wideMode = false }) 
                     </div>
 
                     {/* Tab Content — scrollable */}
-                    <div className="lumiverse-ce-tab-content">
+                    <div className="ado-ce-tab-content">
                         {TAB_RENDERERS[activeTab]?.()}
                     </div>
                 </>
             ) : (
-                <EditorContent className="lumiverse-ce-content">
+                <EditorContent className="ado-ce-content">
                     <EditorSection Icon={FileText} title="Core Prompts" defaultExpanded={true}>
                         {renderCorePrompts()}
                     </EditorSection>

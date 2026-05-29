@@ -1,10 +1,10 @@
 import React, { useState, useMemo, useSyncExternalStore, useCallback } from 'react';
 import clsx from 'clsx';
 import { Bookmark, Trash2, RefreshCw, Plus, Check, X, Clock, FileText, Zap, Heart, Users, Settings2 } from 'lucide-react';
-import { useLumiverseStore, useLumiverseActions, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, saveToExtension } from '../../store/AdoHelperContext';
 
 // Get store for direct state access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 const EMPTY_OBJECT = {};
@@ -78,65 +78,65 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
     }, [preset]);
 
     return (
-        <div className={clsx('lumiverse-preset-card', isActive && 'lumiverse-preset-card--active')}>
-            <div className="lumiverse-preset-card-header">
-                <span className="lumiverse-preset-card-icon">
+        <div className={clsx('ado-preset-card', isActive && 'ado-preset-card--active')}>
+            <div className="ado-preset-card-header">
+                <span className="ado-preset-card-icon">
                     <Bookmark size={16} strokeWidth={1.5} />
                 </span>
-                <span className="lumiverse-preset-card-name">{preset.name}</span>
+                <span className="ado-preset-card-name">{preset.name}</span>
                 {isActive && (
-                    <span className="lumiverse-preset-card-active-badge">
+                    <span className="ado-preset-card-active-badge">
                         <Check size={12} strokeWidth={2} /> Active
                     </span>
                 )}
             </div>
 
-            <div className="lumiverse-preset-card-meta">
+            <div className="ado-preset-card-meta">
                 {/* Separate trait counts with icons */}
-                <div className="lumiverse-preset-stats">
+                <div className="ado-preset-stats">
                     {counts.isCouncil ? (
                         // Council mode stats
                         <>
-                            <span className="lumiverse-preset-stat lumiverse-preset-stat--council">
+                            <span className="ado-preset-stat ado-preset-stat--council">
                                 <Users size={12} strokeWidth={1.5} /> {counts.members}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Zap size={12} strokeWidth={1.5} /> {counts.behaviors}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Heart size={12} strokeWidth={1.5} /> {counts.personalities}
                             </span>
                         </>
                     ) : (
                         // Normal or Chimera mode stats
                         <>
-                            <span className={clsx('lumiverse-preset-stat', counts.isChimera && 'lumiverse-preset-stat--chimera')}>
+                            <span className={clsx('ado-preset-stat', counts.isChimera && 'ado-preset-stat--chimera')}>
                                 <FileText size={12} strokeWidth={1.5} /> {counts.definitions}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Zap size={12} strokeWidth={1.5} /> {counts.behaviors}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Heart size={12} strokeWidth={1.5} /> {counts.personalities}
                             </span>
                         </>
                     )}
                 </div>
                 {preset.chimeraMode && (
-                    <span className="lumiverse-preset-card-mode">Chimera</span>
+                    <span className="ado-preset-card-mode">Chimera</span>
                 )}
                 {preset.councilMode && (
-                    <span className="lumiverse-preset-card-mode">Council</span>
+                    <span className="ado-preset-card-mode">Council</span>
                 )}
-                <span className="lumiverse-preset-card-time">
+                <span className="ado-preset-card-time">
                     <Clock size={12} strokeWidth={1.5} />
                     {formatRelativeTime(preset.updatedAt || preset.createdAt)}
                 </span>
             </div>
 
-            <div className="lumiverse-preset-card-actions">
+            <div className="ado-preset-card-actions">
                 <button
-                    className="lumiverse-preset-btn lumiverse-preset-btn--primary"
+                    className="ado-preset-btn ado-preset-btn--primary"
                     onClick={() => onLoad(preset.name)}
                     title="Load this preset"
                     type="button"
@@ -144,7 +144,7 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
                     Load
                 </button>
                 <button
-                    className="lumiverse-preset-btn"
+                    className="ado-preset-btn"
                     onClick={() => onUpdate(preset.name)}
                     title="Update preset with current selections"
                     type="button"
@@ -153,8 +153,8 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
                 </button>
                 <button
                     className={clsx(
-                        'lumiverse-preset-btn lumiverse-preset-btn--danger',
-                        isConfirmingDelete && 'lumiverse-preset-btn--confirming'
+                        'ado-preset-btn ado-preset-btn--danger',
+                        isConfirmingDelete && 'ado-preset-btn--confirming'
                     )}
                     onClick={handleDelete}
                     title={isConfirmingDelete ? 'Click again to confirm' : 'Delete preset'}
@@ -172,14 +172,14 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
  */
 function EmptyState({ onCreateClick }) {
     return (
-        <div className="lumiverse-preset-empty">
-            <span className="lumiverse-preset-empty-icon">
+        <div className="ado-preset-empty">
+            <span className="ado-preset-empty-icon">
                 <Bookmark size={32} strokeWidth={1.5} />
             </span>
             <h4>No Presets Saved</h4>
             <p>Save your current Lumia configuration as a preset to quickly switch between setups.</p>
             <button
-                className="lumiverse-preset-btn lumiverse-preset-btn--primary"
+                className="ado-preset-btn ado-preset-btn--primary"
                 onClick={onCreateClick}
                 style={{ marginTop: '16px' }}
                 type="button"
@@ -205,7 +205,7 @@ const styles = {
         alignItems: 'center',
         gap: '12px',
         padding: '16px 20px',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     headerIcon: {
@@ -216,7 +216,7 @@ const styles = {
         height: '40px',
         borderRadius: '10px',
         background: 'linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(147, 112, 219, 0.1))',
-        color: 'var(--lumiverse-primary)',
+        color: 'var(--ado-primary)',
     },
     headerText: {
         flex: 1,
@@ -225,12 +225,12 @@ const styles = {
         margin: 0,
         fontSize: '16px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     subtitle: {
         margin: '4px 0 0',
         fontSize: '12px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
     },
     scrollArea: {
         flex: '1 1 auto',
@@ -252,10 +252,10 @@ const styles = {
         flex: 1,
         padding: '10px 12px',
         fontSize: '13px',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         transition: 'border-color 0.2s ease',
     },
@@ -264,7 +264,7 @@ const styles = {
         justifyContent: 'flex-end',
         gap: '8px',
         padding: '12px 20px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     button: {
@@ -277,12 +277,12 @@ const styles = {
         transition: 'all 0.2s ease',
     },
     buttonSecondary: {
-        background: 'var(--lumiverse-surface)',
-        color: 'var(--lumiverse-text)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-surface)',
+        color: 'var(--ado-text)',
+        border: '1px solid var(--ado-border)',
     },
     buttonPrimary: {
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: 'white',
     },
 };
@@ -295,7 +295,7 @@ const styles = {
  * accessible from the extension settings panel.
  */
 function PresetManageModal({ onClose }) {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const [newPresetName, setNewPresetName] = useState('');
     const [isCreating, setIsCreating] = useState(false);
 
@@ -410,7 +410,7 @@ function PresetManageModal({ onClose }) {
                             autoFocus
                         />
                         <button
-                            className="lumiverse-preset-btn lumiverse-preset-btn--primary"
+                            className="ado-preset-btn ado-preset-btn--primary"
                             onClick={handleCreate}
                             disabled={!newPresetName.trim()}
                             type="button"
@@ -419,7 +419,7 @@ function PresetManageModal({ onClose }) {
                             <Check size={16} strokeWidth={2} />
                         </button>
                         <button
-                            className="lumiverse-preset-btn"
+                            className="ado-preset-btn"
                             onClick={() => {
                                 setIsCreating(false);
                                 setNewPresetName('');
@@ -432,11 +432,11 @@ function PresetManageModal({ onClose }) {
                     </div>
                 ) : (
                     <div style={styles.createSection}>
-                        <span style={{ fontSize: '13px', color: 'var(--lumiverse-text-secondary)', flex: 1 }}>
+                        <span style={{ fontSize: '13px', color: 'var(--ado-text-secondary)', flex: 1 }}>
                             Save your current Lumia configuration
                         </span>
                         <button
-                            className="lumiverse-preset-btn lumiverse-preset-btn--primary"
+                            className="ado-preset-btn ado-preset-btn--primary"
                             onClick={() => setIsCreating(true)}
                             type="button"
                         >
@@ -447,7 +447,7 @@ function PresetManageModal({ onClose }) {
                 )}
 
                 {/* Preset List */}
-                <div className="lumiverse-preset-list">
+                <div className="ado-preset-list">
                     {presetList.length === 0 ? (
                         <EmptyState onCreateClick={() => setIsCreating(true)} />
                     ) : (

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useLumiverseActions, useUI, useUpdates } from './store/LumiverseContext';
+import { useAdoHelperActions, useUI, useUpdates } from './store/AdoHelperContext';
 import SettingsPanelStub from './components/SettingsPanelStub';
 import ModalContainer from './components/ModalContainer';
 import PackDetailModal from './components/modals/PackDetailModal';
@@ -10,11 +10,11 @@ import { useUpdateChecker } from './hooks/useUpdateChecker';
 /* global SillyTavern */
 
 /**
- * Main App component for Lumiverse Helper
+ * Main App component for Ado Helper
  * This serves as the root of the React UI
  */
 function App() {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const ui = useUI();
     const { extensionUpdate } = useUpdates();
 
@@ -30,7 +30,7 @@ function App() {
     }, [actions, extensionUpdate?.latestVersion]);
 
     return (
-        <div className="lumiverse-app">
+        <div className="ado-app">
             {/* Update notification banner */}
             <UpdateBanner variant="full" onDismiss={handleDismissUpdate} />
 
@@ -45,16 +45,16 @@ function App() {
 
             {/* Loading overlay */}
             {ui.isLoading && (
-                <div className="lumiverse-loading-overlay">
-                    <div className="lumiverse-spinner" />
+                <div className="ado-loading-overlay">
+                    <div className="ado-spinner" />
                 </div>
             )}
 
             {/* Error toast */}
             {ui.error && (
-                <div className="lumiverse-error-toast" onClick={actions.clearError}>
+                <div className="ado-error-toast" onClick={actions.clearError}>
                     <span>{ui.error}</span>
-                    <button className="lumiverse-error-dismiss">Dismiss</button>
+                    <button className="ado-error-dismiss">Dismiss</button>
                 </div>
             )}
         </div>

@@ -387,19 +387,19 @@ function applyBackground(imageUrl, opacity, fadeMs) {
   }
 
   // --- Back layer: holds the current (old) image ---
-  let backLayer = document.querySelector("#lumiverse-bg-back");
+  let backLayer = document.querySelector("#ado-bg-back");
   if (!backLayer) {
     backLayer = document.createElement("div");
-    backLayer.id = "lumiverse-bg-back";
+    backLayer.id = "ado-bg-back";
     backLayer.style.cssText = `${BG_LAYER_CSS} z-index: 0; opacity: 1;`;
     bgElement.prepend(backLayer);
   }
 
   // --- Front layer: fades in the new image ---
-  let frontLayer = document.querySelector("#lumiverse-bg-front");
+  let frontLayer = document.querySelector("#ado-bg-front");
   if (!frontLayer) {
     frontLayer = document.createElement("div");
-    frontLayer.id = "lumiverse-bg-front";
+    frontLayer.id = "ado-bg-front";
     frontLayer.style.cssText = `${BG_LAYER_CSS} z-index: 1; opacity: 0;`;
     bgElement.prepend(frontLayer);
   }
@@ -427,10 +427,10 @@ function applyBackground(imageUrl, opacity, fadeMs) {
   }, fadeMs + 50);
 
   // --- Opacity overlay ---
-  let overlay = document.querySelector("#lumiverse-bg-overlay");
+  let overlay = document.querySelector("#ado-bg-overlay");
   if (!overlay) {
     overlay = document.createElement("div");
-    overlay.id = "lumiverse-bg-overlay";
+    overlay.id = "ado-bg-overlay";
     overlay.style.cssText = `
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none; z-index: 2;
@@ -442,7 +442,7 @@ function applyBackground(imageUrl, opacity, fadeMs) {
 
   // Push to React store for Chat Sheld awareness
   try {
-    const store = window.LumiverseUI?.getStore?.();
+    const store = window.AdoHelperUI?.getStore?.();
     if (store) {
       store.setState({ sceneBackground: imageUrl });
     }
@@ -512,7 +512,7 @@ export async function processSceneResult(sceneData, { force = false, signal } = 
 
   // Signal generating state to React
   try {
-    const store = window.LumiverseUI?.getStore?.();
+    const store = window.AdoHelperUI?.getStore?.();
     if (store) {
       store.setState({ sceneGenerating: true, lastSceneParams: scene });
     }
@@ -594,7 +594,7 @@ export async function processSceneResult(sceneData, { force = false, signal } = 
     return { success: false, error: err.message || "Scene image processing failed" };
   } finally {
     try {
-      const store = window.LumiverseUI?.getStore?.();
+      const store = window.AdoHelperUI?.getStore?.();
       if (store) {
         store.setState({ sceneGenerating: false });
       }
@@ -640,17 +640,17 @@ export async function applySceneBackground(chatId) {
  */
 function clearSceneBackgroundVisuals() {
   // Remove all three crossfade layers injected by applyBackground()
-  const backLayer = document.querySelector("#lumiverse-bg-back");
+  const backLayer = document.querySelector("#ado-bg-back");
   if (backLayer) backLayer.remove();
 
-  const frontLayer = document.querySelector("#lumiverse-bg-front");
+  const frontLayer = document.querySelector("#ado-bg-front");
   if (frontLayer) frontLayer.remove();
 
-  const overlay = document.querySelector("#lumiverse-bg-overlay");
+  const overlay = document.querySelector("#ado-bg-overlay");
   if (overlay) overlay.remove();
 
   try {
-    const store = window.LumiverseUI?.getStore?.();
+    const store = window.AdoHelperUI?.getStore?.();
     if (store) {
       store.setState({ sceneBackground: null });
     }
@@ -709,7 +709,7 @@ export async function generateManually() {
   // Signal generating state immediately so the UI shows the spinner
   // during the tool execution phase (before processSceneResult is reached)
   try {
-    const store = window.LumiverseUI?.getStore?.();
+    const store = window.AdoHelperUI?.getStore?.();
     if (store) store.setState({ sceneGenerating: true });
   } catch { /* non-critical */ }
 
@@ -740,7 +740,7 @@ export async function generateManually() {
     // Always reset generating state — covers tool failure, early returns,
     // and the case where processSceneResult already reset it
     try {
-      const store = window.LumiverseUI?.getStore?.();
+      const store = window.AdoHelperUI?.getStore?.();
       if (store) store.setState({ sceneGenerating: false });
     } catch { /* non-critical */ }
   }
@@ -765,7 +765,7 @@ export function abortImageGeneration() {
   // Immediately clear the generating state so the UI unblocks —
   // don't wait for the promise chain's finally block which may be delayed.
   try {
-    const store = window.LumiverseUI?.getStore?.();
+    const store = window.AdoHelperUI?.getStore?.();
     if (store) store.setState({ sceneGenerating: false });
   } catch { /* non-critical */ }
 }

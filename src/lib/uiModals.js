@@ -80,9 +80,9 @@ function applyModalHeightConstraints($modal) {
   modal.style.maxHeight = `${maxModalHeight}px`;
 
   // Get the modal's internal elements
-  const $header = $modal.find(".lumia-modal-header");
-  const $footer = $modal.find(".lumia-modal-footer");
-  const $content = $modal.find(".lumia-modal-content");
+  const $header = $modal.find(".ado-modal-header");
+  const $footer = $modal.find(".ado-modal-footer");
+  const $content = $modal.find(".ado-modal-content");
 
   // Calculate header and footer heights after modal is rendered
   // Use requestAnimationFrame to ensure DOM is painted
@@ -166,14 +166,14 @@ export function showSelectionModal(type) {
         </svg>`;
   }
 
-  $("#lumia-selection-modal").remove();
+  $("#ado-selection-modal").remove();
 
   // Build HTML for each pack
   let contentHtml = "";
 
   if (packs.length === 0) {
     contentHtml =
-      '<div class="lumia-modal-empty">No Lumia Packs loaded. Add one in settings!</div>';
+      '<div class="ado-modal-empty">No Lumia Packs loaded. Add one in settings!</div>';
   } else {
     packs.forEach((pack) => {
       const packItems = pack.items;
@@ -224,15 +224,15 @@ export function showSelectionModal(type) {
           const showDominant = dominantKey !== null;
 
           return `
-                <div class="lumia-card lumia-card-appear ${cardClass} ${isSelected ? "selected" : ""}"
+                <div class="ado-card ado-card-appear ${cardClass} ${isSelected ? "selected" : ""}"
                      data-pack="${escapedPackName}"
                      data-item="${escapedItemName}">
-                    <div class="lumia-card-image">
-                        ${imgToShow ? `<img src="${imgToShow}" alt="${escapedItemName}" loading="lazy"><div class="lumia-img-spinner"></div>` : `<div class="lumia-card-placeholder">?</div>`}
+                    <div class="ado-card-image">
+                        ${imgToShow ? `<img src="${imgToShow}" alt="${escapedItemName}" loading="lazy"><div class="ado-img-spinner"></div>` : `<div class="ado-card-placeholder">?</div>`}
                         ${
                           showDominant
                             ? `
-                        <div class="lumia-dominant-icon ${isDominant ? "dominant" : ""}"
+                        <div class="ado-dominant-icon ${isDominant ? "dominant" : ""}"
                              data-pack="${escapedPackName}"
                              data-item="${escapedItemName}"
                              title="${isDominant ? "Remove as dominant" : "Set as dominant trait"}">
@@ -241,13 +241,13 @@ export function showSelectionModal(type) {
                         `
                             : ""
                         }
-                        <div class="lumia-card-check">
+                        <div class="ado-card-check">
                             ${SVG_ICONS.check}
                         </div>
                         ${
                           isEditable
                             ? `
-                        <button class="lumia-card-edit-btn"
+                        <button class="ado-card-edit-btn"
                                 data-pack="${escapedPackName}"
                                 data-item="${escapedItemName}"
                                 title="Edit Lumia">
@@ -257,8 +257,8 @@ export function showSelectionModal(type) {
                             : ""
                         }
                     </div>
-                    <div class="lumia-card-info">
-                        <div class="lumia-card-name">${currentDefName || "Unknown"}</div>
+                    <div class="ado-card-info">
+                        <div class="ado-card-name">${currentDefName || "Unknown"}</div>
                     </div>
                 </div>
                 `;
@@ -266,26 +266,26 @@ export function showSelectionModal(type) {
         .join("");
 
       contentHtml += `
-            <div class="lumia-modal-panel lumia-collapsible lumia-pack-section">
-                <div class="lumia-modal-panel-header lumia-collapsible-trigger">
-                    <span class="lumia-panel-collapse-icon">
+            <div class="ado-modal-panel ado-collapsible ado-pack-section">
+                <div class="ado-modal-panel-header ado-collapsible-trigger">
+                    <span class="ado-panel-collapse-icon">
                         ${SVG_ICONS.chevron}
                     </span>
-                    <span class="lumia-modal-panel-icon">
+                    <span class="ado-modal-panel-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </span>
-                    <span class="lumia-modal-panel-title">${escapeHtml(pack.name)}</span>
-                    ${isEditable ? '<span class="lumia-pack-badge-custom">Custom</span>' : ''}
-                    <span class="lumia-modal-panel-count">${lumiaItems.length} items</span>
-                    ${isEditable ? `<button class="lumia-pack-edit-btn" data-pack="${escapeHtml(pack.name)}" title="Edit Pack">${SVG_ICONS.edit}</button>` : ''}
-                    <button class="lumia-icon-btn-sm lumia-remove-pack-btn" data-pack="${escapeHtml(pack.name)}" title="Remove Pack">
+                    <span class="ado-modal-panel-title">${escapeHtml(pack.name)}</span>
+                    ${isEditable ? '<span class="ado-pack-badge-custom">Custom</span>' : ''}
+                    <span class="ado-modal-panel-count">${lumiaItems.length} items</span>
+                    ${isEditable ? `<button class="ado-pack-edit-btn" data-pack="${escapeHtml(pack.name)}" title="Edit Pack">${SVG_ICONS.edit}</button>` : ''}
+                    <button class="ado-icon-btn-sm ado-remove-pack-btn" data-pack="${escapeHtml(pack.name)}" title="Remove Pack">
                         ${SVG_ICONS.trash}
                     </button>
                 </div>
-                <div class="lumia-modal-panel-content lumia-modal-panel-content-cards lumia-collapsible-content">
-                    <div class="lumia-card-grid">
+                <div class="ado-modal-panel-content ado-modal-panel-content-cards ado-collapsible-content">
+                    <div class="ado-card-grid">
                         ${itemsHtml}
                     </div>
                 </div>
@@ -295,32 +295,32 @@ export function showSelectionModal(type) {
   }
 
   const modalHtml = `
-        <dialog id="lumia-selection-modal" class="popup popup--animation-fast lumia-modal lumia-modal-selection">
-            <div class="lumia-modal-header">
-                <div class="lumia-modal-header-icon">
+        <dialog id="ado-selection-modal" class="popup popup--animation-fast ado-modal ado-modal-selection">
+            <div class="ado-modal-header">
+                <div class="ado-modal-header-icon">
                     ${headerIcon}
                 </div>
-                <div class="lumia-modal-header-text">
-                    <h3 class="lumia-modal-title">${title}</h3>
-                    <p class="lumia-modal-subtitle">${subtitle}</p>
+                <div class="ado-modal-header-text">
+                    <h3 class="ado-modal-title">${title}</h3>
+                    <p class="ado-modal-subtitle">${subtitle}</p>
                 </div>
-                <button class="lumia-clear-btn" title="Clear all selections">
+                <button class="ado-clear-btn" title="Clear all selections">
                     ${SVG_ICONS.clear}
                     <span>Clear</span>
                 </button>
             </div>
-            <div class="lumia-modal-content">
+            <div class="ado-modal-content">
                 ${contentHtml}
             </div>
-            <div class="lumia-modal-footer">
-                <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-modal-close-btn">Close</button>
-                ${isMulti ? '<button class="lumia-modal-btn lumia-modal-btn-primary lumia-modal-done">Done</button>' : ""}
+            <div class="ado-modal-footer">
+                <button class="ado-modal-btn ado-modal-btn-secondary ado-modal-close-btn">Close</button>
+                ${isMulti ? '<button class="ado-modal-btn ado-modal-btn-primary ado-modal-done">Done</button>' : ""}
             </div>
         </dialog>
     `;
 
   $("body").append(modalHtml);
-  const $modal = $("#lumia-selection-modal");
+  const $modal = $("#ado-selection-modal");
 
   // Calculate and apply proper height constraints
   applyModalHeightConstraints($modal);
@@ -342,23 +342,23 @@ export function showSelectionModal(type) {
     if (e.type === "click" && e.target === this) closeModal();
   });
 
-  $modal.find(".lumia-modal-close-btn, .lumia-modal-done").click(closeModal);
+  $modal.find(".ado-modal-close-btn, .ado-modal-done").click(closeModal);
 
   $modal.on("keydown", function (e) {
     if (e.key === "Escape") closeModal();
   });
 
   // Handle Collapsible Panels
-  $modal.find(".lumia-collapsible-trigger").click(function (e) {
+  $modal.find(".ado-collapsible-trigger").click(function (e) {
     // Don't collapse if clicking on remove button
-    if ($(e.target).closest(".lumia-remove-pack-btn").length > 0) {
+    if ($(e.target).closest(".ado-remove-pack-btn").length > 0) {
       return;
     }
-    $(this).closest(".lumia-collapsible").toggleClass("collapsed");
+    $(this).closest(".ado-collapsible").toggleClass("collapsed");
   });
 
   // Handle Clear Selection
-  $modal.find(".lumia-clear-btn").click(function (e) {
+  $modal.find(".ado-clear-btn").click(function (e) {
     e.stopPropagation();
 
     // Clear selections based on type
@@ -375,14 +375,14 @@ export function showSelectionModal(type) {
     saveSettings();
 
     // Update UI - remove selected state from all cards
-    $modal.find(".lumia-card").removeClass("selected");
-    $modal.find(".lumia-dominant-icon").removeClass("dominant");
+    $modal.find(".ado-card").removeClass("selected");
+    $modal.find(".ado-dominant-icon").removeClass("dominant");
 
     toastr.info(`${title.replace("Select ", "")} cleared`);
   });
 
   // Handle Remove Pack
-  $modal.find(".lumia-remove-pack-btn").click(function (e) {
+  $modal.find(".ado-remove-pack-btn").click(function (e) {
     e.stopPropagation();
     const packName = $(this).data("pack");
     if (confirm(`Are you sure you want to remove the pack "${packName}"?`)) {
@@ -418,7 +418,7 @@ export function showSelectionModal(type) {
 
       saveSettings();
 
-      $(this).closest(".lumia-modal-panel").remove();
+      $(this).closest(".ado-modal-panel").remove();
 
       if (Object.keys(settings.packs).length === 0) {
         closeModal();
@@ -427,7 +427,7 @@ export function showSelectionModal(type) {
   });
 
   // Handle Pack Edit Button Click
-  $modal.find(".lumia-pack-edit-btn").click(function (e) {
+  $modal.find(".ado-pack-edit-btn").click(function (e) {
     e.stopPropagation();
     const packName = $(this).data("pack");
     closeModal();
@@ -435,7 +435,7 @@ export function showSelectionModal(type) {
   });
 
   // Handle Lumia Card Edit Button Click
-  $modal.find(".lumia-card-edit-btn").click(function (e) {
+  $modal.find(".ado-card-edit-btn").click(function (e) {
     e.stopPropagation();
     const packName = $(this).data("pack");
     const itemName = $(this).data("item");
@@ -448,7 +448,7 @@ export function showSelectionModal(type) {
 
   // Handle Dominant Icon Click (for behaviors/personalities)
   if (dominantKey) {
-    $modal.find(".lumia-dominant-icon").click(function (e) {
+    $modal.find(".ado-dominant-icon").click(function (e) {
       e.stopPropagation(); // Don't trigger card selection
 
       const packName = $(this).data("pack");
@@ -471,7 +471,7 @@ export function showSelectionModal(type) {
         else settings.selectedPersonalities = collection;
 
         // Update card UI to show selected
-        $icon.closest(".lumia-card").addClass("selected");
+        $icon.closest(".ado-card").addClass("selected");
       }
 
       // Toggle dominant status
@@ -487,7 +487,7 @@ export function showSelectionModal(type) {
         $icon.removeClass("dominant");
       } else {
         // Set as new dominant (remove from previous)
-        $modal.find(".lumia-dominant-icon").removeClass("dominant");
+        $modal.find(".ado-dominant-icon").removeClass("dominant");
         settings[dominantKey] = { packName, itemName };
         $icon.addClass("dominant");
       }
@@ -497,10 +497,10 @@ export function showSelectionModal(type) {
   }
 
   // Handle Item/Card Selection
-  $modal.find(".lumia-card").click(function (e) {
+  $modal.find(".ado-card").click(function (e) {
     // Don't trigger if clicking on dominant icon or edit button
-    if ($(e.target).closest(".lumia-dominant-icon").length > 0 ||
-        $(e.target).closest(".lumia-card-edit-btn").length > 0) {
+    if ($(e.target).closest(".ado-dominant-icon").length > 0 ||
+        $(e.target).closest(".ado-card-edit-btn").length > 0) {
       return;
     }
 
@@ -509,7 +509,7 @@ export function showSelectionModal(type) {
 
     if (!isMulti) {
       // Single select (Definition) - deselect all others first, keep modal open
-      $modal.find(".lumia-card").removeClass("selected");
+      $modal.find(".ado-card").removeClass("selected");
       $(this).addClass("selected");
       settings.selectedDefinition = { packName, itemName };
       saveSettings();
@@ -536,7 +536,7 @@ export function showSelectionModal(type) {
             settings[dominantKey].itemName === itemName
           ) {
             settings[dominantKey] = null;
-            $this.find(".lumia-dominant-icon").removeClass("dominant");
+            $this.find(".ado-dominant-icon").removeClass("dominant");
           }
         }
       } else {
@@ -553,20 +553,20 @@ export function showSelectionModal(type) {
   });
 
   // Set up lazy loading for images - add loaded class when image loads
-  $modal.find(".lumia-card-image img").each(function () {
+  $modal.find(".ado-card-image img").each(function () {
     const $img = $(this);
     if (this.complete && this.naturalHeight !== 0) {
       // Image already loaded (cached)
-      $img.addClass("lumia-img-loaded");
+      $img.addClass("ado-img-loaded");
     } else {
       $img.on("load", function () {
-        $img.addClass("lumia-img-loaded");
+        $img.addClass("ado-img-loaded");
       });
       $img.on("error", function () {
         // On error, hide spinner and show placeholder
-        $img.addClass("lumia-img-loaded"); // Stop spinner
+        $img.addClass("ado-img-loaded"); // Stop spinner
         $img.css("display", "none");
-        $img.parent().append('<div class="lumia-card-placeholder">?</div>');
+        $img.parent().append('<div class="ado-card-placeholder">?</div>');
       });
     }
   });
@@ -580,104 +580,104 @@ export function showSelectionModal(type) {
 export function showMiscFeaturesModal() {
   const settings = getSettings();
 
-  $("#lumia-misc-modal").remove();
+  $("#ado-misc-modal").remove();
 
   const currentInterval = settings.lumiaOOCInterval || "";
   const currentStyle = settings.lumiaOOCStyle || "social";
 
   const modalHtml = `
-        <dialog id="lumia-misc-modal" class="popup popup--animation-fast lumia-modal lumia-modal-settings">
-            <div class="lumia-modal-header">
-                <div class="lumia-modal-header-icon">
+        <dialog id="ado-misc-modal" class="popup popup--animation-fast ado-modal ado-modal-settings">
+            <div class="ado-modal-header">
+                <div class="ado-modal-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
                 </div>
-                <h3 class="lumia-modal-title">OOC Settings</h3>
+                <h3 class="ado-modal-title">OOC Settings</h3>
             </div>
-            <div class="lumia-modal-content">
+            <div class="ado-modal-content">
 
-                <div class="lumia-modal-panel">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Comment Trigger</span>
+                        <span class="ado-modal-panel-title">Comment Trigger</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <p class="lumia-modal-description">Automatically inject OOC instructions at message intervals.</p>
-                        <div class="lumia-modal-field">
-                            <label class="lumia-modal-label" for="lumia-ooc-interval-input">Message Interval</label>
+                    <div class="ado-modal-panel-content">
+                        <p class="ado-modal-description">Automatically inject OOC instructions at message intervals.</p>
+                        <div class="ado-modal-field">
+                            <label class="ado-modal-label" for="ado-ooc-interval-input">Message Interval</label>
                             <input type="number"
-                                   id="lumia-ooc-interval-input"
-                                   class="lumia-modal-input"
+                                   id="ado-ooc-interval-input"
+                                   class="ado-modal-input"
                                    placeholder="e.g., 10 (empty = disabled)"
                                    min="1"
                                    value="${escapeHtml(currentInterval.toString())}" />
-                            <span class="lumia-modal-hint">Triggers when message count is divisible by this number</span>
+                            <span class="ado-modal-hint">Triggers when message count is divisible by this number</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lumia-modal-panel">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                 <line x1="3" y1="9" x2="21" y2="9"></line>
                                 <line x1="9" y1="21" x2="9" y2="9"></line>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Display Style</span>
+                        <span class="ado-modal-panel-title">Display Style</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <p class="lumia-modal-description">Choose how OOC comments appear in chat.</p>
-                        <div class="lumia-style-options">
-                            <label class="lumia-style-option ${currentStyle === "social" ? "selected" : ""}">
+                    <div class="ado-modal-panel-content">
+                        <p class="ado-modal-description">Choose how OOC comments appear in chat.</p>
+                        <div class="ado-style-options">
+                            <label class="ado-style-option ${currentStyle === "social" ? "selected" : ""}">
                                 <input type="radio" name="ooc-style" value="social" ${currentStyle === "social" ? "checked" : ""} />
-                                <div class="lumia-style-option-content">
-                                    <span class="lumia-style-option-icon">
+                                <div class="ado-style-option-content">
+                                    <span class="ado-style-option-icon">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <rect x="3" y="3" width="18" height="18" rx="2"></rect>
                                             <circle cx="8.5" cy="8.5" r="1.5"></circle>
                                             <path d="M21 15l-5-5L5 21"></path>
                                         </svg>
                                     </span>
-                                    <div class="lumia-style-option-text">
-                                        <span class="lumia-style-option-title">Social Card</span>
-                                        <span class="lumia-style-option-desc">Full card with avatar & animations</span>
+                                    <div class="ado-style-option-text">
+                                        <span class="ado-style-option-title">Social Card</span>
+                                        <span class="ado-style-option-desc">Full card with avatar & animations</span>
                                     </div>
                                 </div>
                             </label>
-                            <label class="lumia-style-option ${currentStyle === "margin" ? "selected" : ""}">
+                            <label class="ado-style-option ${currentStyle === "margin" ? "selected" : ""}">
                                 <input type="radio" name="ooc-style" value="margin" ${currentStyle === "margin" ? "checked" : ""} />
-                                <div class="lumia-style-option-content">
-                                    <span class="lumia-style-option-icon">
+                                <div class="ado-style-option-content">
+                                    <span class="ado-style-option-icon">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                             <polyline points="14 2 14 8 20 8"></polyline>
                                         </svg>
                                     </span>
-                                    <div class="lumia-style-option-text">
-                                        <span class="lumia-style-option-title">Margin Note</span>
-                                        <span class="lumia-style-option-desc">Minimal hanging tag style</span>
+                                    <div class="ado-style-option-text">
+                                        <span class="ado-style-option-title">Margin Note</span>
+                                        <span class="ado-style-option-desc">Minimal hanging tag style</span>
                                     </div>
                                 </div>
                             </label>
-                            <label class="lumia-style-option ${currentStyle === "whisper" ? "selected" : ""}">
+                            <label class="ado-style-option ${currentStyle === "whisper" ? "selected" : ""}">
                                 <input type="radio" name="ooc-style" value="whisper" ${currentStyle === "whisper" ? "checked" : ""} />
-                                <div class="lumia-style-option-content">
-                                    <span class="lumia-style-option-icon">
+                                <div class="ado-style-option-content">
+                                    <span class="ado-style-option-icon">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                                         </svg>
                                     </span>
-                                    <div class="lumia-style-option-text">
-                                        <span class="lumia-style-option-title">Whisper Bubble</span>
-                                        <span class="lumia-style-option-desc">Soft ethereal thought bubble</span>
+                                    <div class="ado-style-option-text">
+                                        <span class="ado-style-option-title">Whisper Bubble</span>
+                                        <span class="ado-style-option-desc">Soft ethereal thought bubble</span>
                                     </div>
                                 </div>
                             </label>
@@ -686,15 +686,15 @@ export function showMiscFeaturesModal() {
                 </div>
 
             </div>
-            <div class="lumia-modal-footer">
-                <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-misc-cancel-btn">Cancel</button>
-                <button class="lumia-modal-btn lumia-modal-btn-primary lumia-misc-save-btn">Save Changes</button>
+            <div class="ado-modal-footer">
+                <button class="ado-modal-btn ado-modal-btn-secondary ado-misc-cancel-btn">Cancel</button>
+                <button class="ado-modal-btn ado-modal-btn-primary ado-misc-save-btn">Save Changes</button>
             </div>
         </dialog>
     `;
 
   $("body").append(modalHtml);
-  const $modal = $("#lumia-misc-modal");
+  const $modal = $("#ado-misc-modal");
 
   // Calculate and apply proper height constraints
   applyModalHeightConstraints($modal);
@@ -716,13 +716,13 @@ export function showMiscFeaturesModal() {
   });
 
   // Handle style option selection UI
-  $modal.find('.lumia-style-option input[type="radio"]').change(function () {
-    $modal.find(".lumia-style-option").removeClass("selected");
-    $(this).closest(".lumia-style-option").addClass("selected");
+  $modal.find('.ado-style-option input[type="radio"]').change(function () {
+    $modal.find(".ado-style-option").removeClass("selected");
+    $(this).closest(".ado-style-option").addClass("selected");
   });
 
-  $modal.find(".lumia-misc-save-btn").click(() => {
-    const intervalValue = $("#lumia-ooc-interval-input").val().trim();
+  $modal.find(".ado-misc-save-btn").click(() => {
+    const intervalValue = $("#ado-ooc-interval-input").val().trim();
     const styleValue = $modal.find('input[name="ooc-style"]:checked').val();
     const oldStyle = settings.lumiaOOCStyle;
 
@@ -742,7 +742,7 @@ export function showMiscFeaturesModal() {
     }
   });
 
-  $modal.find(".lumia-misc-cancel-btn").click(closeModal);
+  $modal.find(".ado-misc-cancel-btn").click(closeModal);
 
   $modal.on("keydown", function (e) {
     if (e.key === "Escape") closeModal();
@@ -802,7 +802,7 @@ export function showLoomSelectionModal(category) {
 
   if (packs.length === 0) {
     contentHtml =
-      '<div class="lumia-modal-empty">No Packs loaded. Add one in settings!</div>';
+      '<div class="ado-modal-empty">No Packs loaded. Add one in settings!</div>';
   } else {
     packs.forEach((pack) => {
       const packItems = pack.items;
@@ -838,24 +838,24 @@ export function showLoomSelectionModal(category) {
           const escapedItemName = escapeHtml(currentItemName);
 
           return `
-                <div class="lumia-list-item ${isSelected ? "selected" : ""}"
+                <div class="ado-list-item ${isSelected ? "selected" : ""}"
                      data-pack="${escapedPackName}"
                      data-item="${escapedItemName}">
-                    <div class="lumia-list-item-content">
-                        <span class="lumia-list-item-name">${currentItemName || "Unknown"}</span>
+                    <div class="ado-list-item-content">
+                        <span class="ado-list-item-name">${currentItemName || "Unknown"}</span>
                     </div>
-                    <div class="lumia-list-item-toggle">
+                    <div class="ado-list-item-toggle">
                         ${
                           isMulti
                             ? `
-                        <div class="lumia-toggle-switch">
-                            <div class="lumia-toggle-track">
-                                <div class="lumia-toggle-thumb"></div>
+                        <div class="ado-toggle-switch">
+                            <div class="ado-toggle-track">
+                                <div class="ado-toggle-thumb"></div>
                             </div>
                         </div>
                         `
                             : `
-                        <div class="lumia-radio-indicator"></div>
+                        <div class="ado-radio-indicator"></div>
                         `
                         }
                     </div>
@@ -866,24 +866,24 @@ export function showLoomSelectionModal(category) {
 
       if (itemsHtml) {
         contentHtml += `
-                <div class="lumia-modal-panel lumia-collapsible">
-                    <div class="lumia-modal-panel-header lumia-collapsible-trigger">
-                        <span class="lumia-panel-collapse-icon">
+                <div class="ado-modal-panel ado-collapsible">
+                    <div class="ado-modal-panel-header ado-collapsible-trigger">
+                        <span class="ado-panel-collapse-icon">
                             ${SVG_ICONS.chevron}
                         </span>
-                        <span class="lumia-modal-panel-icon">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">${pack.name}</span>
-                        <span class="lumia-modal-panel-count">${categoryItems.length} items</span>
-                        <button class="lumia-icon-btn-sm lumia-remove-pack-btn" data-pack="${escapeHtml(pack.name)}" title="Remove Pack">
+                        <span class="ado-modal-panel-title">${pack.name}</span>
+                        <span class="ado-modal-panel-count">${categoryItems.length} items</span>
+                        <button class="ado-icon-btn-sm ado-remove-pack-btn" data-pack="${escapeHtml(pack.name)}" title="Remove Pack">
                             ${SVG_ICONS.trash}
                         </button>
                     </div>
-                    <div class="lumia-modal-panel-content lumia-modal-panel-content-list lumia-collapsible-content">
-                        <div class="lumia-list-group">
+                    <div class="ado-modal-panel-content ado-modal-panel-content-list ado-collapsible-content">
+                        <div class="ado-list-group">
                             ${itemsHtml}
                         </div>
                     </div>
@@ -893,31 +893,31 @@ export function showLoomSelectionModal(category) {
     });
 
     if (!contentHtml) {
-      contentHtml = `<div class="lumia-modal-empty">No "${category}" items found in loaded packs.</div>`;
+      contentHtml = `<div class="ado-modal-empty">No "${category}" items found in loaded packs.</div>`;
     }
   }
 
   const modalHtml = `
-        <dialog id="loom-selection-modal" class="popup popup--animation-fast lumia-modal lumia-modal-selection">
-            <div class="lumia-modal-header">
-                <div class="lumia-modal-header-icon">
+        <dialog id="loom-selection-modal" class="popup popup--animation-fast ado-modal ado-modal-selection">
+            <div class="ado-modal-header">
+                <div class="ado-modal-header-icon">
                     ${headerIcon}
                 </div>
-                <div class="lumia-modal-header-text">
-                    <h3 class="lumia-modal-title">${title}</h3>
-                    <p class="lumia-modal-subtitle">${subtitle}</p>
+                <div class="ado-modal-header-text">
+                    <h3 class="ado-modal-title">${title}</h3>
+                    <p class="ado-modal-subtitle">${subtitle}</p>
                 </div>
-                <button class="lumia-clear-btn" title="Clear selection">
+                <button class="ado-clear-btn" title="Clear selection">
                     ${SVG_ICONS.clear}
                     <span>Clear</span>
                 </button>
             </div>
-            <div class="lumia-modal-content">
+            <div class="ado-modal-content">
                 ${contentHtml}
             </div>
-            <div class="lumia-modal-footer">
-                <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-modal-close-btn">Close</button>
-                ${isMulti ? '<button class="lumia-modal-btn lumia-modal-btn-primary lumia-modal-done">Done</button>' : ""}
+            <div class="ado-modal-footer">
+                <button class="ado-modal-btn ado-modal-btn-secondary ado-modal-close-btn">Close</button>
+                ${isMulti ? '<button class="ado-modal-btn ado-modal-btn-primary ado-modal-done">Done</button>' : ""}
             </div>
         </dialog>
     `;
@@ -945,26 +945,26 @@ export function showLoomSelectionModal(category) {
     if (e.type === "click" && e.target === this) closeModal();
   });
 
-  $modal.find(".lumia-modal-close-btn, .lumia-modal-done").click(closeModal);
+  $modal.find(".ado-modal-close-btn, .ado-modal-done").click(closeModal);
 
   $modal.on("keydown", function (e) {
     if (e.key === "Escape") closeModal();
   });
 
   // Handle Collapsible Panels
-  $modal.find(".lumia-collapsible-trigger").click(function (e) {
+  $modal.find(".ado-collapsible-trigger").click(function (e) {
     // Don't collapse if clicking on an interactive element or remove button
     if (
-      $(e.target).closest(".lumia-list-item").length > 0 ||
-      $(e.target).closest(".lumia-remove-pack-btn").length > 0
+      $(e.target).closest(".ado-list-item").length > 0 ||
+      $(e.target).closest(".ado-remove-pack-btn").length > 0
     ) {
       return;
     }
-    $(this).closest(".lumia-collapsible").toggleClass("collapsed");
+    $(this).closest(".ado-collapsible").toggleClass("collapsed");
   });
 
   // Handle Clear Selection
-  $modal.find(".lumia-clear-btn").click(function (e) {
+  $modal.find(".ado-clear-btn").click(function (e) {
     e.stopPropagation();
 
     // Clear selection based on settings key
@@ -977,13 +977,13 @@ export function showLoomSelectionModal(category) {
     saveSettings();
 
     // Update UI - remove selected state from all items
-    $modal.find(".lumia-list-item").removeClass("selected");
+    $modal.find(".ado-list-item").removeClass("selected");
 
     toastr.info(`${title.replace("Select ", "")} cleared`);
   });
 
   // Handle Remove Pack
-  $modal.find(".lumia-remove-pack-btn").click(function (e) {
+  $modal.find(".ado-remove-pack-btn").click(function (e) {
     e.stopPropagation();
     const packName = $(this).data("pack");
     if (confirm(`Are you sure you want to remove the pack "${packName}"?`)) {
@@ -1029,7 +1029,7 @@ export function showLoomSelectionModal(category) {
 
       saveSettings();
 
-      $(this).closest(".lumia-modal-panel").remove();
+      $(this).closest(".ado-modal-panel").remove();
 
       if (Object.keys(settings.packs).length === 0) {
         closeModal();
@@ -1038,13 +1038,13 @@ export function showLoomSelectionModal(category) {
   });
 
   // Handle Item Selection
-  $modal.find(".lumia-list-item").click(function () {
+  $modal.find(".ado-list-item").click(function () {
     const packName = $(this).data("pack");
     const itemName = $(this).data("item");
 
     if (!isMulti) {
       // Single select - deselect all others first
-      $modal.find(".lumia-list-item").removeClass("selected");
+      $modal.find(".ado-list-item").removeClass("selected");
       $(this).addClass("selected");
       settings[settingsKey] = { packName, itemName };
       saveSettings();
@@ -1083,7 +1083,7 @@ export function showSummarizationModal() {
   const settings = getSettings();
   const context = getContext();
 
-  $("#lumia-summarization-modal").remove();
+  $("#ado-summarization-modal").remove();
 
   const sumSettings = settings.summarization || {};
   const secondary = sumSettings.secondary || {};
@@ -1112,9 +1112,9 @@ export function showSummarizationModal() {
   const providerDefaults = getProviderDefaults(currentProvider);
 
   const modalHtml = `
-        <dialog id="lumia-summarization-modal" class="popup popup--animation-fast lumia-modal lumia-modal-settings">
-            <div class="lumia-modal-header">
-                <div class="lumia-modal-header-icon">
+        <dialog id="ado-summarization-modal" class="popup popup--animation-fast ado-modal ado-modal-settings">
+            <div class="ado-modal-header">
+                <div class="ado-modal-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="21" y1="10" x2="3" y2="10"></line>
                         <line x1="21" y1="6" x2="3" y2="6"></line>
@@ -1122,172 +1122,172 @@ export function showSummarizationModal() {
                         <line x1="21" y1="18" x2="3" y2="18"></line>
                     </svg>
                 </div>
-                <h3 class="lumia-modal-title">Summarization</h3>
+                <h3 class="ado-modal-title">Summarization</h3>
             </div>
-            <div class="lumia-modal-content">
+            <div class="ado-modal-content">
 
                 <!-- Mode Selection -->
-                <div class="lumia-modal-panel">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="3"></circle>
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Mode</span>
+                        <span class="ado-modal-panel-title">Mode</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <div class="lumia-mode-options">
-                            <label class="lumia-mode-option ${currentMode === "disabled" ? "selected" : ""}">
+                    <div class="ado-modal-panel-content">
+                        <div class="ado-mode-options">
+                            <label class="ado-mode-option ${currentMode === "disabled" ? "selected" : ""}">
                                 <input type="radio" name="sum-mode" value="disabled" ${currentMode === "disabled" ? "checked" : ""} />
-                                <span class="lumia-mode-option-label">Disabled</span>
+                                <span class="ado-mode-option-label">Disabled</span>
                             </label>
-                            <label class="lumia-mode-option ${currentMode === "auto" ? "selected" : ""}">
+                            <label class="ado-mode-option ${currentMode === "auto" ? "selected" : ""}">
                                 <input type="radio" name="sum-mode" value="auto" ${currentMode === "auto" ? "checked" : ""} />
-                                <span class="lumia-mode-option-label">Automatic</span>
+                                <span class="ado-mode-option-label">Automatic</span>
                             </label>
-                            <label class="lumia-mode-option ${currentMode === "manual" ? "selected" : ""}">
+                            <label class="ado-mode-option ${currentMode === "manual" ? "selected" : ""}">
                                 <input type="radio" name="sum-mode" value="manual" ${currentMode === "manual" ? "checked" : ""} />
-                                <span class="lumia-mode-option-label">Manual</span>
+                                <span class="ado-mode-option-label">Manual</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Auto Settings (conditional) -->
-                <div class="lumia-modal-panel" id="lumia-sum-auto-section" style="${currentMode === "auto" ? "" : "display: none;"}">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel" id="ado-sum-auto-section" style="${currentMode === "auto" ? "" : "display: none;"}">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Auto Settings</span>
+                        <span class="ado-modal-panel-title">Auto Settings</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <div class="lumia-modal-field-row">
-                            <div class="lumia-modal-field">
-                                <label class="lumia-modal-label" for="lumia-sum-interval-input">Interval</label>
-                                <input type="number" id="lumia-sum-interval-input" class="lumia-modal-input" min="1" value="${currentInterval}" />
-                                <span class="lumia-modal-hint">Every N messages</span>
+                    <div class="ado-modal-panel-content">
+                        <div class="ado-modal-field-row">
+                            <div class="ado-modal-field">
+                                <label class="ado-modal-label" for="ado-sum-interval-input">Interval</label>
+                                <input type="number" id="ado-sum-interval-input" class="ado-modal-input" min="1" value="${currentInterval}" />
+                                <span class="ado-modal-hint">Every N messages</span>
                             </div>
-                            <div class="lumia-modal-field">
-                                <label class="lumia-modal-label" for="lumia-sum-auto-context-input">Context</label>
-                                <input type="number" id="lumia-sum-auto-context-input" class="lumia-modal-input" min="1" max="100" value="${currentAutoContext}" />
-                                <span class="lumia-modal-hint">Messages to include</span>
+                            <div class="ado-modal-field">
+                                <label class="ado-modal-label" for="ado-sum-auto-context-input">Context</label>
+                                <input type="number" id="ado-sum-auto-context-input" class="ado-modal-input" min="1" max="100" value="${currentAutoContext}" />
+                                <span class="ado-modal-hint">Messages to include</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Manual Context (conditional) -->
-                <div class="lumia-modal-panel" id="lumia-sum-manual-section" style="${currentMode === "manual" || currentMode === "auto" ? "" : "display: none;"}">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel" id="ado-sum-manual-section" style="${currentMode === "manual" || currentMode === "auto" ? "" : "display: none;"}">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Manual Context</span>
+                        <span class="ado-modal-panel-title">Manual Context</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <div class="lumia-modal-field">
-                            <label class="lumia-modal-label" for="lumia-sum-manual-context-input">Messages to include</label>
-                            <input type="number" id="lumia-sum-manual-context-input" class="lumia-modal-input" min="1" max="100" value="${currentManualContext}" />
-                            <span class="lumia-modal-hint">When using /loom-summarize command</span>
+                    <div class="ado-modal-panel-content">
+                        <div class="ado-modal-field">
+                            <label class="ado-modal-label" for="ado-sum-manual-context-input">Messages to include</label>
+                            <input type="number" id="ado-sum-manual-context-input" class="ado-modal-input" min="1" max="100" value="${currentManualContext}" />
+                            <span class="ado-modal-hint">When using /loom-summarize command</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- API Source -->
-                <div class="lumia-modal-panel">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">API Source</span>
+                        <span class="ado-modal-panel-title">API Source</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <div class="lumia-mode-options">
-                            <label class="lumia-mode-option lumia-mode-option-wide ${currentSource === "main" ? "selected" : ""}">
+                    <div class="ado-modal-panel-content">
+                        <div class="ado-mode-options">
+                            <label class="ado-mode-option ado-mode-option-wide ${currentSource === "main" ? "selected" : ""}">
                                 <input type="radio" name="sum-source" value="main" ${currentSource === "main" ? "checked" : ""} />
-                                <span class="lumia-mode-option-label">Main API</span>
+                                <span class="ado-mode-option-label">Main API</span>
                             </label>
-                            <label class="lumia-mode-option lumia-mode-option-wide ${currentSource === "secondary" ? "selected" : ""}">
+                            <label class="ado-mode-option ado-mode-option-wide ${currentSource === "secondary" ? "selected" : ""}">
                                 <input type="radio" name="sum-source" value="secondary" ${currentSource === "secondary" ? "checked" : ""} />
-                                <span class="lumia-mode-option-label">Secondary LLM</span>
+                                <span class="ado-mode-option-label">Secondary LLM</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Secondary LLM Config (conditional) -->
-                <div class="lumia-modal-panel" id="lumia-sum-secondary-section" style="${currentSource === "secondary" ? "" : "display: none;"}">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel" id="ado-sum-secondary-section" style="${currentSource === "secondary" ? "" : "display: none;"}">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                                 <line x1="8" y1="21" x2="16" y2="21"></line>
                                 <line x1="12" y1="17" x2="12" y2="21"></line>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Secondary LLM</span>
+                        <span class="ado-modal-panel-title">Secondary LLM</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <div class="lumia-modal-field">
-                            <label class="lumia-modal-label" for="lumia-sum-provider-select">Provider</label>
-                            <select id="lumia-sum-provider-select" class="lumia-modal-select">
+                    <div class="ado-modal-panel-content">
+                        <div class="ado-modal-field">
+                            <label class="ado-modal-label" for="ado-sum-provider-select">Provider</label>
+                            <select id="ado-sum-provider-select" class="ado-modal-select">
                                 ${Object.entries(PROVIDER_CONFIG).map(([key, config]) =>
                                   `<option value="${key}" ${currentProvider === key ? "selected" : ""}>${config.name}</option>`
                                 ).join("")}
                             </select>
-                            <span class="lumia-modal-hint lumia-sum-provider-hint ${currentProvider === "custom" ? "lumia-hidden" : ""}">
+                            <span class="ado-modal-hint ado-sum-provider-hint ${currentProvider === "custom" ? "ado-hidden" : ""}">
                                 Uses API key from SillyTavern settings
                             </span>
                         </div>
 
-                        <div class="lumia-modal-field-row">
-                            <div class="lumia-modal-field">
-                                <label class="lumia-modal-label" for="lumia-sum-model-input">Model</label>
-                                <input type="text" id="lumia-sum-model-input" class="lumia-modal-input"
+                        <div class="ado-modal-field-row">
+                            <div class="ado-modal-field">
+                                <label class="ado-modal-label" for="ado-sum-model-input">Model</label>
+                                <input type="text" id="ado-sum-model-input" class="ado-modal-input"
                                        placeholder="${providerDefaults.placeholder}"
                                        value="${escapeHtml(currentModel)}" />
                             </div>
                         </div>
 
-                        <div class="lumia-modal-field lumia-sum-custom-fields ${currentProvider === "custom" ? "" : "lumia-hidden"}">
-                            <label class="lumia-modal-label" for="lumia-sum-endpoint-input">Endpoint URL</label>
-                            <input type="text" id="lumia-sum-endpoint-input" class="lumia-modal-input"
+                        <div class="ado-modal-field ado-sum-custom-fields ${currentProvider === "custom" ? "" : "ado-hidden"}">
+                            <label class="ado-modal-label" for="ado-sum-endpoint-input">Endpoint URL</label>
+                            <input type="text" id="ado-sum-endpoint-input" class="ado-modal-input"
                                    placeholder="https://your-api.com/v1/chat/completions"
                                    value="${escapeHtml(currentEndpoint)}" />
                         </div>
 
-                        <div class="lumia-modal-field lumia-sum-custom-fields ${currentProvider === "custom" ? "" : "lumia-hidden"}">
-                            <label class="lumia-modal-label" for="lumia-sum-apikey-input">API Key</label>
-                            <input type="password" id="lumia-sum-apikey-input" class="lumia-modal-input"
+                        <div class="ado-modal-field ado-sum-custom-fields ${currentProvider === "custom" ? "" : "ado-hidden"}">
+                            <label class="ado-modal-label" for="ado-sum-apikey-input">API Key</label>
+                            <input type="password" id="ado-sum-apikey-input" class="ado-modal-input"
                                    placeholder="Your API key"
                                    value="${escapeHtml(currentApiKey)}" />
                         </div>
 
-                        <div class="lumia-modal-field-row lumia-modal-field-row-3">
-                            <div class="lumia-modal-field">
-                                <label class="lumia-modal-label" for="lumia-sum-temp-input">Temp</label>
-                                <input type="number" id="lumia-sum-temp-input" class="lumia-modal-input"
+                        <div class="ado-modal-field-row ado-modal-field-row-3">
+                            <div class="ado-modal-field">
+                                <label class="ado-modal-label" for="ado-sum-temp-input">Temp</label>
+                                <input type="number" id="ado-sum-temp-input" class="ado-modal-input"
                                        min="0" max="2" step="0.1" value="${currentTemp}" />
                             </div>
-                            <div class="lumia-modal-field">
-                                <label class="lumia-modal-label" for="lumia-sum-topp-input">Top-P</label>
-                                <input type="number" id="lumia-sum-topp-input" class="lumia-modal-input"
+                            <div class="ado-modal-field">
+                                <label class="ado-modal-label" for="ado-sum-topp-input">Top-P</label>
+                                <input type="number" id="ado-sum-topp-input" class="ado-modal-input"
                                        min="0" max="1" step="0.05" value="${currentTopP}" />
                             </div>
-                            <div class="lumia-modal-field">
-                                <label class="lumia-modal-label" for="lumia-sum-maxtokens-input">Max Tokens</label>
-                                <input type="text" id="lumia-sum-maxtokens-input" class="lumia-modal-input"
+                            <div class="ado-modal-field">
+                                <label class="ado-modal-label" for="ado-sum-maxtokens-input">Max Tokens</label>
+                                <input type="text" id="ado-sum-maxtokens-input" class="ado-modal-input"
                                        value="${currentMaxTokens}" />
                             </div>
                         </div>
@@ -1295,74 +1295,74 @@ export function showSummarizationModal() {
                 </div>
 
                 <!-- Test Section -->
-                <div class="lumia-modal-panel lumia-modal-panel-accent">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel ado-modal-panel-accent">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Test</span>
+                        <span class="ado-modal-panel-title">Test</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <button id="lumia-sum-test-btn" class="lumia-modal-btn lumia-modal-btn-primary lumia-modal-btn-full ${hasActiveChat ? "" : "lumia-btn-disabled"}" ${hasActiveChat ? "" : "disabled"}>
-                            <span class="lumia-btn-icon">
+                    <div class="ado-modal-panel-content">
+                        <button id="ado-sum-test-btn" class="ado-modal-btn ado-modal-btn-primary ado-modal-btn-full ${hasActiveChat ? "" : "ado-btn-disabled"}" ${hasActiveChat ? "" : "disabled"}>
+                            <span class="ado-btn-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
                             </span>
-                            <span class="lumia-btn-spinner lumia-hidden"></span>
-                            <span class="lumia-btn-text">${hasActiveChat ? "Generate Summary Now" : "No Active Chat"}</span>
+                            <span class="ado-btn-spinner ado-hidden"></span>
+                            <span class="ado-btn-text">${hasActiveChat ? "Generate Summary Now" : "No Active Chat"}</span>
                         </button>
-                        <div id="lumia-sum-test-result" class="lumia-test-result lumia-hidden"></div>
-                        ${!hasActiveChat ? '<div class="lumia-test-hint">Open a chat to test summarization</div>' : ""}
+                        <div id="ado-sum-test-result" class="ado-test-result ado-hidden"></div>
+                        ${!hasActiveChat ? '<div class="ado-test-hint">Open a chat to test summarization</div>' : ""}
                     </div>
                 </div>
 
                 <!-- Message Truncation Section -->
-                <div class="lumia-modal-panel">
-                    <div class="lumia-modal-panel-header">
-                        <span class="lumia-modal-panel-icon">
+                <div class="ado-modal-panel">
+                    <div class="ado-modal-panel-header">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Save N Messages</span>
+                        <span class="ado-modal-panel-title">Save N Messages</span>
                     </div>
-                    <div class="lumia-modal-panel-content">
-                        <div class="lumia-filter-item">
-                            <div class="lumia-toggle-row">
-                                <label class="lumia-toggle-label" for="lumia-trunc-toggle">
-                                    <span class="lumia-toggle-text">Limit Context Messages</span>
-                                    <span class="lumia-toggle-hint">Only send the last N messages to the AI</span>
+                    <div class="ado-modal-panel-content">
+                        <div class="ado-filter-item">
+                            <div class="ado-toggle-row">
+                                <label class="ado-toggle-label" for="ado-trunc-toggle">
+                                    <span class="ado-toggle-text">Limit Context Messages</span>
+                                    <span class="ado-toggle-hint">Only send the last N messages to the AI</span>
                                 </label>
-                                <div class="lumia-toggle-switch-wrapper">
-                                    <input type="checkbox" id="lumia-trunc-toggle" class="lumia-toggle-input" ${truncEnabled ? "checked" : ""} />
-                                    <label for="lumia-trunc-toggle" class="lumia-toggle-switch-label">
-                                        <div class="lumia-toggle-track">
-                                            <div class="lumia-toggle-thumb"></div>
+                                <div class="ado-toggle-switch-wrapper">
+                                    <input type="checkbox" id="ado-trunc-toggle" class="ado-toggle-input" ${truncEnabled ? "checked" : ""} />
+                                    <label for="ado-trunc-toggle" class="ado-toggle-switch-label">
+                                        <div class="ado-toggle-track">
+                                            <div class="ado-toggle-thumb"></div>
                                         </div>
                                     </label>
                                 </div>
                             </div>
-                            <div class="lumia-filter-options ${truncEnabled ? "" : "lumia-filter-options-hidden"}">
-                                <label class="lumia-input-label">
+                            <div class="ado-filter-options ${truncEnabled ? "" : "ado-filter-options-hidden"}">
+                                <label class="ado-input-label">
                                     <span>Messages to keep:</span>
-                                    <input type="number" id="lumia-trunc-count-input" class="lumia-input-number" value="${truncKeepCount}" min="5" max="500" />
+                                    <input type="number" id="ado-trunc-count-input" class="ado-input-number" value="${truncKeepCount}" min="5" max="500" />
                                 </label>
-                                <span class="lumia-input-hint">Number of recent messages to include in context</span>
+                                <span class="ado-input-hint">Number of recent messages to include in context</span>
 
-                                <div class="lumia-warning-box">
-                                    <div class="lumia-warning-box-icon">
+                                <div class="ado-warning-box">
+                                    <div class="ado-warning-box-icon">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
                                             <line x1="12" y1="9" x2="12" y2="13"></line>
                                             <line x1="12" y1="17" x2="12.01" y2="17"></line>
                                         </svg>
                                     </div>
-                                    <div class="lumia-warning-box-content">
-                                        <div class="lumia-warning-box-title">Memory Loss Warning</div>
-                                        <div class="lumia-warning-box-text">
+                                    <div class="ado-warning-box-content">
+                                        <div class="ado-warning-box-title">Memory Loss Warning</div>
+                                        <div class="ado-warning-box-text">
                                             Older messages beyond this limit will be excluded from the AI's context.
                                             The AI will lose awareness of earlier events, character details, and plot points.
                                             Consider using Loom summarization to preserve important memories.
@@ -1375,15 +1375,15 @@ export function showSummarizationModal() {
                 </div>
 
             </div>
-            <div class="lumia-modal-footer">
-                <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-sum-cancel-btn">Cancel</button>
-                <button class="lumia-modal-btn lumia-modal-btn-primary lumia-sum-save-btn">Save Changes</button>
+            <div class="ado-modal-footer">
+                <button class="ado-modal-btn ado-modal-btn-secondary ado-sum-cancel-btn">Cancel</button>
+                <button class="ado-modal-btn ado-modal-btn-primary ado-sum-save-btn">Save Changes</button>
             </div>
         </dialog>
     `;
 
   $("body").append(modalHtml);
-  const $modal = $("#lumia-summarization-modal");
+  const $modal = $("#ado-summarization-modal");
 
   // Calculate and apply proper height constraints
   applyModalHeightConstraints($modal);
@@ -1406,7 +1406,7 @@ export function showSummarizationModal() {
 
   // Handle mode option selection UI
   $modal.find('input[name="sum-mode"]').change(function () {
-    $modal.find(".lumia-mode-option").each(function () {
+    $modal.find(".ado-mode-option").each(function () {
       const $input = $(this).find('input[name="sum-mode"]');
       if ($input.is(":checked")) {
         $(this).addClass("selected");
@@ -1417,20 +1417,20 @@ export function showSummarizationModal() {
 
     const mode = $(this).val();
     if (mode === "auto") {
-      $modal.find("#lumia-sum-auto-section").show();
-      $modal.find("#lumia-sum-manual-section").show();
+      $modal.find("#ado-sum-auto-section").show();
+      $modal.find("#ado-sum-manual-section").show();
     } else if (mode === "manual") {
-      $modal.find("#lumia-sum-auto-section").hide();
-      $modal.find("#lumia-sum-manual-section").show();
+      $modal.find("#ado-sum-auto-section").hide();
+      $modal.find("#ado-sum-manual-section").show();
     } else {
-      $modal.find("#lumia-sum-auto-section").hide();
-      $modal.find("#lumia-sum-manual-section").hide();
+      $modal.find("#ado-sum-auto-section").hide();
+      $modal.find("#ado-sum-manual-section").hide();
     }
   });
 
   // Handle source option selection UI
   $modal.find('input[name="sum-source"]').change(function () {
-    $modal.find(".lumia-mode-option").each(function () {
+    $modal.find(".ado-mode-option").each(function () {
       const $input = $(this).find('input[name="sum-source"]');
       if ($input.length && $input.is(":checked")) {
         $(this).addClass("selected");
@@ -1441,39 +1441,39 @@ export function showSummarizationModal() {
 
     const source = $(this).val();
     if (source === "secondary") {
-      $modal.find("#lumia-sum-secondary-section").show();
+      $modal.find("#ado-sum-secondary-section").show();
     } else {
-      $modal.find("#lumia-sum-secondary-section").hide();
+      $modal.find("#ado-sum-secondary-section").hide();
     }
   });
 
   // Update placeholders and show/hide custom fields when provider changes
-  $modal.find("#lumia-sum-provider-select").change(function () {
+  $modal.find("#ado-sum-provider-select").change(function () {
     const provider = $(this).val();
     const config = getProviderConfig(provider);
 
     // Update model placeholder
     $modal
-      .find("#lumia-sum-model-input")
+      .find("#ado-sum-model-input")
       .attr("placeholder", config.placeholder);
 
     // Show/hide custom fields (endpoint and API key)
     if (provider === "custom") {
-      $modal.find(".lumia-sum-custom-fields").removeClass("lumia-hidden");
-      $modal.find(".lumia-sum-provider-hint").addClass("lumia-hidden");
+      $modal.find(".ado-sum-custom-fields").removeClass("ado-hidden");
+      $modal.find(".ado-sum-provider-hint").addClass("ado-hidden");
     } else {
-      $modal.find(".lumia-sum-custom-fields").addClass("lumia-hidden");
-      $modal.find(".lumia-sum-provider-hint").removeClass("lumia-hidden");
+      $modal.find(".ado-sum-custom-fields").addClass("ado-hidden");
+      $modal.find(".ado-sum-provider-hint").removeClass("ado-hidden");
     }
   });
 
   // Handle message truncation toggle
-  $modal.find("#lumia-trunc-toggle").change(function () {
-    const $options = $(this).closest(".lumia-filter-item").find(".lumia-filter-options");
+  $modal.find("#ado-trunc-toggle").change(function () {
+    const $options = $(this).closest(".ado-filter-item").find(".ado-filter-options");
     if ($(this).is(":checked")) {
-      $options.removeClass("lumia-filter-options-hidden");
+      $options.removeClass("ado-filter-options-hidden");
     } else {
-      $options.addClass("lumia-filter-options-hidden");
+      $options.addClass("ado-filter-options-hidden");
     }
   });
 
@@ -1487,19 +1487,19 @@ export function showSummarizationModal() {
   };
 
   // Test button
-  $modal.find("#lumia-sum-test-btn").click(async function () {
+  $modal.find("#ado-sum-test-btn").click(async function () {
     const $btn = $(this);
-    const $icon = $btn.find(".lumia-btn-icon");
-    const $spinner = $btn.find(".lumia-btn-spinner");
-    const $text = $btn.find(".lumia-btn-text");
-    const $result = $modal.find("#lumia-sum-test-result");
+    const $icon = $btn.find(".ado-btn-icon");
+    const $spinner = $btn.find(".ado-btn-spinner");
+    const $text = $btn.find(".ado-btn-text");
+    const $result = $modal.find("#ado-sum-test-result");
 
     // Show loading state
     $btn.prop("disabled", true);
-    $icon.addClass("lumia-hidden");
-    $spinner.removeClass("lumia-hidden");
+    $icon.addClass("ado-hidden");
+    $spinner.removeClass("ado-hidden");
     $text.text("Weaving summary...");
-    $result.addClass("lumia-hidden").removeClass("lumia-test-result-success lumia-test-result-error");
+    $result.addClass("ado-hidden").removeClass("ado-test-result-success ado-test-result-error");
 
     try {
       // Temporarily apply current form values (test uses manual context since it's a manual action)
@@ -1507,21 +1507,21 @@ export function showSummarizationModal() {
         mode: $modal.find('input[name="sum-mode"]:checked').val(),
         apiSource: $modal.find('input[name="sum-source"]:checked').val(),
         autoInterval:
-          parseInt($modal.find("#lumia-sum-interval-input").val()) || 10,
+          parseInt($modal.find("#ado-sum-interval-input").val()) || 10,
         autoMessageContext:
-          parseInt($modal.find("#lumia-sum-auto-context-input").val()) || 10,
+          parseInt($modal.find("#ado-sum-auto-context-input").val()) || 10,
         manualMessageContext:
-          parseInt($modal.find("#lumia-sum-manual-context-input").val()) || 10,
+          parseInt($modal.find("#ado-sum-manual-context-input").val()) || 10,
         secondary: {
-          provider: $modal.find("#lumia-sum-provider-select").val(),
-          model: $modal.find("#lumia-sum-model-input").val(),
-          endpoint: $modal.find("#lumia-sum-endpoint-input").val(),
-          apiKey: $modal.find("#lumia-sum-apikey-input").val(),
+          provider: $modal.find("#ado-sum-provider-select").val(),
+          model: $modal.find("#ado-sum-model-input").val(),
+          endpoint: $modal.find("#ado-sum-endpoint-input").val(),
+          apiKey: $modal.find("#ado-sum-apikey-input").val(),
           temperature:
-            parseFloat($modal.find("#lumia-sum-temp-input").val()) || 0.7,
-          topP: parseFloat($modal.find("#lumia-sum-topp-input").val()) || 1.0,
+            parseFloat($modal.find("#ado-sum-temp-input").val()) || 0.7,
+          topP: parseFloat($modal.find("#ado-sum-topp-input").val()) || 1.0,
           maxTokens: parseMaxTokens(
-            $modal.find("#lumia-sum-maxtokens-input").val(),
+            $modal.find("#ado-sum-maxtokens-input").val(),
           ),
         },
       };
@@ -1530,41 +1530,41 @@ export function showSummarizationModal() {
 
       // Reset button state
       $btn.prop("disabled", false);
-      $spinner.addClass("lumia-hidden");
-      $icon.removeClass("lumia-hidden");
+      $spinner.addClass("ado-hidden");
+      $icon.removeClass("ado-hidden");
       $text.text("Generate Summary Now");
 
       if (result) {
         $result
-          .removeClass("lumia-hidden")
-          .addClass("lumia-test-result-success")
+          .removeClass("ado-hidden")
+          .addClass("ado-test-result-success")
           .html(`
-            <div class="lumia-test-result-icon">
+            <div class="ado-test-result-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </div>
-            <div class="lumia-test-result-content">
-              <div class="lumia-test-result-title">Summary woven successfully!</div>
-              <div class="lumia-test-result-text">Saved to chat metadata.</div>
+            <div class="ado-test-result-content">
+              <div class="ado-test-result-title">Summary woven successfully!</div>
+              <div class="ado-test-result-text">Saved to chat metadata.</div>
             </div>
           `);
         toastr.success("Summary generated and saved to chat metadata!");
       } else {
         $result
-          .removeClass("lumia-hidden")
-          .addClass("lumia-test-result-error")
+          .removeClass("ado-hidden")
+          .addClass("ado-test-result-error")
           .html(`
-            <div class="lumia-test-result-icon">
+            <div class="ado-test-result-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
             </div>
-            <div class="lumia-test-result-content">
-              <div class="lumia-test-result-title">No summary generated</div>
-              <div class="lumia-test-result-text">Check console for details.</div>
+            <div class="ado-test-result-content">
+              <div class="ado-test-result-title">No summary generated</div>
+              <div class="ado-test-result-text">Check console for details.</div>
             </div>
           `);
       }
@@ -1573,61 +1573,61 @@ export function showSummarizationModal() {
 
       // Reset button state
       $btn.prop("disabled", false);
-      $spinner.addClass("lumia-hidden");
-      $icon.removeClass("lumia-hidden");
+      $spinner.addClass("ado-hidden");
+      $icon.removeClass("ado-hidden");
       $text.text("Generate Summary Now");
 
       $result
-        .removeClass("lumia-hidden")
-        .addClass("lumia-test-result-error")
+        .removeClass("ado-hidden")
+        .addClass("ado-test-result-error")
         .html(`
-          <div class="lumia-test-result-icon">
+          <div class="ado-test-result-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <path d="M15 9l-6 6M9 9l6 6"></path>
             </svg>
           </div>
-          <div class="lumia-test-result-content">
-            <div class="lumia-test-result-title">Error</div>
-            <div class="lumia-test-result-text">${error.message}</div>
+          <div class="ado-test-result-content">
+            <div class="ado-test-result-title">Error</div>
+            <div class="ado-test-result-text">${error.message}</div>
           </div>
         `);
     }
   });
 
   // Save button
-  $modal.find(".lumia-sum-save-btn").click(() => {
+  $modal.find(".ado-sum-save-btn").click(() => {
     const maxTokensVal = parseMaxTokens(
-      $modal.find("#lumia-sum-maxtokens-input").val(),
+      $modal.find("#ado-sum-maxtokens-input").val(),
     );
 
-    $modal.find("#lumia-sum-maxtokens-input").val(maxTokensVal);
+    $modal.find("#ado-sum-maxtokens-input").val(maxTokensVal);
 
     settings.summarization = {
       mode: $modal.find('input[name="sum-mode"]:checked').val(),
       apiSource: $modal.find('input[name="sum-source"]:checked').val(),
       autoInterval:
-        parseInt($modal.find("#lumia-sum-interval-input").val()) || 10,
+        parseInt($modal.find("#ado-sum-interval-input").val()) || 10,
       autoMessageContext:
-        parseInt($modal.find("#lumia-sum-auto-context-input").val()) || 10,
+        parseInt($modal.find("#ado-sum-auto-context-input").val()) || 10,
       manualMessageContext:
-        parseInt($modal.find("#lumia-sum-manual-context-input").val()) || 10,
+        parseInt($modal.find("#ado-sum-manual-context-input").val()) || 10,
       secondary: {
-        provider: $modal.find("#lumia-sum-provider-select").val(),
-        model: $modal.find("#lumia-sum-model-input").val(),
-        endpoint: $modal.find("#lumia-sum-endpoint-input").val(),
-        apiKey: $modal.find("#lumia-sum-apikey-input").val(),
+        provider: $modal.find("#ado-sum-provider-select").val(),
+        model: $modal.find("#ado-sum-model-input").val(),
+        endpoint: $modal.find("#ado-sum-endpoint-input").val(),
+        apiKey: $modal.find("#ado-sum-apikey-input").val(),
         temperature:
-          parseFloat($modal.find("#lumia-sum-temp-input").val()) || 0.7,
-        topP: parseFloat($modal.find("#lumia-sum-topp-input").val()) || 1.0,
+          parseFloat($modal.find("#ado-sum-temp-input").val()) || 0.7,
+        topP: parseFloat($modal.find("#ado-sum-topp-input").val()) || 1.0,
         maxTokens: maxTokensVal,
       },
     };
 
     // Save message truncation settings
     settings.messageTruncation = {
-      enabled: $modal.find("#lumia-trunc-toggle").is(":checked"),
-      keepCount: parseInt($modal.find("#lumia-trunc-count-input").val()) || 50,
+      enabled: $modal.find("#ado-trunc-toggle").is(":checked"),
+      keepCount: parseInt($modal.find("#ado-trunc-count-input").val()) || 50,
     };
 
     saveSettings();
@@ -1636,7 +1636,7 @@ export function showSummarizationModal() {
     closeModal();
   });
 
-  $modal.find(".lumia-sum-cancel-btn").click(closeModal);
+  $modal.find(".ado-sum-cancel-btn").click(closeModal);
 
   $modal.on("keydown", function (e) {
     if (e.key === "Escape") closeModal();
@@ -1651,7 +1651,7 @@ export function showSummarizationModal() {
 export function showPromptSettingsModal() {
   const settings = getSettings();
 
-  $("#lumia-prompt-settings-modal").remove();
+  $("#ado-prompt-settings-modal").remove();
 
   const sovereignHand = settings.sovereignHand || {};
   const isSovereignEnabled = sovereignHand.enabled || false;
@@ -1664,83 +1664,83 @@ export function showPromptSettingsModal() {
   const loomItems = contextFilters.loomItems || {};
 
   const modalHtml = `
-        <dialog id="lumia-prompt-settings-modal" class="popup popup--animation-fast lumia-modal lumia-modal-settings">
-            <div class="lumia-modal-header">
-                <div class="lumia-modal-header-icon">
+        <dialog id="ado-prompt-settings-modal" class="popup popup--animation-fast ado-modal ado-modal-settings">
+            <div class="ado-modal-header">
+                <div class="ado-modal-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
                 </div>
-                <h3 class="lumia-modal-title">Prompt Settings</h3>
+                <h3 class="ado-modal-title">Prompt Settings</h3>
             </div>
-            <div class="lumia-modal-content">
+            <div class="ado-modal-content">
 
                 <!-- Sovereign Hand Section -->
-                <div class="lumia-modal-panel lumia-collapsible">
-                    <div class="lumia-modal-panel-header lumia-collapsible-trigger">
-                        <span class="lumia-panel-collapse-icon">
+                <div class="ado-modal-panel ado-collapsible">
+                    <div class="ado-modal-panel-header ado-collapsible-trigger">
+                        <span class="ado-panel-collapse-icon">
                             ${SVG_ICONS.chevron}
                         </span>
-                        <span class="lumia-modal-panel-icon">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Sovereign Hand</span>
-                        <span class="lumia-panel-status ${isSovereignEnabled ? "lumia-panel-status-active" : ""}">${isSovereignEnabled ? "Active" : "Inactive"}</span>
+                        <span class="ado-modal-panel-title">Sovereign Hand</span>
+                        <span class="ado-panel-status ${isSovereignEnabled ? "ado-panel-status-active" : ""}">${isSovereignEnabled ? "Active" : "Inactive"}</span>
                     </div>
-                    <div class="lumia-modal-panel-content lumia-collapsible-content">
-                        <div class="lumia-panel-content-inner">
-                            <p class="lumia-modal-description">Enable Sovereign Hand integration to use advanced prompt manipulation features.</p>
+                    <div class="ado-modal-panel-content ado-collapsible-content">
+                        <div class="ado-panel-content-inner">
+                            <p class="ado-modal-description">Enable Sovereign Hand integration to use advanced prompt manipulation features.</p>
 
-                            <div class="lumia-toggle-row">
-                                <label class="lumia-toggle-label" for="lumia-sovereign-hand-toggle">
-                                    <span class="lumia-toggle-text">Use Sovereign Hand Features</span>
-                                    <span class="lumia-toggle-hint">Enables Sovereign Hand macros for advanced prompt control</span>
+                            <div class="ado-toggle-row">
+                                <label class="ado-toggle-label" for="ado-sovereign-hand-toggle">
+                                    <span class="ado-toggle-text">Use Sovereign Hand Features</span>
+                                    <span class="ado-toggle-hint">Enables Sovereign Hand macros for advanced prompt control</span>
                                 </label>
-                                <div class="lumia-toggle-switch-wrapper">
-                                    <input type="checkbox" id="lumia-sovereign-hand-toggle" class="lumia-toggle-input" ${isSovereignEnabled ? "checked" : ""} />
-                                    <label for="lumia-sovereign-hand-toggle" class="lumia-toggle-switch-label">
-                                        <div class="lumia-toggle-track">
-                                            <div class="lumia-toggle-thumb"></div>
+                                <div class="ado-toggle-switch-wrapper">
+                                    <input type="checkbox" id="ado-sovereign-hand-toggle" class="ado-toggle-input" ${isSovereignEnabled ? "checked" : ""} />
+                                    <label for="ado-sovereign-hand-toggle" class="ado-toggle-switch-label">
+                                        <div class="ado-toggle-track">
+                                            <div class="ado-toggle-thumb"></div>
                                         </div>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="lumia-toggle-row ${isSovereignEnabled ? "" : "lumia-toggle-disabled"}">
-                                <label class="lumia-toggle-label" for="lumia-sovereign-exclude-toggle">
-                                    <span class="lumia-toggle-text">Exclude Last Message from Context</span>
-                                    <span class="lumia-toggle-hint">When enabled, removes the last user message from the outgoing context</span>
+                            <div class="ado-toggle-row ${isSovereignEnabled ? "" : "ado-toggle-disabled"}">
+                                <label class="ado-toggle-label" for="ado-sovereign-exclude-toggle">
+                                    <span class="ado-toggle-text">Exclude Last Message from Context</span>
+                                    <span class="ado-toggle-hint">When enabled, removes the last user message from the outgoing context</span>
                                 </label>
-                                <div class="lumia-toggle-switch-wrapper">
-                                    <input type="checkbox" id="lumia-sovereign-exclude-toggle" class="lumia-toggle-input" ${isExcludeLastMessage ? "checked" : ""} ${isSovereignEnabled ? "" : "disabled"} />
-                                    <label for="lumia-sovereign-exclude-toggle" class="lumia-toggle-switch-label">
-                                        <div class="lumia-toggle-track">
-                                            <div class="lumia-toggle-thumb"></div>
+                                <div class="ado-toggle-switch-wrapper">
+                                    <input type="checkbox" id="ado-sovereign-exclude-toggle" class="ado-toggle-input" ${isExcludeLastMessage ? "checked" : ""} ${isSovereignEnabled ? "" : "disabled"} />
+                                    <label for="ado-sovereign-exclude-toggle" class="ado-toggle-switch-label">
+                                        <div class="ado-toggle-track">
+                                            <div class="ado-toggle-thumb"></div>
                                         </div>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="lumia-toggle-row ${isSovereignEnabled ? "" : "lumia-toggle-disabled"}">
-                                <label class="lumia-toggle-label" for="lumia-sovereign-include-prompt-toggle">
-                                    <span class="lumia-toggle-text">Include Message in Master Prompt</span>
-                                    <span class="lumia-toggle-hint">When enabled, includes the user message in the {{loomSovHand}} macro output</span>
+                            <div class="ado-toggle-row ${isSovereignEnabled ? "" : "ado-toggle-disabled"}">
+                                <label class="ado-toggle-label" for="ado-sovereign-include-prompt-toggle">
+                                    <span class="ado-toggle-text">Include Message in Master Prompt</span>
+                                    <span class="ado-toggle-hint">When enabled, includes the user message in the {{loomSovHand}} macro output</span>
                                 </label>
-                                <div class="lumia-toggle-switch-wrapper">
-                                    <input type="checkbox" id="lumia-sovereign-include-prompt-toggle" class="lumia-toggle-input" ${isIncludeMessageInPrompt ? "checked" : ""} ${isSovereignEnabled ? "" : "disabled"} />
-                                    <label for="lumia-sovereign-include-prompt-toggle" class="lumia-toggle-switch-label">
-                                        <div class="lumia-toggle-track">
-                                            <div class="lumia-toggle-thumb"></div>
+                                <div class="ado-toggle-switch-wrapper">
+                                    <input type="checkbox" id="ado-sovereign-include-prompt-toggle" class="ado-toggle-input" ${isIncludeMessageInPrompt ? "checked" : ""} ${isSovereignEnabled ? "" : "disabled"} />
+                                    <label for="ado-sovereign-include-prompt-toggle" class="ado-toggle-switch-label">
+                                        <div class="ado-toggle-track">
+                                            <div class="ado-toggle-thumb"></div>
                                         </div>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="lumia-info-box lumia-info-box-sovereign ${isSovereignEnabled ? "" : "lumia-info-box-muted"}">
-                                <div class="lumia-info-box-header">
+                            <div class="ado-info-box ado-info-box-sovereign ${isSovereignEnabled ? "" : "ado-info-box-muted"}">
+                                <div class="ado-info-box-header">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <line x1="12" y1="16" x2="12" y2="12"></line>
@@ -1748,7 +1748,7 @@ export function showPromptSettingsModal() {
                                     </svg>
                                     <span>Available macros:</span>
                                 </div>
-                                <ul class="lumia-info-box-list">
+                                <ul class="ado-info-box-list">
                                     <li><code>{{loomLastUserMessage}}</code> returns the last user message content</li>
                                     <li><code>{{loomLastCharMessage}}</code> returns the last character message content</li>
                                     <li><code>{{lastMessageName}}</code> returns the name of whoever sent the last message</li>
@@ -1760,119 +1760,119 @@ export function showPromptSettingsModal() {
                 </div>
 
                 <!-- Context Filters Section -->
-                <div class="lumia-modal-panel lumia-collapsible">
-                    <div class="lumia-modal-panel-header lumia-collapsible-trigger">
-                        <span class="lumia-panel-collapse-icon">
+                <div class="ado-modal-panel ado-collapsible">
+                    <div class="ado-modal-panel-header ado-collapsible-trigger">
+                        <span class="ado-panel-collapse-icon">
                             ${SVG_ICONS.chevron}
                         </span>
-                        <span class="lumia-modal-panel-icon">
+                        <span class="ado-modal-panel-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                             </svg>
                         </span>
-                        <span class="lumia-modal-panel-title">Context Filters</span>
-                        <span class="lumia-panel-status ${htmlTags.enabled || detailsBlocks.enabled || loomItems.enabled ? "lumia-panel-status-active" : ""}">${htmlTags.enabled || detailsBlocks.enabled || loomItems.enabled ? "Active" : "Inactive"}</span>
+                        <span class="ado-modal-panel-title">Context Filters</span>
+                        <span class="ado-panel-status ${htmlTags.enabled || detailsBlocks.enabled || loomItems.enabled ? "ado-panel-status-active" : ""}">${htmlTags.enabled || detailsBlocks.enabled || loomItems.enabled ? "Active" : "Inactive"}</span>
                     </div>
-                    <div class="lumia-modal-panel-content lumia-collapsible-content">
-                        <div class="lumia-panel-content-inner">
-                            <p class="lumia-modal-description">Filter out specific content from the chat context before sending to the AI. Helps reduce token usage and keep prompts clean.</p>
+                    <div class="ado-modal-panel-content ado-collapsible-content">
+                        <div class="ado-panel-content-inner">
+                            <p class="ado-modal-description">Filter out specific content from the chat context before sending to the AI. Helps reduce token usage and keep prompts clean.</p>
 
                             <!-- HTML Tags Filter -->
-                            <div class="lumia-filter-item">
-                                <div class="lumia-toggle-row">
-                                    <label class="lumia-toggle-label" for="lumia-filter-html-toggle">
-                                        <span class="lumia-toggle-text">Strip HTML Tags</span>
-                                        <span class="lumia-toggle-hint">Removes formatting tags: &lt;div&gt;, &lt;span&gt;, &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;em&gt;, &lt;strong&gt;</span>
+                            <div class="ado-filter-item">
+                                <div class="ado-toggle-row">
+                                    <label class="ado-toggle-label" for="ado-filter-html-toggle">
+                                        <span class="ado-toggle-text">Strip HTML Tags</span>
+                                        <span class="ado-toggle-hint">Removes formatting tags: &lt;div&gt;, &lt;span&gt;, &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;em&gt;, &lt;strong&gt;</span>
                                     </label>
-                                    <div class="lumia-toggle-switch-wrapper">
-                                        <input type="checkbox" id="lumia-filter-html-toggle" class="lumia-toggle-input" ${htmlTags.enabled ? "checked" : ""} />
-                                        <label for="lumia-filter-html-toggle" class="lumia-toggle-switch-label">
-                                            <div class="lumia-toggle-track">
-                                                <div class="lumia-toggle-thumb"></div>
+                                    <div class="ado-toggle-switch-wrapper">
+                                        <input type="checkbox" id="ado-filter-html-toggle" class="ado-toggle-input" ${htmlTags.enabled ? "checked" : ""} />
+                                        <label for="ado-filter-html-toggle" class="ado-toggle-switch-label">
+                                            <div class="ado-toggle-track">
+                                                <div class="ado-toggle-thumb"></div>
                                             </div>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="lumia-filter-options ${htmlTags.enabled ? "" : "lumia-filter-options-hidden"}">
-                                    <label class="lumia-input-label">
+                                <div class="ado-filter-options ${htmlTags.enabled ? "" : "ado-filter-options-hidden"}">
+                                    <label class="ado-input-label">
                                         <span>Keep HTML in last N messages:</span>
-                                        <input type="number" id="lumia-filter-html-depth" class="lumia-input-number" value="${htmlTags.keepDepth || 3}" min="0" max="100" />
+                                        <input type="number" id="ado-filter-html-depth" class="ado-input-number" value="${htmlTags.keepDepth || 3}" min="0" max="100" />
                                     </label>
-                                    <span class="lumia-input-hint">HTML tags in older messages will be stripped to save tokens</span>
+                                    <span class="ado-input-hint">HTML tags in older messages will be stripped to save tokens</span>
                                     <!-- Strip Fonts Sub-toggle -->
-                                    <div class="lumia-filter-sub-item">
-                                        <div class="lumia-toggle-row">
-                                            <label class="lumia-toggle-label" for="lumia-filter-fonts-toggle">
-                                                <span class="lumia-toggle-text">Also Strip Fonts</span>
-                                                <span class="lumia-toggle-hint">Remove &lt;font&gt; tags (used by some presets for colored dialogue)</span>
+                                    <div class="ado-filter-sub-item">
+                                        <div class="ado-toggle-row">
+                                            <label class="ado-toggle-label" for="ado-filter-fonts-toggle">
+                                                <span class="ado-toggle-text">Also Strip Fonts</span>
+                                                <span class="ado-toggle-hint">Remove &lt;font&gt; tags (used by some presets for colored dialogue)</span>
                                             </label>
-                                            <div class="lumia-toggle-switch-wrapper">
-                                                <input type="checkbox" id="lumia-filter-fonts-toggle" class="lumia-toggle-input" ${htmlTags.stripFonts ? "checked" : ""} />
-                                                <label for="lumia-filter-fonts-toggle" class="lumia-toggle-switch-label">
-                                                    <div class="lumia-toggle-track">
-                                                        <div class="lumia-toggle-thumb"></div>
+                                            <div class="ado-toggle-switch-wrapper">
+                                                <input type="checkbox" id="ado-filter-fonts-toggle" class="ado-toggle-input" ${htmlTags.stripFonts ? "checked" : ""} />
+                                                <label for="ado-filter-fonts-toggle" class="ado-toggle-switch-label">
+                                                    <div class="ado-toggle-track">
+                                                        <div class="ado-toggle-thumb"></div>
                                                     </div>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="lumia-filter-options lumia-filter-sub-options ${htmlTags.stripFonts ? "" : "lumia-filter-options-hidden"}">
-                                            <label class="lumia-input-label">
+                                        <div class="ado-filter-options ado-filter-sub-options ${htmlTags.stripFonts ? "" : "ado-filter-options-hidden"}">
+                                            <label class="ado-input-label">
                                                 <span>Keep fonts in last N messages:</span>
-                                                <input type="number" id="lumia-filter-fonts-depth" class="lumia-input-number" value="${htmlTags.fontKeepDepth || 3}" min="0" max="100" />
+                                                <input type="number" id="ado-filter-fonts-depth" class="ado-input-number" value="${htmlTags.fontKeepDepth || 3}" min="0" max="100" />
                                             </label>
-                                            <span class="lumia-input-hint">Font tags in older messages will be stripped to save tokens</span>
+                                            <span class="ado-input-hint">Font tags in older messages will be stripped to save tokens</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Details Blocks Filter -->
-                            <div class="lumia-filter-item">
-                                <div class="lumia-toggle-row">
-                                    <label class="lumia-toggle-label" for="lumia-filter-details-toggle">
-                                        <span class="lumia-toggle-text">Filter Details Blocks</span>
-                                        <span class="lumia-toggle-hint">Removes &lt;details&gt; blocks from older messages to save context</span>
+                            <div class="ado-filter-item">
+                                <div class="ado-toggle-row">
+                                    <label class="ado-toggle-label" for="ado-filter-details-toggle">
+                                        <span class="ado-toggle-text">Filter Details Blocks</span>
+                                        <span class="ado-toggle-hint">Removes &lt;details&gt; blocks from older messages to save context</span>
                                     </label>
-                                    <div class="lumia-toggle-switch-wrapper">
-                                        <input type="checkbox" id="lumia-filter-details-toggle" class="lumia-toggle-input" ${detailsBlocks.enabled ? "checked" : ""} />
-                                        <label for="lumia-filter-details-toggle" class="lumia-toggle-switch-label">
-                                            <div class="lumia-toggle-track">
-                                                <div class="lumia-toggle-thumb"></div>
+                                    <div class="ado-toggle-switch-wrapper">
+                                        <input type="checkbox" id="ado-filter-details-toggle" class="ado-toggle-input" ${detailsBlocks.enabled ? "checked" : ""} />
+                                        <label for="ado-filter-details-toggle" class="ado-toggle-switch-label">
+                                            <div class="ado-toggle-track">
+                                                <div class="ado-toggle-thumb"></div>
                                             </div>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="lumia-filter-options ${detailsBlocks.enabled ? "" : "lumia-filter-options-hidden"}">
-                                    <label class="lumia-input-label">
+                                <div class="ado-filter-options ${detailsBlocks.enabled ? "" : "ado-filter-options-hidden"}">
+                                    <label class="ado-input-label">
                                         <span>Keep in last N messages:</span>
-                                        <input type="number" id="lumia-filter-details-depth" class="lumia-input-number" value="${detailsBlocks.keepDepth || 3}" min="0" max="100" />
+                                        <input type="number" id="ado-filter-details-depth" class="ado-input-number" value="${detailsBlocks.keepDepth || 3}" min="0" max="100" />
                                     </label>
-                                    <span class="lumia-input-hint">Messages beyond this depth will have &lt;details&gt; blocks removed</span>
+                                    <span class="ado-input-hint">Messages beyond this depth will have &lt;details&gt; blocks removed</span>
                                 </div>
                             </div>
 
                             <!-- Loom Items Filter -->
-                            <div class="lumia-filter-item">
-                                <div class="lumia-toggle-row">
-                                    <label class="lumia-toggle-label" for="lumia-filter-loom-toggle">
-                                        <span class="lumia-toggle-text">Filter Loom Tags</span>
-                                        <span class="lumia-toggle-hint">Removes Lucid Loom-related tags from older messages</span>
+                            <div class="ado-filter-item">
+                                <div class="ado-toggle-row">
+                                    <label class="ado-toggle-label" for="ado-filter-loom-toggle">
+                                        <span class="ado-toggle-text">Filter Loom Tags</span>
+                                        <span class="ado-toggle-hint">Removes Lucid Loom-related tags from older messages</span>
                                     </label>
-                                    <div class="lumia-toggle-switch-wrapper">
-                                        <input type="checkbox" id="lumia-filter-loom-toggle" class="lumia-toggle-input" ${loomItems.enabled ? "checked" : ""} />
-                                        <label for="lumia-filter-loom-toggle" class="lumia-toggle-switch-label">
-                                            <div class="lumia-toggle-track">
-                                                <div class="lumia-toggle-thumb"></div>
+                                    <div class="ado-toggle-switch-wrapper">
+                                        <input type="checkbox" id="ado-filter-loom-toggle" class="ado-toggle-input" ${loomItems.enabled ? "checked" : ""} />
+                                        <label for="ado-filter-loom-toggle" class="ado-toggle-switch-label">
+                                            <div class="ado-toggle-track">
+                                                <div class="ado-toggle-thumb"></div>
                                             </div>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="lumia-filter-options ${loomItems.enabled ? "" : "lumia-filter-options-hidden"}">
-                                    <label class="lumia-input-label">
+                                <div class="ado-filter-options ${loomItems.enabled ? "" : "ado-filter-options-hidden"}">
+                                    <label class="ado-input-label">
                                         <span>Keep in last N messages:</span>
-                                        <input type="number" id="lumia-filter-loom-depth" class="lumia-input-number" value="${loomItems.keepDepth || 5}" min="0" max="100" />
+                                        <input type="number" id="ado-filter-loom-depth" class="ado-input-number" value="${loomItems.keepDepth || 5}" min="0" max="100" />
                                     </label>
-                                    <span class="lumia-input-hint">Loom tags in older messages will be stripped to save tokens</span>
+                                    <span class="ado-input-hint">Loom tags in older messages will be stripped to save tokens</span>
                                 </div>
                             </div>
 
@@ -1881,15 +1881,15 @@ export function showPromptSettingsModal() {
                 </div>
 
             </div>
-            <div class="lumia-modal-footer">
-                <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-prompt-settings-cancel-btn">Cancel</button>
-                <button class="lumia-modal-btn lumia-modal-btn-primary lumia-prompt-settings-save-btn">Save Changes</button>
+            <div class="ado-modal-footer">
+                <button class="ado-modal-btn ado-modal-btn-secondary ado-prompt-settings-cancel-btn">Cancel</button>
+                <button class="ado-modal-btn ado-modal-btn-primary ado-prompt-settings-save-btn">Save Changes</button>
             </div>
         </dialog>
     `;
 
   $("body").append(modalHtml);
-  const $modal = $("#lumia-prompt-settings-modal");
+  const $modal = $("#ado-prompt-settings-modal");
 
   // Calculate and apply proper height constraints
   applyModalHeightConstraints($modal);
@@ -1911,100 +1911,100 @@ export function showPromptSettingsModal() {
   });
 
   // Handle Collapsible Panels
-  $modal.find(".lumia-collapsible-trigger").click(function (e) {
+  $modal.find(".ado-collapsible-trigger").click(function (e) {
     // Don't collapse if clicking on interactive elements
-    if ($(e.target).closest("input, label, .lumia-toggle-switch-wrapper").length > 0) {
+    if ($(e.target).closest("input, label, .ado-toggle-switch-wrapper").length > 0) {
       return;
     }
-    $(this).closest(".lumia-collapsible").toggleClass("collapsed");
+    $(this).closest(".ado-collapsible").toggleClass("collapsed");
   });
 
   // Handle toggle visual feedback for sovereign hand info box
-  $modal.find("#lumia-sovereign-hand-toggle").change(function () {
+  $modal.find("#ado-sovereign-hand-toggle").change(function () {
     const isChecked = $(this).is(":checked");
-    const $infoBox = $modal.find(".lumia-info-box-sovereign");
-    const $status = $(this).closest(".lumia-collapsible").find(".lumia-panel-status");
-    const $excludeToggle = $modal.find("#lumia-sovereign-exclude-toggle");
-    const $excludeRow = $excludeToggle.closest(".lumia-toggle-row");
-    const $includePromptToggle = $modal.find("#lumia-sovereign-include-prompt-toggle");
-    const $includePromptRow = $includePromptToggle.closest(".lumia-toggle-row");
+    const $infoBox = $modal.find(".ado-info-box-sovereign");
+    const $status = $(this).closest(".ado-collapsible").find(".ado-panel-status");
+    const $excludeToggle = $modal.find("#ado-sovereign-exclude-toggle");
+    const $excludeRow = $excludeToggle.closest(".ado-toggle-row");
+    const $includePromptToggle = $modal.find("#ado-sovereign-include-prompt-toggle");
+    const $includePromptRow = $includePromptToggle.closest(".ado-toggle-row");
 
     if (isChecked) {
-      $infoBox.removeClass("lumia-info-box-muted");
-      $status.addClass("lumia-panel-status-active").text("Active");
+      $infoBox.removeClass("ado-info-box-muted");
+      $status.addClass("ado-panel-status-active").text("Active");
       $excludeToggle.prop("disabled", false);
-      $excludeRow.removeClass("lumia-toggle-disabled");
+      $excludeRow.removeClass("ado-toggle-disabled");
       $includePromptToggle.prop("disabled", false);
-      $includePromptRow.removeClass("lumia-toggle-disabled");
+      $includePromptRow.removeClass("ado-toggle-disabled");
     } else {
-      $infoBox.addClass("lumia-info-box-muted");
-      $status.removeClass("lumia-panel-status-active").text("Inactive");
+      $infoBox.addClass("ado-info-box-muted");
+      $status.removeClass("ado-panel-status-active").text("Inactive");
       $excludeToggle.prop("disabled", true);
-      $excludeRow.addClass("lumia-toggle-disabled");
+      $excludeRow.addClass("ado-toggle-disabled");
       $includePromptToggle.prop("disabled", true);
-      $includePromptRow.addClass("lumia-toggle-disabled");
+      $includePromptRow.addClass("ado-toggle-disabled");
     }
   });
 
   // Handle filter toggle visual feedback for options visibility
-  $modal.find("#lumia-filter-details-toggle").change(function () {
-    const $options = $(this).closest(".lumia-filter-item").find(".lumia-filter-options");
+  $modal.find("#ado-filter-details-toggle").change(function () {
+    const $options = $(this).closest(".ado-filter-item").find(".ado-filter-options");
     if ($(this).is(":checked")) {
-      $options.removeClass("lumia-filter-options-hidden");
+      $options.removeClass("ado-filter-options-hidden");
     } else {
-      $options.addClass("lumia-filter-options-hidden");
+      $options.addClass("ado-filter-options-hidden");
     }
     updateFilterStatus();
   });
 
-  $modal.find("#lumia-filter-loom-toggle").change(function () {
-    const $options = $(this).closest(".lumia-filter-item").find(".lumia-filter-options");
+  $modal.find("#ado-filter-loom-toggle").change(function () {
+    const $options = $(this).closest(".ado-filter-item").find(".ado-filter-options");
     if ($(this).is(":checked")) {
-      $options.removeClass("lumia-filter-options-hidden");
+      $options.removeClass("ado-filter-options-hidden");
     } else {
-      $options.addClass("lumia-filter-options-hidden");
+      $options.addClass("ado-filter-options-hidden");
     }
     updateFilterStatus();
   });
 
-  $modal.find("#lumia-filter-html-toggle").change(function () {
-    const $options = $(this).closest(".lumia-filter-item").find("> .lumia-filter-options");
+  $modal.find("#ado-filter-html-toggle").change(function () {
+    const $options = $(this).closest(".ado-filter-item").find("> .ado-filter-options");
     if ($(this).is(":checked")) {
-      $options.removeClass("lumia-filter-options-hidden");
+      $options.removeClass("ado-filter-options-hidden");
     } else {
-      $options.addClass("lumia-filter-options-hidden");
+      $options.addClass("ado-filter-options-hidden");
     }
     updateFilterStatus();
   });
 
-  $modal.find("#lumia-filter-fonts-toggle").change(function () {
-    const $options = $(this).closest(".lumia-filter-sub-item").find(".lumia-filter-sub-options");
+  $modal.find("#ado-filter-fonts-toggle").change(function () {
+    const $options = $(this).closest(".ado-filter-sub-item").find(".ado-filter-sub-options");
     if ($(this).is(":checked")) {
-      $options.removeClass("lumia-filter-options-hidden");
+      $options.removeClass("ado-filter-options-hidden");
     } else {
-      $options.addClass("lumia-filter-options-hidden");
+      $options.addClass("ado-filter-options-hidden");
     }
   });
 
   // Update the Context Filters panel status badge
   function updateFilterStatus() {
-    const htmlEnabled = $modal.find("#lumia-filter-html-toggle").is(":checked");
-    const detailsEnabled = $modal.find("#lumia-filter-details-toggle").is(":checked");
-    const loomEnabled = $modal.find("#lumia-filter-loom-toggle").is(":checked");
-    const $status = $modal.find(".lumia-modal-panel").eq(1).find(".lumia-panel-status");
+    const htmlEnabled = $modal.find("#ado-filter-html-toggle").is(":checked");
+    const detailsEnabled = $modal.find("#ado-filter-details-toggle").is(":checked");
+    const loomEnabled = $modal.find("#ado-filter-loom-toggle").is(":checked");
+    const $status = $modal.find(".ado-modal-panel").eq(1).find(".ado-panel-status");
 
     if (htmlEnabled || detailsEnabled || loomEnabled) {
-      $status.addClass("lumia-panel-status-active").text("Active");
+      $status.addClass("ado-panel-status-active").text("Active");
     } else {
-      $status.removeClass("lumia-panel-status-active").text("Inactive");
+      $status.removeClass("ado-panel-status-active").text("Inactive");
     }
   }
 
-  $modal.find(".lumia-prompt-settings-save-btn").click(() => {
+  $modal.find(".ado-prompt-settings-save-btn").click(() => {
     // Save Sovereign Hand settings
-    const isSovereignEnabled = $modal.find("#lumia-sovereign-hand-toggle").is(":checked");
-    const isExcludeLastMessage = $modal.find("#lumia-sovereign-exclude-toggle").is(":checked");
-    const isIncludeMessageInPrompt = $modal.find("#lumia-sovereign-include-prompt-toggle").is(":checked");
+    const isSovereignEnabled = $modal.find("#ado-sovereign-hand-toggle").is(":checked");
+    const isExcludeLastMessage = $modal.find("#ado-sovereign-exclude-toggle").is(":checked");
+    const isIncludeMessageInPrompt = $modal.find("#ado-sovereign-include-prompt-toggle").is(":checked");
     if (!settings.sovereignHand) {
       settings.sovereignHand = {};
     }
@@ -2018,20 +2018,20 @@ export function showPromptSettingsModal() {
     }
 
     settings.contextFilters.htmlTags = {
-      enabled: $modal.find("#lumia-filter-html-toggle").is(":checked"),
-      keepDepth: parseInt($modal.find("#lumia-filter-html-depth").val()) || 3,
-      stripFonts: $modal.find("#lumia-filter-fonts-toggle").is(":checked"),
-      fontKeepDepth: parseInt($modal.find("#lumia-filter-fonts-depth").val()) || 3,
+      enabled: $modal.find("#ado-filter-html-toggle").is(":checked"),
+      keepDepth: parseInt($modal.find("#ado-filter-html-depth").val()) || 3,
+      stripFonts: $modal.find("#ado-filter-fonts-toggle").is(":checked"),
+      fontKeepDepth: parseInt($modal.find("#ado-filter-fonts-depth").val()) || 3,
     };
 
     settings.contextFilters.detailsBlocks = {
-      enabled: $modal.find("#lumia-filter-details-toggle").is(":checked"),
-      keepDepth: parseInt($modal.find("#lumia-filter-details-depth").val()) || 3,
+      enabled: $modal.find("#ado-filter-details-toggle").is(":checked"),
+      keepDepth: parseInt($modal.find("#ado-filter-details-depth").val()) || 3,
     };
 
     settings.contextFilters.loomItems = {
-      enabled: $modal.find("#lumia-filter-loom-toggle").is(":checked"),
-      keepDepth: parseInt($modal.find("#lumia-filter-loom-depth").val()) || 5,
+      enabled: $modal.find("#ado-filter-loom-toggle").is(":checked"),
+      keepDepth: parseInt($modal.find("#ado-filter-loom-depth").val()) || 5,
     };
 
     saveSettings();
@@ -2040,7 +2040,7 @@ export function showPromptSettingsModal() {
     closeModal();
   });
 
-  $modal.find(".lumia-prompt-settings-cancel-btn").click(closeModal);
+  $modal.find(".ado-prompt-settings-cancel-btn").click(closeModal);
 
   $modal.on("keydown", function (e) {
     if (e.key === "Escape") closeModal();
@@ -2059,18 +2059,18 @@ export async function showLucidCardsModal() {
   $("#lucid-cards-modal").remove();
 
   const modalHtml = `
-        <dialog id="lucid-cards-modal" class="popup popup--animation-fast lumia-modal lumia-modal-lucid-cards">
-            <div class="lumia-modal-header">
-                <div class="lumia-modal-header-icon">
+        <dialog id="lucid-cards-modal" class="popup popup--animation-fast ado-modal ado-modal-lucid-cards">
+            <div class="ado-modal-header">
+                <div class="ado-modal-header-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                         <line x1="12" y1="22.08" x2="12" y2="12"></line>
                     </svg>
                 </div>
-                <div class="lumia-modal-header-text">
-                    <h3 class="lumia-modal-title">Lucid Cards Browser</h3>
-                    <p class="lumia-modal-subtitle">Browse and import official Lumiverse content</p>
+                <div class="ado-modal-header-text">
+                    <h3 class="ado-modal-title">Lucid Cards Browser</h3>
+                    <p class="ado-modal-subtitle">Browse and import official Ado Helper content</p>
                 </div>
             </div>
             <div class="lucid-cards-tabs">
@@ -2104,7 +2104,7 @@ export async function showLucidCardsModal() {
                     <span>Narratives</span>
                 </button>
             </div>
-            <div class="lumia-modal-content">
+            <div class="ado-modal-content">
                 <div class="lucid-cards-loading">
                     <div class="lucid-cards-spinner"></div>
                     <span>Loading content from Lucid.cards...</span>
@@ -2116,20 +2116,20 @@ export async function showLucidCardsModal() {
                         <line x1="9" y1="9" x2="15" y2="15"></line>
                     </svg>
                     <span class="lucid-cards-error-message">Failed to load content</span>
-                    <button class="lumia-modal-btn lumia-modal-btn-secondary lucid-cards-retry-btn">Retry</button>
+                    <button class="ado-modal-btn ado-modal-btn-secondary lucid-cards-retry-btn">Retry</button>
                 </div>
                 <div class="lucid-cards-content" style="display: none;"></div>
             </div>
-            <div class="lumia-modal-footer lucid-cards-footer">
-                <button class="lumia-modal-btn lumia-modal-btn-secondary lucid-cards-close-btn">Close</button>
+            <div class="ado-modal-footer lucid-cards-footer">
+                <button class="ado-modal-btn ado-modal-btn-secondary lucid-cards-close-btn">Close</button>
                 <div class="lucid-cards-selection-controls" style="display: none;">
-                    <button class="lumia-modal-btn lumia-modal-btn-text lucid-cards-select-all-btn">Select All</button>
-                    <button class="lumia-modal-btn lumia-modal-btn-text lucid-cards-clear-btn">Clear</button>
+                    <button class="ado-modal-btn ado-modal-btn-text lucid-cards-select-all-btn">Select All</button>
+                    <button class="ado-modal-btn ado-modal-btn-text lucid-cards-clear-btn">Clear</button>
                 </div>
                 <div class="lucid-cards-selected-count" style="display: none;">
                     <span class="lucid-cards-count-text">0 selected</span>
                 </div>
-                <button class="lumia-modal-btn lumia-modal-btn-primary lucid-cards-import-btn" style="display: none;">
+                <button class="ado-modal-btn ado-modal-btn-primary lucid-cards-import-btn" style="display: none;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
@@ -2180,10 +2180,10 @@ export async function showLucidCardsModal() {
 
     modal.style.maxHeight = `${maxModalHeight}px`;
 
-    const $header = $modal.find(".lumia-modal-header");
+    const $header = $modal.find(".ado-modal-header");
     const $tabs = $modal.find(".lucid-cards-tabs");
-    const $footer = $modal.find(".lumia-modal-footer");
-    const $content = $modal.find(".lumia-modal-content");
+    const $footer = $modal.find(".ado-modal-footer");
+    const $content = $modal.find(".ado-modal-content");
 
     requestAnimationFrame(() => {
       const headerHeight = $header.length ? $header[0].offsetHeight : 0;
@@ -2226,7 +2226,7 @@ export async function showLucidCardsModal() {
     if (e.key === "Escape") closeModal();
   });
 
-  // Fetch data from Lucid.cards API (new /api/lumia-dlc endpoint)
+  // Fetch data from Lucid.cards API (new /api/ado-dlc endpoint)
   const fetchLucidCards = async () => {
     $modal.find(".lucid-cards-loading").show();
     $modal.find(".lucid-cards-error").hide();
@@ -2236,7 +2236,7 @@ export async function showLucidCardsModal() {
 
     try {
       const response = await fetch(
-        "https://lucid.cards/api/lumia-dlc",
+        "https://lucid.cards/api/ado-dlc",
       );
       if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
       cachedData = await response.json();
@@ -2298,8 +2298,8 @@ export async function showLucidCardsModal() {
       .map((pack) => {
         const name = pack.packName || "Unknown";
         const escapedName = escapeHtml(name);
-        // Use slug for download path: /api/lumia-dlc/{slug}
-        const downloadPath = pack.slug ? `/api/lumia-dlc/${pack.slug}` : "";
+        // Use slug for download path: /api/ado-dlc/{slug}
+        const downloadPath = pack.slug ? `/api/ado-dlc/${pack.slug}` : "";
         const escapedPath = escapeHtml(downloadPath);
         const coverUrl = pack.coverUrl || null;
         const authorName = pack.packAuthor || null;
@@ -2313,7 +2313,7 @@ export async function showLucidCardsModal() {
 
         // Render cover image or placeholder
         const imageHtml = coverUrl
-          ? `<img src="${escapeHtml(coverUrl)}" alt="" loading="lazy" class="lumia-img-loaded">`
+          ? `<img src="${escapeHtml(coverUrl)}" alt="" loading="lazy" class="ado-img-loaded">`
           : `<div class="lucid-dlc-card-placeholder">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -2404,13 +2404,13 @@ export async function showLucidCardsModal() {
           const $img = $card.find(".lucid-dlc-card-image img");
           if ($img.length) {
             if ($img[0].complete && $img[0].naturalHeight !== 0) {
-              $img.addClass("lumia-img-loaded");
+              $img.addClass("ado-img-loaded");
             } else {
               $img.on("load", function () {
-                $(this).addClass("lumia-img-loaded");
+                $(this).addClass("ado-img-loaded");
               });
               $img.on("error", function () {
-                $(this).addClass("lumia-img-loaded");
+                $(this).addClass("ado-img-loaded");
               });
             }
           }
@@ -2599,7 +2599,7 @@ export async function showLucidCardsModal() {
  */
 export function refreshUIDisplay() {
   const settings = getSettings();
-  const statusDiv = document.getElementById("lumia-book-status");
+  const statusDiv = document.getElementById("ado-book-status");
   const packs = Object.values(settings.packs);
 
   if (packs.length > 0) {
@@ -2616,7 +2616,7 @@ export function refreshUIDisplay() {
     }
 
     // Update Definition Selector Label
-    const currentDefDiv = document.getElementById("lumia-current-definition");
+    const currentDefDiv = document.getElementById("ado-current-definition");
     if (currentDefDiv) {
       // Check if in Chimera mode
       if (settings.chimeraMode && settings.selectedDefinitions?.length > 0) {
@@ -2646,7 +2646,7 @@ export function refreshUIDisplay() {
 
     // Update Behaviors List (with dominant indicator)
     const currentBehaviorsDiv = document.getElementById(
-      "lumia-current-behaviors",
+      "ado-current-behaviors",
     );
     if (currentBehaviorsDiv) {
       const names = settings.selectedBehaviors
@@ -2669,7 +2669,7 @@ export function refreshUIDisplay() {
 
     // Update Personalities List (with dominant indicator)
     const currentPersonalitiesDiv = document.getElementById(
-      "lumia-current-personalities",
+      "ado-current-personalities",
     );
     if (currentPersonalitiesDiv) {
       const names = settings.selectedPersonalities
@@ -2738,9 +2738,9 @@ export function refreshUIDisplay() {
     if (statusDiv) statusDiv.textContent = "No Packs loaded";
 
     [
-      "lumia-current-definition",
-      "lumia-current-behaviors",
-      "lumia-current-personalities",
+      "ado-current-definition",
+      "ado-current-behaviors",
+      "ado-current-personalities",
       "loom-current-style",
       "loom-current-utils",
       "loom-current-retrofits",
@@ -2760,15 +2760,15 @@ export function refreshUIDisplay() {
  */
 export function createLoomSummaryButton() {
   // Remove existing button if any using native DOM
-  const existing = document.getElementById("lumia-loom-summary-btn");
+  const existing = document.getElementById("ado-loom-summary-btn");
   if (existing) {
     existing.remove();
   }
 
   // Create button element
   const button = document.createElement("button");
-  button.id = "lumia-loom-summary-btn";
-  button.className = "lumia-loom-summary-btn";
+  button.id = "ado-loom-summary-btn";
+  button.className = "ado-loom-summary-btn";
   button.title = "View/Edit Loom Summary";
 
   // Apply critical positioning styles inline to ensure they take effect
@@ -2796,8 +2796,8 @@ export function createLoomSummaryButton() {
   // Attach click handler - prefer React modal if available
   button.addEventListener("click", () => {
     // Try to use React modal system first
-    if (window.LumiverseUI?.getStore) {
-      const store = window.LumiverseUI.getStore();
+    if (window.AdoHelperUI?.getStore) {
+      const store = window.AdoHelperUI.getStore();
       if (store?.getState()?.actions?.openModal) {
         store.getState().actions.openModal('loomSummary');
         return;
@@ -2816,7 +2816,7 @@ export function createLoomSummaryButton() {
  * and whether summarization is in progress
  */
 export function updateLoomSummaryButtonState() {
-  const btn = document.getElementById("lumia-loom-summary-btn");
+  const btn = document.getElementById("ado-loom-summary-btn");
   if (!btn) return;
 
   const context = getContext();
@@ -2828,24 +2828,24 @@ export function updateLoomSummaryButtonState() {
 
   // Clear all state classes first
   btn.classList.remove(
-    "lumia-loom-summary-btn-hidden",
-    "lumia-loom-summary-btn-empty",
-    "lumia-loom-summary-btn-active",
-    "lumia-loom-summary-btn-summarizing"
+    "ado-loom-summary-btn-hidden",
+    "ado-loom-summary-btn-empty",
+    "ado-loom-summary-btn-active",
+    "ado-loom-summary-btn-summarizing"
   );
 
   if (summarizing) {
     // Summarizing state takes priority
-    btn.classList.add("lumia-loom-summary-btn-summarizing");
+    btn.classList.add("ado-loom-summary-btn-summarizing");
     btn.title = "Generating summary...";
   } else if (!hasChat) {
-    btn.classList.add("lumia-loom-summary-btn-hidden");
+    btn.classList.add("ado-loom-summary-btn-hidden");
     btn.title = "No active chat";
   } else if (hasSummary) {
-    btn.classList.add("lumia-loom-summary-btn-active");
+    btn.classList.add("ado-loom-summary-btn-active");
     btn.title = "View/Edit Loom Summary";
   } else {
-    btn.classList.add("lumia-loom-summary-btn-empty");
+    btn.classList.add("ado-loom-summary-btn-empty");
     btn.title = "No Loom Summary (click to create)";
   }
 }
@@ -2861,15 +2861,15 @@ export function showLoomSummaryModal() {
     return;
   }
 
-  $("#lumia-loom-summary-modal").remove();
+  $("#ado-loom-summary-modal").remove();
 
   const currentSummary = context.chatMetadata?.[LOOM_SUMMARY_KEY] || "";
   const hasSummary = !!currentSummary;
 
   const modalHtml = `
-    <dialog id="lumia-loom-summary-modal" class="popup popup--animation-fast lumia-modal lumia-modal-summary">
-      <div class="lumia-modal-header">
-        <div class="lumia-modal-header-icon">
+    <dialog id="ado-loom-summary-modal" class="popup popup--animation-fast ado-modal ado-modal-summary">
+      <div class="ado-modal-header">
+        <div class="ado-modal-header-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <ellipse cx="12" cy="12" rx="8" ry="10" />
             <ellipse cx="12" cy="12" rx="3" ry="10" />
@@ -2878,18 +2878,18 @@ export function showLoomSummaryModal() {
             <circle cx="12" cy="12" r="2" fill="currentColor"/>
           </svg>
         </div>
-        <h3 class="lumia-modal-title">Loom Summary</h3>
+        <h3 class="ado-modal-title">Loom Summary</h3>
       </div>
-      <div class="lumia-modal-content lumia-summary-content">
+      <div class="ado-modal-content ado-summary-content">
         ${hasSummary ? `
-          <div class="lumia-summary-status lumia-summary-status-exists">
+          <div class="ado-summary-status ado-summary-status-exists">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
             <span>Summary exists for this chat</span>
           </div>
         ` : `
-          <div class="lumia-summary-status lumia-summary-status-empty">
+          <div class="ado-summary-status ado-summary-status-empty">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -2898,7 +2898,7 @@ export function showLoomSummaryModal() {
             <span>No summary yet - generate one or write your own</span>
           </div>
         `}
-        <textarea id="lumia-summary-textarea" class="lumia-summary-textarea" placeholder="Write or paste your Loom summary here...
+        <textarea id="ado-summary-textarea" class="ado-summary-textarea" placeholder="Write or paste your Loom summary here...
 
 Use the structured format:
 **Completed Objectives**
@@ -2912,16 +2912,16 @@ Use the structured format:
 
 (etc.)">${escapeHtml(currentSummary)}</textarea>
       </div>
-      <div class="lumia-modal-footer">
-        <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-summary-cancel-btn">Cancel</button>
-        <button class="lumia-modal-btn lumia-modal-btn-secondary lumia-summary-clear-btn" ${!hasSummary ? "disabled" : ""}>Clear</button>
-        <button class="lumia-modal-btn lumia-modal-btn-primary lumia-summary-save-btn">Save</button>
+      <div class="ado-modal-footer">
+        <button class="ado-modal-btn ado-modal-btn-secondary ado-summary-cancel-btn">Cancel</button>
+        <button class="ado-modal-btn ado-modal-btn-secondary ado-summary-clear-btn" ${!hasSummary ? "disabled" : ""}>Clear</button>
+        <button class="ado-modal-btn ado-modal-btn-primary ado-summary-save-btn">Save</button>
       </div>
     </dialog>
   `;
 
   $("body").append(modalHtml);
-  const $modal = $("#lumia-loom-summary-modal");
+  const $modal = $("#ado-loom-summary-modal");
 
   const closeModal = () => {
     $modal[0].close();
@@ -2935,12 +2935,12 @@ Use the structured format:
   });
 
   // Cancel button
-  $modal.find(".lumia-summary-cancel-btn").click(closeModal);
+  $modal.find(".ado-summary-cancel-btn").click(closeModal);
 
   // Clear button
-  $modal.find(".lumia-summary-clear-btn").click(() => {
+  $modal.find(".ado-summary-clear-btn").click(() => {
     if (confirm("Are you sure you want to clear the Loom summary for this chat?")) {
-      $modal.find("#lumia-summary-textarea").val("");
+      $modal.find("#ado-summary-textarea").val("");
       // Also clear from metadata immediately
       if (context.chatMetadata) {
         delete context.chatMetadata[LOOM_SUMMARY_KEY];
@@ -2953,8 +2953,8 @@ Use the structured format:
   });
 
   // Save button
-  $modal.find(".lumia-summary-save-btn").click(() => {
-    const newSummary = $modal.find("#lumia-summary-textarea").val().trim();
+  $modal.find(".ado-summary-save-btn").click(() => {
+    const newSummary = $modal.find("#ado-summary-textarea").val().trim();
 
     if (!context.chatMetadata) {
       context.chatMetadata = {};
@@ -2976,5 +2976,5 @@ Use the structured format:
   $modal[0].showModal();
 
   // Focus the textarea
-  $modal.find("#lumia-summary-textarea").focus();
+  $modal.find("#ado-summary-textarea").focus();
 }

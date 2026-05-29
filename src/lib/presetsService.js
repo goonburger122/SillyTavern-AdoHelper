@@ -967,7 +967,7 @@ export function setPostProcessing(strategy) {
     notifyReasoningChange();
 }
 
-// --- Adaptive Thinking Toggle (Lumiverse-only, per-model-profile) ---
+// --- Adaptive Thinking Toggle (Ado Helper-only, per-model-profile) ---
 
 let _adaptiveThinkingEnabled = true;
 

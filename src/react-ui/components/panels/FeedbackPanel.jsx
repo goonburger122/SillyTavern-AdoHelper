@@ -2,11 +2,11 @@ import React, { useMemo, useSyncExternalStore, useState, useCallback } from 'rea
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'motion/react';
 import { BarChart2, CheckCircle, XCircle, Users, ChevronDown, ChevronUp, Briefcase, Eye, EyeOff, AlertTriangle } from 'lucide-react';
-import { useLumiverseStore, usePacks } from '../../store/LumiverseContext';
+import { useAdoHelperStore, usePacks } from '../../store/AdoHelperContext';
 import LazyImage from '../shared/LazyImage';
 
 // Get store for direct access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants
 const EMPTY_ARRAY = [];
@@ -147,22 +147,22 @@ function IdentityContext({ identity }) {
     if (!hasContent) return null;
 
     return (
-        <div className="lumiverse-feedback-identity">
+        <div className="ado-feedback-identity">
             <button
-                className="lumiverse-feedback-identity-toggle"
+                className="ado-feedback-identity-toggle"
                 onClick={() => setIsVisible(prev => !prev)}
                 type="button"
             >
                 {isVisible ? <EyeOff size={12} /> : <Eye size={12} />}
                 <span>Identity Context</span>
                 {identity.role && (
-                    <span className="lumiverse-feedback-identity-role">{identity.role}</span>
+                    <span className="ado-feedback-identity-role">{identity.role}</span>
                 )}
             </button>
             <AnimatePresence>
                 {isVisible && (
                     <motion.div
-                        className="lumiverse-feedback-identity-content"
+                        className="ado-feedback-identity-content"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -170,21 +170,21 @@ function IdentityContext({ identity }) {
                         style={{ overflow: 'hidden' }}
                     >
                         {identity.definition && (
-                            <div className="lumiverse-feedback-identity-field">
-                                <span className="lumiverse-feedback-identity-label">Definition</span>
-                                <div className="lumiverse-feedback-identity-text">{identity.definition}</div>
+                            <div className="ado-feedback-identity-field">
+                                <span className="ado-feedback-identity-label">Definition</span>
+                                <div className="ado-feedback-identity-text">{identity.definition}</div>
                             </div>
                         )}
                         {identity.personality && (
-                            <div className="lumiverse-feedback-identity-field">
-                                <span className="lumiverse-feedback-identity-label">Personality</span>
-                                <div className="lumiverse-feedback-identity-text">{identity.personality}</div>
+                            <div className="ado-feedback-identity-field">
+                                <span className="ado-feedback-identity-label">Personality</span>
+                                <div className="ado-feedback-identity-text">{identity.personality}</div>
                             </div>
                         )}
                         {identity.behavior && (
-                            <div className="lumiverse-feedback-identity-field">
-                                <span className="lumiverse-feedback-identity-label">Behavior</span>
-                                <div className="lumiverse-feedback-identity-text">{identity.behavior}</div>
+                            <div className="ado-feedback-identity-field">
+                                <span className="ado-feedback-identity-label">Behavior</span>
+                                <div className="ado-feedback-identity-text">{identity.behavior}</div>
                             </div>
                         )}
                     </motion.div>
@@ -201,19 +201,19 @@ function ToolError({ error }) {
     const parsed = useMemo(() => parseToolError(error), [error]);
 
     return (
-        <div className="lumiverse-feedback-tool-error">
-            <div className="lumiverse-feedback-tool-error-header">
+        <div className="ado-feedback-tool-error">
+            <div className="ado-feedback-tool-error-header">
                 <AlertTriangle size={13} />
                 {parsed.statusCode
                     ? <strong>{parsed.statusCode}</strong>
                     : <strong>Error</strong>
                 }
             </div>
-            <div className="lumiverse-feedback-tool-error-message">
+            <div className="ado-feedback-tool-error-message">
                 {parsed.friendlyMessage}
             </div>
             {parsed.rawDetail && (
-                <details className="lumiverse-feedback-tool-error-details">
+                <details className="ado-feedback-tool-error-details">
                     <summary>Raw error detail</summary>
                     <pre>{parsed.rawDetail}</pre>
                 </details>
@@ -233,13 +233,13 @@ function ToolResult({ result, isLast }) {
     }, []);
 
     return (
-        <div className={clsx('lumiverse-feedback-tool', isLast && 'lumiverse-feedback-tool--last')}>
-            <div className="lumiverse-feedback-tool-header" onClick={toggleExpanded}>
-                <Briefcase size={12} strokeWidth={1.5} className="lumiverse-feedback-tool-icon" />
-                <span className="lumiverse-feedback-tool-name">{result.toolDisplayName}</span>
+        <div className={clsx('ado-feedback-tool', isLast && 'ado-feedback-tool--last')}>
+            <div className="ado-feedback-tool-header" onClick={toggleExpanded}>
+                <Briefcase size={12} strokeWidth={1.5} className="ado-feedback-tool-icon" />
+                <span className="ado-feedback-tool-name">{result.toolDisplayName}</span>
                 <span className={clsx(
-                    'lumiverse-feedback-tool-badge',
-                    result.success ? 'lumiverse-feedback-tool-badge--success' : 'lumiverse-feedback-tool-badge--error'
+                    'ado-feedback-tool-badge',
+                    result.success ? 'ado-feedback-tool-badge--success' : 'ado-feedback-tool-badge--error'
                 )}>
                     {result.success ? (
                         <><CheckCircle size={10} /> OK</>
@@ -247,14 +247,14 @@ function ToolResult({ result, isLast }) {
                         <><XCircle size={10} /> Error</>
                     )}
                 </span>
-                <span className="lumiverse-feedback-tool-chevron">
+                <span className="ado-feedback-tool-chevron">
                     {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </span>
             </div>
             <AnimatePresence>
                 {isExpanded && (
                     <motion.div
-                        className="lumiverse-feedback-tool-body"
+                        className="ado-feedback-tool-body"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -262,7 +262,7 @@ function ToolResult({ result, isLast }) {
                         style={{ overflow: 'hidden' }}
                     >
                         {result.success ? (
-                            <div className="lumiverse-feedback-tool-response">
+                            <div className="ado-feedback-tool-response">
                                 {result.response || '(No response content)'}
                             </div>
                         ) : (
@@ -289,14 +289,14 @@ function FeedbackMemberCard({ group, packs }) {
 
     return (
         <motion.div
-            className="lumiverse-feedback-member"
+            className="ado-feedback-member"
             initial={{ opacity: 0, y: 12, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             layout
         >
-            <div className="lumiverse-feedback-member-header">
-                <div className="lumiverse-feedback-member-avatar">
+            <div className="ado-feedback-member-header">
+                <div className="ado-feedback-member-avatar">
                     <LazyImage
                         src={memberImage}
                         alt={memberName}
@@ -304,15 +304,15 @@ function FeedbackMemberCard({ group, packs }) {
                         fallback={<Users size={20} strokeWidth={1.5} />}
                     />
                 </div>
-                <div className="lumiverse-feedback-member-info">
-                    <span className="lumiverse-feedback-member-name">{memberName}</span>
-                    <span className="lumiverse-feedback-member-stats">
+                <div className="ado-feedback-member-info">
+                    <span className="ado-feedback-member-name">{memberName}</span>
+                    <span className="ado-feedback-member-stats">
                         {successCount}/{totalCount} tools succeeded
                     </span>
                 </div>
             </div>
             <IdentityContext identity={identity} />
-            <div className="lumiverse-feedback-member-tools">
+            <div className="ado-feedback-member-tools">
                 {group.tools.map((result, idx) => (
                     <ToolResult
                         key={`${result.toolName}-${idx}`}
@@ -330,8 +330,8 @@ function FeedbackMemberCard({ group, packs }) {
  */
 function EmptyFeedbackState() {
     return (
-        <div className="lumiverse-feedback-empty">
-            <span className="lumiverse-feedback-empty-icon">
+        <div className="ado-feedback-empty">
+            <span className="ado-feedback-empty-icon">
                 <BarChart2 size={36} strokeWidth={1.5} />
             </span>
             <h4>No feedback yet</h4>
@@ -375,18 +375,18 @@ function FeedbackPanel() {
     }
 
     return (
-        <div className="lumiverse-feedback-panel">
+        <div className="ado-feedback-panel">
             <motion.div
-                className="lumiverse-feedback-summary"
+                className="ado-feedback-summary"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
             >
-                <span className="lumiverse-feedback-count">
+                <span className="ado-feedback-count">
                     {toolResults.filter(r => r.success).length}/{toolResults.length} tools succeeded
                 </span>
             </motion.div>
-            <div className="lumiverse-feedback-members">
+            <div className="ado-feedback-members">
                 <AnimatePresence initial={false}>
                     {groupedResults.map((group) => (
                         <FeedbackMemberCard

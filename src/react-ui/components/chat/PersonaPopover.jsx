@@ -59,34 +59,34 @@ export default function PersonaPopover({ onClose }) {
     const isEmpty = personas.length === 0;
 
     return (
-        <div className="lcs-persona-popover" ref={menuRef}>
+        <div className="ado-persona-popover" ref={menuRef}>
             {isEmpty ? (
-                <div className="lcs-persona-empty">
+                <div className="ado-persona-empty">
                     <UserCircle size={20} style={{ opacity: 0.4 }} />
                     <span>No personas configured</span>
                 </div>
             ) : (
-                <div className="lcs-persona-list">
+                <div className="ado-persona-list">
                     {personas.map((p) => {
                         const isActive = p.avatarId === currentAvatar;
                         return (
                             <button
                                 key={p.avatarId}
-                                className={`lcs-persona-item${isActive ? ' lcs-persona-active' : ''}`}
+                                className={`ado-persona-item${isActive ? ' ado-persona-active' : ''}`}
                                 onClick={() => handleSelect(p.avatarId)}
                                 type="button"
                             >
                                 <LazyImage
-                                    containerClassName="lcs-persona-avatar"
+                                    containerClassName="ado-persona-avatar"
                                     src={p.avatarUrl}
                                     alt={p.name}
                                     spinnerSize={10}
                                 />
-                                <div className="lcs-persona-info">
-                                    <span className="lcs-persona-name">{p.name}</span>
-                                    {p.title && <span className="lcs-persona-title">{p.title}</span>}
+                                <div className="ado-persona-info">
+                                    <span className="ado-persona-name">{p.name}</span>
+                                    {p.title && <span className="ado-persona-title">{p.title}</span>}
                                 </div>
-                                {isActive && <span className="lcs-persona-check">&#10003;</span>}
+                                {isActive && <span className="ado-persona-check">&#10003;</span>}
                             </button>
                         );
                     })}

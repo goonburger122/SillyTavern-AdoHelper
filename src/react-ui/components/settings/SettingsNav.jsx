@@ -84,13 +84,13 @@ export default function SettingsNav({ activeView, onNavigate, onClose }) {
     }, [isDropdownOpen]);
 
     return (
-        <nav className="lumiverse-settings-nav">
+        <nav className="ado-settings-nav">
             {/* ---- Desktop sidebar (hidden on mobile via CSS) ---- */}
-            <div className="lumiverse-settings-nav-header">
+            <div className="ado-settings-nav-header">
                 <Settings2 size={16} strokeWidth={1.5} />
                 <span>Settings</span>
                 <button
-                    className="lumiverse-settings-nav-close"
+                    className="ado-settings-nav-close"
                     onClick={onClose}
                     type="button"
                     aria-label="Close settings"
@@ -98,16 +98,16 @@ export default function SettingsNav({ activeView, onNavigate, onClose }) {
                     <X size={16} strokeWidth={2} />
                 </button>
             </div>
-            <div className="lumiverse-settings-nav-items">
+            <div className="ado-settings-nav-items">
                 {NAV_GROUPS.map(group => (
-                    <div key={group.label} className="lumiverse-settings-nav-group">
-                        <div className="lumiverse-settings-nav-group-label">{group.label}</div>
+                    <div key={group.label} className="ado-settings-nav-group">
+                        <div className="ado-settings-nav-group-label">{group.label}</div>
                         {group.items.map(item => (
                             <button
                                 key={item.id}
                                 className={clsx(
-                                    'lumiverse-settings-nav-item',
-                                    activeView === item.id && 'lumiverse-settings-nav-item--active'
+                                    'ado-settings-nav-item',
+                                    activeView === item.id && 'ado-settings-nav-item--active'
                                 )}
                                 onClick={() => onNavigate(item.id)}
                                 type="button"
@@ -121,30 +121,30 @@ export default function SettingsNav({ activeView, onNavigate, onClose }) {
             </div>
 
             {/* ---- Mobile dropdown header (hidden on desktop via CSS) ---- */}
-            <div className="lumiverse-settings-mobile-header">
+            <div className="ado-settings-mobile-header">
                 <button
                     ref={selectorRef}
-                    className="lumiverse-settings-mobile-selector"
+                    className="ado-settings-mobile-selector"
                     onClick={() => setIsDropdownOpen(prev => !prev)}
                     type="button"
                     aria-expanded={isDropdownOpen}
                     aria-haspopup="listbox"
                 >
                     <activeItem.Icon size={15} strokeWidth={1.5} />
-                    <span className="lumiverse-settings-mobile-selector-label">
+                    <span className="ado-settings-mobile-selector-label">
                         {activeItem.label}
                     </span>
                     <ChevronDown
                         size={14}
                         strokeWidth={2}
                         className={clsx(
-                            'lumiverse-settings-mobile-chevron',
-                            isDropdownOpen && 'lumiverse-settings-mobile-chevron--open'
+                            'ado-settings-mobile-chevron',
+                            isDropdownOpen && 'ado-settings-mobile-chevron--open'
                         )}
                     />
                 </button>
                 <button
-                    className="lumiverse-settings-mobile-close"
+                    className="ado-settings-mobile-close"
                     onClick={onClose}
                     type="button"
                     aria-label="Close settings"
@@ -155,18 +155,18 @@ export default function SettingsNav({ activeView, onNavigate, onClose }) {
 
             {/* ---- Mobile dropdown panel ---- */}
             {isDropdownOpen && (
-                <div ref={dropdownRef} className="lumiverse-settings-mobile-dropdown" role="listbox">
+                <div ref={dropdownRef} className="ado-settings-mobile-dropdown" role="listbox">
                     {NAV_GROUPS.map(group => (
-                        <div key={group.label} className="lumiverse-settings-mobile-group">
-                            <div className="lumiverse-settings-mobile-group-label">{group.label}</div>
+                        <div key={group.label} className="ado-settings-mobile-group">
+                            <div className="ado-settings-mobile-group-label">{group.label}</div>
                             {group.items.map(item => (
                                 <button
                                     key={item.id}
                                     role="option"
                                     aria-selected={activeView === item.id}
                                     className={clsx(
-                                        'lumiverse-settings-mobile-item',
-                                        activeView === item.id && 'lumiverse-settings-mobile-item--active'
+                                        'ado-settings-mobile-item',
+                                        activeView === item.id && 'ado-settings-mobile-item--active'
                                     )}
                                     onClick={() => handleMobileNavigate(item.id)}
                                     type="button"

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useSyncExternalStore, useCallback } from 'react';
 import clsx from 'clsx';
 import { Bookmark, Trash2, RefreshCw, Plus, Check, X, Clock, FileText, Zap, Heart, Users, Brain, Link2, Edit3, Layers } from 'lucide-react';
-import { useLumiverseStore, useLumiverseActions, saveToExtension } from '../../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, saveToExtension } from '../../store/AdoHelperContext';
 import { CollapsibleSection } from '../shared/CollapsibleSection';
 import { ReasoningSettingsContent } from '../shared/ReasoningSettings';
 import { ToggleBindingsContent } from '../shared/ToggleBindingsContent';
@@ -10,7 +10,7 @@ import { detectConnectionProfile } from '../../../lib/lucidLoomService';
 
 
 // Get store for direct state access
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable fallback constants for useSyncExternalStore
 const EMPTY_OBJECT = {};
@@ -84,65 +84,65 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
     }, [preset]);
 
     return (
-        <div className={clsx('lumiverse-preset-card', isActive && 'lumiverse-preset-card--active')}>
-            <div className="lumiverse-preset-card-header">
-                <span className="lumiverse-preset-card-icon">
+        <div className={clsx('ado-preset-card', isActive && 'ado-preset-card--active')}>
+            <div className="ado-preset-card-header">
+                <span className="ado-preset-card-icon">
                     <Bookmark size={16} strokeWidth={1.5} />
                 </span>
-                <span className="lumiverse-preset-card-name">{preset.name}</span>
+                <span className="ado-preset-card-name">{preset.name}</span>
                 {isActive && (
-                    <span className="lumiverse-preset-card-active-badge">
+                    <span className="ado-preset-card-active-badge">
                         <Check size={12} strokeWidth={2} /> Active
                     </span>
                 )}
             </div>
 
-            <div className="lumiverse-preset-card-meta">
+            <div className="ado-preset-card-meta">
                 {/* Separate trait counts with icons */}
-                <div className="lumiverse-preset-stats">
+                <div className="ado-preset-stats">
                     {counts.isCouncil ? (
                         // Council mode stats
                         <>
-                            <span className="lumiverse-preset-stat lumiverse-preset-stat--council">
+                            <span className="ado-preset-stat ado-preset-stat--council">
                                 <Users size={12} strokeWidth={1.5} /> {counts.members}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Zap size={12} strokeWidth={1.5} /> {counts.behaviors}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Heart size={12} strokeWidth={1.5} /> {counts.personalities}
                             </span>
                         </>
                     ) : (
                         // Normal or Chimera mode stats
                         <>
-                            <span className={clsx('lumiverse-preset-stat', counts.isChimera && 'lumiverse-preset-stat--chimera')}>
+                            <span className={clsx('ado-preset-stat', counts.isChimera && 'ado-preset-stat--chimera')}>
                                 <FileText size={12} strokeWidth={1.5} /> {counts.definitions}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Zap size={12} strokeWidth={1.5} /> {counts.behaviors}
                             </span>
-                            <span className="lumiverse-preset-stat">
+                            <span className="ado-preset-stat">
                                 <Heart size={12} strokeWidth={1.5} /> {counts.personalities}
                             </span>
                         </>
                     )}
                 </div>
                 {preset.chimeraMode && (
-                    <span className="lumiverse-preset-card-mode">Chimera</span>
+                    <span className="ado-preset-card-mode">Chimera</span>
                 )}
                 {preset.councilMode && (
-                    <span className="lumiverse-preset-card-mode">Council</span>
+                    <span className="ado-preset-card-mode">Council</span>
                 )}
-                <span className="lumiverse-preset-card-time">
+                <span className="ado-preset-card-time">
                     <Clock size={12} strokeWidth={1.5} />
                     {formatRelativeTime(preset.updatedAt || preset.createdAt)}
                 </span>
             </div>
 
-            <div className="lumiverse-preset-card-actions">
+            <div className="ado-preset-card-actions">
                 <button
-                    className="lumiverse-preset-btn lumiverse-preset-btn--primary"
+                    className="ado-preset-btn ado-preset-btn--primary"
                     onClick={() => onLoad(preset.name)}
                     title="Load this preset"
                     type="button"
@@ -150,7 +150,7 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
                     Load
                 </button>
                 <button
-                    className="lumiverse-preset-btn"
+                    className="ado-preset-btn"
                     onClick={() => onUpdate(preset.name)}
                     title="Update preset with current selections"
                     type="button"
@@ -159,8 +159,8 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
                 </button>
                 <button
                     className={clsx(
-                        'lumiverse-preset-btn lumiverse-preset-btn--danger',
-                        isConfirmingDelete && 'lumiverse-preset-btn--confirming'
+                        'ado-preset-btn ado-preset-btn--danger',
+                        isConfirmingDelete && 'ado-preset-btn--confirming'
                     )}
                     onClick={handleDelete}
                     title={isConfirmingDelete ? 'Click again to confirm' : 'Delete preset'}
@@ -178,8 +178,8 @@ function PresetCard({ preset, isActive, onLoad, onUpdate, onDelete }) {
  */
 function EmptyState() {
     return (
-        <div className="lumiverse-preset-empty">
-            <span className="lumiverse-preset-empty-icon">
+        <div className="ado-preset-empty">
+            <span className="ado-preset-empty-icon">
                 <Bookmark size={32} strokeWidth={1.5} />
             </span>
             <h4>No Presets Saved</h4>
@@ -194,7 +194,7 @@ function EmptyState() {
 function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, onDelete }) {
     const [newPresetName, setNewPresetName] = useState('');
     const [isCreating, setIsCreating] = useState(false);
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     
     // Get current presets from store for duplicate check
     const presets = useSyncExternalStore(
@@ -228,12 +228,12 @@ function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, o
     };
 
     return (
-        <div className="lumiverse-presets-section-content">
+        <div className="ado-presets-section-content">
             {/* Create new preset */}
-            <div className="lumiverse-preset-create-area" style={{ marginBottom: '12px' }}>
+            <div className="ado-preset-create-area" style={{ marginBottom: '12px' }}>
                 {!isCreating ? (
                     <button
-                        className="lumiverse-preset-create-btn"
+                        className="ado-preset-create-btn"
                         onClick={() => setIsCreating(true)}
                         title="Save current configuration as preset"
                         type="button"
@@ -242,10 +242,10 @@ function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, o
                         <span>New Preset</span>
                     </button>
                 ) : (
-                    <div className="lumiverse-preset-create-form">
+                    <div className="ado-preset-create-form">
                         <input
                             type="text"
-                            className="lumiverse-preset-input"
+                            className="ado-preset-input"
                             placeholder="Preset name..."
                             value={newPresetName}
                             onChange={(e) => setNewPresetName(e.target.value)}
@@ -253,7 +253,7 @@ function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, o
                             autoFocus
                         />
                         <button
-                            className="lumiverse-preset-btn lumiverse-preset-btn--primary"
+                            className="ado-preset-btn ado-preset-btn--primary"
                             onClick={handleCreate}
                             disabled={!newPresetName.trim()}
                             type="button"
@@ -261,7 +261,7 @@ function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, o
                             <Check size={14} strokeWidth={2} />
                         </button>
                         <button
-                            className="lumiverse-preset-btn"
+                            className="ado-preset-btn"
                             onClick={() => {
                                 setIsCreating(false);
                                 setNewPresetName('');
@@ -275,7 +275,7 @@ function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, o
             </div>
 
             {/* Preset list */}
-            <div className="lumiverse-preset-list">
+            <div className="ado-preset-list">
                 {presetList.length === 0 ? (
                     <EmptyState />
                 ) : (
@@ -299,7 +299,7 @@ function SavedPresetsContent({ presetList, activePresetName, onLoad, onUpdate, o
  * Main Preset Manager component
  */
 function PresetManager() {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     // Subscribe to presets and activePresetName
     const presets = useSyncExternalStore(
@@ -366,7 +366,7 @@ function PresetManager() {
     const reasoningActive = reasoningSettings?.auto_parse || apiReasoning.enabled;
 
     return (
-        <div className="lumiverse-preset-manager">
+        <div className="ado-preset-manager">
             {/* Lumia Presets Section */}
             <CollapsibleSection
                 Icon={Bookmark}
@@ -390,7 +390,7 @@ function PresetManager() {
                 status={reasoningActive}
                 defaultOpen={false}
             >
-                <p className="lumiverse-vp-settings-desc">
+                <p className="ado-vp-settings-desc">
                     Configure reasoning/chain-of-thought settings. Changes sync with the Chat Presets modal.
                 </p>
                 <ReasoningSettingsContent
@@ -419,23 +419,23 @@ function PresetManager() {
                 title="Toggle Bindings"
                 defaultOpen={false}
             >
-                <p className="lumiverse-vp-settings-desc">
+                <p className="ado-vp-settings-desc">
                     Save which prompts are enabled/disabled and restore them when switching chats or characters.
                 </p>
                 <ToggleBindingsContent compact={true} />
             </CollapsibleSection>
 
             {/* Loom Builder Trigger */}
-            <div className="lumiverse-preset-editor-trigger">
+            <div className="ado-preset-editor-trigger">
                 <button
-                    className="lumia-btn lumia-btn-secondary lumia-btn-full"
+                    className="ado-btn ado-btn-secondary ado-btn-full"
                     onClick={() => actions.openModal('loomBuilder')}
                     type="button"
                 >
                     <Layers size={14} strokeWidth={2} />
                     Open Loom Builder
                 </button>
-                <p className="lumiverse-preset-editor-hint">
+                <p className="ado-preset-editor-hint">
                     Build and manage Lucid Loom presets with full prompt assembly control.
                 </p>
             </div>

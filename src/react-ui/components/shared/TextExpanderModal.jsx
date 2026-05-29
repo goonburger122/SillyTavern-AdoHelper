@@ -14,11 +14,11 @@ import { highlightContent } from '../../lib/syntaxHighlighter';
  * Scroll positions are synced on every scroll event.
  *
  * Portal-rendered to document.body (same pattern as ConfirmationModal).
- * Follows the `.lumiverse-modal` pattern for theme integration:
- *   - Surface: var(--lumiverse-bg)
- *   - Header/footer: var(--lumiverse-bg-elevated)
- *   - Editor well: var(--lumiverse-fill-subtle)
- *   - Shadows: var(--lumiverse-shadow-lg)
+ * Follows the `.ado-modal` pattern for theme integration:
+ *   - Surface: var(--ado-bg)
+ *   - Header/footer: var(--ado-bg-elevated)
+ *   - Editor well: var(--ado-fill-subtle)
+ *   - Shadows: var(--ado-shadow-lg)
  *   - All colors derive from user's active theme
  */
 const TextExpanderModal = ({ isOpen, onClose, value, onChange, title }) => {
@@ -126,7 +126,7 @@ const TextExpanderModal = ({ isOpen, onClose, value, onChange, title }) => {
                         {/* Footer */}
                         <div className="lce-expander-footer">
                             <button
-                                className="lumiverse-ce-btn lumiverse-ce-btn--primary"
+                                className="ado-ce-btn ado-ce-btn--primary"
                                 onClick={onClose}
                                 type="button"
                             >

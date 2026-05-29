@@ -32,7 +32,7 @@ import {
     triggerBatchDelete,
     stopStreaming,
 } from '../../../lib/chatSheldService';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import ToolsMenu from './ToolsMenu';
 import QuickReplyPopover from './QuickReplyPopover';
 import PersonaPopover from './PersonaPopover';
@@ -44,7 +44,7 @@ import { isGroupChat } from '../../../stContext';
 import { getActiveGuides } from '../../../lib/guidedGenerationService';
 import ConfirmationModal from '../shared/ConfirmationModal';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 const selectIsStreaming = () => store.getState().chatSheld?.isStreaming || false;
 const selectHasMessages = () => (store.getState().chatSheld?.messages?.length || 0) > 0;
 const selectBatchDeleteMode = () => store.getState().chatSheld?.batchDeleteMode || false;
@@ -167,8 +167,8 @@ export default function InputArea() {
     const deleteCount = batchDeleteFromId !== null ? messageCount - batchDeleteFromId : 0;
 
     return (
-        <div className="lcs-input-area">
-            {/* Popovers — anchored to .lcs-input-area for proper centering */}
+        <div className="ado-input-area">
+            {/* Popovers — anchored to .ado-input-area for proper centering */}
             {openPopover === 'tools' && <ToolsMenu onClose={() => setOpenPopover(null)} />}
             {openPopover === 'qr' && <QuickReplyPopover onClose={() => setOpenPopover(null)} />}
             {openPopover === 'persona' && <PersonaPopover onClose={() => setOpenPopover(null)} />}
@@ -177,16 +177,16 @@ export default function InputArea() {
 
             {/* Batch delete mode bar */}
             {batchDeleteMode ? (
-                <div className="lcs-batch-bar">
-                    <span className="lcs-batch-bar-text">
+                <div className="ado-batch-bar">
+                    <span className="ado-batch-bar-text">
                         {batchDeleteFromId !== null
                             ? `Delete from message #${batchDeleteFromId} onward (${deleteCount} message${deleteCount !== 1 ? 's' : ''})`
                             : 'Click a message to set the truncation point'
                         }
                     </span>
-                    <div className="lcs-batch-bar-actions">
+                    <div className="ado-batch-bar-actions">
                         <button
-                            className="lcs-action-bar-btn lcs-action-bar-btn--delete"
+                            className="ado-action-bar-btn ado-action-bar-btn--delete"
                             onClick={() => setConfirmDelete(true)}
                             disabled={batchDeleteFromId === null}
                             title="Delete selected messages"
@@ -196,7 +196,7 @@ export default function InputArea() {
                             <span style={{ marginLeft: '4px', fontSize: '12px' }}>Delete</span>
                         </button>
                         <button
-                            className="lcs-action-bar-btn"
+                            className="ado-action-bar-btn"
                             onClick={handleCancelBatch}
                             title="Cancel batch delete"
                             type="button"
@@ -210,9 +210,9 @@ export default function InputArea() {
                 <>
                     {/* Action bar — chat control buttons (hidden during streaming) */}
                     {!isStreaming && hasMessages && (
-                        <div className="lcs-action-bar">
+                        <div className="ado-action-bar">
                             <button
-                                className="lcs-action-bar-btn"
+                                className="ado-action-bar-btn"
                                 onClick={triggerRegenerate}
                                 title="Regenerate last response"
                                 type="button"
@@ -220,7 +220,7 @@ export default function InputArea() {
                                 <RefreshCw size={14} />
                             </button>
                             <button
-                                className="lcs-action-bar-btn"
+                                className="ado-action-bar-btn"
                                 onClick={triggerContinue}
                                 title="Continue generation"
                                 type="button"
@@ -228,7 +228,7 @@ export default function InputArea() {
                                 <Play size={14} />
                             </button>
                             <button
-                                className="lcs-action-bar-btn"
+                                className="ado-action-bar-btn"
                                 onClick={triggerImpersonate}
                                 title="Impersonate (AI writes as you)"
                                 type="button"
@@ -237,7 +237,7 @@ export default function InputArea() {
                             </button>
                             {isGroup && (
                                 <button
-                                    className="lcs-action-bar-btn"
+                                    className="ado-action-bar-btn"
                                     onClick={() => setOpenPopover(p => p === 'forceReply' ? null : 'forceReply')}
                                     title="Force Reply (select who speaks)"
                                     type="button"
@@ -247,7 +247,7 @@ export default function InputArea() {
                             )}
                             {hasPersonas && (
                                 <button
-                                    className="lcs-action-bar-btn"
+                                    className="ado-action-bar-btn"
                                     onClick={() => setOpenPopover(p => p === 'persona' ? null : 'persona')}
                                     title="Switch Persona"
                                     type="button"
@@ -256,7 +256,7 @@ export default function InputArea() {
                                 </button>
                             )}
                             <button
-                                className="lcs-action-bar-btn"
+                                className="ado-action-bar-btn"
                                 onClick={() => setOpenPopover(p => p === 'guides' ? null : 'guides')}
                                 title="Guided Generations"
                                 type="button"
@@ -264,12 +264,12 @@ export default function InputArea() {
                             >
                                 <Compass size={14} />
                                 {activeGuideCount > 0 && (
-                                    <span className="lcs-guide-badge">{activeGuideCount}</span>
+                                    <span className="ado-guide-badge">{activeGuideCount}</span>
                                 )}
                             </button>
                             {isQRAvailable() && (
                                 <button
-                                    className="lcs-action-bar-btn"
+                                    className="ado-action-bar-btn"
                                     onClick={() => setOpenPopover(p => p === 'qr' ? null : 'qr')}
                                     title="Quick Replies"
                                     type="button"
@@ -278,7 +278,7 @@ export default function InputArea() {
                                 </button>
                             )}
                             <button
-                                className="lcs-action-bar-btn"
+                                className="ado-action-bar-btn"
                                 onClick={() => setOpenPopover(p => p === 'tools' ? null : 'tools')}
                                 title="More tools"
                                 type="button"
@@ -286,7 +286,7 @@ export default function InputArea() {
                                 <MoreHorizontal size={14} />
                             </button>
                             {draftHiddenCount > 0 && (
-                                <span className="lcs-draft-count-badge">
+                                <span className="ado-draft-count-badge">
                                     <EyeOff size={11} />
                                     <span>{draftHiddenCount}</span>
                                 </span>
@@ -298,12 +298,12 @@ export default function InputArea() {
 
             {/* Active guide pills */}
             {activeGuideCount > 0 && !batchDeleteMode && (
-                <div className="lcs-guide-pills">
+                <div className="ado-guide-pills">
                     {guidedGenerations.filter(g => g.enabled).map(g => (
-                        <span key={g.id} className="lcs-guide-pill">
+                        <span key={g.id} className="ado-guide-pill">
                             <span
-                                className="lcs-guide-pill-dot"
-                                style={{ background: g.color || 'var(--lumiverse-primary, rgba(140,130,255,0.8))' }}
+                                className="ado-guide-pill-dot"
+                                style={{ background: g.color || 'var(--ado-primary, rgba(140,130,255,0.8))' }}
                             />
                             {g.name}
                         </span>
@@ -313,11 +313,11 @@ export default function InputArea() {
 
             {/* Input row — textarea + send/stop toggle (hidden in batch mode) */}
             {!batchDeleteMode && (
-                <div className="lcs-input-row">
-                    <div className="lcs-input-wrapper">
+                <div className="ado-input-row">
+                    <div className="ado-input-wrapper">
                         <textarea
                             ref={textareaRef}
-                            className="lcs-textarea"
+                            className="ado-textarea"
                             value={text}
                             onChange={handleInput}
                             onKeyDown={handleKeyDown}
@@ -328,7 +328,7 @@ export default function InputArea() {
                     </div>
                     {isStreaming ? (
                         <button
-                            className="lcs-send-btn lcs-send-btn--stop"
+                            className="ado-send-btn ado-send-btn--stop"
                             onClick={handleStop}
                             title="Stop generation"
                             type="button"
@@ -338,7 +338,7 @@ export default function InputArea() {
                         </button>
                     ) : (
                         <button
-                            className="lcs-send-btn"
+                            className="ado-send-btn"
                             onClick={handleSend}
                             title={text.trim() ? 'Send message' : 'Silent continue (nudge)'}
                             type="button"

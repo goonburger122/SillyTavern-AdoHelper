@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLumiverse, useLumiverseActions } from '../store/LumiverseContext';
+import { useAdoHelper, useAdoHelperActions } from '../store/AdoHelperContext';
 import * as connService from '../../lib/connectionService';
 
 /**
@@ -7,8 +7,8 @@ import * as connService from '../../lib/connectionService';
  * Connects connectionService <-> store <-> component.
  */
 export function useConnectionManager() {
-    const connectionManager = useLumiverse(s => s.connectionManager);
-    const actions = useLumiverseActions();
+    const connectionManager = useAdoHelper(s => s.connectionManager);
+    const actions = useAdoHelperActions();
 
     const registry = connectionManager?.registry || {};
     const activeProfileId = connectionManager?.activeProfileId || null;

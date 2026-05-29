@@ -20,7 +20,7 @@ export function getContext() {
     return SillyTavern.getContext();
   }
 
-  console.error("[LumiverseHelper] SillyTavern global not available");
+  console.error("[AdoHelperHelper] SillyTavern global not available");
   return null;
 }
 
@@ -84,7 +84,7 @@ export function getMacrosParser() {
   const ctx = getContext();
 
   if (!ctx) {
-    console.warn("[LumiverseHelper] Context not available for macro registration");
+    console.warn("[AdoHelperHelper] Context not available for macro registration");
     return null;
   }
 
@@ -125,26 +125,26 @@ export function getMacrosParser() {
         // Legacy signature: (name, handler, description)
         options = {
           handler: handlerOrOptions,
-          description: legacyDescription || `Lumiverse Helper macro: ${name}`,
+          description: legacyDescription || `Ado Helper macro: ${name}`,
         };
       } else if (typeof handlerOrOptions === "object" && handlerOrOptions !== null) {
         // New signature: (name, options)
         options = {
           ...handlerOrOptions,
-          description: handlerOrOptions.description || `Lumiverse Helper macro: ${name}`,
+          description: handlerOrOptions.description || `Ado Helper macro: ${name}`,
         };
       } else {
         // Static value
         options = {
           handler: () => handlerOrOptions,
-          description: legacyDescription || `Lumiverse Helper macro: ${name}`,
+          description: legacyDescription || `Ado Helper macro: ${name}`,
         };
       }
 
       // Ensure handler exists
       const handler = options.handler;
       if (typeof handler !== "function") {
-        console.error(`[LumiverseHelper] Invalid handler for macro ${name}`);
+        console.error(`[AdoHelperHelper] Invalid handler for macro ${name}`);
         return;
       }
 
@@ -154,7 +154,7 @@ export function getMacrosParser() {
           // Build full Macros 2.0 options object
           const macros2Options = {
             handler,
-            category: "Lumiverse Helper",
+            category: "Ado Helper",
             description: options.description,
           };
 
@@ -169,7 +169,7 @@ export function getMacrosParser() {
           ctx.macros.register(name, macros2Options);
           return; // Success - don't try other methods
         } catch (e) {
-          console.warn(`[LumiverseHelper] macros.register failed for ${name}, trying fallback:`, e.message);
+          console.warn(`[AdoHelperHelper] macros.register failed for ${name}, trying fallback:`, e.message);
         }
       }
 
@@ -179,7 +179,7 @@ export function getMacrosParser() {
           ctx.registerMacro(name, handler);
           return; // Success
         } catch (e) {
-          console.warn(`[LumiverseHelper] registerMacro failed for ${name}, trying fallback:`, e.message);
+          console.warn(`[AdoHelperHelper] registerMacro failed for ${name}, trying fallback:`, e.message);
         }
       }
 
@@ -189,11 +189,11 @@ export function getMacrosParser() {
           ctx.MacrosParser.registerMacro(name, handler);
           return; // Success
         } catch (e) {
-          console.error(`[LumiverseHelper] All macro registration methods failed for ${name}:`, e.message);
+          console.error(`[AdoHelperHelper] All macro registration methods failed for ${name}:`, e.message);
         }
       }
 
-      console.error(`[LumiverseHelper] Could not register macro ${name} - all methods exhausted`);
+      console.error(`[AdoHelperHelper] Could not register macro ${name} - all methods exhausted`);
     },
   };
 }
@@ -221,7 +221,7 @@ export function getSlashCommandParser() {
     return globalThis.SlashCommandParser;
   }
 
-  console.warn("[LumiverseHelper] SlashCommandParser not available");
+  console.warn("[AdoHelperHelper] SlashCommandParser not available");
   return null;
 }
 
@@ -248,7 +248,7 @@ export function getSlashCommand() {
     return globalThis.SlashCommand;
   }
 
-  console.warn("[LumiverseHelper] SlashCommand not available");
+  console.warn("[AdoHelperHelper] SlashCommand not available");
   return null;
 }
 
@@ -279,7 +279,7 @@ async function discoverExtensionInfo(extensionName) {
 
     const response = await fetch('/api/extensions/discover');
     if (!response.ok) {
-      console.warn('[LumiverseHelper] Failed to discover extension info:', response.statusText);
+      console.warn('[AdoHelperHelper] Failed to discover extension info:', response.statusText);
       return null;
     }
 
@@ -291,13 +291,13 @@ async function discoverExtensionInfo(extensionName) {
     );
 
     if (!myEntry) {
-      console.warn(`[LumiverseHelper] Extension '${cleanName}' not found in server registry.`);
+      console.warn(`[AdoHelperHelper] Extension '${cleanName}' not found in server registry.`);
       return null;
     }
 
     return myEntry;
   } catch (error) {
-    console.error('[LumiverseHelper] Error discovering extension info:', error);
+    console.error('[AdoHelperHelper] Error discovering extension info:', error);
     return null;
   }
 }
@@ -331,12 +331,12 @@ export async function triggerExtensionUpdate(extensionName) {
     });
 
     if (response.status === 403) {
-      console.error('[LumiverseHelper] Update failed: Admin permission required for global extensions');
+      console.error('[AdoHelperHelper] Update failed: Admin permission required for global extensions');
       return { success: false, message: 'Permission denied: Admin required to update global extensions' };
     }
 
     if (!response.ok) {
-      console.error(`[LumiverseHelper] Update failed: ${response.statusText}`);
+      console.error(`[AdoHelperHelper] Update failed: ${response.statusText}`);
       return { success: false, message: `Update failed: ${response.statusText}` };
     }
 
@@ -352,7 +352,7 @@ export async function triggerExtensionUpdate(extensionName) {
       };
     }
   } catch (error) {
-    console.error('[LumiverseHelper] Error triggering extension update:', error);
+    console.error('[AdoHelperHelper] Error triggering extension update:', error);
     return { success: false, message: `Error: ${error.message}` };
   }
 }
@@ -384,7 +384,7 @@ export async function getExtensionGitVersion(extensionName) {
 
     return await response.json();
   } catch (error) {
-    console.error('[LumiverseHelper] Failed to get git version:', error);
+    console.error('[AdoHelperHelper] Failed to get git version:', error);
     return null;
   }
 }
@@ -410,7 +410,7 @@ export function registerFunctionTool(toolDef) {
   if (ctx?.registerFunctionTool) {
     ctx.registerFunctionTool(toolDef);
   } else {
-    console.warn("[LumiverseHelper] registerFunctionTool not available on context");
+    console.warn("[AdoHelperHelper] registerFunctionTool not available on context");
   }
 }
 
@@ -423,7 +423,7 @@ export function unregisterFunctionTool(name) {
   if (ctx?.unregisterFunctionTool) {
     ctx.unregisterFunctionTool(name);
   } else {
-    console.warn("[LumiverseHelper] unregisterFunctionTool not available on context");
+    console.warn("[AdoHelperHelper] unregisterFunctionTool not available on context");
   }
 }
 
@@ -530,7 +530,7 @@ export async function getItemizedPrompts() {
       }
     }
   } catch (e) {
-    console.warn('[LumiverseHelper] Failed to read itemized prompts from localforage:', e.message);
+    console.warn('[AdoHelperHelper] Failed to read itemized prompts from localforage:', e.message);
   }
 
   return null;
@@ -706,7 +706,7 @@ export function getUserPersona() {
   if (!persona) return null;
 
   // Debug: log resolved persona text length for diagnosis
-  console.debug('[LumiverseHelper:Persona] getUserPersona: name=%s, persona_len=%d', name, persona.length);
+  console.debug('[AdoHelperHelper:Persona] getUserPersona: name=%s, persona_len=%d', name, persona.length);
 
   return { name, persona };
 }
@@ -793,12 +793,12 @@ export async function writeSecret(key, value) {
     } catch (cacheErr) {
       // Non-fatal — the key is written to disk, but frontend cache is stale.
       // The backend will still find it on the next generation request.
-      console.warn('[LumiverseHelper] Could not refresh secret state cache:', cacheErr);
+      console.warn('[AdoHelperHelper] Could not refresh secret state cache:', cacheErr);
     }
 
     return true;
   } catch (err) {
-    console.error('[LumiverseHelper] Failed to write secret:', err);
+    console.error('[AdoHelperHelper] Failed to write secret:', err);
     return false;
   }
 }

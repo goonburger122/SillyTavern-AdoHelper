@@ -4,10 +4,10 @@
  */
 
 import { useCallback, useSyncExternalStore } from 'react';
-import { useLumiverseStore, useLumiverseActions, saveToExtensionImmediate } from '../store/LumiverseContext';
+import { useAdoHelperStore, useAdoHelperActions, saveToExtensionImmediate } from '../store/AdoHelperContext';
 import { generateManually, clearSceneBackground, abortImageGeneration } from '../../lib/imageGenService.js';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selectors
 const selectImageGeneration = () => store.getState().imageGeneration || {};
@@ -16,7 +16,7 @@ const selectSceneGenerating = () => store.getState().sceneGenerating || false;
 const selectLastSceneParams = () => store.getState().lastSceneParams;
 
 export function useImageGenSettings() {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     const settings = useSyncExternalStore(store.subscribe, selectImageGeneration, selectImageGeneration);
     const sceneBackground = useSyncExternalStore(store.subscribe, selectSceneBackground, selectSceneBackground);

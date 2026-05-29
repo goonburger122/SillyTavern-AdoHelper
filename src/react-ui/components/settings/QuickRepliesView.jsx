@@ -1,8 +1,8 @@
 /**
- * QuickRepliesView — Full QR set + entry management UI for Lumiverse settings.
+ * QuickRepliesView — Full QR set + entry management UI for Ado Helper settings.
  *
  * Provides CRUD for QR2 sets and entries via quickReplyService,
- * styled with Lumiverse's adaptive theming.
+ * styled with Ado Helper's adaptive theming.
  */
 
 import React, { useState, useCallback, useEffect } from 'react';
@@ -43,12 +43,12 @@ const s = {
         gap: '8px',
         fontSize: '16px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
     },
     unavailable: {
         padding: '40px 20px',
         textAlign: 'center',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         fontSize: '13px',
         lineHeight: '1.6',
     },
@@ -61,10 +61,10 @@ const s = {
         flex: 1,
         padding: '8px 12px',
         fontSize: '13px',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '8px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         boxSizing: 'border-box',
     },
@@ -76,22 +76,22 @@ const s = {
         fontSize: '12px',
         fontWeight: 500,
         borderRadius: '8px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-fill-subtle)',
-        color: 'var(--lumiverse-text)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-fill-subtle)',
+        color: 'var(--ado-text)',
         cursor: 'pointer',
         transition: 'all 0.15s ease',
         whiteSpace: 'nowrap',
     },
     btnPrimary: {
-        background: 'var(--lumiverse-primary, rgba(100,120,255,0.15))',
-        borderColor: 'var(--lumiverse-primary, rgba(100,120,255,0.3))',
-        color: 'var(--lumiverse-text)',
+        background: 'var(--ado-primary, rgba(100,120,255,0.15))',
+        borderColor: 'var(--ado-primary, rgba(100,120,255,0.3))',
+        color: 'var(--ado-text)',
     },
     btnDanger: {
         background: 'rgba(255,60,60,0.08)',
         borderColor: 'rgba(255,60,60,0.2)',
-        color: 'var(--lumiverse-danger, rgba(255,100,100,0.9))',
+        color: 'var(--ado-danger, rgba(255,100,100,0.9))',
     },
     btnSmall: {
         padding: '4px 10px',
@@ -99,8 +99,8 @@ const s = {
     },
     setCard: {
         marginBottom: '10px',
-        background: 'var(--lumiverse-fill-subtle)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-fill-subtle)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '10px',
         overflow: 'hidden',
     },
@@ -124,7 +124,7 @@ const s = {
         flex: 1,
         fontSize: '14px',
         fontWeight: 600,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -140,22 +140,22 @@ const s = {
     },
     badgeGlobal: {
         background: 'rgba(100,120,255,0.12)',
-        color: 'var(--lumiverse-primary, rgba(130,150,255,0.8))',
+        color: 'var(--ado-primary, rgba(130,150,255,0.8))',
     },
     badgeChat: {
         background: 'rgba(100,220,160,0.12)',
-        color: 'var(--lumiverse-success, rgba(100,220,160,0.8))',
+        color: 'var(--ado-success, rgba(100,220,160,0.8))',
     },
     setBody: {
         padding: '0 14px 14px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
     },
     setControls: {
         display: 'flex',
         flexWrap: 'wrap',
         gap: '8px',
         padding: '10px 0',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        borderBottom: '1px solid var(--ado-border)',
         marginBottom: '10px',
     },
     entryRow: {
@@ -171,14 +171,14 @@ const s = {
         width: '20px',
         textAlign: 'center',
         flexShrink: 0,
-        color: 'var(--lumiverse-text-dim)',
+        color: 'var(--ado-text-dim)',
         fontSize: '12px',
     },
     entryLabel: {
         flex: 1,
         fontSize: '13px',
         fontWeight: 500,
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -186,7 +186,7 @@ const s = {
     entryPreview: {
         flex: 2,
         fontSize: '11.5px',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -212,16 +212,16 @@ const s = {
         padding: '1px 5px',
         borderRadius: '3px',
         background: 'rgba(255,255,255,0.05)',
-        color: 'var(--lumiverse-text-muted)',
+        color: 'var(--ado-text-muted)',
         textTransform: 'uppercase',
     },
     editor: {
         padding: '12px',
         marginTop: '6px',
         marginBottom: '6px',
-        background: 'var(--lumiverse-fill-light, rgba(0,0,0,0.15))',
+        background: 'var(--ado-fill-light, rgba(0,0,0,0.15))',
         borderRadius: '8px',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
     },
     editorField: {
         marginBottom: '10px',
@@ -232,7 +232,7 @@ const s = {
         fontWeight: 600,
         textTransform: 'uppercase',
         letterSpacing: '0.04em',
-        color: 'var(--lumiverse-text-dim)',
+        color: 'var(--ado-text-dim)',
         marginBottom: '4px',
     },
     textarea: {
@@ -242,10 +242,10 @@ const s = {
         padding: '8px 10px',
         fontSize: '12.5px',
         fontFamily: 'ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Code", Menlo, Consolas, monospace',
-        background: 'var(--lumiverse-input-bg)',
-        border: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-input-bg)',
+        border: '1px solid var(--ado-border)',
         borderRadius: '6px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         outline: 'none',
         resize: 'vertical',
         boxSizing: 'border-box',
@@ -261,7 +261,7 @@ const s = {
         alignItems: 'center',
         gap: '6px',
         fontSize: '12px',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         cursor: 'pointer',
     },
     editorActions: {
@@ -270,7 +270,7 @@ const s = {
         gap: '8px',
         marginTop: '12px',
         paddingTop: '10px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
     },
     addEntryRow: {
         display: 'flex',
@@ -355,7 +355,7 @@ function QREntryEditor({ entry, setName, onSaved, onCancel }) {
                             placeholder="fa-solid fa-bolt"
                         />
                         {form.icon && (
-                            <i className={form.icon} style={{ fontSize: '14px', color: 'var(--lumiverse-text-dim)' }} />
+                            <i className={form.icon} style={{ fontSize: '14px', color: 'var(--ado-text-dim)' }} />
                         )}
                     </div>
                 </div>
@@ -503,18 +503,18 @@ function QRSetCard({ set, onRefresh }) {
             <div
                 style={s.setHeader}
                 onClick={() => setExpanded(prev => !prev)}
-                onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill-subtle)'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill-subtle)'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
             >
                 {expanded
-                    ? <ChevronDown size={14} style={{ flexShrink: 0, color: 'var(--lumiverse-text-dim)' }} />
-                    : <ChevronRight size={14} style={{ flexShrink: 0, color: 'var(--lumiverse-text-dim)' }} />
+                    ? <ChevronDown size={14} style={{ flexShrink: 0, color: 'var(--ado-text-dim)' }} />
+                    : <ChevronRight size={14} style={{ flexShrink: 0, color: 'var(--ado-text-dim)' }} />
                 }
                 {set.color && (
                     <div style={{ ...s.setColorDot, background: set.color }} />
                 )}
                 <span style={s.setName}>{set.name}</span>
-                <span style={{ fontSize: '11px', color: 'var(--lumiverse-text-muted)' }}>
+                <span style={{ fontSize: '11px', color: 'var(--ado-text-muted)' }}>
                     {set.qrs.length} {set.qrs.length === 1 ? 'entry' : 'entries'}
                 </span>
                 {set.isGlobal && <span style={{ ...s.badge, ...s.badgeGlobal }}>Global</span>}
@@ -557,7 +557,7 @@ function QRSetCard({ set, onRefresh }) {
                             <div
                                 style={s.entryRow}
                                 onClick={() => setEditingId(editingId === entry.id ? null : entry.id)}
-                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill-subtle)'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill-subtle)'; }}
                                 onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
                             >
                                 <div style={s.entryIcon}>
@@ -659,10 +659,10 @@ export default function QuickRepliesView() {
 
     if (!available) {
         return (
-            <div className="lumiverse-settings-view" style={s.view}>
+            <div className="ado-settings-view" style={s.view}>
                 <div style={s.header}>
                     <div style={s.headerTitle}>
-                        <Zap size={18} style={{ color: 'var(--lumiverse-primary)' }} />
+                        <Zap size={18} style={{ color: 'var(--ado-primary)' }} />
                         Quick Replies
                     </div>
                 </div>
@@ -677,10 +677,10 @@ export default function QuickRepliesView() {
     }
 
     return (
-        <div className="lumiverse-settings-view" style={s.view}>
+        <div className="ado-settings-view" style={s.view}>
             <div style={s.header}>
                 <div style={s.headerTitle}>
-                    <Zap size={18} style={{ color: 'var(--lumiverse-primary)' }} />
+                    <Zap size={18} style={{ color: 'var(--ado-primary)' }} />
                     Quick Replies
                 </div>
             </div>

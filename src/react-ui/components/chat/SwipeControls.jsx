@@ -9,10 +9,10 @@
 import React, { useCallback } from 'react';
 import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { triggerSwipe } from '../../../lib/chatSheldService';
-import { useLumiverseActions } from '../../store/LumiverseContext';
+import { useAdoHelperActions } from '../../store/AdoHelperContext';
 
 export default function SwipeControls({ mesId, swipeId, swipeCount, swipes, isLastMessage }) {
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     const handleSwipeLeft = useCallback(() => {
         triggerSwipe('left');
@@ -33,23 +33,23 @@ export default function SwipeControls({ mesId, swipeId, swipeCount, swipes, isLa
     if (!isLastMessage) {
         if (isGreetingsMessage) {
             return (
-                <div className="lcs-swipe">
+                <div className="ado-swipe">
                     <button
-                        className="lcs-greetings-indicator"
+                        className="ado-greetings-indicator"
                         onClick={handleOpenGreetings}
                         title="Browse alternate greetings"
                         type="button"
                     >
                         <MessageCircle size={13} />
                         <span>Greetings</span>
-                        <span className="lcs-greetings-badge">{swipeCount}</span>
+                        <span className="ado-greetings-badge">{swipeCount}</span>
                     </button>
                 </div>
             );
         }
         return (
-            <div className="lcs-swipe">
-                <span className="lcs-swipe-counter">
+            <div className="ado-swipe">
+                <span className="ado-swipe-counter">
                     {swipeId + 1} / {swipeCount}
                 </span>
             </div>
@@ -59,19 +59,19 @@ export default function SwipeControls({ mesId, swipeId, swipeCount, swipes, isLa
     // Last message + greetings: show indicator + right arrow for generating new
     if (isGreetingsMessage) {
         return (
-            <div className="lcs-swipe">
+            <div className="ado-swipe">
                 <button
-                    className="lcs-greetings-indicator"
+                    className="ado-greetings-indicator"
                     onClick={handleOpenGreetings}
                     title="Browse alternate greetings"
                     type="button"
                 >
                     <MessageCircle size={13} />
                     <span>Greetings</span>
-                    <span className="lcs-greetings-badge">{swipeCount}</span>
+                    <span className="ado-greetings-badge">{swipeCount}</span>
                 </button>
                 <button
-                    className="lcs-swipe-btn"
+                    className="ado-swipe-btn"
                     onClick={handleSwipeRight}
                     title="Generate new greeting"
                     type="button"
@@ -86,10 +86,10 @@ export default function SwipeControls({ mesId, swipeId, swipeCount, swipes, isLa
     const hasMultiple = swipeCount > 1;
 
     return (
-        <div className="lcs-swipe">
+        <div className="ado-swipe">
             {hasMultiple && (
                 <button
-                    className="lcs-swipe-btn"
+                    className="ado-swipe-btn"
                     onClick={handleSwipeLeft}
                     disabled={swipeId <= 0}
                     title="Previous swipe"
@@ -99,12 +99,12 @@ export default function SwipeControls({ mesId, swipeId, swipeCount, swipes, isLa
                 </button>
             )}
             {hasMultiple && (
-                <span className="lcs-swipe-counter">
+                <span className="ado-swipe-counter">
                     {swipeId + 1} / {swipeCount}
                 </span>
             )}
             <button
-                className="lcs-swipe-btn"
+                className="ado-swipe-btn"
                 onClick={handleSwipeRight}
                 title={hasMultiple ? 'Next swipe' : 'Generate alternative'}
                 type="button"

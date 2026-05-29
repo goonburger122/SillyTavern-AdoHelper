@@ -22,7 +22,7 @@ import {
     ChevronDown,
 } from 'lucide-react';
 import { useConnectionManager } from '../../hooks/useConnectionManager';
-import { useLumiverse, useLumiverseActions } from '../../store/LumiverseContext';
+import { useAdoHelper, useAdoHelperActions } from '../../store/AdoHelperContext';
 import { chatPresetService } from '../../../lib/chatPresetService';
 import { getAvailableRegexPresets } from '../../../lib/connectionService';
 import ConfirmationModal from '../shared/ConfirmationModal';
@@ -61,16 +61,16 @@ const styles = {
         flexDirection: 'column',
         position: 'absolute',
         inset: 0,
-        background: 'var(--lumiverse-bg)',
-        color: 'var(--lumiverse-text)',
+        background: 'var(--ado-bg)',
+        color: 'var(--ado-text)',
     },
     header: {
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
         padding: '10px 12px',
-        background: 'var(--lumiverse-bg-elevated)',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-bg-elevated)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
         flexWrap: 'wrap',
     },
@@ -87,9 +87,9 @@ const styles = {
         width: '28px',
         height: '28px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
-        color: 'var(--lumiverse-text)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
+        color: 'var(--ado-text)',
         cursor: 'pointer',
         flexShrink: 0,
     },
@@ -109,13 +109,13 @@ const styles = {
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: 'transparent',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
         cursor: 'pointer',
         transition: 'border-color 0.15s, background 0.15s',
     },
     cardActive: {
-        borderColor: 'var(--lumiverse-primary)',
-        background: 'var(--lumiverse-fill-light, rgba(0,0,0,0.15))',
+        borderColor: 'var(--ado-primary)',
+        background: 'var(--ado-fill-light, rgba(0,0,0,0.15))',
     },
     cardAccent: {
         width: '4px',
@@ -147,7 +147,7 @@ const styles = {
         fontWeight: 600,
         padding: '2px 6px',
         borderRadius: '4px',
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: '#fff',
         flexShrink: 0,
     },
@@ -160,7 +160,7 @@ const styles = {
         borderRadius: '6px',
         border: 'none',
         background: 'transparent',
-        color: 'var(--lumiverse-text-secondary, var(--lumiverse-text))',
+        color: 'var(--ado-text-secondary, var(--ado-text))',
         cursor: 'pointer',
         opacity: 0.6,
         flexShrink: 0,
@@ -177,16 +177,16 @@ const styles = {
         flexDirection: 'column',
         position: 'absolute',
         inset: 0,
-        background: 'var(--lumiverse-bg)',
-        color: 'var(--lumiverse-text)',
+        background: 'var(--ado-bg)',
+        color: 'var(--ado-text)',
     },
     editorHeader: {
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
         padding: '10px 16px',
-        background: 'var(--lumiverse-bg-elevated)',
-        borderBottom: '1px solid var(--lumiverse-border)',
+        background: 'var(--ado-bg-elevated)',
+        borderBottom: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     editorScroll: {
@@ -210,9 +210,9 @@ const styles = {
         width: '100%',
         padding: '8px 10px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
-        color: 'var(--lumiverse-text)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
+        color: 'var(--ado-text)',
         fontSize: '13px',
         outline: 'none',
         boxSizing: 'border-box',
@@ -221,9 +221,9 @@ const styles = {
         width: '100%',
         padding: '8px 10px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
-        color: 'var(--lumiverse-text)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
+        color: 'var(--ado-text)',
         fontSize: '13px',
         outline: 'none',
         boxSizing: 'border-box',
@@ -249,7 +249,7 @@ const styles = {
         height: '24px',
         border: 'none',
         background: 'transparent',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         cursor: 'pointer',
         opacity: 0.5,
     },
@@ -265,17 +265,17 @@ const styles = {
         gap: '4px',
         padding: '8px 6px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-fill-subtle, rgba(0,0,0,0.1))',
-        color: 'var(--lumiverse-text)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-fill-subtle, rgba(0,0,0,0.1))',
+        color: 'var(--ado-text)',
         cursor: 'pointer',
         fontSize: '11px',
         fontWeight: 500,
         transition: 'border-color 0.15s',
     },
     providerChipActive: {
-        borderColor: 'var(--lumiverse-primary)',
-        background: 'var(--lumiverse-fill-light, rgba(0,0,0,0.15))',
+        borderColor: 'var(--ado-primary)',
+        background: 'var(--ado-fill-light, rgba(0,0,0,0.15))',
     },
     providerDot: {
         width: '8px',
@@ -287,7 +287,7 @@ const styles = {
         display: 'flex',
         gap: '8px',
         padding: '12px 16px',
-        borderTop: '1px solid var(--lumiverse-border)',
+        borderTop: '1px solid var(--ado-border)',
         flexShrink: 0,
     },
     saveBtn: {
@@ -295,7 +295,7 @@ const styles = {
         padding: '8px 16px',
         borderRadius: '6px',
         border: 'none',
-        background: 'var(--lumiverse-primary)',
+        background: 'var(--ado-primary)',
         color: '#fff',
         fontSize: '13px',
         fontWeight: 600,
@@ -304,9 +304,9 @@ const styles = {
     cancelBtn: {
         padding: '8px 16px',
         borderRadius: '6px',
-        border: '1px solid var(--lumiverse-border)',
+        border: '1px solid var(--ado-border)',
         background: 'transparent',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '13px',
         cursor: 'pointer',
     },
@@ -335,8 +335,8 @@ const styles = {
         minWidth: '160px',
         padding: '4px',
         borderRadius: '8px',
-        border: '1px solid var(--lumiverse-border)',
-        background: 'var(--lumiverse-bg-elevated)',
+        border: '1px solid var(--ado-border)',
+        background: 'var(--ado-bg-elevated)',
         boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
     },
     menuItem: {
@@ -348,13 +348,13 @@ const styles = {
         border: 'none',
         borderRadius: '6px',
         background: 'transparent',
-        color: 'var(--lumiverse-text)',
+        color: 'var(--ado-text)',
         fontSize: '12px',
         cursor: 'pointer',
         textAlign: 'left',
     },
     menuItemDanger: {
-        color: 'var(--lumiverse-danger, #ef4444)',
+        color: 'var(--ado-danger, #ef4444)',
     },
 };
 
@@ -367,7 +367,7 @@ function ProfileEditor({ profile, onSave, onCancel }) {
     const [showApiKey, setShowApiKey] = useState(false);
 
     // Get Loom Builder state for preset detection
-    const loomBuilder = useLumiverse(s => s.loomBuilder);
+    const loomBuilder = useAdoHelper(s => s.loomBuilder);
     const isLoomMode = !!loomBuilder?.activePresetId;
     const loomRegistry = loomBuilder?.registry || {};
 
@@ -720,7 +720,7 @@ export default function ConnectionManager({ compact }) {
         applyProfile,
         PROVIDER_DEFAULTS,
     } = useConnectionManager();
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
 
     const [editingId, setEditingId] = useState(null);
     const [editingProfile, setEditingProfile] = useState(null);
@@ -808,7 +808,7 @@ export default function ConnectionManager({ compact }) {
                 <button style={styles.headerBtn} onClick={handleImportST} title="Import from ST Connection Manager">
                     <Zap size={12} />
                 </button>
-                <button style={{ ...styles.headerBtn, background: 'var(--lumiverse-primary)', color: '#fff', borderColor: 'transparent' }} onClick={handleNew} title="Create new profile">
+                <button style={{ ...styles.headerBtn, background: 'var(--ado-primary)', color: '#fff', borderColor: 'transparent' }} onClick={handleNew} title="Create new profile">
                     <Plus size={12} />
                 </button>
             </div>

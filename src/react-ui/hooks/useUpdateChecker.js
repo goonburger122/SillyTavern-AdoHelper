@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { useLumiverseActions } from '../store/LumiverseContext';
+import { useAdoHelperActions } from '../store/AdoHelperContext';
 import { checkExtensionUpdate, subscribeToUpdates } from '../../lib/updateService';
 import { checkForPresetUpdates } from '../../lib/presetsService';
 
@@ -11,15 +11,15 @@ const UPDATE_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
  * Update the accordion badge in the DOM (outside React)
  */
 function updateAccordionBadge(hasUpdates, presetCount, hasExtUpdate) {
-    // Try to use the global LumiverseUI API if available
-    if (typeof window !== 'undefined' && window.LumiverseUI?.updateAccordionBadge) {
+    // Try to use the global AdoHelperUI API if available
+    if (typeof window !== 'undefined' && window.AdoHelperUI?.updateAccordionBadge) {
         let badgeText = 'New!';
         if (hasExtUpdate && presetCount > 0) {
             badgeText = 'Updates!';
         } else if (presetCount > 1) {
             badgeText = `${presetCount} updates`;
         }
-        window.LumiverseUI.updateAccordionBadge(hasUpdates, badgeText);
+        window.AdoHelperUI.updateAccordionBadge(hasUpdates, badgeText);
     }
 }
 
@@ -31,7 +31,7 @@ function updateAccordionBadge(hasUpdates, presetCount, hasExtUpdate) {
  */
 export function useUpdateChecker() {
 
-    const actions = useLumiverseActions();
+    const actions = useAdoHelperActions();
     const checkIntervalRef = useRef(null);
     const hasInitialized = useRef(false);
 

@@ -6,7 +6,7 @@
  * - ST native: Fixed categories (System Info, Prompt Tokens, World Info, etc.)
  * - Loom preset: Dynamic block-level breakdown from Lucid Loom assembly
  *
- * Uses self-contained inline styles with var(--lumiverse-*) variables.
+ * Uses self-contained inline styles with var(--ado-*) variables.
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -40,19 +40,19 @@ const ROLE_COLORS = {
 const s = {
     header: {
         display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
-        padding: '20px 24px 16px', borderBottom: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        padding: '20px 24px 16px', borderBottom: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
         flexShrink: 0,
     },
     headerLeft: { display: 'flex', flexDirection: 'column', gap: '6px' },
-    title: { fontSize: '18px', fontWeight: 600, color: 'var(--lumiverse-text, #e6e6f0)', margin: 0 },
+    title: { fontSize: '18px', fontWeight: 600, color: 'var(--ado-text, #e6e6f0)', margin: 0 },
     apiInfo: {
         display: 'flex', flexWrap: 'wrap', gap: '6px', fontSize: '11px',
     },
     badge: {
         padding: '2px 7px', borderRadius: '4px',
-        background: 'var(--lumiverse-fill, rgba(255,255,255,0.06))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.06))',
-        color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.6))',
+        background: 'var(--ado-fill, rgba(255,255,255,0.06))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.06))',
+        color: 'var(--ado-text-muted, rgba(230,230,240,0.6))',
         fontSize: '10px', fontWeight: 500, letterSpacing: '0.02em',
     },
     loomBadge: {
@@ -65,9 +65,9 @@ const s = {
     },
     closeBtn: {
         width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.04))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
-        borderRadius: '8px', color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.6))',
+        background: 'var(--ado-fill-subtle, rgba(255,255,255,0.04))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
+        borderRadius: '8px', color: 'var(--ado-text-muted, rgba(230,230,240,0.6))',
         cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0,
     },
     body: {
@@ -77,7 +77,7 @@ const s = {
     },
     barContainer: {
         display: 'flex', height: '24px', borderRadius: '6px', overflow: 'hidden',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
     },
     barSegment: {
         height: '100%', transition: 'width 0.3s ease',
@@ -87,23 +87,23 @@ const s = {
     },
     legend: {
         display: 'flex', flexWrap: 'wrap', gap: '8px 14px', fontSize: '11px',
-        color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.6))',
+        color: 'var(--ado-text-muted, rgba(230,230,240,0.6))',
     },
     legendItem: { display: 'flex', alignItems: 'center', gap: '5px' },
     legendDot: { width: '8px', height: '8px', borderRadius: '2px', flexShrink: 0 },
     table: { width: '100%', borderCollapse: 'collapse' },
     tableSection: {
         fontSize: '13px', fontWeight: 600, padding: '10px 8px 6px',
-        color: 'var(--lumiverse-text, #e6e6f0)',
-        borderBottom: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        color: 'var(--ado-text, #e6e6f0)',
+        borderBottom: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
     },
     tableRow: {
-        fontSize: '13px', color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.7))',
+        fontSize: '13px', color: 'var(--ado-text-muted, rgba(230,230,240,0.7))',
     },
     tableCell: { padding: '5px 8px' },
     tableCellRight: { padding: '5px 8px', textAlign: 'right', fontVariantNumeric: 'tabular-nums' },
     tableCellSub: { padding: '4px 8px 4px 24px', fontSize: '12px' },
-    tableCellZero: { color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.25))' },
+    tableCellZero: { color: 'var(--ado-text-dim, rgba(230,230,240,0.25))' },
     roleBadge: {
         display: 'inline-block', padding: '1px 5px', borderRadius: '3px',
         fontSize: '9px', fontWeight: 600, letterSpacing: '0.03em',
@@ -111,45 +111,45 @@ const s = {
     },
     footer: {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 24px', borderTop: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
+        padding: '14px 24px', borderTop: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
         flexShrink: 0, gap: '12px', flexWrap: 'wrap',
     },
     footerTotal: {
-        fontSize: '14px', fontWeight: 600, color: 'var(--lumiverse-text, #e6e6f0)',
+        fontSize: '14px', fontWeight: 600, color: 'var(--ado-text, #e6e6f0)',
         fontVariantNumeric: 'tabular-nums',
     },
     footerActions: { display: 'flex', gap: '8px' },
     footerBtn: {
         display: 'flex', alignItems: 'center', gap: '5px',
         padding: '7px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: 500,
-        background: 'var(--lumiverse-fill, rgba(255,255,255,0.06))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
-        color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.6))',
+        background: 'var(--ado-fill, rgba(255,255,255,0.06))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
+        color: 'var(--ado-text-muted, rgba(230,230,240,0.6))',
         cursor: 'pointer', transition: 'all 0.15s', fontFamily: 'inherit',
     },
     rawBlock: {
         marginTop: '8px', padding: '14px', borderRadius: '10px',
-        background: 'var(--lumiverse-bg-deep, rgba(10,8,18,0.9))',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.06))',
+        background: 'var(--ado-bg-deep, rgba(10,8,18,0.9))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.06))',
         maxHeight: '350px', overflowY: 'auto', fontSize: '12px', lineHeight: 1.5,
         fontFamily: "'SF Mono', 'Fira Code', Menlo, Consolas, monospace",
-        color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.65))',
+        color: 'var(--ado-text-muted, rgba(230,230,240,0.65))',
         whiteSpace: 'pre-wrap', wordBreak: 'break-word',
     },
     loading: {
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        gap: '14px', padding: '60px 20px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))',
+        gap: '14px', padding: '60px 20px', color: 'var(--ado-text-dim, rgba(230,230,240,0.4))',
         fontSize: '13px',
     },
     unavailable: {
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        gap: '12px', padding: '60px 20px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.35))',
+        gap: '12px', padding: '60px 20px', color: 'var(--ado-text-dim, rgba(230,230,240,0.35))',
         fontSize: '14px', textAlign: 'center',
     },
     accordion: {
         borderRadius: '10px',
-        border: '1px solid var(--lumiverse-border, rgba(255,255,255,0.08))',
-        background: 'var(--lumiverse-fill-subtle, rgba(255,255,255,0.02))',
+        border: '1px solid var(--ado-border, rgba(255,255,255,0.08))',
+        background: 'var(--ado-fill-subtle, rgba(255,255,255,0.02))',
         overflow: 'hidden',
         flexShrink: 0, // Prevent flex column from shrinking this — let the body scroll instead
     },
@@ -161,15 +161,15 @@ const s = {
     },
     accordionHeaderLeft: {
         display: 'flex', alignItems: 'center', gap: '8px',
-        fontSize: '13px', fontWeight: 600, color: 'var(--lumiverse-text, #e6e6f0)',
+        fontSize: '13px', fontWeight: 600, color: 'var(--ado-text, #e6e6f0)',
     },
     accordionChevron: {
         transition: 'transform 0.2s ease',
-        color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.5))',
+        color: 'var(--ado-text-muted, rgba(230,230,240,0.5))',
         flexShrink: 0,
     },
     accordionTokenSummary: {
-        fontSize: '12px', fontWeight: 500, color: 'var(--lumiverse-text-muted, rgba(230,230,240,0.55))',
+        fontSize: '12px', fontWeight: 500, color: 'var(--ado-text-muted, rgba(230,230,240,0.55))',
         fontVariantNumeric: 'tabular-nums',
         display: 'flex', alignItems: 'center', gap: '8px',
     },
@@ -178,7 +178,7 @@ const s = {
     },
     accordionInner: {
         padding: '0 14px 12px',
-        borderTop: '1px solid var(--lumiverse-border, rgba(255,255,255,0.06))',
+        borderTop: '1px solid var(--ado-border, rgba(255,255,255,0.06))',
     },
 };
 
@@ -261,7 +261,7 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
 
     // Summary groups for the overview bar
     const groups = [];
-    if (lumiverseTokens > 0) groups.push({ key: 'lumiverse', label: 'Lumiverse Prompts', tokens: lumiverseTokens, color: GROUP_COLORS.lumiverse });
+    if (lumiverseTokens > 0) groups.push({ key: 'lumiverse', label: 'Ado Helper Prompts', tokens: lumiverseTokens, color: GROUP_COLORS.lumiverse });
     if (chatHistoryTokens > 0) {
         const msgCount = chatHistoryBlocks.reduce((sum, b) => sum + (b.messageCount || 0), 0);
         groups.push({ key: 'chatHistory', label: msgCount > 0 ? `Chat History (${msgCount} msgs)` : 'Chat History', tokens: chatHistoryTokens, color: GROUP_COLORS.chatHistory });
@@ -325,14 +325,14 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                     </div>
                 </div>
 
-                {/* Collapsible: Lumiverse Prompts detail */}
+                {/* Collapsible: Ado Helper Prompts detail */}
                 {lumiverseBlocks.length > 0 && (
                     <div style={s.accordion}>
                         <button
                             style={s.accordionHeader}
                             onClick={() => setBlocksOpen(prev => !prev)}
                             type="button"
-                            onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill, rgba(255,255,255,0.04))'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill, rgba(255,255,255,0.04))'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
                         >
                             <div style={s.accordionHeaderLeft}>
@@ -343,10 +343,10 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                                         transform: blocksOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                                     }}
                                 />
-                                Lumiverse Prompts
+                                Ado Helper Prompts
                                 <span style={{
                                     fontSize: '11px', fontWeight: 400,
-                                    color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))',
+                                    color: 'var(--ado-text-dim, rgba(230,230,240,0.4))',
                                 }}>
                                     ({lumiverseBlocks.length} block{lumiverseBlocks.length !== 1 ? 's' : ''})
                                 </span>
@@ -380,9 +380,9 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                                 <table style={{ ...s.table, marginTop: '4px' }}>
                                     <thead>
                                         <tr>
-                                            <th style={{ ...s.tableCell, textAlign: 'left', fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Block</th>
-                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Tokens</th>
-                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>%</th>
+                                            <th style={{ ...s.tableCell, textAlign: 'left', fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Block</th>
+                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Tokens</th>
+                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>%</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -410,7 +410,7 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                             style={s.accordionHeader}
                             onClick={() => setExtensionsOpen(prev => !prev)}
                             type="button"
-                            onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill, rgba(255,255,255,0.04))'; }}
+                            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill, rgba(255,255,255,0.04))'; }}
                             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
                         >
                             <div style={s.accordionHeaderLeft}>
@@ -424,7 +424,7 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                                 Extensions
                                 <span style={{
                                     fontSize: '11px', fontWeight: 400,
-                                    color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))',
+                                    color: 'var(--ado-text-dim, rgba(230,230,240,0.4))',
                                 }}>
                                     ({extensionBlocks.length} item{extensionBlocks.length !== 1 ? 's' : ''})
                                 </span>
@@ -438,9 +438,9 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                                 <table style={{ ...s.table, marginTop: '4px' }}>
                                     <thead>
                                         <tr>
-                                            <th style={{ ...s.tableCell, textAlign: 'left', fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Extension</th>
-                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Tokens</th>
-                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>%</th>
+                                            <th style={{ ...s.tableCell, textAlign: 'left', fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Extension</th>
+                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Tokens</th>
+                                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>%</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -463,7 +463,7 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
 
                 {/* World Info detail — shown as rows if present (from explicit blocks or auto-inject) */}
                 {worldInfoBlocks.length > 0 && worldInfoBlocks.some(b => b.tokens > 0) && (
-                    <div style={{ fontSize: '12px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))' }}>
+                    <div style={{ fontSize: '12px', color: 'var(--ado-text-dim, rgba(230,230,240,0.4))' }}>
                         <table style={s.table}>
                             <tbody>
                                 {worldInfoBlocks.map((block, i) => (
@@ -483,7 +483,7 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
 
                 {/* System blocks detail (separators, utilities) — shown inline if present */}
                 {systemBlocks.length > 0 && (
-                    <div style={{ fontSize: '12px', color: 'var(--lumiverse-text-dim, rgba(230,230,240,0.4))' }}>
+                    <div style={{ fontSize: '12px', color: 'var(--ado-text-dim, rgba(230,230,240,0.4))' }}>
                         <table style={s.table}>
                             <tbody>
                                 {systemBlocks.map((block, i) => (
@@ -511,7 +511,7 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                 <div style={s.footerTotal}>
                     {barTotal.toLocaleString()} tokens
                     {data.maxContext > 0 && (
-                        <span style={{ fontWeight: 400, fontSize: '12px', color: 'var(--lumiverse-text-dim)', marginLeft: '8px' }}>
+                        <span style={{ fontWeight: 400, fontSize: '12px', color: 'var(--ado-text-dim)', marginLeft: '8px' }}>
                             / {data.maxContext.toLocaleString()} max context
                         </span>
                     )}
@@ -523,8 +523,8 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                                 style={s.footerBtn}
                                 onClick={(e) => { e.stopPropagation(); setShowRaw(prev => !prev); }}
                                 type="button"
-                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill-hover, rgba(255,255,255,0.1))'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--lumiverse-fill, rgba(255,255,255,0.06))'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill-hover, rgba(255,255,255,0.1))'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--ado-fill, rgba(255,255,255,0.06))'; }}
                             >
                                 {showRaw ? <EyeOff size={13} /> : <Eye size={13} />}
                                 {showRaw ? 'Hide Raw' : 'View Raw'}
@@ -533,8 +533,8 @@ function LoomView({ data, barTotal, showRaw, setShowRaw, copied, handleCopy, onC
                                 style={s.footerBtn}
                                 onClick={(e) => { e.stopPropagation(); handleCopy(); }}
                                 type="button"
-                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill-hover, rgba(255,255,255,0.1))'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--lumiverse-fill, rgba(255,255,255,0.06))'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill-hover, rgba(255,255,255,0.1))'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--ado-fill, rgba(255,255,255,0.06))'; }}
                             >
                                 {copied ? <Check size={13} /> : <Copy size={13} />}
                                 {copied ? 'Copied!' : 'Copy Prompt'}
@@ -599,9 +599,9 @@ function STView({ data, barTotal, barItems, showRaw, setShowRaw, copied, handleC
                 <table style={s.table}>
                     <thead>
                         <tr>
-                            <th style={{ ...s.tableCell, textAlign: 'left', fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Category</th>
-                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Tokens</th>
-                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--lumiverse-text-dim)', fontWeight: 500, padding: '6px 8px' }}>%</th>
+                            <th style={{ ...s.tableCell, textAlign: 'left', fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Category</th>
+                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>Tokens</th>
+                            <th style={{ ...s.tableCellRight, fontSize: '11px', color: 'var(--ado-text-dim)', fontWeight: 500, padding: '6px 8px' }}>%</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -652,12 +652,12 @@ function STView({ data, barTotal, barItems, showRaw, setShowRaw, copied, handleC
                 <div style={s.footerTotal}>
                     {barTotal.toLocaleString()} tokens counted
                     {data.totalTokens > 0 && data.totalTokens !== barTotal && (
-                        <span style={{ fontWeight: 400, fontSize: '12px', color: 'var(--lumiverse-text-dim)', marginLeft: '8px' }}>
+                        <span style={{ fontWeight: 400, fontSize: '12px', color: 'var(--ado-text-dim)', marginLeft: '8px' }}>
                             ({data.totalTokens.toLocaleString()} sent to API)
                         </span>
                     )}
                     {data.maxContext > 0 && (
-                        <span style={{ fontWeight: 400, fontSize: '12px', color: 'var(--lumiverse-text-dim)', marginLeft: '8px' }}>
+                        <span style={{ fontWeight: 400, fontSize: '12px', color: 'var(--ado-text-dim)', marginLeft: '8px' }}>
                             / {data.maxContext.toLocaleString()} max context
                         </span>
                     )}
@@ -669,8 +669,8 @@ function STView({ data, barTotal, barItems, showRaw, setShowRaw, copied, handleC
                                 style={s.footerBtn}
                                 onClick={(e) => { e.stopPropagation(); setShowRaw(prev => !prev); }}
                                 type="button"
-                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill-hover, rgba(255,255,255,0.1))'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--lumiverse-fill, rgba(255,255,255,0.06))'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill-hover, rgba(255,255,255,0.1))'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--ado-fill, rgba(255,255,255,0.06))'; }}
                             >
                                 {showRaw ? <EyeOff size={13} /> : <Eye size={13} />}
                                 {showRaw ? 'Hide Raw' : 'View Raw'}
@@ -679,8 +679,8 @@ function STView({ data, barTotal, barItems, showRaw, setShowRaw, copied, handleC
                                 style={s.footerBtn}
                                 onClick={(e) => { e.stopPropagation(); handleCopy(); }}
                                 type="button"
-                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--lumiverse-fill-hover, rgba(255,255,255,0.1))'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--lumiverse-fill, rgba(255,255,255,0.06))'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--ado-fill-hover, rgba(255,255,255,0.1))'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'var(--ado-fill, rgba(255,255,255,0.06))'; }}
                             >
                                 {copied ? <Check size={13} /> : <Copy size={13} />}
                                 {copied ? 'Copied!' : 'Copy Prompt'}
@@ -732,7 +732,7 @@ export default function PromptItemizationModal({ onClose, mesId }) {
                     <button style={s.closeBtn} onClick={onClose} type="button"><X size={16} /></button>
                 </div>
                 <div style={s.loading}>
-                    <Loader2 size={24} style={{ animation: 'lcs-spin 0.75s linear infinite' }} />
+                    <Loader2 size={24} style={{ animation: 'ado-spin 0.75s linear infinite' }} />
                     Computing token counts...
                 </div>
             </>

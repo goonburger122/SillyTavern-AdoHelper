@@ -6,13 +6,13 @@
 import React, { useCallback, useRef, useState, useSyncExternalStore } from 'react';
 import clsx from 'clsx';
 import { Image as ImageIcon, Settings, Eye, Layers, Trash2, Plus, Loader, Sparkles, X, RefreshCw } from 'lucide-react';
-import { useLumiverseStore } from '../../store/LumiverseContext';
+import { useAdoHelperStore } from '../../store/AdoHelperContext';
 import { useImageGenSettings } from '../../hooks/useImageGenSettings';
 import { CollapsibleSection } from '../shared/CollapsibleSection';
 import { IMAGEGEN_PROVIDERS, fetchNanoGptModels } from '../../../lib/imageProviders';
 import ImageLightbox from '../shared/ImageLightbox';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 // Stable selectors
 const selectImageGen = () => store.getState().imageGeneration || {};
@@ -23,22 +23,22 @@ const selectConnectionRegistry = () => store.getState().connectionManager?.regis
  */
 function Toggle({ id, checked, onChange, label, hint }) {
     return (
-        <div className="lumiverse-vp-toggle-row">
-            <label className="lumiverse-vp-toggle-label" htmlFor={id}>
-                <span className="lumiverse-vp-toggle-text">{label}</span>
-                {hint && <span className="lumiverse-vp-toggle-hint">{hint}</span>}
+        <div className="ado-vp-toggle-row">
+            <label className="ado-vp-toggle-label" htmlFor={id}>
+                <span className="ado-vp-toggle-text">{label}</span>
+                {hint && <span className="ado-vp-toggle-hint">{hint}</span>}
             </label>
-            <div className="lumiverse-vp-toggle-switch-wrapper">
+            <div className="ado-vp-toggle-switch-wrapper">
                 <input
                     type="checkbox"
                     id={id}
-                    className="lumiverse-vp-toggle-input"
+                    className="ado-vp-toggle-input"
                     checked={checked}
                     onChange={(e) => onChange(e.target.checked)}
                 />
-                <label htmlFor={id} className="lumiverse-vp-toggle-switch-label">
-                    <div className={clsx('lumiverse-vp-toggle-track', checked && 'lumiverse-vp-toggle-track--on')}>
-                        <div className="lumiverse-vp-toggle-thumb" />
+                <label htmlFor={id} className="ado-vp-toggle-switch-label">
+                    <div className={clsx('ado-vp-toggle-track', checked && 'ado-vp-toggle-track--on')}>
+                        <div className="ado-vp-toggle-thumb" />
                     </div>
                 </label>
             </div>
@@ -51,11 +51,11 @@ function Toggle({ id, checked, onChange, label, hint }) {
  */
 function SelectField({ id, label, hint, value, onChange, options }) {
     return (
-        <div className="lumiverse-vp-field">
-            <label className="lumiverse-vp-field-label" htmlFor={id}>{label}</label>
+        <div className="ado-vp-field">
+            <label className="ado-vp-field-label" htmlFor={id}>{label}</label>
             <select
                 id={id}
-                className="lumiverse-vp-field-input"
+                className="ado-vp-field-input"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             >
@@ -63,7 +63,7 @@ function SelectField({ id, label, hint, value, onChange, options }) {
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
             </select>
-            {hint && <span className="lumiverse-vp-field-hint">{hint}</span>}
+            {hint && <span className="ado-vp-field-hint">{hint}</span>}
         </div>
     );
 }
@@ -74,21 +74,21 @@ function SelectField({ id, label, hint, value, onChange, options }) {
 function SliderField({ id, label, hint, value, onChange, min, max, step = 1, format }) {
     const displayValue = format ? format(value) : value;
     return (
-        <div className="lumiverse-vp-field">
-            <label className="lumiverse-vp-field-label" htmlFor={id}>
+        <div className="ado-vp-field">
+            <label className="ado-vp-field-label" htmlFor={id}>
                 {label}: <strong>{displayValue}</strong>
             </label>
             <input
                 type="range"
                 id={id}
-                className="lumiverse-vp-field-slider"
+                className="ado-vp-field-slider"
                 value={value}
                 onChange={(e) => onChange(parseFloat(e.target.value))}
                 min={min}
                 max={max}
                 step={step}
             />
-            {hint && <span className="lumiverse-vp-field-hint">{hint}</span>}
+            {hint && <span className="ado-vp-field-hint">{hint}</span>}
         </div>
     );
 }
@@ -100,16 +100,16 @@ function ReferenceImageGrid({ images, onRemove }) {
     if (!images || images.length === 0) return null;
 
     return (
-        <div className="lumiverse-ig-ref-grid">
+        <div className="ado-ig-ref-grid">
             {images.map((img, i) => (
-                <div key={img.id || `ref-${i}`} className="lumiverse-ig-ref-item">
+                <div key={img.id || `ref-${i}`} className="ado-ig-ref-item">
                     <img
                         src={`data:${img.mimeType || 'image/png'};base64,${img.data}`}
                         alt={img.name || `Reference ${i + 1}`}
-                        className="lumiverse-ig-ref-thumb"
+                        className="ado-ig-ref-thumb"
                     />
                     <button
-                        className="lumiverse-ig-ref-remove"
+                        className="ado-ig-ref-remove"
                         onClick={() => onRemove(img.id, i)}
                         title="Remove reference image"
                         type="button"
@@ -263,7 +263,7 @@ function ImageGenPanel() {
     }, [nanoGptSettings.apiKey, updateNanoGptSettings]);
 
     return (
-        <div className="lumiverse-vp-settings-panel lumiverse-ig-panel">
+        <div className="ado-vp-settings-panel ado-ig-panel">
             {/* Master toggle */}
             <Toggle
                 id="ig-enabled"
@@ -345,11 +345,11 @@ function ImageGenPanel() {
                             />
 
                             {/* Reference Images */}
-                            <div className="lumiverse-vp-field">
-                                <label className="lumiverse-vp-field-label">
+                            <div className="ado-vp-field">
+                                <label className="ado-vp-field-label">
                                     Reference Images ({(googleSettings.referenceImages || []).length}/14)
                                 </label>
-                                <span className="lumiverse-vp-field-hint">
+                                <span className="ado-vp-field-hint">
                                     Upload style reference images to guide generation
                                 </span>
                                 <ReferenceImageGrid
@@ -358,7 +358,7 @@ function ImageGenPanel() {
                                 />
                                 {(googleSettings.referenceImages || []).length < 14 && (
                                     <button
-                                        className="lumiverse-ig-upload-btn"
+                                        className="ado-ig-upload-btn"
                                         onClick={handleReferenceUpload}
                                         type="button"
                                     >
@@ -385,28 +385,28 @@ function ImageGenPanel() {
                             defaultOpen={true}
                         >
                             {/* API Key */}
-                            <div className="lumiverse-vp-field">
-                                <label className="lumiverse-vp-field-label" htmlFor="ig-nanogpt-key">API Key</label>
+                            <div className="ado-vp-field">
+                                <label className="ado-vp-field-label" htmlFor="ig-nanogpt-key">API Key</label>
                                 <input
                                     type="password"
                                     id="ig-nanogpt-key"
-                                    className="lumiverse-vp-field-input"
+                                    className="ado-vp-field-input"
                                     value={nanoGptSettings.apiKey || ''}
                                     onChange={(e) => updateNanoGptSettings({ apiKey: e.target.value })}
                                     placeholder="Enter your Nano-GPT API key"
                                 />
-                                <span className="lumiverse-vp-field-hint">
+                                <span className="ado-vp-field-hint">
                                     Get your API key from nano-gpt.com
                                 </span>
                             </div>
 
                             {/* Model */}
-                            <div className="lumiverse-vp-field">
-                                <label className="lumiverse-vp-field-label" htmlFor="ig-nanogpt-model">Model</label>
-                                <div className="lumiverse-ig-model-row">
+                            <div className="ado-vp-field">
+                                <label className="ado-vp-field-label" htmlFor="ig-nanogpt-model">Model</label>
+                                <div className="ado-ig-model-row">
                                     <select
                                         id="ig-nanogpt-model"
-                                        className="lumiverse-vp-field-input"
+                                        className="ado-vp-field-input"
                                         value={nanoGptSettings.model || 'hidream'}
                                         onChange={(e) => updateNanoGptSettings({ model: e.target.value })}
                                     >
@@ -415,13 +415,13 @@ function ImageGenPanel() {
                                         ))}
                                     </select>
                                     <button
-                                        className="lumiverse-ig-refresh-btn"
+                                        className="ado-ig-refresh-btn"
                                         onClick={handleRefreshModels}
                                         disabled={modelsFetching || !nanoGptSettings.apiKey}
                                         title="Refresh models from Nano-GPT API"
                                         type="button"
                                     >
-                                        <RefreshCw size={14} className={modelsFetching ? 'lumiverse-ig-spinner' : ''} />
+                                        <RefreshCw size={14} className={modelsFetching ? 'ado-ig-spinner' : ''} />
                                     </button>
                                 </div>
                             </div>
@@ -477,11 +477,11 @@ function ImageGenPanel() {
                             </CollapsibleSection>
 
                             {/* Reference Images */}
-                            <div className="lumiverse-vp-field">
-                                <label className="lumiverse-vp-field-label">
+                            <div className="ado-vp-field">
+                                <label className="ado-vp-field-label">
                                     Reference Images ({(nanoGptSettings.referenceImages || []).length}/14)
                                 </label>
-                                <span className="lumiverse-vp-field-hint">
+                                <span className="ado-vp-field-hint">
                                     Upload style reference images to guide generation
                                 </span>
                                 <ReferenceImageGrid
@@ -490,7 +490,7 @@ function ImageGenPanel() {
                                 />
                                 {(nanoGptSettings.referenceImages || []).length < 14 && (
                                     <button
-                                        className="lumiverse-ig-upload-btn"
+                                        className="ado-ig-upload-btn"
                                         onClick={handleReferenceUpload}
                                         type="button"
                                     >
@@ -517,17 +517,17 @@ function ImageGenPanel() {
                             defaultOpen={true}
                         >
                             {/* API Key */}
-                            <div className="lumiverse-vp-field">
-                                <label className="lumiverse-vp-field-label" htmlFor="ig-novelai-key">API Key</label>
+                            <div className="ado-vp-field">
+                                <label className="ado-vp-field-label" htmlFor="ig-novelai-key">API Key</label>
                                 <input
                                     type="password"
                                     id="ig-novelai-key"
-                                    className="lumiverse-vp-field-input"
+                                    className="ado-vp-field-input"
                                     value={novelAiSettings.apiKey || ''}
                                     onChange={(e) => updateNovelAiSettings({ apiKey: e.target.value })}
                                     placeholder="Enter your NovelAI Persistent API Token"
                                 />
-                                <span className="lumiverse-vp-field-hint">
+                                <span className="ado-vp-field-hint">
                                     Get your Persistent API Token from NovelAI Account Settings
                                 </span>
                             </div>
@@ -588,19 +588,19 @@ function ImageGenPanel() {
                                 />
 
                                 {/* Negative Prompt */}
-                                <div className="lumiverse-vp-field">
-                                    <label className="lumiverse-vp-field-label" htmlFor="ig-novelai-negprompt">
+                                <div className="ado-vp-field">
+                                    <label className="ado-vp-field-label" htmlFor="ig-novelai-negprompt">
                                         Negative Prompt
                                     </label>
                                     <textarea
                                         id="ig-novelai-negprompt"
-                                        className="lumiverse-vp-field-input"
+                                        className="ado-vp-field-input"
                                         rows={3}
                                         value={novelAiSettings.negativePrompt || ''}
                                         onChange={(e) => updateNovelAiSettings({ negativePrompt: e.target.value })}
                                         placeholder="Tags to exclude from generation"
                                     />
-                                    <span className="lumiverse-vp-field-hint">
+                                    <span className="ado-vp-field-hint">
                                         Comma-separated tags to avoid in the generated image
                                     </span>
                                 </div>
@@ -714,11 +714,11 @@ function ImageGenPanel() {
                                 />
 
                                 {/* Manual reference image uploads */}
-                                <div className="lumiverse-vp-field">
-                                    <label className="lumiverse-vp-field-label">
+                                <div className="ado-vp-field">
+                                    <label className="ado-vp-field-label">
                                         Reference Images ({(novelAiSettings.referenceImages || []).length}/14)
                                     </label>
-                                    <span className="lumiverse-vp-field-hint">
+                                    <span className="ado-vp-field-hint">
                                         Upload images for vibe/style transfer via NovelAI Director
                                     </span>
                                 <ReferenceImageGrid
@@ -727,7 +727,7 @@ function ImageGenPanel() {
                                 />
                                 {(novelAiSettings.referenceImages || []).length < 14 && (
                                     <button
-                                        className="lumiverse-ig-upload-btn"
+                                        className="ado-ig-upload-btn"
                                         onClick={handleReferenceUpload}
                                         type="button"
                                     >
@@ -827,14 +827,14 @@ function ImageGenPanel() {
                         {/* Current background thumbnail — click to expand */}
                         {sceneBackground && (
                             <div
-                                className="lumiverse-ig-preview lumiverse-ig-preview--clickable"
+                                className="ado-ig-preview ado-ig-preview--clickable"
                                 onClick={() => setLightboxOpen(true)}
                                 title="Click to expand"
                             >
                                 <img
                                     src={sceneBackground}
                                     alt="Current scene background"
-                                    className="lumiverse-ig-preview-img"
+                                    className="ado-ig-preview-img"
                                 />
                             </div>
                         )}
@@ -850,17 +850,17 @@ function ImageGenPanel() {
 
                         {/* Last scene parameters */}
                         {lastSceneParams && (
-                            <div className="lumiverse-ig-scene-info">
-                                <div className="lumiverse-ig-scene-field">
+                            <div className="ado-ig-scene-info">
+                                <div className="ado-ig-scene-field">
                                     <strong>Scene:</strong> {lastSceneParams.environment}
                                 </div>
                                 {lastSceneParams.time_of_day && (
-                                    <div className="lumiverse-ig-scene-field">
+                                    <div className="ado-ig-scene-field">
                                         <strong>Time:</strong> {lastSceneParams.time_of_day}
                                     </div>
                                 )}
                                 {lastSceneParams.mood && (
-                                    <div className="lumiverse-ig-scene-field">
+                                    <div className="ado-ig-scene-field">
                                         <strong>Mood:</strong> {lastSceneParams.mood}
                                     </div>
                                 )}
@@ -868,10 +868,10 @@ function ImageGenPanel() {
                         )}
 
                         {/* Action buttons */}
-                        <div className="lumiverse-ig-actions">
+                        <div className="ado-ig-actions">
                             {sceneGenerating ? (
                                 <button
-                                    className="lumiverse-ig-action-btn lumiverse-ig-action-btn--danger"
+                                    className="ado-ig-action-btn ado-ig-action-btn--danger"
                                     onClick={cancelGeneration}
                                     type="button"
                                 >
@@ -880,7 +880,7 @@ function ImageGenPanel() {
                                 </button>
                             ) : (
                                 <button
-                                    className="lumiverse-ig-action-btn lumiverse-ig-action-btn--primary"
+                                    className="ado-ig-action-btn ado-ig-action-btn--primary"
                                     onClick={handleGenerate}
                                     type="button"
                                 >
@@ -891,7 +891,7 @@ function ImageGenPanel() {
 
                             {sceneBackground && (
                                 <button
-                                    className="lumiverse-ig-action-btn lumiverse-ig-action-btn--danger"
+                                    className="ado-ig-action-btn ado-ig-action-btn--danger"
                                     onClick={clearBackground}
                                     type="button"
                                 >
@@ -903,7 +903,7 @@ function ImageGenPanel() {
 
                         {/* Error display */}
                         {genError && !sceneGenerating && (
-                            <div className="lumiverse-ig-error">
+                            <div className="ado-ig-error">
                                 {genError}
                             </div>
                         )}

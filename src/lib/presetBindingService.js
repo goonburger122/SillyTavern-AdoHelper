@@ -451,7 +451,7 @@ export async function applyBindingForCurrentContext() {
         const result = restoreDefaultToggleState();
         
         if (result.applied && typeof toastr !== 'undefined') {
-            toastr.info(`Restored default toggles (${result.matched} prompts)`, 'Lumiverse Helper', {
+            toastr.info(`Restored default toggles (${result.matched} prompts)`, 'Ado Helper', {
                 timeOut: 2000,
                 preventDuplicates: true,
             });
@@ -507,7 +507,7 @@ export async function applyBindingForCurrentContext() {
             // Show toast notification
             if (typeof toastr !== 'undefined') {
                 const bindingLabel = binding.bindingType === 'chat' ? 'chat' : 'character';
-                toastr.info(`Preset switched to "${binding.presetName}" (${bindingLabel} binding)`, 'Lumiverse Helper', {
+                toastr.info(`Preset switched to "${binding.presetName}" (${bindingLabel} binding)`, 'Ado Helper', {
                     timeOut: 2000,
                     preventDuplicates: true,
                 });
@@ -535,7 +535,7 @@ export async function applyBindingForCurrentContext() {
  * 1. Base preset provides the prompts and their default enabled states
  * 2. Toggle state overrides specific prompts' enabled/disabled status
  * 
- * Toggle bindings are now loaded from the Lumiverse index file for persistence.
+ * Toggle bindings are now loaded from the Ado Helper index file for persistence.
  * 
  * @returns {Promise<{applied: boolean, source: 'chat'|'character'|null, matched: number}>}
  */
@@ -550,7 +550,7 @@ export async function applyToggleStatesForCurrentContext() {
             const result = await applyToggleStateToCurrentPreset(chatToggleState);
             if (result.applied) {
                 if (typeof toastr !== 'undefined') {
-                    toastr.info(`Prompt toggles applied (chat binding: ${result.matched} prompts)`, 'Lumiverse Helper', {
+                    toastr.info(`Prompt toggles applied (chat binding: ${result.matched} prompts)`, 'Ado Helper', {
                         timeOut: 2000,
                         preventDuplicates: true,
                     });
@@ -567,7 +567,7 @@ export async function applyToggleStatesForCurrentContext() {
             const result = await applyToggleStateToCurrentPreset(charToggleState);
             if (result.applied) {
                 if (typeof toastr !== 'undefined') {
-                    toastr.info(`Prompt toggles applied (character binding: ${result.matched} prompts)`, 'Lumiverse Helper', {
+                    toastr.info(`Prompt toggles applied (character binding: ${result.matched} prompts)`, 'Ado Helper', {
                         timeOut: 2000,
                         preventDuplicates: true,
                     });

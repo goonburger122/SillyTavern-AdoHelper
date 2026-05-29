@@ -1,7 +1,7 @@
 /**
  * ChatSheld — Root Component for Glassmorphic Chat Override
  *
- * Renders as a light DOM child inside #sheld, scoped via .lcs-app CSS class.
+ * Renders as a light DOM child inside #sheld, scoped via .ado-app CSS class.
  * Orchestrates the message list, input area, and all sub-components.
  *
  * Layout with side portrait:
@@ -21,7 +21,7 @@
  */
 
 import React, { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { useLumiverseStore } from '../store/LumiverseContext';
+import { useAdoHelperStore } from '../store/AdoHelperContext';
 import { generateThemeCSSForChatSheld } from '../../lib/themeManager.js';
 import { chatSheldStyles } from './ChatSheldStyles.js';
 import MessageList from './chat/MessageList';
@@ -32,7 +32,7 @@ import AuthorsNotePortal from './chat/AuthorsNotePortal';
 import SidePortrait from './chat/SidePortrait';
 import useIsMobile from '../hooks/useIsMobile';
 
-const store = useLumiverseStore;
+const store = useAdoHelperStore;
 
 const selectMessages = () => store.getState().chatSheld?.messages || [];
 const selectIsStreaming = () => store.getState().chatSheld?.isStreaming || false;
@@ -61,15 +61,15 @@ export default function ChatSheld() {
     useLayoutEffect(() => {
         // Styles — already injected by service layer on first activation,
         // but create if missing (covers hot-reload / re-mount edge cases)
-        if (!document.getElementById('lcs-chat-sheld-styles')) {
+        if (!document.getElementById('ado-chat-sheld-styles')) {
             const styleEl = document.createElement('style');
-            styleEl.id = 'lcs-chat-sheld-styles';
+            styleEl.id = 'ado-chat-sheld-styles';
             styleEl.textContent = chatSheldStyles;
             document.head.appendChild(styleEl);
         }
-        if (!document.getElementById('lcs-chat-sheld-theme')) {
+        if (!document.getElementById('ado-chat-sheld-theme')) {
             const themeEl = document.createElement('style');
-            themeEl.id = 'lcs-chat-sheld-theme';
+            themeEl.id = 'ado-chat-sheld-theme';
             const themeCSS = generateThemeCSSForChatSheld();
             if (themeCSS) themeEl.textContent = themeCSS;
             document.head.appendChild(themeEl);
@@ -81,7 +81,7 @@ export default function ChatSheld() {
         const stForm = document.querySelector('#form_sheld');
         if (stChat) stChat.style.display = 'none';
         if (stForm) stForm.style.display = 'none';
-        const root = document.getElementById('lumiverse-chat-root');
+        const root = document.getElementById('ado-chat-root');
         if (root) {
             root.style.visibility = 'visible';
             root.style.position = '';
@@ -89,18 +89,18 @@ export default function ChatSheld() {
         }
 
         // Remove loading skeleton (service layer placed it for instant visual feedback)
-        document.getElementById('lcs-loading-skeleton')?.remove();
+        document.getElementById('ado-loading-skeleton')?.remove();
 
         return () => {
-            document.getElementById('lcs-chat-sheld-styles')?.remove();
-            document.getElementById('lcs-chat-sheld-theme')?.remove();
+            document.getElementById('ado-chat-sheld-styles')?.remove();
+            document.getElementById('ado-chat-sheld-theme')?.remove();
         };
     }, []);
 
     // Listen for theme changes and update styles
     useEffect(() => {
         const handleThemeChange = () => {
-            const themeEl = document.getElementById('lcs-chat-sheld-theme');
+            const themeEl = document.getElementById('ado-chat-sheld-theme');
             if (themeEl) {
                 const themeCSS = generateThemeCSSForChatSheld();
                 themeEl.textContent = themeCSS || '';
@@ -113,7 +113,7 @@ export default function ChatSheld() {
 
     // ── Deferred backdrop-filter re-enable ──
     // When streaming ends, isStreaming flips to false. If we immediately remove
-    // .lcs-container--streaming, backdrop-filter re-enables on ALL cards at once,
+    // .ado-container--streaming, backdrop-filter re-enables on ALL cards at once,
     // causing a massive GPU compositing rebuild that shifts scrollHeight. The
     // scrollSnapTrigger from GENERATION_ENDED then fires against an unstable
     // layout, landing at the wrong position. Fix: keep the class for 3 frames
@@ -153,25 +153,25 @@ export default function ChatSheld() {
         };
     }, [isStreaming]);
 
-    const modeClass = displayMode === 'immersive' ? ' lcs-immersive' : displayMode === 'bubble' ? ' lcs-bubble' : '';
-    const streamingClass = backdropDisabled ? ' lcs-container--streaming' : '';
-    const portraitClass = showSidePortrait ? ' lcs-side-portrait-active' : '';
-    const containerClass = `lcs-container${modeClass}${streamingClass}${portraitClass}`;
+    const modeClass = displayMode === 'immersive' ? ' ado-immersive' : displayMode === 'bubble' ? ' ado-bubble' : '';
+    const streamingClass = backdropDisabled ? ' ado-container--streaming' : '';
+    const portraitClass = showSidePortrait ? ' ado-side-portrait-active' : '';
+    const containerClass = `ado-container${modeClass}${streamingClass}${portraitClass}`;
 
     // ── Dynamic safe zone for floating input bar ──
-    // ResizeObserver measures the input area and sets --lcs-input-safe-zone
+    // ResizeObserver measures the input area and sets --ado-input-safe-zone
     // on the main column so the scroll container's bottom padding stays in sync.
     const mainColumnRef = useRef(null);
 
     useEffect(() => {
         const mainCol = mainColumnRef.current;
         if (!mainCol) return;
-        const inputEl = mainCol.querySelector('.lcs-input-area');
+        const inputEl = mainCol.querySelector('.ado-input-area');
         if (!inputEl) return;
 
         const update = () => {
             const h = inputEl.offsetHeight;
-            mainCol.style.setProperty('--lcs-input-safe-zone', `${h + 12}px`);
+            mainCol.style.setProperty('--ado-input-safe-zone', `${h + 12}px`);
         };
 
         const ro = new ResizeObserver(update);
@@ -183,8 +183,8 @@ export default function ChatSheld() {
     return (
         <div className={containerClass}>
             {showSidePortrait && sidePortraitSide === 'left' && <SidePortrait />}
-            <div className="lcs-main-column" ref={mainColumnRef}>
-                <div className="lcs-scroll-container" ref={scrollContainerRef}>
+            <div className="ado-main-column" ref={mainColumnRef}>
+                <div className="ado-scroll-container" ref={scrollContainerRef}>
                     <MessageList
                         messages={messages}
                         isStreaming={isStreaming}
